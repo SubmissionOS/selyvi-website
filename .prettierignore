@@ -1,0 +1,15 @@
+.next/
+node_modules/
+out/
+build/
+screenshots/
+package-lock.json
+next-env.d.ts
+*.woff2
+
+# Governance-Dokument: wortgleich so gepflegt, wie es abgestimmt wurde.
+CLAUDE.md
+
+# Wird von `next build` automatisch neu geschrieben – Prettier und Next
+# wuerden sich sonst gegenseitig ueberschreiben.
+tsconfig.json

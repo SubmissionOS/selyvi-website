@@ -1,0 +1,8 @@
+# Zeilenenden im Repository immer LF, im Arbeitsverzeichnis plattformüblich.
+# Ohne diese Datei erzeugt ein Wechsel zwischen Windows und Linux/macOS
+# Diff-Rauschen über ganze Dateien – und Prettier und Git widersprechen sich.
+* text=auto eol=lf
+
+# Binärdateien nicht anfassen.
+*.png binary
+*.woff2 binary

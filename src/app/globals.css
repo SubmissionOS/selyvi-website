@@ -1,0 +1,206 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* ============================================================================
+   DESIGN TOKENS
+   ----------------------------------------------------------------------------
+   Einzige Quelle der Wahrheit fuer alle Farben des Projekts.
+   Regel: Im Markup NIEMALS Hex-Werte oder Tailwind-Standardfarben
+   (z. B. `text-blue-600`, `bg-slate-50`) verwenden – ausschliesslich die hier
+   definierten Tokens ueber ihre Tailwind-Utilities (`bg-brand-800`, `text-ink`,
+   `border-gray-200`, ...).
+   ========================================================================== */
+
+:root {
+  /* --- Markenfarben ------------------------------------------------------ */
+  --brand-100: #c7ecff; /* Flaechen, dezente Hervorhebungen */
+  --brand-400: #1e9cd7; /* NUR Flaechen/Icons/Akzente – siehe Kontrastregel */
+  --brand-600: #0074bd; /* Interaktive Elemente, Fokus-Ring, Links */
+  --brand-800: #015b97; /* Wortmarke, Footer-Flaeche, Ueberschriften-Akzent */
+
+  /* --- Text & Flaechen --------------------------------------------------- */
+  --ink: #0e1b26; /* Fliesstext, Standard-Textfarbe */
+  --surface: #ffffff; /* Basis-Hintergrund */
+  --surface-alt: #f6fafd; /* Abgesetzte Sektionen */
+
+  /* --- Grauskala --------------------------------------------------------- */
+  --gray-200: #e2e8ef; /* Rahmen, Trennlinien */
+  --gray-500: #64748b; /* Sekundaertext, Footer-Links */
+
+  /* --- Call-to-Action ----------------------------------------------------
+     Zwei Varianten stehen zur Auswahl. Welche aktiv ist, entscheidet die
+     Konstante CTA_VARIANT in src/config/brand.ts – sie setzt das Attribut
+     data-cta="a" | "b" auf <html>. Die Regeln darunter binden --cta.
+     --------------------------------------------------------------------- */
+  --cta-variant-a: #2c40ff; /* Variante A: kontrastierendes Blau-Violett */
+  --cta-variant-b: #0074bd; /* Variante B: markeneigenes Blau (= brand-600) */
+
+  /* Fallback, falls kein data-cta-Attribut gesetzt ist. */
+  --cta: var(--cta-variant-a);
+}
+
+/* Aktive CTA-Variante, gesteuert ueber <html data-cta="..."> */
+:root[data-cta="a"] {
+  --cta: var(--cta-variant-a);
+}
+
+:root[data-cta="b"] {
+  --cta: var(--cta-variant-b);
+}
+
+/* ============================================================================
+   TAILWIND-THEME
+   ----------------------------------------------------------------------------
+   `inline` sorgt dafuer, dass die Utilities auf die CSS-Variablen verweisen
+   statt sie zur Build-Zeit aufzuloesen. Nur so wirkt das Umschalten von
+   --cta ueber das data-Attribut zur Laufzeit.
+   ========================================================================== */
+
+@theme inline {
+  --color-brand-100: var(--brand-100);
+  --color-brand-400: var(--brand-400);
+  --color-brand-600: var(--brand-600);
+  --color-brand-800: var(--brand-800);
+
+  --color-ink: var(--ink);
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+
+  --color-gray-200: var(--gray-200);
+  --color-gray-500: var(--gray-500);
+
+  /* `bg-cta` / `text-cta` sind ausschliesslich dem primaeren CTA vorbehalten. */
+  --color-cta: var(--cta);
+
+  /* Schriftfamilie: die Variable liefert next/font (self-hosted, siehe layout.tsx) */
+  --font-sans: var(--font-ibm-plex-sans), ui-sans-serif, system-ui, sans-serif;
+
+  /* Auf-/Zuklappen der FAQ. Die Hoehe liefert Radix zur Laufzeit. */
+  --animate-accordion-down: accordion-down 200ms ease-out;
+  --animate-accordion-up: accordion-up 200ms ease-out;
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+/* ============================================================================
+   VERBINDLICHE EINSATZREGELN
+   ----------------------------------------------------------------------------
+   1) KONTRAST – brand-400 (#1e9cd7)
+      brand-400 erreicht auf weissem Grund nur ca. 3,0:1 Kontrast. Es darf
+      deshalb NIE fuer Text unter 24px verwendet werden. Erlaubt sind:
+        - Flaechen, Rahmen, Icons, dekorative Elemente
+        - Text ab 24px (WCAG "large text", ab 3:1 zulaessig)
+      Fuer jeden Fliess- und UI-Text gilt: --ink, --gray-500 oder brand-600.
+
+   2) CTA – --cta
+      --cta / `bg-cta` ist AUSSCHLIESSLICH fuer den primaeren
+      Call-to-Action-Button ("Demo buchen") reserviert. Nicht fuer Links,
+      Ueberschriften, Icons, Badges, Rahmen, Hover-Zustaende anderer Elemente
+      oder sekundaere Buttons. Ein primaerer CTA pro Ansichtsbereich.
+
+   3) KEINE VERLAEUFE
+      Keine Gradients, keine Farbverlaeufe, keine Schlagschatten als Deko.
+      Flaechen sind einfarbig, Abgrenzung erfolgt ueber --surface-alt und
+      --gray-200.
+   ========================================================================== */
+
+@layer base {
+  * {
+    border-color: var(--gray-200);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    /* Weiches Scrollen fuer Sprungmarken (z. B. "So funktioniert’s" im Hero).
+       Der prefers-reduced-motion-Block weiter unten setzt das wieder auf auto. */
+    scroll-behavior: smooth;
+  }
+
+  /* Die Kopfzeile ist sticky (h-16 = 4rem). Ohne diesen Abstand verschwindet
+     die Ueberschrift des Sprungziels hinter der Leiste. */
+  :target,
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+
+  body {
+    background-color: var(--surface);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Tastaturnavigation: gut sichtbarer Fokus-Ring auf allen fokussierbaren
+     Elementen. Nur :focus-visible, damit Mausklicks keinen Ring erzeugen. */
+  :focus-visible {
+    outline: 2px solid var(--brand-600);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Auf dunklen Flaechen (Footer) muss der Ring hell sein, sonst verschwindet
+     er auf brand-800. */
+  .on-dark :focus-visible {
+    outline-color: var(--brand-100);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: 1.2;
+    text-wrap: balance;
+    font-weight: 600;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* Sprungmarke zum Hauptinhalt – nur bei Tastaturfokus sichtbar. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--gray-200);
+}

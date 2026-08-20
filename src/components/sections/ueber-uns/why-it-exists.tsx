@@ -1,0 +1,79 @@
+import { PERSON_CONSENT_REVIEW, PRODUCT_NAME } from "@/config/brand";
+import { ReviewMarker } from "@/components/ui/review-marker";
+
+/**
+ * Sektion „Warum es … gibt“ – zwischen Intro und Mission.
+ *
+ * Sprungziel des Herkunfts-Links im Hero der Startseite (id="warum").
+ *
+ * Bewusst ruhiger Lesetext, keine Karten: Das hier ist der einzige Abschnitt
+ * der Website, der erzaehlt statt aufzuzaehlen. `max-w-[34rem]` haelt die
+ * Zeilenlaenge bei rund 65 Zeichen – die Spanne, in der laengerer Fliesstext
+ * noch gut lesbar bleibt.
+ *
+ * ACHTUNG, KOPPLUNG ZU PRACTICE_CLAIM:
+ * Der zweite Absatz enthaelt die BW-Aussage ein zweites Mal – als Nebensatz im
+ * Fliesstext ("gemeinsam mit Lehrkraeften aus ganz Baden-Wuerttemberg […] von
+ * der Grundschule bis zum Abitur"). Sie laesst sich hier nicht durch die
+ * Konstante ersetzen, weil PRACTICE_CLAIM ein eigenstaendiger Satz ist und der
+ * Erzaehlfluss sonst bricht.
+ *
+ * Wer PRACTICE_CLAIM in src/config/brand.ts aendert – etwa auf konkrete Zahlen –
+ * MUSS diesen Absatz mit anpassen. Es ist die einzige Stelle der Website, an
+ * der die Aussage nicht aus der Konstante kommt.
+ *
+ * ZWEI OFFENE PUNKTE ZUR NENNUNG VON PERSONEN:
+ *
+ * 1. Der Platzhalter [PERSON] bleibt stehen, bis die betreffende Person
+ *    entschieden hat, OB und WIE sie genannt werden moechte. Ein Name, den
+ *    jemand nicht freigegeben hat, gehoert nicht auf eine oeffentliche Seite –
+ *    schon gar nicht auf eine, die anderswo Datensparsamkeit verspricht.
+ *
+ * 2. Der Text nennt ausserdem Christian, Tobi und Rafael beim Vornamen. Deren
+ *    Freigabe ist bereits ueber `approved` in src/config/team.ts erfasst; die
+ *    Erwaehnung HIER faellt unter dieselbe Zustimmung und muss mit abgefragt
+ *    werden.
+ */
+export function WhyItExists() {
+  return (
+    <section
+      id="warum"
+      aria-labelledby="warum-titel"
+      className="border-b border-gray-200"
+    >
+      <div className="mx-auto w-full max-w-6xl px-6 py-20 lg:px-8 lg:py-24">
+        <h2
+          id="warum-titel"
+          className="text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
+        >
+          Warum es {PRODUCT_NAME} gibt
+        </h2>
+
+        <div className="mt-8 max-w-[34rem] space-y-6 text-lg text-gray-500">
+          <p>
+            Angefangen hat das hier nicht mit einem Businessplan, sondern am Küchentisch.{" "}
+            <span className="text-ink">[PERSON]</span> ist angehende Grundschullehrerin –
+            und wir haben aus nächster Nähe gesehen, wie viele Abende nicht in Unterricht
+            fließen, sondern in Korrekturstapel, Dokumentation und Verwaltung. Also haben
+            wir angefangen, ihr Werkzeuge zu bauen. Erst kleine, dann bessere. Irgendwann
+            war klar: Das Problem hat nicht eine Person – das Problem hat ein ganzes
+            Berufsfeld.
+          </p>
+
+          <p>
+            Aus den Abenden wurde ein System. Wir haben es gemeinsam mit Lehrkräften aus
+            ganz Baden-Württemberg weiterentwickelt – von der Grundschule bis zum Abitur –
+            und dabei mehr gelernt, als jedes Lehrbuch hergibt: Was im Alltag wirklich
+            hilft, entscheidet sich im Alltag. Aus uns dreien – Christian, Tobi und Rafael
+            – wurde ein Team mit einem einfachen Maßstab: Würde das einer Lehrerin, die
+            wir kennen, wirklich einen Abend zurückgeben? Wenn nein, bauen wir es nicht.
+          </p>
+
+          <p className="text-sm">
+            <ReviewMarker note={PERSON_CONSENT_REVIEW} />
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}

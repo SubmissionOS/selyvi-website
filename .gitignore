@@ -1,0 +1,24 @@
+# Abhängigkeiten und Build-Ausgaben
+node_modules/
+.next/
+out/
+build/
+next-env.d.ts
+*.tsbuildinfo
+
+# Umgebungsvariablen – NIEMALS ins Repository.
+# Der Stern deckt auch .env.production, .env.development usw. ab; die Vorlage
+# mit reinen Platzhaltern wird ausdrücklich wieder aufgenommen.
+.env*
+!.env.example
+
+# Logs
+*.log
+
+# Betriebssystem
+.DS_Store
+Thumbs.db
+
+# screenshots/ steht bewusst NICHT hier:
+# Die Bilder sind Teil der Dokumentation (AUDIT.md verweist darauf) und bleiben
+# versioniert.
