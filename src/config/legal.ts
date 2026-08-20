@@ -97,18 +97,12 @@ export const imprint: Imprint = {
 /**
  * Rechtstexte des Impressums.
  *
- * ==========================================================================
- * DIESE VIER ABSCHNITTE SIND LEER – DER VORLAGENTEXT FEHLT.
- * ==========================================================================
+ * Der Wortlaut ist unverändert aus der Vorlage übernommen. Diese Abschnitte
+ * sind juristische Standardtexte, deren Formulierung Bedeutung hat – wer sie
+ * anpasst, sollte das nicht nach Sprachgefühl tun, sondern nach Rücksprache.
  *
- * Vorgesehen war, den Wortlaut wortgleich aus einer Vorlage zu übernehmen. Die
- * Vorlage lag der Anweisung nicht bei (der Platzhalter „[Text aus dieser
- * Nachricht]" blieb unausgefüllt).
- *
- * Hier steht deshalb nichts. Diese Abschnitte sind juristische Standardtexte,
- * deren Wortlaut Bedeutung hat – eine selbst formulierte Fassung wäre genau
- * die Sorte Text, die im Streitfall nicht trägt. Sobald die Vorlage vorliegt:
- * `body` je Abschnitt füllen, `pending` entfernen.
+ * Ein leeres `body`-Array blendet den Wortlaut aus und zeigt stattdessen einen
+ * [PRÜFEN]-Marker. Das gilt weiterhin für Abschnitte, die später dazukommen.
  */
 export type LegalTextSection = {
   title: string;
@@ -120,8 +114,28 @@ export const IMPRINT_TEXT_REVIEW =
   "Wortlaut aus der Vorlage übernehmen – der Text lag der Anweisung nicht bei";
 
 export const imprintTextSections: LegalTextSection[] = [
-  { title: "Haftung für Inhalte", body: [] },
-  { title: "Haftung für Links", body: [] },
-  { title: "Urheberrecht", body: [] },
-  { title: "Verbraucherstreitbeilegung / Universalschlichtungsstelle", body: [] },
+  {
+    title: "Haftung für Inhalte",
+    body: [
+      "Als Diensteanbieter sind wir gemäß § 5 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Wir sind jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.",
+    ],
+  },
+  {
+    title: "Haftung für Links",
+    body: [
+      "Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.",
+    ],
+  },
+  {
+    title: "Urheberrecht",
+    body: [
+      "Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.",
+    ],
+  },
+  {
+    title: "Verbraucherstreitbeilegung / Universalschlichtungsstelle",
+    body: [
+      "Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.",
+    ],
+  },
 ];

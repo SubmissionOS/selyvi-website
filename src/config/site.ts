@@ -1,6 +1,10 @@
+import { imprint } from "@/config/legal";
+
 /**
  * Navigations- und Footer-Struktur.
- * Alle Ziele sind bereits als Routen angelegt (leere Seiten mit H1-Platzhalter).
+ *
+ * Kontaktangaben kommen aus src/config/legal.ts, damit Footer, Impressum und
+ * Datenschutzerklaerung nicht auseinanderlaufen.
  */
 
 export type NavItem = {
@@ -61,11 +65,21 @@ export const footerColumns: FooterColumn[] = [
   },
   {
     title: "Kontakt",
+    /**
+     * Bewusst reduziert: nur die E-Mail-Adresse, kein Telefon, keine Anschrift.
+     *
+     * Die vollständigen Angaben stehen im Impressum – dort gehören sie hin, und
+     * dorthin führt der Link in der Spalte „Rechtliches". Eine private
+     * Mobilnummer auf jeder einzelnen Seite auszugeben, ist etwas anderes als
+     * sie im Impressum bereitzuhalten.
+     *
+     * Die Adresse kommt aus src/config/legal.ts – eine Quelle mit Impressum und
+     * Datenschutzerklärung. Sonst stehen auf derselben Website zwei
+     * verschiedene Kontaktadressen.
+     */
     items: [
-      { label: "kontakt@example.de", href: "mailto:kontakt@example.de" },
-      { label: "+49 000 000000", href: "tel:+4900000000" },
-      { label: "Support", href: "/demo" },
-      { label: "Musterstraße 1, 10000 Musterstadt", href: "/impressum" },
+      { label: imprint.email, href: `mailto:${imprint.email}` },
+      { label: "Demo buchen", href: "/demo" },
     ],
   },
 ];
