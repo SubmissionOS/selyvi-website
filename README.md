@@ -17,6 +17,7 @@ npm run lint:fix      # ESLint mit Autofix
 npm run format        # Prettier schreibt
 npm run format:check  # Prettier prüft nur
 npm run check         # lint + build (Torwächter vor jedem Commit)
+npm run smoke <url>   # Smoke-Test gegen ein Deployment
 ```
 
 Verbindliche Arbeitsregeln stehen in [CLAUDE.md](CLAUDE.md).
@@ -519,84 +520,103 @@ Hinweis: Das OG-Bild rendert mit einer System-Sans, nicht mit IBM Plex –
 nicht. Für ein Platzhalter-Motiv vertretbar; beim Austausch gegen ein
 gestaltetes Bild erübrigt sich der Punkt.
 
-## Nach Domainkauf
+## Deployment
 
-Die echte Domain wird an **drei** Stellen eingetragen:
+### Repository
 
-| #   | Stelle                                 | Was                                                           |
-| --- | -------------------------------------- | ------------------------------------------------------------- |
-| 1   | [src/config/seo.ts](src/config/seo.ts) | `SITE_URL` – speist Canonical, og:url, Sitemap und robots.txt |
-| 2   | Sitemap und robots.txt                 | **nichts zu tun** – beide leiten sich aus `SITE_URL` ab       |
-| 3   | `.env.local` (`DEMO_MAIL_FROM`)        | Absenderadresse auf der neuen, in Brevo verifizierten Domain  |
+Das Repository ist **privat** und enthält den Next.js-Projektordner als Wurzel –
+in Vercel ist deshalb **kein** „Root Directory" zu setzen.
 
-Punkt 2 steht ausdrücklich in der Tabelle, damit niemand danach sucht: Sitemap
-und robots.txt haben keinen eigenen Domain-Eintrag, sie gehen beide durch
-`absoluteUrl()`.
+Nicht im Repository: `node_modules/`, `.next/`, jede `.env*` außer
+[.env.example](.env.example) (reine Platzhalter). Versioniert bleibt
+`screenshots/`, weil [AUDIT.md](AUDIT.md) darauf verweist.
 
-Der Platzhalter ist `https://produktname.example`. `.example` ist nach RFC 2606
-dauerhaft für Dokumentation reserviert und löst nirgends auf – ein Platzhalter,
-der versehentlich live geht, zeigt damit ins Leere statt auf eine fremde
-Website.
+### Region: fra1
 
-Nach der Umstellung einmal gegenprüfen:
+Die Function-Region steht in [vercel.json](vercel.json):
 
-```bash
-npm run build && npm start
-curl -s http://localhost:3000/ | grep -o '<link rel="canonical"[^>]*>'
-curl -s http://localhost:3000/sitemap.xml
-curl -s http://localhost:3000/robots.txt
+```json
+{ "regions": ["fra1"] }
 ```
 
-## Praxis-Aussage und Herkunftsgeschichte
+**Bewusst als Datei statt nur als UI-Einstellung.** Eine reine UI-Einstellung
+ist nirgends nachlesbar und fällt bei einem Reimport des Projekts still auf die
+Standardregion `iad1` (USA) zurück. Für die Datenschutzerklärung ist Frankfurt
+aber eine zugesagte Tatsache – die Server Action des Demo-Formulars verarbeitet
+dort personenbezogene Daten. Nach dem ersten Deploy in der Vercel-UI unter
+Settings → Functions gegenprüfen, dass `fra1` aktiv ist.
 
-Es gibt **eine** kanonische Formulierung der Praxis-Aussage, in
-[src/config/brand.ts](src/config/brand.ts):
+### ENV-Variablen in Vercel (Production)
 
-| Konstante               | Zweck                                         |
-| ----------------------- | --------------------------------------------- |
-| `PRACTICE_CLAIM`        | Vollform, ein eigenstaendiger Satz            |
-| `PRACTICE_CLAIM_SHORT`  | Kurzform fuer die Trust-Zeile                 |
-| `PRACTICE_CLAIM_REVIEW` | Text des offenen Punktes (Zahlen-Upgrade)     |
-| `PERSON_CONSENT_REVIEW` | Text des offenen Punktes (Nennung der Person) |
+| Variable         | Wert                                          |
+| ---------------- | --------------------------------------------- |
+| `BREVO_API_KEY`  | direkt in der Vercel-UI eintragen             |
+| `DEMO_MAIL_TO`   | Zieladresse für Anfragen                      |
+| `DEMO_MAIL_FROM` | in Brevo bereits verifizierte Absenderadresse |
+| `DEMO_DRY_RUN`   | **nicht setzen**                              |
 
-Verwendet in: Trust-Zeile und Sektion „Aus der Praxis“ (Startseite),
-Prinzip-Band (/produkt), Organisations-Karte (/schulen), Arbeitsweise-Karte
-(/ueber-uns). Wer die Konstante aendert, aendert alle Stellen auf einmal – nach
-demselben Muster wie [dpa-band.tsx](src/components/sections/dpa-band.tsx).
+Der Schlüssel gehört ausschließlich in die Vercel-UI – nie in Code, nie in
+einen Chat, nie in ein Log. `DEMO_DRY_RUN` in Produktion nicht setzen: Das
+Formular meldete sonst Erfolg, ohne eine Mail zu verschicken.
 
-**Der sichtbare Marker zur Praxis-Aussage steht genau einmal**, in der Sektion
-„Aus der Praxis“ auf der Startseite. Es ist ein offener Punkt, keine fuenf –
-und seine Aufloesung erledigt alle Fundstellen gleichzeitig.
+`DEMO_MAIL_FROM` ist vorerst die bestehende verifizierte Adresse.
+**[PRÜFEN]** Nach dem Domainkauf auf einen `@selyvi.de`-Absender umstellen.
 
-### Eine Ausnahme von der Konstante
+Ohne vollständige Konfiguration verweigert der Versand den Dienst und meldet
+das ehrlich, statt einen Erfolg vorzutäuschen („fail closed").
 
-Der Erzaehltext in
-[why-it-exists.tsx](src/components/sections/ueber-uns/why-it-exists.tsx) enthaelt
-die BW-Aussage ein zweites Mal, als Nebensatz im Fliesstext. Dort laesst sie
-sich nicht durch die Konstante ersetzen, ohne den Satzbau zu zerstoeren.
-**Wer `PRACTICE_CLAIM` aendert, muss diesen Absatz von Hand nachziehen** – der
-Hinweis steht in beiden Dateien im Quelltext.
+### Smoke-Test
 
-### Nennung von Personen
+Gegen jede Deployment-URL ausführbar:
 
-Der Abschnitt „Warum es … gibt“ und die Zeile im Hero der Startseite beziehen
-sich auf eine reale, nicht oeffentliche Person. Der Platzhalter `[PERSON]`
-bleibt stehen, bis die Person entschieden hat, **ob und wie** sie genannt
-werden moechte – Name, Umschreibung oder anonym. Diese Entscheidung trifft die
-Person, nicht das Team.
+```bash
+npm run smoke https://selyvi-website-xxxx.vercel.app
+```
 
-Der Erzaehltext nennt zusaetzlich Christian, Tobi und Rafael beim Vornamen.
-Deren Freigabe wird ueber `approved` in [team.ts](src/config/team.ts) gefuehrt;
-die Erwaehnung im Fliesstext faellt unter dieselbe Zustimmung und ist mit
-abzufragen.
+Geprüft werden: alle 8 Seiten mit Status 200, die 404-Seite mit Status 404, die
+vier Sicherheits-Header auf jeder Antwort, keine Verweise auf Google-Font-Server,
+`noindex` ausschließlich auf `/datenschutz`, Sitemap und robots.txt, sowie das
+Fehlen von altem Produktnamen und Secret-Mustern in der Ausgabe.
 
-### Praxis-Beispiele auf /produkt
+**Nicht abgedeckt: die vier Formular-Pfade.** Server Actions brauchen einen
+Browser. Diese vier von Hand auf der Preview-URL prüfen:
 
-Jeder der vier Funktionsblöcke traegt unter den Stichpunkten eine Mikrozeile
-„Aus der Zusammenarbeit“ – vier bewusst **leere, markierte Slots**. Dort gehoert
-je ein echter Hinweis aus der Zusammenarbeit mit Lehrkraeften hin: welcher
-Hinweis hat diese Funktion geprägt? Ein erfundenes Beispiel waere genau die
-Sorte Beleg, die im Gespraech auseinanderfaellt.
+| Pfad                          | Erwartung                                                   |
+| ----------------------------- | ----------------------------------------------------------- |
+| Formular leer absenden        | vier Feldfehler, Fokus springt auf „Name"                   |
+| Sofort absenden (unter 3 s)   | Erfolgsansicht, aber **keine** Mail – Zeitcheck greift      |
+| Honeypot füllen               | Erfolgsansicht, aber **keine** Mail (Feld nur via DevTools) |
+| Korrekt ausfüllen, 4 s warten | Erfolgsansicht **und** Mail an `DEMO_MAIL_TO`               |
+
+Die beiden Abwehr-Pfade sind absichtlich nicht von einer echten Anfrage zu
+unterscheiden – sichtbar wird der Unterschied nur im Function-Log von Vercel
+(`Anfrage verworfen: …`) und daran, dass keine Mail ankommt.
+
+## Launch-Restschritte
+
+Erst **nach** dem Domainkauf. Vorher bleibt die Website auf der
+Vercel-Preview-URL, und `SITE_URL` bleibt auf dem `.example`-Platzhalter.
+
+| #   | Schritt                                                              | Wo                                                 |
+| --- | -------------------------------------------------------------------- | -------------------------------------------------- |
+| 1   | `selyvi.de` als Primary Domain verbinden                             | Vercel → Settings → Domains                        |
+| 2   | `selyvi.com` und `www.selyvi.de` als Redirect auf die Primary Domain | Vercel → Settings → Domains                        |
+| 3   | `SITE_URL` auf `https://selyvi.de` umstellen                         | [src/config/seo.ts](src/config/seo.ts)             |
+| 4   | Brevo-Absender-Domain verifizieren (SPF, DKIM, DMARC)                | Brevo                                              |
+| 5   | `DEMO_MAIL_FROM` auf die neue `@selyvi.de`-Adresse umstellen         | Vercel → Environment Variables                     |
+| 6   | OG-Vorschau prüfen und Cache leeren lassen                           | LinkedIn Post Inspector, Facebook Sharing Debugger |
+| 7   | Property anlegen, Sitemap einreichen                                 | Google Search Console, Bing Webmaster Tools        |
+| 8   | `npm run smoke https://selyvi.de` erneut ausführen                   | lokal                                              |
+
+Zu Schritt 3: Canonical, `og:url`, Sitemap und robots.txt leiten sich alle aus
+`SITE_URL` ab – es ist genau **eine** Zeile.
+
+Zu Schritt 6: Das OG-Bild trägt `?v=2`. Falls das Motiv später ausgetauscht
+wird, die Zahl in `OG_IMAGE.url` erhöhen, damit die Netzwerke es neu holen.
+
+**Nicht vergessen, unabhängig vom Domainkauf:** `PRIVACY_APPROVED` steht auf
+`false`. Solange trägt `/datenschutz` ein `noindex` und fehlt in der Sitemap.
+Nach der anwaltlichen Prüfung auf `true` setzen.
 
 ## Geteilte Bausteine
 
