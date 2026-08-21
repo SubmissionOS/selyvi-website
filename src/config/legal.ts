@@ -82,7 +82,14 @@ export const imprint: Imprint = {
   street: "Hauptstraße 33",
   zipCity: "73550 Waldstetten",
   country: "Deutschland",
-  email: "kontakt@guddiweb.com",
+  // Übergangsadresse. Nach dem Domainkauf auf kontakt@selyvi.de umstellen –
+  // eine Adresse auf der eigenen Domain wirkt in der Beschaffung seriöser.
+  // Siehe README, NACH-LAUNCH-LISTE.
+  //
+  // Diese eine Zeile speist Impressum, Datenschutzerklärung (Verantwortlicher
+  // und Betroffenenrechte), Footer-Kontaktspalte und die Fallback-Zeile im
+  // Fehlerfall des Demo-Formulars.
+  email: "selyvi.app@gmail.com",
   phone: "+49 (0)176 30136988",
   vatId: "DE455168590",
   contentResponsible: "Rafael Gutmann, Hauptstraße 33, 73550 Waldstetten, Deutschland",

@@ -644,12 +644,18 @@ streicht die Zeile aus dieser Liste.
 
 ### Technisch
 
-| #   | Punkt                                                        | Wo                          | Zuständigkeit |
-| --- | ------------------------------------------------------------ | --------------------------- | ------------- |
-| 20  | Domain kaufen, danach `SITE_URL` und `DEMO_MAIL_FROM` setzen | siehe „Launch-Restschritte" | Betrieb       |
-| 21  | Content-Security-Policy                                      | `next.config.ts`            | Technik       |
-| 22  | Fehler-Monitoring statt Konsolen-Log                         | `error.tsx`                 | Technik       |
-| 23  | Routenweise Code-Aufteilung (173 kB auf jeder Route)         | siehe [AUDIT.md](AUDIT.md)  | Technik       |
+| #   | Punkt                                                                 | Wo                                         | Zuständigkeit |
+| --- | --------------------------------------------------------------------- | ------------------------------------------ | ------------- |
+| 20  | Domain kaufen, danach `SITE_URL` und `DEMO_MAIL_FROM` setzen          | siehe „Launch-Restschritte"                | Betrieb       |
+| 21  | Content-Security-Policy                                               | `next.config.ts`                           | Technik       |
+| 22  | Fehler-Monitoring statt Konsolen-Log                                  | `error.tsx`                                | Technik       |
+| 23  | Routenweise Code-Aufteilung (173 kB auf jeder Route)                  | siehe [AUDIT.md](AUDIT.md)                 | Technik       |
+| 24  | Kontaktadresse auf `kontakt@selyvi.de` umstellen (Gmail ist Übergang) | `email` in [legal.ts](src/config/legal.ts) | Betrieb       |
+
+Zu Punkt 24: Eine Adresse auf der eigenen Domain wirkt auf Schulleitungen
+seriöser als eine Gmail-Adresse, und sie kommt mit dem Domainkauf ohnehin. Es
+ist eine Zeile – `email` in `legal.ts` speist Impressum, Datenschutzerklärung,
+Footer und die Fallback-Zeile des Demo-Formulars gemeinsam.
 
 ### Was bewusst auf der Seite bleibt
 
