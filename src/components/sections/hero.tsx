@@ -1,9 +1,8 @@
 import Link from "next/link";
 
-import { PERSON_CONSENT_REVIEW, PRODUCT_NAME } from "@/config/brand";
+import { PRODUCT_NAME } from "@/config/brand";
 import { primaryCta } from "@/config/site";
 import { Button } from "@/components/ui/button";
-import { ReviewMarker } from "@/components/ui/review-marker";
 import { InterfaceSkeleton } from "@/components/sections/interface-skeleton";
 
 /**
@@ -32,8 +31,8 @@ export function Hero() {
             entwickelt in der EU.
           </p>
 
-          {/* Herkunftszeile. Nennt bewusst keinen Namen: Die Person hat der
-              Erwaehnung noch nicht zugestimmt – siehe PERSON_CONSENT_REVIEW. */}
+          {/* Herkunftszeile. Nennt bewusst keinen Namen – die Person bleibt
+              anonym, so wie im Erzaehltext auf /ueber-uns. */}
           <p className="mt-6 max-w-xl text-sm text-gray-500">
             Entstanden am Küchentisch einer angehenden Grundschullehrerin{" "}
             <span aria-hidden="true">→</span>{" "}
@@ -43,8 +42,6 @@ export function Hero() {
             >
               Unsere Geschichte
             </Link>
-            <br />
-            <ReviewMarker note={PERSON_CONSENT_REVIEW} />
           </p>
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">

@@ -1,5 +1,4 @@
-import { PERSON_CONSENT_REVIEW, PRODUCT_NAME } from "@/config/brand";
-import { ReviewMarker } from "@/components/ui/review-marker";
+import { PRODUCT_NAME } from "@/config/brand";
 
 /**
  * Sektion „Warum es … gibt“ – zwischen Intro und Mission.
@@ -22,16 +21,15 @@ import { ReviewMarker } from "@/components/ui/review-marker";
  * MUSS diesen Absatz mit anpassen. Es ist die einzige Stelle der Website, an
  * der die Aussage nicht aus der Konstante kommt.
  *
- * NENNUNG VON PERSONEN – ein offener Punkt, einer erledigt:
+ * NENNUNG VON PERSONEN:
  *
- * 1. Der Platzhalter [PERSON] bleibt stehen, bis die betreffende Person
- *    entschieden hat, OB und WIE sie genannt werden moechte. Ein Name, den
- *    jemand nicht freigegeben hat, gehoert nicht auf eine oeffentliche Seite –
- *    schon gar nicht auf eine, die anderswo Datensparsamkeit verspricht.
+ * Die angehende Grundschullehrerin bleibt anonym – der Text nennt sie nur als
+ * Person im engsten Umfeld des Teams. Das war ihre Entscheidung; ein Name
+ * gehoert nur auf diese Seite, wenn die Person ihn selbst freigibt.
  *
- * 2. Die Nennung von Christian, Tobi und Rafael beim Vornamen ist abgedeckt:
- *    Alle drei stehen in src/config/team.ts auf `approved: true`, und die
- *    Zustimmung schliesst die Erwaehnung in diesem Text ein. ERLEDIGT.
+ * Christian, Tobi und Rafael werden beim Vornamen genannt. Alle drei stehen in
+ * src/config/team.ts auf `approved: true`, und die Zustimmung schliesst diesen
+ * Text ein.
  */
 export function WhyItExists() {
   return (
@@ -50,9 +48,9 @@ export function WhyItExists() {
 
         <div className="mt-8 max-w-[34rem] space-y-6 text-lg text-gray-500">
           <p>
-            Angefangen hat das hier nicht mit einem Businessplan, sondern am Küchentisch.{" "}
-            <span className="text-ink">[PERSON]</span> ist angehende Grundschullehrerin –
-            und wir haben aus nächster Nähe gesehen, wie viele Abende nicht in Unterricht
+            Angefangen hat das hier nicht mit einem Businessplan, sondern am Küchentisch.
+            Im engsten Umfeld unseres Teams ist eine angehende Grundschullehrerin – und
+            wir haben aus nächster Nähe gesehen, wie viele Abende nicht in Unterricht
             fließen, sondern in Korrekturstapel, Dokumentation und Verwaltung. Also haben
             wir angefangen, ihr Werkzeuge zu bauen. Erst kleine, dann bessere. Irgendwann
             war klar: Das Problem hat nicht eine Person – das Problem hat ein ganzes
@@ -66,10 +64,6 @@ export function WhyItExists() {
             hilft, entscheidet sich im Alltag. Aus uns dreien – Christian, Tobi und Rafael
             – wurde ein Team mit einem einfachen Maßstab: Würde das einer Lehrerin, die
             wir kennen, wirklich einen Abend zurückgeben? Wenn nein, bauen wir es nicht.
-          </p>
-
-          <p className="text-sm">
-            <ReviewMarker note={PERSON_CONSENT_REVIEW} />
           </p>
         </div>
       </div>

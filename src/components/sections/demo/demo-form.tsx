@@ -12,10 +12,10 @@ import {
   ROLE_OPTIONS,
   type DemoField,
 } from "@/lib/demo/schema";
+import { imprint } from "@/config/legal";
 import { INITIAL_DEMO_STATE, type DemoFormState } from "@/lib/demo/state";
 import { submitDemoRequest } from "@/app/demo/actions";
 import { Button } from "@/components/ui/button";
-import { ReviewMarker } from "@/components/ui/review-marker";
 
 /**
  * Demo-Formular.
@@ -120,10 +120,7 @@ export function DemoForm() {
             Danke für Ihre Anfrage.
           </h2>
 
-          <p className="mt-4 text-gray-500">
-            Wir melden uns werktags innerhalb von{" "}
-            <ReviewMarker note="Reaktionszeit zusagen" /> bei Ihnen.
-          </p>
+          <p className="mt-4 text-gray-500">Wir melden uns werktags bei Ihnen.</p>
         </div>
       ) : (
         <form ref={formRef} action={formAction} noValidate className="space-y-6">
@@ -134,7 +131,7 @@ export function DemoForm() {
             >
               <p className="text-ink">{state.message}</p>
               <p className="mt-2 text-sm text-gray-500">
-                Alternativ erreichen Sie uns unter <ReviewMarker note="Kontaktadresse" />
+                Alternativ erreichen Sie uns unter {imprint.email}.
               </p>
             </div>
           ) : null}

@@ -1,5 +1,3 @@
-import { ReviewMarker } from "@/components/ui/review-marker";
-
 /**
  * Sektion 4 – Ausblick „In Arbeit“.
  *
@@ -9,7 +7,7 @@ import { ReviewMarker } from "@/components/ui/review-marker";
  * Gespraech erkennen koennen, nicht danach.
  *
  * Erst wenn ein Punkt tatsaechlich verfuegbar ist, wandert er nach oben zu den
- * Funktionsblöcken und verliert Badge und Markierung.
+ * Funktionsblöcken und verliert das Badge.
  */
 const upcoming = [
   {
@@ -55,9 +53,7 @@ export function Roadmap() {
                 In Entwicklung
               </span>
 
-              <h3 className="mt-5 text-base font-semibold text-ink">
-                {item.title} <ReviewMarker />
-              </h3>
+              <h3 className="mt-5 text-base font-semibold text-ink">{item.title}</h3>
 
               <p className="mt-3 text-sm text-gray-500">{item.description}</p>
             </li>

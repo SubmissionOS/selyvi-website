@@ -1,7 +1,5 @@
 import { Check } from "lucide-react";
 
-import { ReviewMarker } from "@/components/ui/review-marker";
-
 /**
  * Sektion 4 – Rollen-Block.
  *
@@ -49,11 +47,7 @@ export function RolesSplit() {
           <div className="rounded-xl border border-gray-200 bg-surface-alt p-6 lg:p-8">
             <h3 className="text-lg font-semibold text-ink">Was die Schulleitung sieht</h3>
 
-            <p className="mt-6">
-              <ReviewMarker note="Rollen- und Rechtemodell in Abstimmung" />
-            </p>
-
-            <p className="mt-4 text-gray-500">
+            <p className="mt-6 text-gray-500">
               Welche Übersichten und Verwaltungsfunktionen der Schulleitung zur Verfügung
               stehen, ist noch nicht entschieden.
             </p>

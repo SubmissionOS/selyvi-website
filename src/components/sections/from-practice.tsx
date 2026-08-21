@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import { PRACTICE_CLAIM, PRACTICE_CLAIM_REVIEW } from "@/config/brand";
+import { PRACTICE_CLAIM } from "@/config/brand";
 import { Button } from "@/components/ui/button";
-import { ReviewMarker } from "@/components/ui/review-marker";
 
 /**
  * Sektion „Aus der Praxis“ – zwischen „So funktioniert’s“ und „Kernfunktionen“.
@@ -39,10 +38,6 @@ export function FromPractice() {
 
           <p className="mt-4 text-lg text-gray-500">
             Viele Funktionen gehen direkt auf Hinweise aus dieser Zusammenarbeit zurück.
-          </p>
-
-          <p className="mt-6 text-sm">
-            <ReviewMarker note={PRACTICE_CLAIM_REVIEW} />
           </p>
 
           <div className="mt-8">

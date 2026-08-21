@@ -12,9 +12,9 @@
  * Die Zustimmung deckt auch die Erwaehnung beim Vornamen im Erzaehltext auf
  * /ueber-uns ab.
  *
- * Offen bleibt je Person der Beschreibungssatz: Solange `description` leer ist,
- * zeigt die Karte einen kleineren [PRÜFEN]-Hinweis. Den Satz gibt die Person
- * selbst vor – erfundene Beschreibungen kommen hier nicht hinein.
+ * `description` ist je Person leer und wird schlicht nicht gerendert. Sobald
+ * eine Person einen Satz ueber sich freigibt, hier eintragen – erfundene
+ * Beschreibungen kommen nicht hinein. Siehe README, NACH-LAUNCH-LISTE.
  *
  * Fotos fehlen weiterhin; darauf weist die Sektion im Fliesstext hin, dafuer
  * braucht es keinen Marker.
@@ -35,14 +35,6 @@ export type TeamMember = {
   /** Liegt die Freigabe der Person fuer Nennung und Beschreibung vor? */
   approved: boolean;
 };
-
-/**
- * Offener Punkt je Person: der Beschreibungssatz.
- *
- * Greift automatisch, solange `description` leer ist – unabhängig von der
- * Freigabe. Wer den Satz einträgt, lässt den Marker damit verschwinden.
- */
-export const TEAM_DESCRIPTION_REVIEW = "Beschreibungssatz der Person ausstehend";
 
 export const team: TeamMember[] = [
   {

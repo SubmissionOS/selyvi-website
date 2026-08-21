@@ -46,33 +46,6 @@ export const PRACTICE_CLAIM_SHORT =
   "Mit Lehrkräften aus ganz BW entwickelt – Grundschule bis Abitur";
 
 /**
- * Offener Punkt zur Praxis-Aussage.
- *
- * Der sichtbare [PRÜFEN]-Marker wird GENAU EINMAL gerendert, in der Sektion
- * „Aus der Praxis“ auf der Startseite. Grund: Es ist ein einziger offener
- * Punkt, keine fuenf. Wuerde jede Fundstelle einen Marker tragen, zaehlte die
- * Uebersicht im README fuenf offene Punkte, wo es einen gibt – und die
- * Aufloesung erledigt ohnehin alle Fundstellen auf einmal, weil sie sich die
- * Konstante teilen.
- */
-export const PRACTICE_CLAIM_REVIEW =
-  "Sobald Zahlen freigegeben: durch konkrete Angabe (X Lehrkräfte, Schularten) ersetzen";
-
-/**
- * Offener Punkt zur Nennung der Person, mit der alles angefangen hat.
- *
- * Betrifft zwei Stellen: die Zeile im Hero der Startseite und den [PERSON]-
- * Platzhalter im Abschnitt „Warum es … gibt“ auf /ueber-uns.
- *
- * Es geht um eine reale, nicht oeffentliche Person. Ohne ausdrueckliches
- * Einverstaendnis darf dort weder ein Name noch eine identifizierende
- * Umschreibung stehen. Die Entscheidung, WIE genannt wird, trifft die Person
- * selbst – nicht das Team.
- */
-export const PERSON_CONSENT_REVIEW =
-  "Einverständnis der genannten Person für jede Erwähnung einholen (Nennung: Name / 'Christians Partnerin' / anonym)";
-
-/**
  * CTA-Farbvariante.
  *
  * "a" = #2c40ff (kontrastierendes Blau-Violett)

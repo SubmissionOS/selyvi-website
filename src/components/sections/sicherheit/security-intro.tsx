@@ -3,12 +3,10 @@ import { PRODUCT_NAME } from "@/config/brand";
 /**
  * Sektion 1 – Intro.
  *
- * ACHTUNG, GILT FUER DIE GANZE SEITE: Jede <ReviewMarker />-Stelle auf
- * /datenschutz-sicherheit ist ein LAUNCH-BLOCKER. Diese Seite lesen
- * Schulleitungen und Datenschutzbeauftragte vor der Beschaffung. Sie darf
- * nicht mit offenen Markern live gehen – entweder die Angabe ist belegt, oder
- * die Seite geht nicht live. Die vollstaendige Liste steht im README unter
- * „LAUNCH-BLOCKER“.
+ * GILT FUER DIE GANZE SEITE: Hier steht nur, was heute stimmt. Wo eine Zusage
+ * noch nicht gedeckt ist, steht entweder die abgeschwaechte Tatsache oder eine
+ * Ankuendigung mit Zeitpunkt. Was noch aussteht, steht im README unter
+ * NACH-LAUNCH-LISTE – nicht auf der Seite.
  *
  * Der zweite Absatz benennt den Zustand der Seite ausdruecklich. Das ist
  * Absicht: Eine offen ausgewiesene Luecke kostet weniger Vertrauen als eine

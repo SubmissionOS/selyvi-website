@@ -602,6 +602,72 @@ Die beiden Abwehr-Pfade sind absichtlich nicht von einer echten Anfrage zu
 unterscheiden – sichtbar wird der Unterschied nur im Function-Log von Vercel
 (`Anfrage verworfen: …`) und daran, dass keine Mail ankommt.
 
+## NACH-LAUNCH-LISTE
+
+Die Website enthält **keine sichtbaren Platzhalter mehr**. Jede Aussage auf der
+Seite ist heute wahr; alles, was noch offen war, wurde entweder auf die
+belegbare Tatsache gekürzt, in eine Ankündigung mit Zeitpunkt umformuliert oder
+ersatzlos entfernt.
+
+Die offenen Punkte gehen dabei nicht verloren – sie stehen hier. Regel für jeden
+Punkt: Wer ihn auflöst, ergänzt den Inhalt **an der genannten Stelle** und
+streicht die Zeile aus dieser Liste.
+
+### Blockiert nichts, aber sollte kommen
+
+| #   | Punkt                                                                                                                        | Wo einzutragen                                                                                   | Zuständigkeit     |
+| --- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ----------------- |
+| 1   | Beschreibungssatz je Person (3×)                                                                                             | `description` in [team.ts](src/config/team.ts)                                                   | die Person selbst |
+| 2   | Fotos statt Initialen-Avatare                                                                                                | `team-grid.tsx`, Hinweistext dort mit anpassen                                                   | Team              |
+| 3   | Konkrete Zahlen zur Praxis-Aussage (X Lehrkräfte, Schularten)                                                                | `PRACTICE_CLAIM` in [brand.ts](src/config/brand.ts) **und** der Nebensatz in `why-it-exists.tsx` | Team              |
+| 4   | Praxis-Beispiele je Funktionsblock (welcher Lehrkraft-Hinweis prägte die Funktion?)                                          | `function-blocks.tsx`, als neue Mikrozeile                                                       | Team              |
+| 5   | Gestrichene Stichpunkte, sobald belegt: eigene Bewertungsmaßstäbe, gemeinsame Ablage im Kollegium, Rollen- und Rechtekonzept | `function-blocks.tsx`, `bullets`                                                                 | Produkt           |
+| 6   | Schulformen und Jahrgangsstufen zum Start (FAQ-Frage war entfernt)                                                           | `faq.tsx`, Frage wieder aufnehmen                                                                | Produkt           |
+| 7   | Dauer und Umfang der Pilotphase, Schulungsformat                                                                             | `rollout-timeline.tsx`                                                                           | Produkt           |
+| 8   | Einführungsaufwand für Schulen (FAQ-Frage war entfernt)                                                                      | `leadership-faq.tsx`, Frage wieder aufnehmen                                                     | Produkt           |
+| 9   | Unterlagen-Paket für Personalrat und Datenschutzbeauftragte                                                                  | `leadership-faq.tsx`, Antwort ergänzen                                                           | Produkt + Recht   |
+| 10  | Dediziertes Postfach für Datenschutzanfragen                                                                                 | `for-dpos.tsx`, danach `legal.ts`                                                                | Betrieb           |
+
+### Rechtlich / vertraglich
+
+| #   | Punkt                                                                                               | Wo einzutragen                                                          | Zuständigkeit   |
+| --- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | --------------- |
+| 11  | Rollen- und Rechtemodell festlegen                                                                  | `principles-grid.tsx`, `security-faq.tsx`, `roles-split.tsx`, `faq.tsx` | Produkt + Recht |
+| 12  | Verschlüsselung ruhender Daten (Umfang bestätigen)                                                  | `principles-grid.tsx`, Karte „Verschlüsselung"                          | Technik         |
+| 13  | KI-Verarbeitung: Modell-Anbieter, Verarbeitungsort, Zusicherung zur Nicht-Nutzung für Training      | `principles-grid.tsx`, `security-faq.tsx`                               | Vertrag + Recht |
+| 14  | Aufbewahrungs- und Löschfristen                                                                     | `principles-grid.tsx`, `security-faq.tsx`, `/datenschutz`               | Recht           |
+| 15  | Vollständige Subprozessoren-Liste (mind. Hosting, E-Mail-Versand, KI-Anbieter)                      | `subprocessors-table.tsx`, Tabelle wieder aufbauen                      | Vertrag + Recht |
+| 16  | AVV-Entwurf zum Bereitstellen                                                                       | `dpa-band.tsx`, Satz konkreter fassen                                   | Recht           |
+| 17  | Betreiberangabe: nach Gründung auf die Selyvi-Betreibergesellschaft umstellen und anwaltlich prüfen | `legal.ts` (dort als `OPERATOR_NOTE` im Quelltext)                      | Recht           |
+| 18  | Datenschutzerklärung anwaltlich prüfen, danach `PRIVACY_APPROVED = true`                            | [legal.ts](src/config/legal.ts)                                         | Anwalt          |
+| 19  | AGB- und Barrierefreiheitsseite: klären, ob nötig                                                   | neue Routen, danach Footer                                              | Recht           |
+
+### Technisch
+
+| #   | Punkt                                                        | Wo                          | Zuständigkeit |
+| --- | ------------------------------------------------------------ | --------------------------- | ------------- |
+| 20  | Domain kaufen, danach `SITE_URL` und `DEMO_MAIL_FROM` setzen | siehe „Launch-Restschritte" | Betrieb       |
+| 21  | Content-Security-Policy                                      | `next.config.ts`            | Technik       |
+| 22  | Fehler-Monitoring statt Konsolen-Log                         | `error.tsx`                 | Technik       |
+| 23  | Routenweise Code-Aufteilung (173 kB auf jeder Route)         | siehe [AUDIT.md](AUDIT.md)  | Technik       |
+
+### Was bewusst auf der Seite bleibt
+
+Diese Formulierungen sind **Ankündigungen, keine Platzhalter** – sie sagen wahr,
+dass etwas noch nicht entschieden ist, und gehören genau so auf die Seite:
+
+- „In Arbeit"-Karten auf /produkt („ist noch nicht entschieden", „klärt das Team
+  gerade", „ist offen")
+- Rollen-Block auf /schulen: kündigt an, was dort später stehen wird
+- Prinzipien-Karten „Rollen & Rechte", „KI-Verarbeitung", „Löschkonzept"
+- Einführungs-Schritte auf /schulen („gestalten wir gerade mit Pilotschulen")
+- Die Zeile „Diese Erklärung befindet sich in laufender juristischer Prüfung."
+  auf /datenschutz
+
+Ebenso bleibt `PRIVACY_APPROVED = false`: Das ist kein sichtbarer Platzhalter,
+sondern Schutz – `/datenschutz` trägt dadurch weiterhin `noindex` und fehlt in
+der Sitemap, bis die Prüfung durch ist.
+
 ## Launch-Restschritte
 
 Erst **nach** dem Domainkauf. Vorher bleibt die Website auf der
@@ -644,79 +710,14 @@ Nach der anwaltlichen Prüfung auf `true` setzen.
 
 ### Offene Platzhalter vor dem Livegang
 
-- **Produktname**: `PRODUCT_NAME` in [src/config/brand.ts](src/config/brand.ts).
-  Eine Zeile, wirkt auf Wortmarke, Metadaten, Fließtext und FAQ.
-- **Alle `[PRÜFEN]`-Stellen** finden:
-
-  ```bash
-  grep -rn "ReviewMarker\|review:" src/
-  ```
-
-  Aktuell 50 Stellen, in drei Kategorien. Zwei davon (`DEMO_MAIL_TO`,
-  `DEMO_MAIL_FROM`) stehen nicht im Quelltext, sondern in
-  [.env.example](.env.example) – der Grep unten findet sie nicht.
-
-  | Kategorie                  | Anzahl | Wo                                   |
-  | -------------------------- | ------ | ------------------------------------ |
-  | Launch-Blocker Sicherheit  | 13     | `/datenschutz-sicherheit`            |
-  | Launch-Blocker Rechtliches | 7      | `/impressum` (5), `/datenschutz` (2) |
-  | Übrige Platzhalter         | 30     | alle anderen Seiten                  |
-
-#### LAUNCH-BLOCKER
-
-Die Seite `/datenschutz-sicherheit` darf **nicht** live gehen, solange auch nur
-einer dieser Punkte offen ist. Sie ist die Grundlage, auf der Schulen ihre
-Beschaffungs- und Datenschutzprüfung aufsetzen – eine ungedeckte Zusage hier
-kostet nicht nur den Abschluss, sondern die Prüfung insgesamt.
-
-| Ort                        | Offener Punkt                                                                  | Wer entscheidet |
-| -------------------------- | ------------------------------------------------------------------------------ | --------------- |
-| Prinzip „EU-Hosting“       | finale Hosting-Architektur bestätigen                                          | Technik         |
-| Prinzip „Verschlüsselung“  | Umfang der Verschlüsselung ruhender Daten bestätigen                           | Technik         |
-| Prinzip „Rollen & Rechte“  | Rechtemodell in Abstimmung                                                     | Produkt         |
-| Prinzip „KI-Verarbeitung“  | Modell-Anbieter, Verarbeitungsort, Zusicherung zur Nicht-Nutzung für Training  | Vertrag + Recht |
-| Prinzip „Löschkonzept“     | Aufbewahrungs- und Löschfristen definieren                                     | Recht           |
-| Dienstleister-Tabelle      | vollständige Subprozessoren-Liste (mind. Hosting, E-Mail-Versand, KI-Anbieter) | Vertrag + Recht |
-| AVV-Sektion                | AVV-Dokument in Erstellung                                                     | Recht           |
-| Für Datenschutzbeauftragte | Unterlagen-Paket                                                               | Produkt + Recht |
-| Für Datenschutzbeauftragte | dedizierte Kontaktadresse für Datenschutzanfragen                              | Betrieb         |
-| FAQ, 4 Antworten           | jeweils abhängig von den Punkten darüber                                       | –               |
-
-Prüfen mit:
+**Keine mehr.** Die Website enthält keinen sichtbaren Marker und keinen
+Platzhalter-Text. Nachprüfen gegen ein laufendes Deployment:
 
 ```bash
-grep -rn "ReviewMarker\|review:" src/components/sections/sicherheit/
+npm run smoke <url>
 ```
 
-#### Übrige Platzhalter
-
-Blockieren den Launch nicht, müssen aber vor dem Livegang aufgelöst oder
-gestrichen werden.
-
-| Seite        | Offen                                                                                                                                                             |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/`          | 3 FAQ-Antworten (Schulformen, Datenzugriff, Einstiegsprozess), Einverständnis Person (Hero), Zahlen zur Praxis-Aussage                                            |
-| `/produkt`   | 3 Stichpunkte (Bewertungsmaßstäbe, gemeinsame Ablage, Rollen- und Rechtekonzept), 3 „In Arbeit“-Karten, 4 Praxis-Beispiele in den Mikrozeilen                     |
-| `/schulen`   | 2 Timeline-Schritte (Pilotphase, Schulung), Rollen-Block rechte Spalte, AVV-Dokument, 3 FAQ-Antworten                                                             |
-| `/ueber-uns` | Formulierung Teamherkunft, 3 Beschreibungssätze der Personen, Karte „Mit Lehrkräften entwickelt“, Einverständnis Person ([PERSON] im Abschnitt „Warum es … gibt“) |
-| `/demo`      | Reaktionszeit (Erfolgsansicht), Kontaktadresse (Fehlerfall), `DEMO_MAIL_TO`, `DEMO_MAIL_FROM` in `.env.example`                                                   |
-
-Mehrere Punkte hängen zusammen: Rollen- und Rechtemodell sowie der AVV-Entwurf
-tauchen auf drei Seiten auf. Wer sie auflöst, erledigt jeweils mehrere Marker –
-und muss alle Fundstellen anfassen, nicht nur die auffälligste.
-
-Die drei Beschreibungssätze auf `/ueber-uns` hängen an keinem anderen Punkt,
-brauchen aber jeweils einen Satz der genannten Person – das lässt sich weder
-sammeln noch delegieren. Die Freigaben zur Nennung selbst liegen inzwischen vor.
-
-- **DSGVO-Block**: Die vier Erläuterungssätze sind rechtliche Zusagen und
-  brauchen eine Freigabe von Rechtsseite.
-- **Testimonials**: `SHOW_TESTIMONIALS` in
-  [src/config/features.ts](src/config/features.ts) bleibt auf `false`, bis eine
-  echte, schriftlich freigegebene Pilotstimme vorliegt. Die Datenliste in
-  `testimonials.tsx` ist bewusst leer – das Flag allein schaltet nichts sichtbar.
-- **Hero-Mockup**: `interface-skeleton.tsx` zeigt nur Flächen, keine erfundenen
-  Texte oder Zahlen. Ersetzen, sobald echte Screenshots existieren.
+Alle ehemals markierten Punkte stehen in der [NACH-LAUNCH-LISTE](#nach-launch-liste).
 
 ## Screenshots erzeugen
 

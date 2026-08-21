@@ -3,7 +3,6 @@ import { ArrowRight, Eye, ShieldCheck, Users } from "lucide-react";
 
 import { PRACTICE_CLAIM } from "@/config/brand";
 import { Button } from "@/components/ui/button";
-import { ReviewMarker } from "@/components/ui/review-marker";
 
 /**
  * Sektion 4 – Arbeitsweise.
@@ -13,14 +12,14 @@ import { ReviewMarker } from "@/components/ui/review-marker";
  * /datenschutz-sicherheit und auf dieser Seite nachpruefbar. Genau deshalb
  * darf sie hier ohne Marker stehen.
  *
- * Die erste Karte dagegen greift vor: Pilotschulen gibt es noch nicht.
+ * Die erste Karte nennt die kanonische Praxis-Aussage aus PRACTICE_CLAIM –
+ * dieselbe wie auf Startseite, /produkt und /schulen.
  */
 const practices = [
   {
     icon: Users,
     title: "Mit Lehrkräften entwickelt",
     description: PRACTICE_CLAIM,
-    review: "sobald Pilotschulen feststehen, hier konkret werden",
   },
   {
     icon: ShieldCheck,
@@ -67,12 +66,6 @@ export function HowWeWork() {
                 </h3>
 
                 <p className="mt-3 text-sm text-gray-500">{practice.description}</p>
-
-                {practice.review ? (
-                  <p className="mt-4 text-sm">
-                    <ReviewMarker note={practice.review} />
-                  </p>
-                ) : null}
 
                 {practice.action ? (
                   <div className="mt-6">

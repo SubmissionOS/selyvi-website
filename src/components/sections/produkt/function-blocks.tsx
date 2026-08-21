@@ -1,11 +1,10 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { Check, MessageSquareQuote } from "lucide-react";
+import { Check } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { PRODUCT_NAME } from "@/config/brand";
 import { Button } from "@/components/ui/button";
-import { ReviewMarker } from "@/components/ui/review-marker";
 import {
   CorrectionSkeleton,
   DocumentationSkeleton,
@@ -13,27 +12,11 @@ import {
   PrivacySkeleton,
 } from "@/components/sections/produkt/function-skeletons";
 
-/**
- * Text des offenen Punktes fuer die vier Mikrozeilen „Aus der Zusammenarbeit“.
- *
- * Hier steht ABSICHTLICH kein Beispiel. Ein erfundener Lehrkraft-Hinweis waere
- * genau die Sorte Beleg, die im Gespraech auseinanderfaellt – und diese vier
- * Zeilen sollen spaeter die staerksten der Seite sein: echte Verbesserungen mit
- * echter Herkunft. Bis dahin bleiben sie leer und markiert.
- */
-const PRACTICE_EXAMPLE_REVIEW =
-  "Konkretes Praxis-Beispiel vom Team: welcher Lehrkraft-Hinweis hat diese Funktion geprägt?";
-
-type Bullet = {
-  text: string;
-  needsReview?: boolean;
-};
-
 type FunctionBlock = {
   id: string;
   title: string;
   paragraphs: string[];
-  bullets: Bullet[];
+  bullets: string[];
   skeleton: ReactNode;
   action?: { label: string; href: string };
 };
@@ -46,11 +29,7 @@ const blocks: FunctionBlock[] = [
       `Abgaben sammeln Sie in ${PRODUCT_NAME} ein – hochgeladen oder aus einer bestehenden Ablage verbunden.`,
       "Zu jeder Abgabe entsteht ein Korrekturvorschlag, den Sie prüfen, ändern oder verwerfen. Wirksam wird eine Bewertung erst, wenn Sie sie bestätigt haben.",
     ],
-    bullets: [
-      { text: "Vorschläge mit Begründung" },
-      { text: "Eigene Bewertungsmaßstäbe hinterlegen", needsReview: true },
-      { text: "Jede Änderung nachvollziehbar" },
-    ],
+    bullets: ["Vorschläge mit Begründung", "Jede Änderung nachvollziehbar"],
     skeleton: <CorrectionSkeleton />,
   },
   {
@@ -61,9 +40,9 @@ const blocks: FunctionBlock[] = [
       "Abgelegt wird pro Klasse und Fach, sodass der Leistungsstand über das Schuljahr nachvollziehbar bleibt.",
     ],
     bullets: [
-      { text: "Erfassung im Arbeitsfluss statt am Schuljahresende" },
-      { text: "Ablage pro Klasse und Fach" },
-      { text: "Verlauf über das Schuljahr einsehbar" },
+      "Erfassung im Arbeitsfluss statt am Schuljahresende",
+      "Ablage pro Klasse und Fach",
+      "Verlauf über das Schuljahr einsehbar",
     ],
     skeleton: <DocumentationSkeleton />,
   },
@@ -75,9 +54,8 @@ const blocks: FunctionBlock[] = [
       "Was zu einer Stunde gehört, bleibt beieinander – und ist dort auffindbar, wo Sie es brauchen.",
     ],
     bullets: [
-      { text: "Aufgaben und Fristen je Klasse" },
-      { text: "Unterlagen bei der Stunde statt im Mailanhang" },
-      { text: "Gemeinsame Ablage im Kollegium", needsReview: true },
+      "Aufgaben und Fristen je Klasse",
+      "Unterlagen bei der Stunde statt im Mailanhang",
     ],
     skeleton: <OrganisationSkeleton />,
   },
@@ -89,9 +67,8 @@ const blocks: FunctionBlock[] = [
       "Wer innerhalb der Schule welche Daten sieht, regelt ein Rollen- und Rechtekonzept.",
     ],
     bullets: [
-      { text: "Verarbeitung und Speicherung in der EU" },
-      { text: "Auftragsverarbeitungsvertrag nach Art. 28 DSGVO" },
-      { text: "Rollen- und Rechtekonzept", needsReview: true },
+      "Verarbeitung und Speicherung in der EU",
+      "Auftragsverarbeitungsvertrag nach Art. 28 DSGVO",
     ],
     skeleton: <PrivacySkeleton />,
     action: {
@@ -104,12 +81,10 @@ const blocks: FunctionBlock[] = [
 /**
  * Sektion 3 – Vier Funktionsblöcke, abwechselnd Text links und rechts.
  *
- * Die Beschreibungen bleiben bewusst nah an dem, was die Startseite bereits
- * zusagt. Wo eine konkretere Behauptung noetig waere, steht ein
- * <ReviewMarker /> statt einer erfundenen Angabe.
- *
- * Unter den Stichpunkten steht je Block eine Mikrozeile „Aus der
- * Zusammenarbeit“ – vier bewusst leere, markierte Slots.
+ * Die Beschreibungen und Stichpunkte bleiben bewusst nah an dem, was die
+ * Startseite bereits zusagt. Stichpunkte, die eine noch unbelegte Funktion
+ * versprochen haetten, wurden gestrichen statt abgeschwaecht – siehe README,
+ * NACH-LAUNCH-LISTE.
  */
 export function FunctionBlocks() {
   return (
@@ -143,31 +118,15 @@ export function FunctionBlocks() {
 
                 <ul className="mt-8 space-y-3">
                   {block.bullets.map((bullet) => (
-                    <li key={bullet.text} className="flex items-start gap-3">
+                    <li key={bullet} className="flex items-start gap-3">
                       <Check
                         aria-hidden="true"
                         className="mt-1 size-4 shrink-0 text-brand-600"
                       />
-                      <span className="text-ink">
-                        {bullet.text}
-                        {bullet.needsReview ? <ReviewMarker className="ml-2" /> : null}
-                      </span>
+                      <span className="text-ink">{bullet}</span>
                     </li>
                   ))}
                 </ul>
-
-                {/* Mikrozeile: hier kommt spaeter ein echter Hinweis aus der
-                    Zusammenarbeit hin. Bis dahin nur der offene Punkt. */}
-                <p className="mt-6 flex items-start gap-3 text-sm">
-                  <MessageSquareQuote
-                    aria-hidden="true"
-                    className="mt-0.5 size-4 shrink-0 text-brand-600"
-                  />
-                  <span className="text-gray-500">
-                    <span className="font-medium text-ink">Aus der Zusammenarbeit:</span>{" "}
-                    <ReviewMarker note={PRACTICE_EXAMPLE_REVIEW} />
-                  </span>
-                </p>
 
                 {block.action ? (
                   <div className="mt-10">

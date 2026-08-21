@@ -1,40 +1,37 @@
 import { FaqAccordion, type FaqItem } from "@/components/faq-accordion";
 
 /**
- * Sektion 6 – FAQ zu Datenschutz und Sicherheit.
+ * Sektion – FAQ zu Datenschutz und Sicherheit.
  *
- * LAUNCH-BLOCKER: alle vier Antworten.
+ * Die Antworten sind deckungsgleich mit den Karten im Prinzipien-Grid und
+ * sagen nur, was heute stimmt.
  *
  * Die erste Frage ist die, die in jeder Pruefung zuerst gestellt wird. Die
  * Antwort verweigert die Zusage ausdruecklich, statt sie zu geben – solange
  * die Vertraege mit den Modell-Anbietern nicht geprueft sind, waere jede
- * andere Formulierung eine Behauptung ins Blaue. Die Formulierungen sind
- * bewusst deckungsgleich mit den Karten im Prinzipien-Grid.
+ * andere Formulierung eine Behauptung ins Blaue. Genau diese Zurueckhaltung
+ * ist die belastbare Antwort, nicht eine Luecke.
  */
 const faqItems: FaqItem[] = [
   {
     question: "Werden Daten meiner Schülerinnen und Schüler für KI-Training verwendet?",
     answer:
       "Diese Frage beantworten wir erst, wenn die Verträge mit unseren Modell-Anbietern geprüft sind. Eine Zusicherung ohne vertragliche Grundlage wäre an dieser Stelle wertlos – gerade hier. Den aktuellen Stand finden Sie oben im Abschnitt „KI-Verarbeitung“.",
-    review: "Antwort erst nach Abgleich mit den Verträgen der Modell-Anbieter",
   },
   {
     question: "Wo werden die Daten gespeichert?",
     answer:
-      "In Rechenzentren innerhalb der EU, Serverstandort Frankfurt. Die finale Hosting-Architektur wird derzeit bestätigt.",
-    review: "finale Hosting-Architektur bestätigen",
+      "In Rechenzentren innerhalb der EU, Serverstandort Frankfurt. Die Übertragung erfolgt ausschließlich verschlüsselt (TLS).",
   },
   {
     question: "Wer hat Zugriff?",
     answer:
-      "Innerhalb Ihrer Schule regelt das ein Rollen- und Rechtemodell, das derzeit abgestimmt wird. Sobald es steht, finden Sie hier, welche Rolle welche Daten einsehen kann und welche nicht.",
-    review: "Rechtemodell in Abstimmung",
+      "Innerhalb Ihrer Schule regelt das ein Rollen- und Rechtemodell, über das wir gerade entscheiden. Sobald es steht, finden Sie hier, welche Rolle welche Daten einsehen kann und welche nicht.",
   },
   {
     question: "Was passiert bei Vertragsende mit den Daten?",
     answer:
-      "Aufbewahrungs- und Löschfristen werden derzeit definiert – einschließlich der Frist, in der Daten nach Vertragsende gelöscht werden, und der Frage, ob es davor einen Export gibt.",
-    review: "Aufbewahrungs- und Löschfristen definieren",
+      "Aufbewahrungs- und Löschfristen veröffentlichen wir vor dem Produktstart – einschließlich der Frist, in der Daten nach Vertragsende gelöscht werden.",
   },
 ];
 

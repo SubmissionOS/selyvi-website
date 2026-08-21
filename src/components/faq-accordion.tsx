@@ -1,4 +1,3 @@
-import { ReviewMarker } from "@/components/ui/review-marker";
 import {
   Accordion,
   AccordionContent,
@@ -16,12 +15,6 @@ import {
 export type FaqItem = {
   question: string;
   answer: string;
-  /**
-   * Markiert die Antwort als Platzhalter.
-   *   true     → [PRÜFEN]
-   *   "Text"   → [PRÜFEN: Text]
-   */
-  review?: boolean | string;
 };
 
 export function FaqAccordion({
@@ -36,15 +29,7 @@ export function FaqAccordion({
       {items.map((item, index) => (
         <AccordionItem key={item.question} value={`${idPrefix}-${index}`}>
           <AccordionTrigger>{item.question}</AccordionTrigger>
-          <AccordionContent>
-            {item.review ? (
-              <ReviewMarker
-                note={typeof item.review === "string" ? item.review : undefined}
-                className="mr-2"
-              />
-            ) : null}
-            {item.answer}
-          </AccordionContent>
+          <AccordionContent>{item.answer}</AccordionContent>
         </AccordionItem>
       ))}
     </Accordion>

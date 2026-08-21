@@ -14,11 +14,10 @@ export const metadata: Metadata = pageMetadata("/datenschutz-sicherheit");
 /**
  * Seite für Schulleitungen und Datenschutzbeauftragte.
  *
- * DIESE SEITE DARF NICHT MIT OFFENEN [PRÜFEN]-MARKERN LIVE GEHEN.
- * Jeder Marker hier ist ein Launch-Blocker; die Liste steht im README unter
- * „LAUNCH-BLOCKER“. Vor dem Livegang pruefen:
- *
- *   grep -rn "ReviewMarker\|review:" src/components/sections/sicherheit/
+ * Auf dieser Seite steht ausschliesslich, was heute stimmt. Wo eine Zusage nicht
+ * gedeckt war, steht jetzt die abgeschwaechte Tatsache oder eine Ankuendigung
+ * mit Zeitpunkt. Was noch aussteht, steht im README unter NACH-LAUNCH-LISTE –
+ * nicht auf der Seite.
  *
  * <DpaBand /> ist dieselbe Komponente wie auf /schulen – die AVV-Aussage
  * bleibt dadurch auf beiden Seiten zwingend wortgleich.

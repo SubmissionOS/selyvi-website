@@ -7,23 +7,13 @@
  * ==========================================================================
  */
 
-/** Erzeugt einen Platzhalter-Wert mit Hinweis, was fehlt. */
-export function pending(note: string): string {
-  return `[PRÜFEN: ${note}]`;
-}
-
-/** Erkennt, ob ein Wert noch ein Platzhalter ist. */
-export function isPending(value: string): boolean {
-  return value.startsWith("[PRÜFEN:");
-}
-
 /**
  * Impressum freigegeben.
  *
  * true, seit die Angaben echt sind: Entwurfs-Balken und noindex entfallen auf
  * /impressum, die Seite steht wieder in der Sitemap.
  *
- * Offen bleibt der Betreiber-Hinweis (siehe OPERATOR_REVIEW) – der betrifft
+ * Offen bleibt der Betreiber-Hinweis (siehe OPERATOR_NOTE unten) – der betrifft
  * aber nicht die Richtigkeit der Angaben, sondern ihre Vorläufigkeit.
  */
 export const IMPRINT_READY = true;
@@ -50,8 +40,12 @@ export const PRIVACY_APPROVED = false;
  * Vertretung und Registereintrag – und damit sowohl das Impressum als auch der
  * Verantwortliche in der Datenschutzerklärung.
  */
-export const OPERATOR_REVIEW =
-  "Vorläufige Betreiberangabe – nach Gründung auf die Selyvi-Betreibergesellschaft umstellen und anwaltlich prüfen";
+/*
+ * OPERATOR_NOTE (bewusst keine exportierte Konstante, damit nichts sie rendert):
+ *   Vorläufige Betreiberangabe – nach Gründung auf die
+ *   Selyvi-Betreibergesellschaft umstellen und anwaltlich prüfen.
+ * Steht auch im README unter NACH-LAUNCH-LISTE.
+ */
 
 export type Imprint = {
   /** Firmierung bzw. Name des Einzelunternehmers. */
@@ -80,7 +74,7 @@ export type Imprint = {
  * statt leer angezeigt – eine leere Rubrik sieht nach einer fehlenden Angabe
  * aus, obwohl schlicht keine existiert.
  *
- * Nach Gründung einer Gesellschaft (siehe OPERATOR_REVIEW) kommen Rechtsform,
+ * Nach Gründung einer Gesellschaft (siehe OPERATOR_NOTE unten) kommen Rechtsform,
  * Vertretung und Registereintrag hinzu.
  */
 export const imprint: Imprint = {
@@ -101,17 +95,15 @@ export const imprint: Imprint = {
  * sind juristische Standardtexte, deren Formulierung Bedeutung hat – wer sie
  * anpasst, sollte das nicht nach Sprachgefühl tun, sondern nach Rücksprache.
  *
- * Ein leeres `body`-Array blendet den Wortlaut aus und zeigt stattdessen einen
- * [PRÜFEN]-Marker. Das gilt weiterhin für Abschnitte, die später dazukommen.
+ * Alle vier Abschnitte sind gefüllt. Kommt ein weiterer dazu, gehört der
+ * Wortlaut gleich mit hinein – ein Abschnitt mit leerem `body` würde nur eine
+ * leere Überschrift rendern.
  */
 export type LegalTextSection = {
   title: string;
   /** Wortlaut aus der Vorlage. Leer = noch nicht übernommen. */
   body: string[];
 };
-
-export const IMPRINT_TEXT_REVIEW =
-  "Wortlaut aus der Vorlage übernehmen – der Text lag der Anweisung nicht bei";
 
 export const imprintTextSections: LegalTextSection[] = [
   {

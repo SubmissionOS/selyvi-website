@@ -1,15 +1,17 @@
-import { ReviewMarker } from "@/components/ui/review-marker";
-
 /**
- * Sektion 3 – Transparenz-Tabelle der Auftragsverarbeiter.
+ * Sektion 3 – Auftragsverarbeiter.
  *
- * LAUNCH-BLOCKER. Die Tabelle steht hier mit Kopfzeile, aber ohne Zeilen:
- * Struktur und Zusage sind sichtbar, es steht nur noch kein Firmenname darin.
+ * Die Tabelle stand hier mit Kopfzeile, aber ohne Zeilen – eine Struktur, die
+ * eine Liste verspricht, die es noch nicht gibt. Sie ist durch einen Satz
+ * ersetzt, der genau das sagt, was stimmt: dass die Liste kommt.
  *
  * KEINE Namen eintragen, bevor die Liste bestaetigt ist – auch keine
  * „wahrscheinlichen“. Eine Subprozessoren-Liste ist eine Rechtsauskunft nach
  * Art. 28 Abs. 2 DSGVO; ein falscher Eintrag ist schlimmer als ein fehlender,
  * weil Schulen ihre eigenen Verzeichnisse darauf aufbauen.
+ *
+ * Sobald die Liste steht, gehoert hier wieder eine Tabelle her – siehe README,
+ * NACH-LAUNCH-LISTE.
  */
 export function SubprocessorsTable() {
   return (
@@ -27,42 +29,9 @@ export function SubprocessorsTable() {
 
         <p className="mt-6 max-w-2xl text-lg text-gray-500">
           Wir setzen Dienstleister ein, die in unserem Auftrag personenbezogene Daten
-          verarbeiten. Die vollständige Liste veröffentlichen wir hier, bevor der Dienst
-          startet – mit Name, Zweck und Verarbeitungsort.
+          verarbeiten. Die vollständige Liste unserer Auftragsverarbeiter veröffentlichen
+          wir hier vor dem Produktstart.
         </p>
-
-        {/* Breite Tabellen scrollen in ihrem eigenen Container, damit die Seite
-            auf schmalen Viewports nicht horizontal scrollt. */}
-        <div className="mt-12 overflow-x-auto rounded-xl border border-gray-200 bg-surface">
-          <table className="w-full min-w-lg border-collapse text-left">
-            <caption className="sr-only">
-              Auftragsverarbeiter mit Zweck und Verarbeitungsort. Die Liste wird derzeit
-              zusammengestellt.
-            </caption>
-
-            <thead>
-              <tr className="border-b border-gray-200">
-                <th scope="col" className="px-6 py-4 text-sm font-semibold text-ink">
-                  Dienst
-                </th>
-                <th scope="col" className="px-6 py-4 text-sm font-semibold text-ink">
-                  Zweck
-                </th>
-                <th scope="col" className="px-6 py-4 text-sm font-semibold text-ink">
-                  Standort
-                </th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr>
-                <td colSpan={3} className="px-6 py-8 text-sm text-gray-500">
-                  <ReviewMarker note="vollständige Subprozessoren-Liste vor Launch – erwartet werden mindestens Hosting, E-Mail-Versand, KI-Anbieter" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
       </div>
     </section>
   );

@@ -1,5 +1,4 @@
-import { TEAM_DESCRIPTION_REVIEW, team } from "@/config/team";
-import { ReviewMarker } from "@/components/ui/review-marker";
+import { team } from "@/config/team";
 
 /**
  * Sektion 3 – Team.
@@ -47,21 +46,6 @@ export function TeamGrid() {
 
               {member.description ? (
                 <p className="mt-4 text-sm text-gray-500">{member.description}</p>
-              ) : null}
-
-              {/* Zwei getrennte offene Punkte, in dieser Reihenfolge:
-                  1. Freigabe fehlt  -> die Person darf gar nicht genannt werden
-                  2. Freigabe da, Satz fehlt -> nur der Beschreibungssatz offen
-                  Beide verschwinden von selbst, sobald das jeweilige Feld
-                  gefüllt ist. */}
-              {!member.approved ? (
-                <p className="mt-4 text-sm">
-                  <ReviewMarker note="Personenfreigabe + Foto + Beschreibungssatz" />
-                </p>
-              ) : member.description.length === 0 ? (
-                <p className="mt-4 text-sm">
-                  <ReviewMarker note={TEAM_DESCRIPTION_REVIEW} />
-                </p>
               ) : null}
             </li>
           ))}

@@ -14,22 +14,9 @@ const faqItems: FaqItem[] = [
     answer: "Preise werden aktuell mit Pilotschulen festgelegt – sprechen Sie uns an.",
   },
   {
-    question: "Wie viel Aufwand ist die Einführung?",
-    answer:
-      "Wie viel Zeit Einführung und Schulung im Kollegium binden, lässt sich erst nach der Pilotphase belastbar sagen. Genau das erhebt das Team gerade gemeinsam mit den ersten Schulen. Eine geschätzte Zahl wäre an dieser Stelle wertlos für Ihre Planung.",
-    review: true,
-  },
-  {
     question: "Müssen Personalrat und Datenschutzbeauftragte einbezogen werden?",
     answer:
-      "Das empfehlen wir ausdrücklich. Die Einführung einer Software, die personenbezogene Daten von Lehrkräften sowie Schülerinnen und Schülern verarbeitet, berührt die Zuständigkeit beider Seiten. Die Unterlagen, die Sie den Gremien vorlegen können, stellen wir bereit.",
-    review: "Unterlagen-Paket offen",
-  },
-  {
-    question: "Wer ist Verantwortlicher im Sinne der DSGVO?",
-    answer:
-      "Die Rollenverteilung zwischen Schule, Schulträger und uns als Anbieter wird derzeit mit Rechtsberatung geklärt. Wir tragen hier erst eine Aussage ein, wenn sie geprüft ist – bei dieser Frage haftet am Ende Ihre Schule, nicht unsere Website.",
-    review: "mit Rechtsberatung klären",
+      "Das empfehlen wir ausdrücklich. Die Einführung einer Software, die personenbezogene Daten von Lehrkräften sowie Schülerinnen und Schülern verarbeitet, berührt die Zuständigkeit beider Seiten.",
   },
 ];
 

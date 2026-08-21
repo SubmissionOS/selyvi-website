@@ -1,20 +1,13 @@
 import type { ReactNode } from "react";
 
 import { PRODUCT_NAME } from "@/config/brand";
-import {
-  IMPRINT_TEXT_REVIEW,
-  OPERATOR_REVIEW,
-  imprint,
-  imprintTextSections,
-} from "@/config/legal";
-import { ReviewMarker } from "@/components/ui/review-marker";
+import { imprint, imprintTextSections } from "@/config/legal";
 
 /**
  * Strukturierte Darstellung der Impressumsangaben.
  *
- * Die Werte kommen aus src/config/legal.ts und sind echt. Der einzige offene
- * Punkt ist die Vorläufigkeit der Betreiberangabe – sie steht als
- * Transparenz-Zeile ganz oben, nicht versteckt zwischen den Feldern.
+ * Die Werte kommen aus src/config/legal.ts und sind echt. Die Transparenz-Zeile
+ * oben nennt den Betreiber, bevor die Felder kommen.
  *
  * Auszeichnung als <dl>: Bezeichnung und Wert gehoeren zusammen, und
  * Screenreader koennen die Paare als solche ausgeben.
@@ -53,14 +46,12 @@ export function ImprintDetails() {
   return (
     <div className="mt-12 max-w-3xl space-y-12">
       {/* Transparenz-Zeile: wer hinter dem Angebot steht, bevor die Felder
-          kommen. Der Marker macht die Vorlaeufigkeit sichtbar, ohne die
-          Richtigkeit der Angaben infrage zu stellen. */}
+          kommen. Die Angabe ist heute richtig; dass sie sich nach einer
+          Gruendung aendert, steht als OPERATOR_NOTE im Quelltext von legal.ts
+          und im README – nicht auf der Seite. */}
       <div className="rounded-xl border border-gray-200 bg-surface-alt p-6">
         <p className="text-ink">
           {PRODUCT_NAME} ist ein Angebot von Rafael Gutmann (GuddiWeb).
-        </p>
-        <p className="mt-3 text-sm">
-          <ReviewMarker note={OPERATOR_REVIEW} />
         </p>
       </div>
 
@@ -93,19 +84,13 @@ export function ImprintDetails() {
 
       {imprintTextSections.map((section) => (
         <Block key={section.title} title={section.title}>
-          {section.body.length > 0 ? (
-            <div className="space-y-4">
-              {section.body.map((paragraph) => (
-                <p key={paragraph} className="text-gray-500">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm">
-              <ReviewMarker note={IMPRINT_TEXT_REVIEW} />
-            </p>
-          )}
+          <div className="space-y-4">
+            {section.body.map((paragraph) => (
+              <p key={paragraph} className="text-gray-500">
+                {paragraph}
+              </p>
+            ))}
+          </div>
         </Block>
       ))}
     </div>

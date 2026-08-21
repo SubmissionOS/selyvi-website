@@ -1,5 +1,3 @@
-import { ReviewMarker } from "@/components/ui/review-marker";
-
 /**
  * Hinweis zur Auftragsverarbeitung – GETEILTE Sektion.
  *
@@ -9,10 +7,11 @@ import { ReviewMarker } from "@/components/ui/review-marker";
  * ueberarbeitet hat. Eine Kopie waere genau die Stelle, an der eine Schule
  * spaeter zwei verschiedene Zusagen nebeneinander findet.
  *
- * Die Markierung bleibt stehen, bis der Vertragsentwurf tatsaechlich
- * existiert. Ein AVV ist fuer eine Schule ein Beschaffungs-Kriterium – die
- * Zusage „stellen wir bereit“ ohne fertiges Dokument waere genau die Art von
- * Aussage, die im Erstgespraech auffliegt.
+ * Der Text verspricht bewusst KEIN fertiges Dokument. Ein AVV ist fuer eine
+ * Schule ein Beschaffungs-Kriterium; die Zusage „Entwurf stellen wir bereit“
+ * ohne existierendes Dokument waere genau die Art von Aussage, die im
+ * Erstgespraech auffliegt. Sobald der Entwurf vorliegt, kann der Satz konkreter
+ * werden – siehe README, NACH-LAUNCH-LISTE.
  */
 export function DpaBand() {
   return (
@@ -27,8 +26,7 @@ export function DpaBand() {
           </h2>
 
           <p className="mt-4 text-lg text-gray-500">
-            Den Vertragsentwurf stellen wir im Erstgespräch bereit.{" "}
-            <ReviewMarker note="AVV-Dokument in Erstellung" />
+            Alle Fragen dazu klären wir transparent im Erstgespräch.
           </p>
         </div>
       </div>

@@ -1,5 +1,4 @@
 import { PRODUCT_NAME } from "@/config/brand";
-import { ReviewMarker } from "@/components/ui/review-marker";
 
 /**
  * Sektion 1 – Intro.
@@ -21,7 +20,7 @@ export function AboutIntro() {
 
         <p className="mt-6 max-w-2xl text-lg text-gray-500">
           Hinter {PRODUCT_NAME} steht ein kleines Team aus Produkt, Technik und
-          Bildungspraxis. <ReviewMarker note="Formulierung Teamherkunft" />
+          Bildungspraxis.
         </p>
 
         <p className="mt-4 max-w-2xl text-lg text-gray-500">

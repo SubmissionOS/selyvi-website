@@ -1,5 +1,3 @@
-import { ReviewMarker } from "@/components/ui/review-marker";
-
 /**
  * Sektion 3 – Einführungs-Ablauf als Timeline.
  *
@@ -18,13 +16,11 @@ const steps = [
     title: "Pilotphase mit ausgewählten Lehrkräften",
     description:
       "Die Pilotpraxis ist aus der bisherigen Zusammenarbeit mit Lehrkräften gewachsen. Dauer und Umfang der Pilotphase stehen noch nicht fest – das Team gestaltet den Ablauf gerade gemeinsam mit den ersten Pilotschulen und ergänzt belastbare Angaben hier, sobald sie feststehen.",
-    review: "Dauer und Umfang offen",
   },
   {
     title: "Schulung & Onboarding",
     description:
       "In welchem Format Schulungen stattfinden – vor Ort, online oder als Material zum Selbststudium – wird derzeit mit den Pilotschulen festgelegt.",
-    review: "Format offen",
   },
   {
     title: "Rollout im Kollegium",
@@ -63,12 +59,7 @@ export function RolloutTimeline() {
               </span>
 
               <div className="pt-1">
-                <h3 className="text-lg font-semibold text-ink">
-                  {step.title}
-                  {step.review ? (
-                    <ReviewMarker note={step.review} className="ml-2" />
-                  ) : null}
-                </h3>
+                <h3 className="text-lg font-semibold text-ink">{step.title}</h3>
 
                 <p className="mt-3 text-gray-500">{step.description}</p>
               </div>

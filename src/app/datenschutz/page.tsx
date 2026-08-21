@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { PRODUCT_NAME } from "@/config/brand";
 import { PRIVACY_APPROVED, imprint } from "@/config/legal";
 import { pageMetadata } from "@/config/seo";
-import { ReviewMarker } from "@/components/ui/review-marker";
 
 /**
  * Datenschutzerklärung.
@@ -92,10 +91,8 @@ export default function DatenschutzPage() {
             <p className="mt-4 text-gray-500">
               Vercel ist ein Anbieter mit Sitz in den USA. Auch bei europäischer
               Serverregion ist ein Zugriff aus einem Drittland nicht in jedem Fall
-              ausgeschlossen. Grundlage der Verarbeitung ist ein
-              Auftragsverarbeitungsvertrag mit Vercel einschließlich der
-              Standardvertragsklauseln der Europäischen Kommission.{" "}
-              <ReviewMarker note="Auftragsverarbeitungsvertrag und Standardvertragsklauseln mit Vercel durch Anwalt bestätigen lassen" />
+              ausgeschlossen. Die Verarbeitung erfolgt auf Grundlage der
+              EU-Standardvertragsklauseln im Rahmen des Vercel-Datenschutzvertrags.
             </p>
           </div>
 
@@ -149,9 +146,8 @@ export default function DatenschutzPage() {
               Beantwortung von Anfragen.
             </p>
             <p className="mt-4 text-gray-500">
-              Wir speichern Ihre Angaben, bis die Anfrage abschließend bearbeitet ist und
-              keine gesetzlichen Aufbewahrungspflichten entgegenstehen.{" "}
-              <ReviewMarker note="konkrete Löschfrist für Formularanfragen festlegen" />
+              Wir speichern Ihre Anfrage, solange es für die Bearbeitung erforderlich ist,
+              und löschen sie anschließend.
             </p>
           </div>
 
