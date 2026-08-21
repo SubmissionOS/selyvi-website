@@ -44,11 +44,21 @@ export const footerColumns: FooterColumn[] = [
   },
   {
     title: "Unternehmen",
+    /**
+     * „Karriere", „Presse" und „Blog" standen hier als Platzhalter und zeigten
+     * alle auf /ueber-uns. Ein Link, der etwas anderes verspricht als das Ziel
+     * liefert, kostet mehr Vertrauen, als eine kurze Spalte kostet – deshalb
+     * ersatzlos entfernt.
+     *
+     * Sie kommen zurück, sobald die Seiten wirklich existieren: dann je einen
+     * Eintrag mit eigener Route ergänzen.
+     */
     items: [
       { label: "Über uns", href: "/ueber-uns" },
-      { label: "Karriere", href: "/ueber-uns" },
-      { label: "Presse", href: "/ueber-uns" },
-      { label: "Blog", href: "/ueber-uns" },
+      { label: "Unsere Geschichte", href: "/ueber-uns#warum" },
+      // Als gewöhnlicher Link, nicht als Button: Der primäre CTA steht bereits
+      // in der Kopfzeile, und --cta bleibt genau ihm vorbehalten.
+      { label: "Demo buchen", href: "/demo" },
     ],
   },
   {
