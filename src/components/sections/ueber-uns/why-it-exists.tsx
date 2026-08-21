@@ -22,17 +22,16 @@ import { ReviewMarker } from "@/components/ui/review-marker";
  * MUSS diesen Absatz mit anpassen. Es ist die einzige Stelle der Website, an
  * der die Aussage nicht aus der Konstante kommt.
  *
- * ZWEI OFFENE PUNKTE ZUR NENNUNG VON PERSONEN:
+ * NENNUNG VON PERSONEN – ein offener Punkt, einer erledigt:
  *
  * 1. Der Platzhalter [PERSON] bleibt stehen, bis die betreffende Person
  *    entschieden hat, OB und WIE sie genannt werden moechte. Ein Name, den
  *    jemand nicht freigegeben hat, gehoert nicht auf eine oeffentliche Seite –
  *    schon gar nicht auf eine, die anderswo Datensparsamkeit verspricht.
  *
- * 2. Der Text nennt ausserdem Christian, Tobi und Rafael beim Vornamen. Deren
- *    Freigabe ist bereits ueber `approved` in src/config/team.ts erfasst; die
- *    Erwaehnung HIER faellt unter dieselbe Zustimmung und muss mit abgefragt
- *    werden.
+ * 2. Die Nennung von Christian, Tobi und Rafael beim Vornamen ist abgedeckt:
+ *    Alle drei stehen in src/config/team.ts auf `approved: true`, und die
+ *    Zustimmung schliesst die Erwaehnung in diesem Text ein. ERLEDIGT.
  */
 export function WhyItExists() {
   return (

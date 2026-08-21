@@ -3,7 +3,8 @@
 Fundament der Marketing-Website (B2B-SaaS für Schulen).
 Next.js 16 (App Router, TypeScript) · Tailwind CSS 4 · shadcn/ui · IBM Plex Sans.
 
-Der Produktname ist durchgängig ein Platzhalter.
+Der Produktname steht an genau einer Stelle: `PRODUCT_NAME` in
+[src/config/brand.ts](src/config/brand.ts).
 
 ## Befehle
 
@@ -316,13 +317,24 @@ in [src/config/team.ts](src/config/team.ts).
 Diese Seite nutzt bewusst **keine** `FinalCta` – das Kontakt-Band übernimmt die
 Rolle des Abschluss-CTA. Zwei CTA-Sektionen untereinander wären eine Dopplung.
 
-**Personenfreigabe.** Namen, Funktionen und Fotos realer Personen dürfen erst
-öffentlich stehen, wenn die jeweilige Person zugestimmt hat. Jede Karte trägt
-deshalb einen Marker, solange `approved` in `team.ts` auf `false` steht. Beim
-Umstellen auf `true` gleichzeitig `description` mit dem freigegebenen Satz
-füllen. Avatare sind Initialen auf brand-100 – **keine Stockfotos**: ein
-Stockfoto an der Stelle einer realen Person ist eine kleine Lüge, und das
-ausgerechnet auf der Seite, die Vertrauen herstellen soll.
+**Personenfreigabe – erledigt.** Alle drei Personen haben der Nennung
+zugestimmt (`approved: true` in [team.ts](src/config/team.ts)). Die Zustimmung
+deckt auch die Erwähnung beim Vornamen im Erzähltext des Abschnitts „Warum es …
+gibt“ ab.
+
+**Offen je Person: der Beschreibungssatz.** Solange `description` leer ist,
+zeigt die Karte einen kleineren Marker. Den Satz gibt die Person selbst vor –
+erfundene Beschreibungen kommen nicht hinein. Beide Marker hängen an je einem
+Feld und verschwinden von allein, sobald es gefüllt ist.
+
+Avatare sind Initialen auf brand-100 – **keine Stockfotos**: ein Stockfoto an
+der Stelle einer realen Person ist eine kleine Lüge, und das ausgerechnet auf
+der Seite, die Vertrauen herstellen soll. Dass Fotos noch fehlen, steht als
+Fließtext in der Sektion; dafür braucht es keinen Marker.
+
+**Weiterhin offen** ist die Nennung einer weiteren, nicht öffentlichen Person:
+Der Platzhalter `[PERSON]` im Erzähltext und die Herkunftszeile im Hero der
+Startseite tragen dazu je einen Marker.
 
 ## Demo (/demo)
 
@@ -461,17 +473,15 @@ Im Footer standen unter „Rechtliches“ die Einträge **AGB** und
 entfernt. Vor dem Launch klären, ob die Seiten gebraucht werden (AGB je nach
 Vertragsmodell, Barrierefreiheitserklärung je nach Anwendbarkeit des BFSG).
 
-### Offener Widerspruch: Footer-Kontaktdaten
+### Footer-Kontaktdaten
 
-Die Kontaktspalte im Footer zeigt weiterhin Platzhalter (`kontakt@example.de`,
-`+49 000 000000`, `Musterstraße 1, 10000 Musterstadt`) aus
-[site.ts](src/config/site.ts), während das Impressum echte Daten nennt. **Auf
-jeder Seite stehen damit zwei verschiedene Kontaktangaben.**
+Die Kontaktspalte im Footer speist sich aus [legal.ts](src/config/legal.ts) und
+ist bewusst reduziert: **nur die E-Mail-Adresse**, kein Telefon, keine
+Anschrift. Die vollständigen Angaben stehen im Impressum – eine private
+Mobilnummer auf jeder einzelnen Seite auszugeben, ist etwas anderes, als sie im
+Impressum bereitzuhalten.
 
-Bewusst nicht eigenmächtig geändert: Ob die private Mobilnummer im Footer jeder
-Seite erscheinen soll, ist eine Entscheidung des Betreibers, keine technische.
-Die saubere Lösung wäre, die Spalte aus `legal.ts` zu speisen – nach demselben
-Muster wie die Datenschutzerklärung.
+Damit nennt die Website an keiner Stelle zwei verschiedene Kontaktadressen.
 
 ## SEO-Grundausstattung
 
@@ -683,21 +693,21 @@ grep -rn "ReviewMarker\|review:" src/components/sections/sicherheit/
 Blockieren den Launch nicht, müssen aber vor dem Livegang aufgelöst oder
 gestrichen werden.
 
-| Seite        | Offen                                                                                                                                               |
-| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/`          | 3 FAQ-Antworten (Schulformen, Datenzugriff, Einstiegsprozess), Einverständnis Person (Hero), Zahlen zur Praxis-Aussage                              |
-| `/produkt`   | 3 Stichpunkte (Bewertungsmaßstäbe, gemeinsame Ablage, Rollen- und Rechtekonzept), 3 „In Arbeit“-Karten, 4 Praxis-Beispiele in den Mikrozeilen       |
-| `/schulen`   | 2 Timeline-Schritte (Pilotphase, Schulung), Rollen-Block rechte Spalte, AVV-Dokument, 3 FAQ-Antworten                                               |
-| `/ueber-uns` | Formulierung Teamherkunft, 3 Personenfreigaben, Karte „Mit Lehrkräften entwickelt“, Einverständnis Person ([PERSON] im Abschnitt „Warum es … gibt“) |
-| `/demo`      | Reaktionszeit (Erfolgsansicht), Kontaktadresse (Fehlerfall), `DEMO_MAIL_TO`, `DEMO_MAIL_FROM` in `.env.example`                                     |
+| Seite        | Offen                                                                                                                                                             |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/`          | 3 FAQ-Antworten (Schulformen, Datenzugriff, Einstiegsprozess), Einverständnis Person (Hero), Zahlen zur Praxis-Aussage                                            |
+| `/produkt`   | 3 Stichpunkte (Bewertungsmaßstäbe, gemeinsame Ablage, Rollen- und Rechtekonzept), 3 „In Arbeit“-Karten, 4 Praxis-Beispiele in den Mikrozeilen                     |
+| `/schulen`   | 2 Timeline-Schritte (Pilotphase, Schulung), Rollen-Block rechte Spalte, AVV-Dokument, 3 FAQ-Antworten                                                             |
+| `/ueber-uns` | Formulierung Teamherkunft, 3 Beschreibungssätze der Personen, Karte „Mit Lehrkräften entwickelt“, Einverständnis Person ([PERSON] im Abschnitt „Warum es … gibt“) |
+| `/demo`      | Reaktionszeit (Erfolgsansicht), Kontaktadresse (Fehlerfall), `DEMO_MAIL_TO`, `DEMO_MAIL_FROM` in `.env.example`                                                   |
 
 Mehrere Punkte hängen zusammen: Rollen- und Rechtemodell sowie der AVV-Entwurf
 tauchen auf drei Seiten auf. Wer sie auflöst, erledigt jeweils mehrere Marker –
 und muss alle Fundstellen anfassen, nicht nur die auffälligste.
 
-Die drei Personenfreigaben auf `/ueber-uns` hängen an keinem anderen Punkt,
-brauchen aber jeweils eine eigene Rückmeldung der genannten Person – das lässt
-sich weder sammeln noch delegieren.
+Die drei Beschreibungssätze auf `/ueber-uns` hängen an keinem anderen Punkt,
+brauchen aber jeweils einen Satz der genannten Person – das lässt sich weder
+sammeln noch delegieren. Die Freigaben zur Nennung selbst liegen inzwischen vor.
 
 - **DSGVO-Block**: Die vier Erläuterungssätze sind rechtliche Zusagen und
   brauchen eine Freigabe von Rechtsseite.

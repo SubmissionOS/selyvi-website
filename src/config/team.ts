@@ -8,10 +8,16 @@
  * Website, die auf ihrer eigenen Datenschutzseite Sorgfalt verspricht, kann
  * schlecht ungefragt Mitarbeitende auflisten.
  *
- * Solange `approved` auf false steht, zeigt die Karte einen sichtbaren
- * [PRÜFEN]-Hinweis. Beim Umstellen auf true bitte gleichzeitig:
- *   - `description` mit dem von der Person freigegebenen Satz fuellen
- *   - Foto ergaenzen (bis dahin steht der Initialen-Avatar)
+ * STAND: Alle drei Personen haben der Nennung zugestimmt (`approved: true`).
+ * Die Zustimmung deckt auch die Erwaehnung beim Vornamen im Erzaehltext auf
+ * /ueber-uns ab.
+ *
+ * Offen bleibt je Person der Beschreibungssatz: Solange `description` leer ist,
+ * zeigt die Karte einen kleineren [PRÜFEN]-Hinweis. Den Satz gibt die Person
+ * selbst vor – erfundene Beschreibungen kommen hier nicht hinein.
+ *
+ * Fotos fehlen weiterhin; darauf weist die Sektion im Fliesstext hin, dafuer
+ * braucht es keinen Marker.
  *
  * Ergaenzungen sind bewusst trivial: eine weitere Zeile in diesem Array.
  */
@@ -30,26 +36,34 @@ export type TeamMember = {
   approved: boolean;
 };
 
+/**
+ * Offener Punkt je Person: der Beschreibungssatz.
+ *
+ * Greift automatisch, solange `description` leer ist – unabhängig von der
+ * Freigabe. Wer den Satz einträgt, lässt den Marker damit verschwinden.
+ */
+export const TEAM_DESCRIPTION_REVIEW = "Beschreibungssatz der Person ausstehend";
+
 export const team: TeamMember[] = [
   {
     name: "Christian Karl Lange",
     role: "Geschäftsführung (CEO)",
     initials: "CL",
     description: "",
-    approved: false,
+    approved: true,
   },
   {
     name: "Tobias Haaga",
     role: "Technik (CTO)",
     initials: "TH",
     description: "",
-    approved: false,
+    approved: true,
   },
   {
     name: "Rafael Gutmann",
     role: "Marketing (CMO)",
     initials: "RG",
     description: "",
-    approved: false,
+    approved: true,
   },
 ];

@@ -1,4 +1,4 @@
-import { team } from "@/config/team";
+import { TEAM_DESCRIPTION_REVIEW, team } from "@/config/team";
 import { ReviewMarker } from "@/components/ui/review-marker";
 
 /**
@@ -11,8 +11,8 @@ import { ReviewMarker } from "@/components/ui/review-marker";
  * Der Kreis ist dekorativ (aria-hidden): Der Name steht direkt daneben, eine
  * Vorlesung der Initialen waere reine Wiederholung.
  *
- * Die Personendaten liegen in src/config/team.ts. Solange `approved` dort auf
- * false steht, zeigt die Karte den Freigabe-Hinweis.
+ * Die Personendaten liegen in src/config/team.ts. Alle drei Freigaben liegen
+ * vor; offen ist je Person nur noch der Beschreibungssatz.
  */
 export function TeamGrid() {
   return (
@@ -49,9 +49,18 @@ export function TeamGrid() {
                 <p className="mt-4 text-sm text-gray-500">{member.description}</p>
               ) : null}
 
+              {/* Zwei getrennte offene Punkte, in dieser Reihenfolge:
+                  1. Freigabe fehlt  -> die Person darf gar nicht genannt werden
+                  2. Freigabe da, Satz fehlt -> nur der Beschreibungssatz offen
+                  Beide verschwinden von selbst, sobald das jeweilige Feld
+                  gefüllt ist. */}
               {!member.approved ? (
                 <p className="mt-4 text-sm">
                   <ReviewMarker note="Personenfreigabe + Foto + Beschreibungssatz" />
+                </p>
+              ) : member.description.length === 0 ? (
+                <p className="mt-4 text-sm">
+                  <ReviewMarker note={TEAM_DESCRIPTION_REVIEW} />
                 </p>
               ) : null}
             </li>
