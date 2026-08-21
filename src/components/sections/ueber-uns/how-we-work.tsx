@@ -24,8 +24,11 @@ const practices = [
   {
     icon: ShieldCheck,
     title: "Datenschutz by Design",
+    // Ohne Hosting-Zusatz: Der Serverstandort des Produkts ist noch nicht
+    // Deutschland (siehe PRODUCT_HOSTING_NOTE), und diese Karte ist nicht der
+    // Ort, an dem das mit einem Halbsatz geklaert werden koennte.
     description:
-      "Verarbeitet wird nur, was die jeweilige Funktion benötigt – auf Servern innerhalb der EU.",
+      "Verarbeitet wird nur, was die jeweilige Funktion benötigt. Jede Lehrkraft sieht ausschließlich ihre eigenen Daten.",
     action: { label: "Sicherheit & Datenschutz", href: "/datenschutz-sicherheit" },
   },
   {

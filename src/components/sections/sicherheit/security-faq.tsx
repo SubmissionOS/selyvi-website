@@ -1,3 +1,8 @@
+import {
+  DATA_SEPARATION_NOTE,
+  PRODUCT_HOSTING_NOTE,
+  WEBSITE_HOSTING_NOTE,
+} from "@/config/product";
 import { FaqAccordion, type FaqItem } from "@/components/faq-accordion";
 
 /**
@@ -19,14 +24,15 @@ const faqItems: FaqItem[] = [
       "Diese Frage beantworten wir erst, wenn die Verträge mit unseren Modell-Anbietern geprüft sind. Eine Zusicherung ohne vertragliche Grundlage wäre an dieser Stelle wertlos – gerade hier. Den aktuellen Stand finden Sie oben im Abschnitt „KI-Verarbeitung“.",
   },
   {
+    // Die Antwort trennt Website und Anwendung ausdruecklich. Eine gemeinsame
+    // Antwort („in der EU, Frankfurt") stand hier bis zum Abgleich mit dem
+    // Produktstand und war fuer die Anwendung nicht gedeckt.
     question: "Wo werden die Daten gespeichert?",
-    answer:
-      "In Rechenzentren innerhalb der EU, Serverstandort Frankfurt. Die Übertragung erfolgt ausschließlich verschlüsselt (TLS).",
+    answer: `Für diese Website und für die Anwendung gelten unterschiedliche Antworten. ${WEBSITE_HOSTING_NOTE} Für die Anwendung gilt: ${PRODUCT_HOSTING_NOTE} Die Übertragung erfolgt in beiden Fällen ausschließlich verschlüsselt (TLS).`,
   },
   {
     question: "Wer hat Zugriff?",
-    answer:
-      "Innerhalb Ihrer Schule regelt das ein Rollen- und Rechtemodell, über das wir gerade entscheiden. Sobald es steht, finden Sie hier, welche Rolle welche Daten einsehen kann und welche nicht.",
+    answer: `${DATA_SEPARATION_NOTE} Eine Rolle mit Gesamtsicht auf die Daten mehrerer Lehrkräfte gibt es nicht – auch nicht für die Schulleitung. Sie sieht im Leitungsmodus ausgewertete Kennzahlen zur Nutzung, keine einzelnen Beobachtungen.`,
   },
   {
     question: "Was passiert bei Vertragsende mit den Daten?",

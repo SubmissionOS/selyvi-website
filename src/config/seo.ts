@@ -59,14 +59,17 @@ export const OG_IMAGE = {
   // Vorschaubilder lange. Nach einem Austausch des Motivs die Zahl erhoehen,
   // dann holen die Plattformen es neu. Die Startseite traegt zusaetzlich Next
   // eigenen Hash, weil dort die Dateikonvention direkt greift.
-  url: "/opengraph-image?v=2",
+  // v=3 seit der Neuausrichtung auf die Grundschule: Der Untertitel im Motiv
+  // hat sich geaendert, und soziale Netzwerke wuerden sonst das alte Bild
+  // weiterzeigen.
+  url: "/opengraph-image?v=3",
   width: 1200,
   height: 630,
-  alt: `${PRODUCT_NAME} – Die KI-Assistenz für Lehrkräfte`,
+  alt: `${PRODUCT_NAME} – Die KI-Assistenz für Grundschullehrkräfte`,
 };
 
 /** Titel der Startseite. Alle anderen Seiten: "Seitentitel – <Produktname>". */
-export const HOME_TITLE = `${PRODUCT_NAME} – Die KI-Assistenz für Lehrkräfte`;
+export const HOME_TITLE = `${PRODUCT_NAME} – Die KI-Assistenz für Grundschullehrkräfte`;
 
 export type RouteMeta = {
   path: string;
@@ -92,27 +95,27 @@ export const routes: RouteMeta[] = [
   {
     path: "/",
     title: "",
-    description: `${PRODUCT_NAME} ist die KI-Assistenz für Lehrkräfte – korrigiert Abgaben, dokumentiert Leistungen und organisiert den Schulalltag. DSGVO-konform, entwickelt in der EU.`,
+    description: `${PRODUCT_NAME} ist die KI-Assistenz für Grundschullehrkräfte – nimmt Beobachtungen aus dem Unterricht auf und macht daraus Zeugnisbemerkungen, Elternmails und passendes Unterrichtsmaterial. In Ihrer Sprache, nicht in KI-Sprache.`,
     priority: 1,
   },
   {
     path: "/produkt",
     title: "Produkt",
     description:
-      "Ein Arbeitsplatz für den ganzen Schulalltag: Korrektur-Assistenz, Leistungsdokumentation, Unterrichtsorganisation und Datenschutz by Design. Die KI schlägt vor, Sie entscheiden.",
+      "Vier Bereiche: Dokumentation, Kommunikation, Unterricht und Steuerung. Was Sie nebenbei im Unterricht erfassen, wird am Zeugnistag zur Grundlage des Textes – und bestimmt, welches Material zur Klasse passt.",
     priority: 0.9,
   },
   {
     path: "/schulen",
     title: "Für Schulen",
-    description: `${PRODUCT_NAME} nimmt dem Kollegium Korrektur- und Dokumentationslast ab und führt Aufgaben, Bewertung und Unterlagen in einer Umgebung zusammen. Datenschutzkonform von Tag eins.`,
+    description: `${PRODUCT_NAME} nimmt Ihrem Kollegium die Schreibarbeit am Zeugnistag und an den Elternabenden ab. Der Entlastungsbericht weist eingesparte Stunden je Monat aus – als PDF für Ihren Schulträger.`,
     priority: 0.9,
   },
   {
     path: "/datenschutz-sicherheit",
     title: "Datenschutz & Sicherheit",
     description:
-      "Verarbeitung nur, soweit die jeweilige Funktion es erfordert – auf Servern innerhalb der EU. Grundsätze, Auftragsverarbeitung und offene Punkte im Überblick.",
+      "Strikte Datentrennung im Kollegium, kein Eltern- oder Schülerportal, keine Weitergabe von Schülerdaten. Grundsätze, Auftragsverarbeitung und offene Punkte im Überblick.",
     priority: 0.8,
   },
   {

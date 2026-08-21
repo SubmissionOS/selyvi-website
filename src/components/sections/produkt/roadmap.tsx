@@ -9,21 +9,36 @@
  * Erst wenn ein Punkt tatsaechlich verfuegbar ist, wandert er nach oben zu den
  * Funktionsblöcken und verliert das Badge.
  */
+/**
+ * Die drei Punkte sind die echten offenen Baustellen aus
+ * docs/produktstand-2026-08.md – nicht drei plausible Roadmap-Themen.
+ *
+ * Der Status steht im Badge statt im Titel: „in Vorbereitung", „geplant" und
+ * „in Arbeit" sind drei verschiedene Entfernungen, und wer wartet, will genau
+ * diesen Unterschied lesen koennen.
+ *
+ * Der erste Punkt ist der wichtigste auf der ganzen Seite. Er nennt eine
+ * Einschraenkung, nach der eine Datenschutzbeauftragte ohnehin fragt – und
+ * beantwortet sie, bevor gefragt wird.
+ */
 const upcoming = [
   {
-    title: "Anbindung an offizielle Schulplattformen",
+    title: "Serverumzug nach Deutschland",
+    status: "In Vorbereitung",
     description:
-      "An welche Landes- und Schulplattformen angebunden wird und in welcher Reihenfolge, ist noch nicht entschieden.",
+      "Vor dem Betrieb mit echten Schülerdaten ziehen die Produktserver nach Deutschland um. Parallel entsteht der Auftragsverarbeitungsvertrag, der jeder Schule vorliegt.",
   },
   {
-    title: "Import aus bestehenden Systemen",
+    title: "Anbindung an Schulverwaltungssoftware",
+    status: "Geplant",
     description:
-      "Welche Formate und Vorsysteme sich übernehmen lassen, klärt das Team gerade.",
+      "Klassen und Kinder werden heute angelegt, nicht importiert. Eine Schnittstelle zu vorhandener Schulverwaltungssoftware gibt es noch nicht – für große Schulen ist das ein spürbarer Startaufwand.",
   },
   {
-    title: "Übergabe an Notenprogramme",
+    title: "Stilprofil per Upload",
+    status: "In Arbeit",
     description:
-      "Ob und in welcher Form Ergebnisse an vorhandene Notenprogramme übergeben werden, ist offen.",
+      "Den Schreibstil lernt die Anwendung heute aus den Texten, die Sie in ihr schreiben. Eigene Texte hochzuladen ist vorbereitet, die Oberfläche dafür fehlt noch.",
   },
 ];
 
@@ -50,7 +65,7 @@ export function Roadmap() {
               className="rounded-xl border border-gray-200 bg-surface p-6"
             >
               <span className="inline-flex items-center rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-800">
-                In Entwicklung
+                {item.status}
               </span>
 
               <h3 className="mt-5 text-base font-semibold text-ink">{item.title}</h3>

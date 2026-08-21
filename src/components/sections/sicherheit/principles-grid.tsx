@@ -1,6 +1,11 @@
-import { Ban, Cpu, KeyRound, Lock, Server, Trash2 } from "lucide-react";
+import { Ban, Cpu, FileText, KeyRound, Lock, Server, Trash2, UserX } from "lucide-react";
 
 import { PRODUCT_NAME } from "@/config/brand";
+import {
+  DATA_SEPARATION_NOTE,
+  PRODUCT_HOSTING_NOTE,
+  WEBSITE_HOSTING_NOTE,
+} from "@/config/product";
 
 /**
  * Sektion 2 – Prinzipien-Grid.
@@ -22,10 +27,18 @@ import { PRODUCT_NAME } from "@/config/brand";
 const principles = [
   {
     icon: Server,
-    title: "EU-Hosting",
+    title: "Hosting dieser Website",
     // Belegt: die Serverregion fra1 steht in vercel.json.
-    description:
-      "Verarbeitung und Speicherung in Rechenzentren innerhalb der EU, Serverstandort Frankfurt.",
+    description: WEBSITE_HOSTING_NOTE,
+  },
+  {
+    icon: FileText,
+    title: "Hosting der Anwendung",
+    // GETRENNT von der Karte darueber, und das ist der Punkt: Die Anwendung
+    // laeuft heute NICHT in Deutschland. Eine gemeinsame Karte „EU-Hosting"
+    // stand hier bis zum Abgleich mit dem Produktstand und gab damit fuer das
+    // Produkt eine Zusage, die es nicht gibt.
+    description: PRODUCT_HOSTING_NOTE,
   },
   {
     icon: Lock,
@@ -36,10 +49,10 @@ const principles = [
   },
   {
     icon: KeyRound,
-    title: "Rollen & Rechte",
-    // Ankuendigungsform: sagt zu, dass es hier stehen wird – nicht, was.
-    description:
-      "Welche Rolle innerhalb der Schule auf welche Daten zugreifen kann, entscheiden wir gerade. Das fertige Modell finden Sie an dieser Stelle.",
+    title: "Strikte Datentrennung",
+    // Ersetzt die fruehere Ankuendigungs-Karte „Rollen & Rechte". Das Modell
+    // steht – und zwar restriktiver, als eine Schule erwartet.
+    description: `${DATA_SEPARATION_NOTE} Eine Rolle mit Gesamtsicht auf die Daten mehrerer Lehrkräfte gibt es nicht.`,
   },
   {
     icon: Ban,
@@ -48,9 +61,14 @@ const principles = [
       "Schülerdaten werden nicht verkauft und nicht zu Werbezwecken verarbeitet.",
   },
   {
+    icon: UserX,
+    title: "Kein Eltern- oder Schülerzugang",
+    description: `${PRODUCT_NAME} ist ein Werkzeug für Lehrkräfte und Schulleitung. Konten für Eltern oder Kinder gibt es bewusst nicht.`,
+  },
+  {
     icon: Cpu,
     title: "KI-Verarbeitung",
-    description: `${PRODUCT_NAME} setzt KI-Modelle ein, um Korrekturvorschläge zu erzeugen. Die genauen Verarbeitungsdetails unserer KI-Komponenten veröffentlichen wir hier vor dem Start.`,
+    description: `${PRODUCT_NAME} setzt KI-Modelle ein, um aus den Beobachtungen einer Lehrkraft Texte und Unterrichtsmaterial zu erzeugen. Die genauen Verarbeitungsdetails unserer KI-Komponenten veröffentlichen wir hier vor dem Start.`,
   },
   {
     icon: Trash2,

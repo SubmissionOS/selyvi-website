@@ -1,31 +1,46 @@
 /**
- * Sektion 3 – Einführungs-Ablauf als Timeline.
+ * Sektion – Einführungs-Ablauf als Timeline.
  *
  * KEINE Zeitangaben. Weder Wochen noch Monate noch „typischerweise“ – der
- * Prozess wird gerade erst mit den ersten Pilotschulen gestaltet. Wo eine
- * Angabe erwartet wird, steht deshalb ausdruecklich, dass sie noch nicht
- * feststeht, statt eine plausible Zahl zu erfinden.
+ * Prozess wird gerade erst mit den ersten Pilotschulen gestaltet.
+ *
+ * Der Ablauf ist so konkret, wie er heute wirklich ist, und das heisst an drei
+ * Stellen: unbequemer, als eine Marketingseite ihn beschreiben wuerde.
+ *
+ *   - Schritt 2: Es gibt keine Selbstregistrierung. Konten legt ausschliesslich
+ *     die Schulleitung an.
+ *   - Schritt 3: Klassen und Kinder werden ANGELEGT, nicht importiert. Fuer
+ *     eine grosse Schule ist das ein spuerbarer Startaufwand. Wer das erst in
+ *     der Einfuehrungswoche erfaehrt, erlebt es als Wortbruch.
+ *   - Schritt 4: Es gibt keine Einfuehrungstour im Produkt. Den Einstieg
+ *     begleiten wir persoenlich – nicht als Serviceversprechen, sondern weil
+ *     es ohne nicht ginge.
  */
 const steps = [
   {
-    title: "Erstgespräch & Demo",
+    title: "Erstgespräch und Demo",
     description:
-      "Wir zeigen den aktuellen Stand der Anwendung und klären, was Ihre Schule braucht. Danach entscheiden Sie, ob eine Pilotphase sinnvoll ist.",
+      "Wir zeigen den aktuellen Stand an der echten Oberfläche und klären, was Ihre Schule braucht. Danach entscheiden Sie, ob eine Pilotphase sinnvoll ist.",
   },
   {
-    title: "Pilotphase mit ausgewählten Lehrkräften",
+    title: "Konten legt die Schulleitung an",
     description:
-      "Die Pilotpraxis ist aus der bisherigen Zusammenarbeit mit Lehrkräften gewachsen. Dauer und Umfang der Pilotphase stehen noch nicht fest – das Team gestaltet den Ablauf gerade gemeinsam mit den ersten Pilotschulen und ergänzt belastbare Angaben hier, sobald sie feststehen.",
+      "Eine Selbstregistrierung gibt es bewusst nicht: Zugänge für Ihr Kollegium richtet die Schulleitung ein und kann Passwörter jederzeit zurücksetzen. Ein Pilot beginnt damit immer mit einem Gespräch, nicht mit einem Anmeldelink.",
   },
   {
-    title: "Schulung & Onboarding",
+    title: "Gemeinsame Ersteinrichtung der Klassen",
     description:
-      "In welchem Format Schulungen stattfinden – vor Ort, online oder als Material zum Selbststudium – wird derzeit mit den Pilotschulen festgelegt.",
+      "Klassen und Kinder legen wir zusammen mit Ihnen an – angelegt, nicht importiert. Eine Schnittstelle zu Schulverwaltungssoftware gibt es noch nicht. Für eine große Schule ist das ein spürbarer Startaufwand, den wir von Anfang an einplanen statt ihn zu übergehen.",
+  },
+  {
+    title: "Persönliche Einweisung",
+    description:
+      "Eine Einführungstour im Produkt gibt es nicht. Den Einstieg begleiten wir deshalb persönlich, gemeinsam mit den Lehrkräften, die anfangen.",
   },
   {
     title: "Rollout im Kollegium",
     description:
-      "Die Einführung im gesamten Kollegium folgt, wenn Pilotphase und Schulung abgeschlossen sind.",
+      "Die Einführung im gesamten Kollegium folgt, wenn die Pilotphase abgeschlossen ist.",
   },
 ];
 

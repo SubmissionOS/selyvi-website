@@ -1,19 +1,35 @@
 import { Check } from "lucide-react";
 
+import { DATA_SEPARATION_NOTE } from "@/config/product";
+
 /**
- * Sektion 4 – Rollen-Block.
+ * Sektion – Rollen-Block.
  *
- * Links steht, was bereits auf /produkt beschrieben ist – nichts darueber
- * hinaus. Rechts steht bewusst KEINE Funktionsliste: Solange das Rollen- und
- * Rechtemodell nicht abgestimmt ist, waere jede Angabe dazu, was eine
- * Schulleitung sieht, geraten. Gerade bei Einsicht in Daten von Lehrkräften
- * und Schülerinnen und Schülern ist das die Aussage, die am wenigsten geraten
- * werden darf – auch nicht mit naheliegenden Vermutungen.
+ * Beide Spalten sind jetzt gefuellt. Die rechte stand lange leer, weil das
+ * Rollen- und Rechtemodell nicht abgestimmt war; inzwischen steht es (siehe
+ * docs/produktstand-2026-08.md, Bereich 2) und ist konkret genug, um es
+ * hinzuschreiben.
+ *
+ * DER SCHLUSSSATZ IST KEIN NACHKLAPP. Die Schulleitung sieht ausgewertete
+ * Kennzahlen, keine einzelnen Beobachtungen – und es gibt keine Rolle mit
+ * Gesamtsicht auf die Daten mehrerer Lehrkraefte. Genau diese Grenze ist die
+ * Frage, die in einer Personalratssitzung gestellt wird, und sie gehoert
+ * deshalb in dieselbe Sektion wie die Aufzaehlung, nicht in eine Fussnote.
  */
 const teacherCapabilities = [
-  "Abgaben einsammeln und Korrekturvorschläge prüfen",
-  "Leistungsstände pro Klasse und Fach festhalten",
-  "Aufgaben, Termine und Unterlagen einer Klasse verwalten",
+  "Beobachtungen im Unterricht festhalten – getippt oder diktiert",
+  "Zeugnisbemerkungen aus den eigenen Beobachtungen erzeugen",
+  "Elternmails schreiben und übersetzen lassen",
+  "Unterrichtsmaterial und Stundenentwürfe aus dem Fachkorpus erzeugen",
+  "Sitzplan, Klassenstundenplan und Dokumentenablage führen",
+];
+
+const leadershipCapabilities = [
+  "Entlastungsbericht: eingesparte Stunden und Automatisierungsquoten je Monat, als PDF",
+  "Nutzung im Kollegium als Verteilung – bewusst keine namentliche Rangliste",
+  "Schulentwicklung: Trends über abgeschlossene Monate",
+  "Aufmerksamkeit: Klassen mit Beobachtungsbedarf, gemessen am Schnitt der eigenen Schule",
+  "Klassen und Konten anlegen, Passwörter zurücksetzen",
 ];
 
 export function RolesSplit() {
@@ -45,21 +61,29 @@ export function RolesSplit() {
           </div>
 
           <div className="rounded-xl border border-gray-200 bg-surface-alt p-6 lg:p-8">
-            <h3 className="text-lg font-semibold text-ink">Was die Schulleitung sieht</h3>
+            <h3 className="text-lg font-semibold text-ink">
+              Was die Schulleitung sieht (Leitungsmodus)
+            </h3>
 
-            <p className="mt-6 text-gray-500">
-              Welche Übersichten und Verwaltungsfunktionen der Schulleitung zur Verfügung
-              stehen, ist noch nicht entschieden.
-            </p>
-
-            <p className="mt-4 text-gray-500">
-              Wir tragen hier bewusst nichts ein, solange das Rollen- und Rechtemodell
-              nicht abgestimmt ist – auch keine naheliegenden Vermutungen. Sobald es
-              steht, finden Sie an dieser Stelle, wer welche Daten einsehen kann und wer
-              nicht.
-            </p>
+            <ul className="mt-6 space-y-3">
+              {leadershipCapabilities.map((capability) => (
+                <li key={capability} className="flex items-start gap-3">
+                  <Check
+                    aria-hidden="true"
+                    className="mt-1 size-4 shrink-0 text-brand-600"
+                  />
+                  <span className="text-ink">{capability}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
+
+        <p className="mt-10 max-w-3xl border-l-2 border-gray-200 pl-6 text-gray-500">
+          Was die Schulleitung ausdrücklich nicht sieht: einzelne Beobachtungen und
+          Bewertungen. {DATA_SEPARATION_NOTE} Eine Rolle mit Gesamtsicht auf die Daten
+          mehrerer Lehrkräfte gibt es nicht – auch nicht für die Schulleitung.
+        </p>
       </div>
     </section>
   );

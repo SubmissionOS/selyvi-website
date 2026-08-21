@@ -23,10 +23,38 @@ npm run smoke <url>   # Smoke-Test gegen ein Deployment
 
 Verbindliche Arbeitsregeln stehen in [CLAUDE.md](CLAUDE.md).
 
+## Wahrheitsquelle für Produktaussagen
+
+**[docs/produktstand-2026-08.md](docs/produktstand-2026-08.md) ist die einzige
+Quelle für das, was die Website über das Produkt behauptet.** Sie ist aus dem
+Stand des Production-Branches erstellt, nicht aus Planungsdokumenten.
+
+Drei Regeln, die für jede Textänderung gelten:
+
+1. Nur als **Live** markierte Funktionen dürfen als verfügbar beschrieben
+   werden.
+2. **Rollout offen**, **Teilweise** und **Nicht gebaut** dürfen nicht als
+   verfügbar erscheinen – auch nicht abgeschwächt. Ihr Platz ist `roadmap.tsx`.
+3. Nichts aus dem Abschnitt „Was du im Gespräch nicht versprechen darfst" darf
+   als Zusage auf der Website stehen.
+
+Die Datei steht in `.prettierignore`, damit ihre Tabellen und Umbrüche so
+bleiben, wie sie abgestimmt wurden.
+
+Aussagen, die auf mehreren Seiten wortgleich stehen müssen, liegen in
+[src/config/product.ts](src/config/product.ts) – nach demselben Muster wie
+`PRACTICE_CLAIM` und `<DpaBand />`. Am wichtigsten dort:
+`PRODUCT_HOSTING_NOTE`. Der Serverstandort des Produkts ist **noch nicht**
+Deutschland; eine pauschale „Server in der EU“-Zusage für das Produkt darf
+nirgends zurückkommen. Getrennt davon steht `WEBSITE_HOSTING_NOTE` – das
+Hosting **dieser Website** in Frankfurt ist belegt (Region `fra1` in
+`vercel.json`) und gilt nur für die Website.
+
 ## Wo was geändert wird
 
 | Aufgabe                          | Datei                                                                         |
 | -------------------------------- | ----------------------------------------------------------------------------- |
+| Produktaussagen prüfen           | `docs/produktstand-2026-08.md`, geteilte Sätze in `src/config/product.ts`     |
 | Produktname / Wortmarke ersetzen | `src/config/brand.ts` (Text) bzw. `src/components/layout/wordmark.tsx` (Logo) |
 | CTA-Farbvariante umschalten      | `src/config/brand.ts` → `CTA_VARIANT`                                         |
 | Navigation & Footer-Links        | `src/config/site.ts`                                                          |
@@ -255,21 +283,28 @@ dieselbe Komponente wie auf der Startseite.
 ## Für Schulen (/schulen)
 
 Zielgruppe sind Schulleitung und Schulträger, nicht die einzelne Lehrkraft.
-Sieben Sektionen unter `src/components/sections/schulen/`.
+Acht Sektionen unter `src/components/sections/schulen/`.
 
 | #   | Sektion                       | Komponente                  |
 | --- | ----------------------------- | --------------------------- |
 | 1   | Intro (einzige H1, kein CTA)  | `school-intro.tsx`          |
 | 2   | Drei Organisations-Argumente  | `organisation-benefits.tsx` |
-| 3   | Einführungs-Ablauf (Timeline) | `rollout-timeline.tsx`      |
-| 4   | Rollen-Block                  | `roles-split.tsx`           |
-| 5   | AVV-Hinweis-Band              | `../dpa-band.tsx` (geteilt) |
-| 6   | FAQ Schulleitung              | `leadership-faq.tsx`        |
-| 7   | Abschluss-CTA (unverändert)   | `../final-cta.tsx`          |
+| 3   | Der Entlastungsbericht        | `relief-report.tsx`         |
+| 4   | Einführungs-Ablauf (Timeline) | `rollout-timeline.tsx`      |
+| 5   | Rollen-Block                  | `roles-split.tsx`           |
+| 6   | AVV-Hinweis-Band              | `../dpa-band.tsx` (geteilt) |
+| 7   | FAQ Schulleitung              | `leadership-faq.tsx`        |
+| 8   | Abschluss-CTA (unverändert)   | `../final-cta.tsx`          |
 
 Die Seite enthält bewusst keine Zeitangaben zum Einführungsprozess – weder
 Wochen noch Monate noch „typischerweise“. Der Ablauf wird gerade erst mit den
-ersten Pilotschulen gestaltet; die betroffenen Schritte sind markiert.
+ersten Pilotschulen gestaltet.
+
+Der Ablauf benennt seit dem Abgleich mit dem Produktstand drei Dinge, die eine
+Marketingseite normalerweise verschweigt: Es gibt keine Selbstregistrierung,
+Klassen werden **angelegt statt importiert**, und eine Einführungstour im
+Produkt existiert nicht. Alle drei fallen spätestens in der Einführungswoche
+auf – vorher gelesen sind sie eine Haltung, nachher ein Wortbruch.
 
 ## Datenschutz & Sicherheit (/datenschutz-sicherheit)
 
@@ -615,42 +650,53 @@ streicht die Zeile aus dieser Liste.
 
 ### Blockiert nichts, aber sollte kommen
 
-| #   | Punkt                                                                                                                        | Wo einzutragen                                                                                   | Zuständigkeit     |
-| --- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ----------------- |
-| 1   | Beschreibungssatz je Person (3×)                                                                                             | `description` in [team.ts](src/config/team.ts)                                                   | die Person selbst |
-| 2   | Fotos statt Initialen-Avatare                                                                                                | `team-grid.tsx`, Hinweistext dort mit anpassen                                                   | Team              |
-| 3   | Konkrete Zahlen zur Praxis-Aussage (X Lehrkräfte, Schularten)                                                                | `PRACTICE_CLAIM` in [brand.ts](src/config/brand.ts) **und** der Nebensatz in `why-it-exists.tsx` | Team              |
-| 4   | Praxis-Beispiele je Funktionsblock (welcher Lehrkraft-Hinweis prägte die Funktion?)                                          | `function-blocks.tsx`, als neue Mikrozeile                                                       | Team              |
-| 5   | Gestrichene Stichpunkte, sobald belegt: eigene Bewertungsmaßstäbe, gemeinsame Ablage im Kollegium, Rollen- und Rechtekonzept | `function-blocks.tsx`, `bullets`                                                                 | Produkt           |
-| 6   | Schulformen und Jahrgangsstufen zum Start (FAQ-Frage war entfernt)                                                           | `faq.tsx`, Frage wieder aufnehmen                                                                | Produkt           |
-| 7   | Dauer und Umfang der Pilotphase, Schulungsformat                                                                             | `rollout-timeline.tsx`                                                                           | Produkt           |
-| 8   | Einführungsaufwand für Schulen (FAQ-Frage war entfernt)                                                                      | `leadership-faq.tsx`, Frage wieder aufnehmen                                                     | Produkt           |
-| 9   | Unterlagen-Paket für Personalrat und Datenschutzbeauftragte                                                                  | `leadership-faq.tsx`, Antwort ergänzen                                                           | Produkt + Recht   |
-| 10  | Dediziertes Postfach für Datenschutzanfragen                                                                                 | `for-dpos.tsx`, danach `legal.ts`                                                                | Betrieb           |
+| #   | Punkt                                                                                                                   | Wo einzutragen                                                                                   | Zuständigkeit     |
+| --- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ----------------- |
+| 1   | Beschreibungssatz je Person (3×)                                                                                        | `description` in [team.ts](src/config/team.ts)                                                   | die Person selbst |
+| 2   | Fotos statt Initialen-Avatare                                                                                           | `team-grid.tsx`, Hinweistext dort mit anpassen                                                   | Team              |
+| 3   | Konkrete Zahlen zur Praxis-Aussage (X Lehrkräfte, Schularten)                                                           | `PRACTICE_CLAIM` in [brand.ts](src/config/brand.ts) **und** der Nebensatz in `why-it-exists.tsx` | Team              |
+| 4   | Praxis-Beispiele je Funktionsblock (welcher Lehrkraft-Hinweis prägte die Funktion?)                                     | `function-blocks.tsx`, als neue Mikrozeile                                                       | Team              |
+| 5   | Dauer und Umfang der Pilotphase, Schulungsformat                                                                        | `rollout-timeline.tsx`                                                                           | Produkt           |
+| 6   | Einführungsaufwand als FAQ-Frage aufnehmen (der Ablauf selbst steht seit 21.08.2026 in `rollout-timeline.tsx`)          | `leadership-faq.tsx`                                                                             | Produkt           |
+| 7   | Unterlagen-Paket für Personalrat und Datenschutzbeauftragte                                                             | `leadership-faq.tsx`, Antwort ergänzen                                                           | Produkt + Recht   |
+| 8   | Dediziertes Postfach für Datenschutzanfragen                                                                            | `for-dpos.tsx`, danach `legal.ts`                                                                | Betrieb           |
+| 9   | Roadmap-Punkte nach Fertigstellung nach oben verschieben: Stilprofil per Upload, Übernahme von Original-Arbeitsblättern | aus `roadmap.tsx` in `function-blocks.tsx`                                                       | Produkt           |
+| 10  | Mehrkanalige, spielerischere Aufgabenformate (Rückmeldung einer Testerin: Material wirkt „zu trocken“)                  | erst Produkt, dann `function-blocks.tsx`                                                         | Produkt           |
 
 ### Rechtlich / vertraglich
 
-| #   | Punkt                                                                                               | Wo einzutragen                                                          | Zuständigkeit   |
-| --- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | --------------- |
-| 11  | Rollen- und Rechtemodell festlegen                                                                  | `principles-grid.tsx`, `security-faq.tsx`, `roles-split.tsx`, `faq.tsx` | Produkt + Recht |
-| 12  | Verschlüsselung ruhender Daten (Umfang bestätigen)                                                  | `principles-grid.tsx`, Karte „Verschlüsselung"                          | Technik         |
-| 13  | KI-Verarbeitung: Modell-Anbieter, Verarbeitungsort, Zusicherung zur Nicht-Nutzung für Training      | `principles-grid.tsx`, `security-faq.tsx`                               | Vertrag + Recht |
-| 14  | Aufbewahrungs- und Löschfristen                                                                     | `principles-grid.tsx`, `security-faq.tsx`, `/datenschutz`               | Recht           |
-| 15  | Vollständige Subprozessoren-Liste (mind. Hosting, E-Mail-Versand, KI-Anbieter)                      | `subprocessors-table.tsx`, Tabelle wieder aufbauen                      | Vertrag + Recht |
-| 16  | AVV-Entwurf zum Bereitstellen                                                                       | `dpa-band.tsx`, Satz konkreter fassen                                   | Recht           |
-| 17  | Betreiberangabe: nach Gründung auf die Selyvi-Betreibergesellschaft umstellen und anwaltlich prüfen | `legal.ts` (dort als `OPERATOR_NOTE` im Quelltext)                      | Recht           |
-| 18  | Datenschutzerklärung anwaltlich prüfen, danach `PRIVACY_APPROVED = true`                            | [legal.ts](src/config/legal.ts)                                         | Anwalt          |
-| 19  | AGB- und Barrierefreiheitsseite: klären, ob nötig                                                   | neue Routen, danach Footer                                              | Recht           |
+| #   | Punkt                                                                                                                                                                                                        | Wo einzutragen                                            | Zuständigkeit   |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------- | --------------- |
+| 11  | Verschlüsselung ruhender Daten (Umfang bestätigen)                                                                                                                                                           | `principles-grid.tsx`, Karte „Verschlüsselung"            | Technik         |
+| 12  | KI-Verarbeitung: Modell-Anbieter, Verarbeitungsort, Zusicherung zur Nicht-Nutzung für Training                                                                                                               | `principles-grid.tsx`, `security-faq.tsx`                 | Vertrag + Recht |
+| 13  | Aufbewahrungs- und Löschfristen                                                                                                                                                                              | `principles-grid.tsx`, `security-faq.tsx`, `/datenschutz` | Recht           |
+| 14  | Vollständige Subprozessoren-Liste (mind. Hosting, E-Mail-Versand, KI-Anbieter)                                                                                                                               | `subprocessors-table.tsx`, Tabelle wieder aufbauen        | Vertrag + Recht |
+| 15  | AVV-Entwurf zum Bereitstellen                                                                                                                                                                                | `dpa-band.tsx`, Satz konkreter fassen                     | Recht           |
+| 16  | Betreiberangabe: nach Gründung auf die Selyvi-Betreibergesellschaft umstellen und anwaltlich prüfen                                                                                                          | `legal.ts` (dort als `OPERATOR_NOTE` im Quelltext)        | Recht           |
+| 17  | Datenschutzerklärung anwaltlich prüfen, danach `PRIVACY_APPROVED = true`                                                                                                                                     | [legal.ts](src/config/legal.ts)                           | Anwalt          |
+| 18  | AGB- und Barrierefreiheitsseite: klären, ob nötig                                                                                                                                                            | neue Routen, danach Footer                                | Recht           |
+| 19  | Lizenzlage der Lehrpläne klären. Die Lehrpläne aller 16 Bundesländer liegen erhoben vor, sind aber aus Lizenzgründen **nicht angebunden** – bis das geklärt ist, darf die Abdeckung nirgends beworben werden | Fachkorpus, danach `function-blocks.tsx`                  | Produkt + Recht |
 
 ### Technisch
 
-| #   | Punkt                                                                 | Wo                                         | Zuständigkeit |
-| --- | --------------------------------------------------------------------- | ------------------------------------------ | ------------- |
-| 20  | Domain kaufen, danach `SITE_URL` und `DEMO_MAIL_FROM` setzen          | siehe „Launch-Restschritte"                | Betrieb       |
-| 21  | Content-Security-Policy                                               | `next.config.ts`                           | Technik       |
-| 22  | Fehler-Monitoring statt Konsolen-Log                                  | `error.tsx`                                | Technik       |
-| 23  | Routenweise Code-Aufteilung (173 kB auf jeder Route)                  | siehe [AUDIT.md](AUDIT.md)                 | Technik       |
-| 24  | Kontaktadresse auf `kontakt@selyvi.de` umstellen (Gmail ist Übergang) | `email` in [legal.ts](src/config/legal.ts) | Betrieb       |
+| #   | Punkt                                                                                                                                   | Wo                                                 | Zuständigkeit   |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | --------------- |
+| 20  | Domain kaufen, danach `SITE_URL` und `DEMO_MAIL_FROM` setzen                                                                            | siehe „Launch-Restschritte"                        | Betrieb         |
+| 21  | Content-Security-Policy                                                                                                                 | `next.config.ts`                                   | Technik         |
+| 22  | Fehler-Monitoring statt Konsolen-Log                                                                                                    | `error.tsx`                                        | Technik         |
+| 23  | Routenweise Code-Aufteilung (173 kB auf jeder Route)                                                                                    | siehe [AUDIT.md](AUDIT.md)                         | Technik         |
+| 24  | Kontaktadresse auf `kontakt@selyvi.de` umstellen (Gmail ist Übergang)                                                                   | `email` in [legal.ts](src/config/legal.ts)         | Betrieb         |
+| 25  | Serverumzug nach Deutschland und AVV abschließen, danach `PRODUCT_HOSTING_NOTE` neu formulieren und die Roadmap-Karte entfernen         | [product.ts](src/config/product.ts), `roadmap.tsx` | Technik + Recht |
+| 26  | Produkt-Umbenennung Mira → Selyvi (Oberfläche, Login, PDF-Export des Entlastungsberichts, Domains, CSV-Dateiname der CRM-Schnittstelle) | Produkt, nicht diese Website                       | Produkt         |
+
+Zu Punkt 25: Bis der Umzug durch ist, ist der Serverstandort die erste Angabe,
+nach der eine Datenschutzbeauftragte fragt. Die Website sagt dazu heute an vier
+Stellen dasselbe – alle vier speisen sich aus `PRODUCT_HOSTING_NOTE`.
+
+Zu Punkt 26: Betrifft nicht diese Website, aber jedes Verkaufsgespräch. Die
+Website spricht durchgehend von Selyvi; wer eine Demo sieht, liest dort
+weiterhin „Mira". Das gehört vor dem Termin angesprochen, nicht währenddessen
+erklärt.
 
 Zu Punkt 24: Eine Adresse auf der eigenen Domain wirkt auf Schulleitungen
 seriöser als eine Gmail-Adresse, und sie kommt mit dem Domainkauf ohnehin. Es
@@ -662,13 +708,20 @@ Footer und die Fallback-Zeile des Demo-Formulars gemeinsam.
 Diese Formulierungen sind **Ankündigungen, keine Platzhalter** – sie sagen wahr,
 dass etwas noch nicht entschieden ist, und gehören genau so auf die Seite:
 
-- „In Arbeit"-Karten auf /produkt („ist noch nicht entschieden", „klärt das Team
-  gerade", „ist offen")
-- Rollen-Block auf /schulen: kündigt an, was dort später stehen wird
-- Prinzipien-Karten „Rollen & Rechte", „KI-Verarbeitung", „Löschkonzept"
-- Einführungs-Schritte auf /schulen („gestalten wir gerade mit Pilotschulen")
+- „In Arbeit"-Karten auf /produkt: Serverumzug („In Vorbereitung"), Anbindung an
+  Schulverwaltungssoftware („Geplant"), Stilprofil per Upload („In Arbeit")
+- Prinzipien-Karte „Hosting der Anwendung": nennt den Umzug als Vorhaben, nicht
+  als erledigt
+- Prinzipien-Karten „KI-Verarbeitung" und „Löschkonzept"
+- Einführungs-Schritte auf /schulen, die eine Grenze benennen: keine
+  Selbstregistrierung, Anlage statt Import, keine Einführungstour im Produkt
 - Die Zeile „Diese Erklärung befindet sich in laufender juristischer Prüfung."
   auf /datenschutz
+
+Der Rollen-Block auf /schulen und die Prinzipien-Karte „Rollen & Rechte" standen
+hier bis zum 21.08.2026 ebenfalls als Ankündigung. Beide sind jetzt beantwortet:
+Jede Lehrkraft sieht ausschließlich ihre eigenen Daten, eine Rolle mit
+Gesamtsicht gibt es nicht.
 
 Ebenso bleibt `PRIVACY_APPROVED = false`: Das ist kein sichtbarer Platzhalter,
 sondern Schutz – `/datenschutz` trägt dadurch weiterhin `noindex` und fehlt in

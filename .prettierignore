@@ -13,3 +13,7 @@ CLAUDE.md
 # Wird von `next build` automatisch neu geschrieben – Prettier und Next
 # wuerden sich sonst gegenseitig ueberschreiben.
 tsconfig.json
+
+# Wahrheitsquelle fuer Produktaussagen: wortgleich so gepflegt, wie sie
+# abgestimmt wurde. Prettier wuerde Tabellen und Zeilenumbrueche umformatieren.
+docs/produktstand-2026-08.md

@@ -1,6 +1,7 @@
 import { Check } from "lucide-react";
 
 import { PRACTICE_CLAIM_SHORT } from "@/config/brand";
+import { AUDIENCE_SHORT } from "@/config/product";
 
 /**
  * Sektion 2 – Trust-Zeile.
@@ -9,11 +10,23 @@ import { PRACTICE_CLAIM_SHORT } from "@/config/brand";
  * Screenreader benannt, ohne eine ueberfluessige Ebene in die
  * Ueberschriften-Hierarchie einzuziehen.
  */
+/**
+ * Drei Merkmale: Passung, Herkunft, Datenschutz.
+ *
+ * „Server in der EU" stand hier bis zum Abgleich mit dem Produktstand. Die
+ * Zusage ist fuer das Produkt nicht gedeckt (siehe PRODUCT_HOSTING_NOTE) und
+ * war in einer Trust-Zeile besonders heikel: eine ungedeckte Zusage genau
+ * dort, wo Leserinnen und Leser sie ungeprueft mitnehmen.
+ *
+ * An ihrer Stelle steht die Datenschutz-Aussage, die heute traegt – „keine
+ * Weitergabe" ist durch den Produktstand gedeckt und ohne Fussnote wahr.
+ */
 const trustPoints = [
-  "DSGVO-konform",
-  "Server in der EU",
+  // Zielgruppe – Quelle ist src/config/product.ts.
+  AUDIENCE_SHORT,
   // Kurzform der kanonischen Praxis-Aussage – Quelle ist src/config/brand.ts.
   PRACTICE_CLAIM_SHORT,
+  "Keine Weitergabe von Schülerdaten",
 ];
 
 export function TrustBar() {

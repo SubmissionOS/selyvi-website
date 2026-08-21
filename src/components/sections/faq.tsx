@@ -1,4 +1,5 @@
 import { PRODUCT_NAME } from "@/config/brand";
+import { DATA_SEPARATION_NOTE } from "@/config/product";
 import { FaqAccordion, type FaqItem } from "@/components/faq-accordion";
 
 /**
@@ -11,12 +12,24 @@ import { FaqAccordion, type FaqItem } from "@/components/faq-accordion";
 const faqItems: FaqItem[] = [
   {
     question: `Was ist ${PRODUCT_NAME}?`,
-    answer: `${PRODUCT_NAME} ist eine KI-Assistenz für Lehrkräfte. Sie unterstützt beim Korrigieren von Abgaben, hält Leistungsstände fest und bündelt die Organisation einer Klasse an einem Ort.`,
+    answer: `${PRODUCT_NAME} ist die KI-Assistenz für Grundschullehrkräfte. Sie nimmt Beobachtungen aus dem Unterricht auf – getippt oder diktiert – und macht daraus Zeugnisbemerkungen, Elternmails und Unterrichtsmaterial.`,
   },
   {
+    // Diese Frage war eine Zeit lang entfernt, weil die Antwort nicht
+    // feststand. Sie steht fest: Grundschule, Klassen 1–4.
+    question: "Für welche Schulformen ist es gedacht?",
+    answer: `${PRODUCT_NAME} ist für die Grundschule gebaut, Klassen 1–4 – Kompetenzen, Fächer und Zeugnistexte sind darauf zugeschnitten.`,
+  },
+  {
+    // Fruehere Antwort: „Über das Rollen- und Rechtekonzept entscheiden wir
+    // gerade." Das Modell steht – und zwar restriktiver, als Interessierte
+    // erwarten. Genau deshalb gehoert es hierher und nicht ins Kleingedruckte.
     question: "Wer sieht die Daten meiner Klasse?",
-    answer:
-      "Über das Rollen- und Rechtekonzept entscheiden wir gerade. Sobald es steht, finden Sie hier, welche Rolle innerhalb der Schule auf welche Daten zugreifen kann.",
+    answer: `${DATA_SEPARATION_NOTE} Eine Rolle mit Gesamtsicht auf die Daten mehrerer Lehrkräfte gibt es nicht. Die Schulleitung sieht ausgewertete Kennzahlen zur Nutzung – keine einzelnen Beobachtungen.`,
+  },
+  {
+    question: "Brauchen Eltern oder Kinder einen Zugang?",
+    answer: `Nein. ${PRODUCT_NAME} ist ein reines Werkzeug für Lehrkräfte und Schulleitung – es gibt bewusst kein Eltern- oder Schülerportal.`,
   },
   {
     question: "Was kostet es?",
@@ -24,8 +37,7 @@ const faqItems: FaqItem[] = [
   },
   {
     question: "Ersetzt die KI meine Bewertung?",
-    answer:
-      "Nein. Jeder Vorschlag ist ein Vorschlag – jede Entscheidung bleibt bei der Lehrkraft.",
+    answer: `Nein. Jeder Vorschlag ist ein Vorschlag – jede Entscheidung bleibt bei der Lehrkraft. Kompetenzeinschätzungen leitet ${PRODUCT_NAME} bewusst nicht automatisch aus Noten ab: Aus einer Deutschnote folgt nicht, ob ein Kind flüssig liest.`,
   },
   {
     question: "Wie starte ich?",

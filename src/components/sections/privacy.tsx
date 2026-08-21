@@ -1,6 +1,12 @@
 import Link from "next/link";
-import { FileText, Lock, ScanLine, Server } from "lucide-react";
+import { Ban, FileText, Lock, ScanLine, Server, UserX } from "lucide-react";
 
+import { PRODUCT_NAME } from "@/config/brand";
+import {
+  DATA_SEPARATION_NOTE,
+  PRODUCT_HOSTING_NOTE,
+  WEBSITE_HOSTING_NOTE,
+} from "@/config/product";
 import { Button } from "@/components/ui/button";
 
 /**
@@ -10,30 +16,47 @@ import { Button } from "@/components/ui/button";
  * Fokus-Ring aus globals.css auf brand-100 um, damit er auf der dunklen
  * Flaeche sichtbar bleibt.
  *
- * ACHTUNG – die vier Erlaeuterungssaetze sind rechtliche Zusagen. Sie sind
- * bewusst knapp und ohne Zusatzversprechen formuliert und muessen vor dem
- * Livegang von Rechtsseite freigegeben werden.
+ * ZWEI GETRENNTE HOSTING-AUSSAGEN, und das ist der Kern dieser Sektion:
+ * Die erste Karte spricht ueber DIESE WEBSITE (Frankfurt – belegt), die zweite
+ * ueber DIE ANWENDUNG (Umzug nach Deutschland und AVV – in Vorbereitung). Bis
+ * zum Abgleich mit docs/produktstand-2026-08.md stand hier eine einzige Karte
+ * „EU-Hosting", die beides vermischte und damit fuer das Produkt eine Zusage
+ * gab, die es nicht gibt: Gehostet wird das Produkt heute bei Railway und
+ * Vercel.
+ *
+ * Die Karten drei bis sechs sind Tatsachen aus dem ausgelieferten Produkt und
+ * brauchen keine Einschraenkung.
  */
 const facts = [
   {
     icon: Server,
-    title: "EU-Hosting",
-    description: "Verarbeitung und Speicherung in Rechenzentren innerhalb der EU.",
+    title: "Diese Website",
+    description: WEBSITE_HOSTING_NOTE,
   },
   {
     icon: FileText,
-    title: "Auftragsverarbeitungsvertrag (AVV)",
-    description: "Nach Art. 28 DSGVO, geschlossen vor dem Einsatz an der Schule.",
+    title: "Die Anwendung",
+    description: PRODUCT_HOSTING_NOTE,
   },
   {
     icon: Lock,
-    title: "Keine Weitergabe von Schülerdaten",
-    description: "Keine Weitergabe an Dritte, keine Nutzung für Werbezwecke.",
+    title: "Strikte Datentrennung",
+    description: DATA_SEPARATION_NOTE,
   },
   {
     icon: ScanLine,
     title: "Datensparsamkeit als Prinzip",
     description: "Erhoben wird, was die jeweilige Funktion benötigt – nicht mehr.",
+  },
+  {
+    icon: Ban,
+    title: "Keine Weitergabe von Schülerdaten",
+    description: "Keine Weitergabe an Dritte, keine Nutzung für Werbezwecke.",
+  },
+  {
+    icon: UserX,
+    title: "Kein Eltern- oder Schülerzugang",
+    description: `${PRODUCT_NAME} ist ein Werkzeug für Lehrkräfte und Schulleitung. Ein Portal für Eltern oder Kinder gibt es bewusst nicht.`,
   },
 ];
 

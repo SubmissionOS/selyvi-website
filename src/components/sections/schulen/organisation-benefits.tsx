@@ -17,21 +17,21 @@ const benefits = [
     icon: Users,
     title: "Entlastung, die ankommt",
     description:
-      "Korrektur- und Dokumentationsaufwand sinken dort, wo er im Kollegium tatsächlich anfällt: beim Durchsehen von Abgaben und beim Festhalten von Leistungsständen.",
+      "Der Aufwand sinkt dort, wo er im Kollegium tatsächlich anfällt: bei Zeugnisbemerkungen, bei Elternmails und beim Zusammensuchen von Material.",
     // Beleg-Satz: dieselbe kanonische Aussage wie auf Startseite und /produkt.
     evidence: PRACTICE_CLAIM,
   },
   {
     icon: Layers,
-    title: "Einheitlich statt zersplittert",
+    title: "Belegbar statt behauptet",
     description:
-      "Aufgaben, Bewertung und Unterlagen liegen in einer Umgebung. Das senkt die Zahl der Werkzeuge, die Ihre Schule einführen, schulen und verantworten muss.",
+      "Der Entlastungsbericht weist eingesparte Stunden und Automatisierungsquoten je Monat aus – als PDF, das Sie weiterreichen können.",
   },
   {
     icon: ShieldCheck,
     title: "Datenschutz, den Sie vertreten können",
     description:
-      "Verarbeitung und Speicherung innerhalb der EU, Auftragsverarbeitungsvertrag nach Art. 28 DSGVO, klar zugeordnete Verantwortlichkeiten.",
+      "Strikte Datentrennung im Kollegium, kein Eltern- oder Schülerportal, keine Weitergabe von Schülerdaten. Was noch aussteht, benennen wir offen.",
     action: { label: "Sicherheit & Datenschutz", href: "/datenschutz-sicherheit" },
   },
 ];

@@ -51,9 +51,9 @@ export function WhyItExists() {
             Angefangen hat das hier nicht mit einem Businessplan, sondern am Küchentisch.
             Im engsten Umfeld unseres Teams ist eine angehende Grundschullehrerin – und
             wir haben aus nächster Nähe gesehen, wie viele Abende nicht in Unterricht
-            fließen, sondern in Korrekturstapel, Dokumentation und Verwaltung. Also haben
-            wir angefangen, ihr Werkzeuge zu bauen. Erst kleine, dann bessere. Irgendwann
-            war klar: Das Problem hat nicht eine Person – das Problem hat ein ganzes
+            fließen, sondern in Dokumentation, Zeugnistexte und Elternpost. Also haben wir
+            angefangen, ihr Werkzeuge zu bauen. Erst kleine, dann bessere. Irgendwann war
+            klar: Das Problem hat nicht eine Person – das Problem hat ein ganzes
             Berufsfeld.
           </p>
 

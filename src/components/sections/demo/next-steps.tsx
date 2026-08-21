@@ -27,8 +27,11 @@ const steps = [
 ];
 
 const privacyPoints = [
-  "Server in der EU",
-  "Auftragsverarbeitungsvertrag nach Art. 28 DSGVO",
+  // „Server in der EU" stand hier bis zum Abgleich mit dem Produktstand und war
+  // fuer das Produkt nicht gedeckt. An dieser Stelle – kurz vor dem Absenden
+  // eines Formulars – waere eine ungedeckte Zusage besonders unglücklich.
+  "Strikte Datentrennung: jede Lehrkraft sieht nur ihre eigenen Daten",
+  "Kein Eltern- oder Schülerportal",
   "Keine Weitergabe von Schülerdaten",
 ];
 

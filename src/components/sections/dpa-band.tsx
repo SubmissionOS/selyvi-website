@@ -1,3 +1,5 @@
+import { PRODUCT_HOSTING_NOTE } from "@/config/product";
+
 /**
  * Hinweis zur Auftragsverarbeitung – GETEILTE Sektion.
  *
@@ -12,6 +14,11 @@
  * ohne existierendes Dokument waere genau die Art von Aussage, die im
  * Erstgespraech auffliegt. Sobald der Entwurf vorliegt, kann der Satz konkreter
  * werden – siehe README, NACH-LAUNCH-LISTE.
+ *
+ * Der erste Absatz kommt aus PRODUCT_HOSTING_NOTE und ist damit wortgleich mit
+ * dem DSGVO-Block der Startseite und dem Prinzipien-Grid: AVV und Serverumzug
+ * sind dasselbe Vorhaben und duerfen nicht an drei Stellen drei Zeitpunkte
+ * nennen.
  */
 export function DpaBand() {
   return (
@@ -24,6 +31,8 @@ export function DpaBand() {
           <h2 id="avv-titel" className="text-2xl font-semibold tracking-tight text-ink">
             Auftragsverarbeitung nach Art. 28 DSGVO
           </h2>
+
+          <p className="mt-4 text-lg text-gray-500">{PRODUCT_HOSTING_NOTE}</p>
 
           <p className="mt-4 text-lg text-gray-500">
             Alle Fragen dazu klären wir transparent im Erstgespräch.

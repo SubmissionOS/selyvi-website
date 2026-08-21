@@ -1,34 +1,38 @@
-import { CalendarDays, ClipboardList, PenLine, ShieldCheck } from "lucide-react";
+import { BarChart3, BookOpen, ClipboardList, Mail } from "lucide-react";
 
-import { PRODUCT_NAME } from "@/config/brand";
+import { TRANSLATION_LANGUAGE_COUNT } from "@/config/product";
 
 /**
  * Sektion 5 – Kernfunktionen.
  * Je Karte genau ein Nutzensatz. Keine Adjektivketten, keine Superlative.
+ *
+ * Die vier Karten sind die vier Bereiche, in die docs/produktstand-2026-08.md
+ * den Funktionsumfang gliedert – nicht vier frei gewaehlte Verkaufsargumente.
+ * Wer die Reihenfolge aendert, sollte sie dort mitaendern.
  */
 const features = [
   {
-    icon: PenLine,
-    title: "Korrektur-Assistenz",
-    description: `Sie laden Abgaben hoch, ${PRODUCT_NAME} schlägt Korrekturen und Kommentare vor – Sie bestätigen oder ändern sie.`,
-  },
-  {
     icon: ClipboardList,
-    title: "Leistungsdokumentation",
+    title: "Dokumentation",
     description:
-      "Bewertungen und Beobachtungen werden beim Arbeiten erfasst und bleiben über das Schuljahr nachvollziehbar.",
+      "Beobachtungen entstehen im Unterricht – getippt oder diktiert – und ergeben je Kind eine Timeline mit Kompetenzen und Förderhinweisen.",
   },
   {
-    icon: CalendarDays,
-    title: "Unterrichtsorganisation",
-    description:
-      "Aufgaben, Fristen und Materialien einer Klasse liegen an einem Ort statt in Mail, Cloud und Zettelwirtschaft.",
+    icon: Mail,
+    title: "Kommunikation",
+    description: `Zeugnisbemerkungen und Elternmails entstehen aus den eigenen Beobachtungen, im gelernten Schreibstil – Elternmails auf Wunsch in ${TRANSLATION_LANGUAGE_COUNT} Sprachen.`,
   },
   {
-    icon: ShieldCheck,
-    title: "Datenschutz by Design",
+    icon: BookOpen,
+    title: "Unterricht",
     description:
-      "Verarbeitet wird nur, was die jeweilige Funktion benötigt – auf Servern innerhalb der EU.",
+      "Material und Stundenentwürfe entstehen aus einem durchsuchbaren Fachkorpus. Jedes erzeugte Material weist seine Quellen aus.",
+  },
+  {
+    icon: BarChart3,
+    title: "Steuerung",
+    description:
+      "Die Schulleitung sieht im Entlastungsbericht, wie viele Stunden das dem Kollegium zurückgegeben hat – Monat für Monat, als PDF.",
   },
 ];
 

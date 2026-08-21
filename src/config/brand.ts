@@ -31,9 +31,16 @@ export const PRODUCT_NAME = "Selyvi";
  * als Nebensatz im Fliesstext. Dort laesst sie sich nicht einsetzen, ohne den
  * Satzbau zu zerstoeren – dieser Absatz muss bei einer Aenderung von Hand
  * nachgezogen werden.
+ *
+ * KEIN SCHULARTEN-ZUSATZ MEHR: Bis zum Abgleich mit dem Produktstand endete
+ * dieser Satz auf „von der Grundschule bis zum Abitur". Das stimmt fuer die
+ * ENTSTEHUNG – so ist das Produkt gewachsen – liest sich an dieser Stelle aber
+ * als Aussage ueber die Eignung, und Selyvi ist fuer die Grundschule gebaut,
+ * Klassen 1–4. Der Zusatz steht deshalb nur noch dort, wo er die Entstehung
+ * erzaehlt: im Fliesstext auf /ueber-uns.
  */
 export const PRACTICE_CLAIM =
-  "Entwickelt in Zusammenarbeit mit Lehrkräften aus ganz Baden-Württemberg – von der Grundschule bis zum Abitur.";
+  "Entwickelt in Zusammenarbeit mit Lehrkräften aus ganz Baden-Württemberg.";
 
 /**
  * Kurzform fuer die Trust-Zeile, wo nur eine Zeile Platz ist.
@@ -43,7 +50,7 @@ export const PRACTICE_CLAIM =
  * die Kurzform direkt daneben und vergisst sie nicht.
  */
 export const PRACTICE_CLAIM_SHORT =
-  "Mit Lehrkräften aus ganz BW entwickelt – Grundschule bis Abitur";
+  "Mit Lehrkräften aus ganz Baden-Württemberg entwickelt";
 
 /**
  * CTA-Farbvariante.

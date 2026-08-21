@@ -25,10 +25,16 @@ export function Hero() {
             <span className="block">Mehr Unterricht.</span>
           </h1>
 
+          {/* Subline nach docs/produktstand-2026-08.md: benennt die drei
+              Ergebnisse, die das Produkt heute wirklich erzeugt. Der frueher hier
+              stehende Satz („korrigiert Abgaben … entwickelt in der EU") sagte
+              zwei Dinge zu, die es so nicht gibt – eine Korrekturfunktion und
+              EU-Hosting des Produkts. */}
           <p className="mt-6 max-w-xl text-lg text-gray-500">
-            {PRODUCT_NAME} ist die KI-Assistenz für Lehrkräfte – korrigiert Abgaben,
-            dokumentiert Leistungen und organisiert den Schulalltag. DSGVO-konform,
-            entwickelt in der EU.
+            {PRODUCT_NAME} ist die KI-Assistenz für Grundschullehrkräfte – nimmt
+            Beobachtungen aus dem Unterricht auf und macht daraus Zeugnisbemerkungen,
+            Elternmails und passendes Unterrichtsmaterial. In Ihrer Sprache, nicht in
+            KI-Sprache.
           </p>
 
           {/* Herkunftszeile. Nennt bewusst keinen Namen – die Person bleibt

@@ -1,24 +1,32 @@
 import { ArrowRight } from "lucide-react";
 
 import { PRODUCT_NAME } from "@/config/brand";
+import { TRANSLATION_LANGUAGE_COUNT } from "@/config/product";
 
 /**
  * Sektion 3 – Problem → Lösung.
  * Drei Gegenüberstellungen, links der Schmerz, rechts die Antwort.
+ *
+ * Die drei Schmerzen sind die aus dem Grundschulalltag, nicht die generischen
+ * einer weiterfuehrenden Schule: Der Zeugnistag, die Elternmail am Abend und
+ * das Material, das nicht zur eigenen Klasse passt. Jede Antwort rechts
+ * beschreibt eine Funktion, die laut docs/produktstand-2026-08.md live ist.
  */
 const pairs = [
   {
-    problem: "Korrekturstapel fressen das Wochenende",
+    problem:
+      "Am Zeugnistag fehlt genau die Doku, die man das ganze Jahr nebenbei gemacht hat",
     solution:
-      "Korrekturvorschläge in Minuten statt Stunden – die Entscheidung bleibt bei Ihnen.",
+      "Beobachtungen aus dem Unterricht – getippt oder diktiert – werden am Zeugnistag zur Grundlage des Textes.",
   },
   {
-    problem: "Dokumentationspflichten wachsen jedes Jahr",
-    solution: "Leistungsstände und Notizen entstehen nebenbei, sauber abgelegt.",
+    problem: "Elternmails kosten Abende, in mehreren Sprachen erst recht",
+    solution: `Die Mail entsteht in Ihrem Stil und wird auf Wunsch übersetzt – in ${TRANSLATION_LANGUAGE_COUNT} Sprachen.`,
   },
   {
-    problem: "Zehn Tools, kein System",
-    solution: "Ein Ort für Aufgaben, Bewertungen und Unterlagen.",
+    problem: "Material von der Stange passt nie zur eigenen Klasse",
+    solution:
+      "Material entsteht aus dem, was Sie über Ihre Klasse dokumentiert haben – mit ausgewiesenen Quellen.",
   },
 ];
 
