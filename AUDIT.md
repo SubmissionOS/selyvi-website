@@ -435,6 +435,85 @@ Je zwei Aufnahmen im Abstand von 6,4 Sekunden, hashgleich:
 Gegenprobe ohne reduced motion: beide Bereiche liefern zu verschiedenen
 Zeitpunkten verschiedene Hashes.
 
+## 10. Vier Szenen auf /produkt (22.08.2026)
+
+Die vier statischen Funktionsblock-Skelette sind durch Szenen ersetzt
+(`src/components/scenes/produkt/`). Jede hat ihren eigenen
+IntersectionObserver – keine `SceneGroup`, weil die Blöcke über die ganze
+Seite verteilt liegen.
+
+### Lighthouse /produkt, je fünf Läufe
+
+| Zustand                       | Performance je Lauf | Median | A11y | LCP   | TBT      | CLS |
+| ----------------------------- | ------------------- | ------ | ---- | ----- | -------- | --- |
+| Baseline (statische Skelette) | 97, 97, 97, 97, 97  | **97** | 100  | 2,6 s | 10–30 ms | 0   |
+| Nachher (vier Szenen)         | 96, 96, 96, 96, 96  | **96** | 100  | 2,8 s | 20–50 ms | 0   |
+
+**Die Vorgabe ist NICHT erfüllt.** Der Median liegt einen Punkt unter der
+Baseline, und zwar nicht als Streuung: Beide Messreihen sind mit 5 × 97
+beziehungsweise 5 × 96 vollkommen stabil.
+
+Ursache, gemessen: Das übertragene JavaScript der Seite steigt von **178,7 kB
+auf 186,8 kB** (+8,1 kB). Vier interaktive Szenen brauchen vier hydrierte
+Client-Komponenten; LCP wandert dadurch von 2,6 s auf 2,8 s und TBT steigt
+leicht. Accessibility, Best Practices, SEO bleiben bei je 100, CLS bei 0.
+
+Das ist der Preis der Funktion selbst, kein behebbarer Fehler. Wer den Punkt
+zurück will, muss Szenen weglassen – zum Beispiel zwei der vier statisch
+lassen.
+
+### Ein Optimierungsversuch, der nichts brachte
+
+`content-visibility: auto` auf den Bühnen sah vielversprechend aus: Vier grosse
+Kästen liegen beim Laden ausserhalb des Bildschirms, und die Angabe lässt den
+Browser deren Innenleben überspringen. Gemessen:
+
+| Variante                  | Performance je Lauf | Median |
+| ------------------------- | ------------------- | ------ |
+| ohne `content-visibility` | 98, 96, 96, 96, 96  | 96     |
+| mit `content-visibility`  | 95, 96, 96, 96, 96  | 96     |
+
+Kein Gewinn, der schlechteste Lauf sogar einen Punkt tiefer. **Wieder
+entfernt** – eine Optimierung ohne gemessenen Nutzen bleibt nicht im Code, nur
+weil sie plausibel klingt. Der Grund steht als Kommentar in `scene-panel.tsx`,
+damit es niemand ein zweites Mal versucht.
+
+### Ruheverhalten je Szene, 3 Sekunden je Zustand
+
+| Szene             | Im Sichtbereich | Weggescrollt | Hintergrund-Tab |
+| ----------------- | --------------- | ------------ | --------------- |
+| A Dokumentation   | 265 rAF         | **0**        | **0**           |
+| B Kommunikation   | 447 rAF         | **0**        | **0**           |
+| C Unterricht      | 402 rAF         | **0**        | **0**           |
+| D Steuerung       | 520 rAF         | **0**        | **0**           |
+| Startseite (Hero) | 229 rAF         | **0**        | **0**           |
+
+Die Zahlen im Sichtbereich unterscheiden sich, weil beim Anfahren einer Szene
+je nach Blockhöhe die benachbarte teilweise mit im Bild liegt und dann
+ebenfalls läuft. Entscheidend sind die beiden Nullspalten.
+
+### prefers-reduced-motion
+
+Je zwei Aufnahmen im Abstand von 7,4 Sekunden, alle vier hashgleich:
+
+| Szene           | Hash               |
+| --------------- | ------------------ |
+| A Dokumentation | `d596e53452c7b754` |
+| B Kommunikation | `ffe86bd80a10bfa6` |
+| C Unterricht    | `fdff707c6c1635c1` |
+| D Steuerung     | `55603de51415aaa2` |
+
+### Barrierefreiheit
+
+axe-core über alle 9 Seiten: **0 Verstöße**. Jede Szene trägt `role="img"` mit
+beschreibendem `aria-label`, alles darin ist `aria-hidden`.
+
+Die Lehre aus Abschnitt 9 ist eingehalten: **keine abgedunkelte Schrift.** In
+Szene C stand die Materialkarte zuerst komplett auf `opacity-0`; das liess die
+rechte Hälfte der Bühne zwei Drittel des Durchlaufs leer. Jetzt sind Rahmen und
+Titel von Beginn an bei voller Deckkraft sichtbar, und nur der Inhalt entsteht.
+Unsichtbar (`opacity-0`) ist unproblematisch – abgedunkelt wäre es nicht.
+
 ## Gefunden und behoben
 
 | #   | Befund                                                  | Behebung                                      |

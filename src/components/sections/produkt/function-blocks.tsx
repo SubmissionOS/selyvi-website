@@ -9,19 +9,17 @@ import {
   TRANSLATION_LANGUAGES_SENTENCE,
 } from "@/config/product";
 import { Button } from "@/components/ui/button";
-import {
-  CommunicationSkeleton,
-  LeadershipSkeleton,
-  MaterialSkeleton,
-  ObservationSkeleton,
-} from "@/components/sections/produkt/function-skeletons";
+import { DocumentationScene } from "@/components/scenes/produkt/documentation-scene";
+import { CommunicationScene } from "@/components/scenes/produkt/communication-scene";
+import { TeachingScene } from "@/components/scenes/produkt/teaching-scene";
+import { SteeringScene } from "@/components/scenes/produkt/steering-scene";
 
 type FunctionBlock = {
   id: string;
   title: string;
   paragraphs: string[];
   bullets: string[];
-  skeleton: ReactNode;
+  scene: ReactNode;
   action?: { label: string; href: string };
 };
 
@@ -61,7 +59,7 @@ const blocks: FunctionBlock[] = [
       "Je Kind eine chronologische Timeline mit Förderempfehlungen",
       "Freie Fragen an die eigenen Daten – der Kontext bleibt serverseitig auf sie begrenzt",
     ],
-    skeleton: <ObservationSkeleton />,
+    scene: <DocumentationScene />,
   },
   {
     id: "kommunikation",
@@ -76,7 +74,7 @@ const blocks: FunctionBlock[] = [
       `${TRANSLATION_LANGUAGE_COUNT} Zielsprachen für Elternmails, ohne Aufpreis`,
       "Kein Eltern- oder Schülerportal – der Versand bleibt bei Ihnen",
     ],
-    skeleton: <CommunicationSkeleton />,
+    scene: <CommunicationScene />,
   },
   {
     id: "unterricht",
@@ -92,7 +90,7 @@ const blocks: FunctionBlock[] = [
       "Klassenstundenplan ohne Redaktionsschritt und ohne Freigabe",
       "Auslesen von Scans als Häkchen mit Voreinstellung Aus",
     ],
-    skeleton: <MaterialSkeleton />,
+    scene: <TeachingScene />,
   },
   {
     id: "steuerung",
@@ -106,7 +104,7 @@ const blocks: FunctionBlock[] = [
       "Nutzung im Kollegium als Verteilung – bewusst keine namentliche Rangliste",
       "Einzelne Beobachtungen und Bewertungen bleiben bei der Lehrkraft",
     ],
-    skeleton: <LeadershipSkeleton />,
+    scene: <SteeringScene />,
     action: {
       label: "Für Schulleitungen",
       href: "/schulen",
@@ -121,7 +119,7 @@ export function FunctionBlocks() {
   return (
     <section aria-label="Funktionen im Detail">
       {blocks.map((block, index) => {
-        // Ungerade Bloecke spiegeln: Text rechts, Skelett links.
+        // Ungerade Bloecke spiegeln: Text rechts, Szene links.
         const reversed = index % 2 === 1;
 
         return (
@@ -168,7 +166,7 @@ export function FunctionBlocks() {
                 ) : null}
               </div>
 
-              <div className={reversed ? "lg:order-1" : undefined}>{block.skeleton}</div>
+              <div className={reversed ? "lg:order-1" : undefined}>{block.scene}</div>
             </div>
           </div>
         );

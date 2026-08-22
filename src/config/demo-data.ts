@@ -21,14 +21,23 @@
 /** Fiktive Klasse, auf die sich alle Szenen beziehen. */
 export const DEMO_CLASS = "3b";
 
-/** Fiktive Kinder. Vorname plus abgekürzter Nachname. */
-export const DEMO_CHILDREN = [
-  "Emma K.",
-  "Yusuf A.",
-  "Lotta B.",
-  "Milan P.",
-  "Frida S.",
-] as const;
+export type DemoChild = {
+  /** Vorname plus abgekürzter Nachname. */
+  name: string;
+  /** Initialen für die Kachel – bewusst hinterlegt statt aus dem Namen
+      geparst, damit ein Name mit Bindestrich nichts kaputt macht. */
+  initials: string;
+};
+
+/** Fiktive Kinder der Klasse 3b. Sechs, weil das Kachelraster 3 × 2 ist. */
+export const DEMO_CHILDREN: DemoChild[] = [
+  { name: "Emma K.", initials: "EK" },
+  { name: "Yusuf A.", initials: "YA" },
+  { name: "Lotta B.", initials: "LB" },
+  { name: "Milan P.", initials: "MP" },
+  { name: "Frida S.", initials: "FS" },
+  { name: "Jonas T.", initials: "JT" },
+];
 
 export type DemoObservation = {
   /** Kind, auf das sich die Beobachtung bezieht. */
@@ -76,16 +85,82 @@ export const DEMO_ARITHMETIC: DemoObservation = {
     "Yusuf löst Aufgaben im Zahlenraum bis 100 überwiegend sicher. Beim Übergang über den Zehner braucht er noch Übung, arbeitet aber konzentriert an eigenen Strategien.",
 };
 
+/* ==========================================================================
+   Daten der vier Szenen auf /produkt.
+   ========================================================================== */
+
 /**
- * Kennzahlen für eine spätere Leitungs-Szene (Entlastungsbericht).
+ * Szene A – Live-Unterricht-Modus: zwei Kinder in einer Stunde.
  *
- * Bewusst ohne Euro-Betrag – der Entlastungsbericht im Produkt nennt keinen,
- * und eine Szene darf nicht mehr behaupten als das Produkt.
+ * Bewusst sehr kurze Notizen. Der Punkt der Szene ist nicht, was dasteht,
+ * sondern dass es NEBENBEI entsteht – ein ausformulierter Satz würde das
+ * Gegenteil suggerieren.
+ */
+export const DEMO_LIVE_NOTES = [
+  { child: "Emma K.", note: "liest flüssig vor", chip: "Deutsch" },
+  { child: "Yusuf A.", note: "sicher im ZR 100", chip: "Mathe" },
+] as const;
+
+/**
+ * Szene B – Elternmail.
+ *
+ * Anrede und Signatur sind ECHTER TEXT und bleiben beim Sprachwechsel
+ * unverändert stehen; nur die Inhaltszeilen bauen sich um. Genau das ist die
+ * Aussage der Szene, und sie entspricht dem Produktstand: „Namen und Signatur
+ * bleiben unangetastet."
+ *
+ * Die Inhaltszeilen selbst sind stilisierte Balken, kein türkischer Text –
+ * eine Übersetzung auf der Website müsste jemand gegenlesen, und ein Fehler
+ * darin fiele ausgerechnet der Zielgruppe auf.
+ */
+export const DEMO_PARENT_MAIL = {
+  greeting: "Liebe Frau Kaya,",
+  closing: "Mit freundlichen Grüßen",
+  signature: "A. Weber",
+  stableNote: "Namen & Signatur bleiben unangetastet",
+  /** Angedeutete Sprachliste im Auswahlfeld. */
+  dropdown: ["Deutsch", "Türkisch", "Arabisch", "Ukrainisch"],
+} as const;
+
+/**
+ * Szene C – Material aus dem Fachkorpus.
+ *
+ * Drei Fundstellen, von denen die Lehrkraft ZWEI auswählt. Die dritte bleibt
+ * bewusst leer: Der Produktstand sagt ausdrücklich, dass die Fundstellen auch
+ * selbst gewählt werden können, statt sie automatisch ziehen zu lassen.
+ */
+export const DEMO_MATERIAL = {
+  topic: "Wortarten, Klasse 3",
+  sources: [
+    "Wortarten bestimmen – Übungsblatt",
+    "Nomen, Verben, Adjektive (Kl. 3)",
+    "Wortarten-Werkstatt, Teil 2",
+  ],
+  documentTitle: "Arbeitsblatt: Wortarten",
+  sourceNote: "Quellen: [1], [2]",
+} as const;
+
+/**
+ * Szene D – Entlastungsbericht der Schulleitung.
+ *
+ * WORTWAHL: „gewonnene Zeit" und „Entlastung" sind zulässig. Das Wort
+ * „Wirkung" kommt in der ganzen Szene NICHT als Behauptung vor – nur die
+ * ehrliche Erhebungs-Zeile spricht über Befragungswerte, und die sagt
+ * ausdrücklich, dass sich noch nichts sagen lässt. Eingesparte Stunden sind
+ * eine Prozesskennzahl, kein Wirkungsnachweis (docs/produktstand-2026-08.md).
+ *
+ * Kein Euro-Betrag: Die Grundlage sind hinterlegte Minutenannahmen, deshalb
+ * steht `note` dauerhaft neben der Zahl.
  */
 export const DEMO_RELIEF_REPORT = {
-  savedHours: 142,
-  automationRate: 68,
-  processes: 9,
+  month: "Juli 2026",
+  previousMonth: "Juni",
+  hours: 138,
+  note: "Schätzwert",
+  surveyLine: "Befragungswerte: Erhebung läuft – noch keine belastbare Aussage.",
+  /** Balkenhöhen als Faktor für scaleY: laufender Monat und Vormonat. */
+  currentBars: [0.68, 1, 0.44],
+  previousBars: [0.5, 0.74, 0.3],
 } as const;
 
 /* ==========================================================================

@@ -266,6 +266,7 @@ reichen; eine Animationsbibliothek ist weder nötig noch erwünscht.
 | `CountUp`       | Zahl zählt hoch                                    | rAF                            |
 | `FakeCursor`    | Weicher Zeiger, der gleitet und „klickt"           | CSS-Transition                 |
 | `ProgressPulse` | Ruhiger Puls, z. B. Mikrofon                       | CSS-Keyframes                  |
+| `MorphLine`     | Textzeile, die sich beim Sprachwechsel umbaut      | CSS-Transition (`scaleX`)      |
 
 ### Wo Szenen laufen
 
@@ -273,6 +274,13 @@ reichen; eine Animationsbibliothek ist weder nötig noch erwünscht.
 | ------------------------------------ | ----------------------------------------------------------- |
 | Hero: „Beobachtung wird Zeugnistext" | `scenes/hero-scene.tsx` – grosse Bühne im `UiWindow`, ~13 s |
 | „So funktioniert's", drei Karten     | `scenes/how-it-works-scenes.tsx` – 112-px-Bühnen, je ~6–7 s |
+| /produkt, vier Funktionsblöcke       | `scenes/produkt/` – vier Bühnen fester Höhe, je ~8–10 s     |
+
+**Auf /produkt hat jede Szene ihren EIGENEN Beobachter** – dort ist die
+`SceneGroup` bewusst NICHT im Einsatz. Die vier Blöcke liegen über die ganze
+Seite verteilt; eine gemeinsame Gruppe würde alle vier starten, sobald der
+erste zu sehen ist, und drei davon liefen dann unbemerkt weiter. Die Gruppe
+ist nur für Szenen gedacht, die nebeneinander in einem Blickfeld liegen.
 
 Die drei kleinen Szenen liegen gemeinsam in einer `SceneGroup`: **ein**
 IntersectionObserver für die ganze Sektion statt drei einzelner. Sie starten

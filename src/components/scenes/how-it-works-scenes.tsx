@@ -9,6 +9,7 @@ import { TRANSLATION_LANGUAGE_COUNT } from "@/config/product";
 import { ChipPop } from "@/components/scenes/chip-pop";
 import { CountUp } from "@/components/scenes/count-up";
 import { FakeCursor } from "@/components/scenes/fake-cursor";
+import { MorphLine } from "@/components/scenes/morph-line";
 import { ProgressPulse } from "@/components/scenes/progress-pulse";
 import { SceneTimeline, type SceneStep } from "@/components/scenes/scene-timeline";
 import { TypingText } from "@/components/scenes/typing-text";
@@ -130,50 +131,6 @@ const GENERATE_STEPS: SceneStep[] = [
  */
 const TOGGLE_REST = { x: 14, y: 20 };
 const TOGGLE_TARGET = { x: 84, y: 62 };
-
-/**
- * Eine „Textzeile", die sich beim Umschalten der Sprache sichtbar umbaut.
- *
- * KEIN echter türkischer Beispieltext. Eine Übersetzung auf einer
- * Marketingseite müsste jemand gegenlesen, der die Sprache spricht – und ein
- * Fehler darin fiele ausgerechnet der Zielgruppe auf, für die die Funktion
- * gedacht ist. Stilisierte Segmente sagen dasselbe, ohne dieses Risiko.
- *
- * Umgebaut wird über `scaleX` mit linkem Ursprung, nicht über `width`: Breite
- * zu animieren löst Layout aus, `transform` nicht. Der leichte Versatz je
- * Segment lässt die Zeile von links nach rechts umspringen statt auf einen
- * Schlag.
- */
-function MorphLine({
-  before,
-  after,
-  translated,
-  animate,
-}: {
-  before: number[];
-  after: number[];
-  translated: boolean;
-  animate: boolean;
-}) {
-  return (
-    <div className="flex items-center gap-1">
-      {before.map((width, position) => (
-        <span
-          key={position}
-          className={cn(
-            "h-1.5 flex-1 origin-left rounded",
-            animate && "transition-transform duration-500",
-            translated ? "bg-brand-100" : "bg-gray-200",
-          )}
-          style={{
-            transform: `scaleX(${translated ? after[position] : width})`,
-            transitionDelay: animate ? `${position * 90}ms` : undefined,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
 
 export function GenerateScene({ startDelayMs = 0 }: { startDelayMs?: number }) {
   return (
