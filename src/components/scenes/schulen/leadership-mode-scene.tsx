@@ -55,6 +55,7 @@ export function LeadershipModeScene() {
     <SceneTimeline
       steps={STEPS}
       loopPauseMs={2000}
+      kicker="Leitungsmodus"
       /*
        * Der letzte Schritt ist die Lehrkraft-Ansicht – die Szene schaltet ja
        * zurück. Für den statischen Fall wäre das das falsche Bild: Es zeigte

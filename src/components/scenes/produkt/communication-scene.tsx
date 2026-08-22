@@ -3,12 +3,13 @@
 import { Check } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { DEMO_PARENT_MAIL } from "@/config/demo-data";
+import { DEMO_CLASS, DEMO_PARENT_MAIL } from "@/config/demo-data";
 import { TRANSLATION_LANGUAGE_COUNT } from "@/config/product";
 import { FakeCursor } from "@/components/scenes/fake-cursor";
 import { MorphLine } from "@/components/scenes/morph-line";
 import { SceneTimeline, type SceneStep } from "@/components/scenes/scene-timeline";
-import { ScenePanel, SceneLabel } from "@/components/scenes/produkt/scene-panel";
+import { SceneLabel } from "@/components/scenes/produkt/scene-panel";
+import { UiWindow } from "@/components/scenes/ui-window";
 
 /**
  * Szene B – Kommunikation, „Elternmail in neun Sprachen".
@@ -36,8 +37,8 @@ const STEPS: SceneStep[] = [
 ];
 
 /** Zeigerpositionen in Prozent der Bühne, am Bildschirm ausgemessen. */
-const CURSOR_REST = { x: 16, y: 78 };
-const CURSOR_TOGGLE = { x: 89, y: 13 };
+const CURSOR_REST = { x: 51, y: 67 };
+const CURSOR_TOGGLE = { x: 91, y: 22 };
 
 /** Rahmen, der um eine stabile Textstelle aufleuchtet. */
 function StableFrame({ show, animate }: { show: boolean; animate: boolean }) {
@@ -56,6 +57,7 @@ export function CommunicationScene() {
     <SceneTimeline
       steps={STEPS}
       loopPauseMs={2000}
+      kicker="17:10 · Elternpost"
       label={`Animierte Darstellung einer Elternmail: Über ein Auswahlfeld wird die Sprache von Deutsch auf Türkisch umgeschaltet. Nur die Inhaltszeilen ändern sich, Anrede und Signatur bleiben unverändert stehen. Insgesamt stehen ${TRANSLATION_LANGUAGE_COUNT} Zielsprachen zur Verfügung. Alle Daten sind erfunden.`}
     >
       {(scene) => {
@@ -66,7 +68,12 @@ export function CommunicationScene() {
         const cursor = scene.reached("zeiger") ? CURSOR_TOGGLE : CURSOR_REST;
 
         return (
-          <ScenePanel className="h-[21rem] sm:h-[18rem]">
+          <UiWindow
+            variant="app"
+            active="klassen"
+            chips={[`Klasse ${DEMO_CLASS}`]}
+            className="h-[23rem] sm:h-[19rem]"
+          >
             <div className="flex items-start justify-between gap-3">
               <SceneLabel>Elternmail</SceneLabel>
 
@@ -162,7 +169,7 @@ export function CommunicationScene() {
               clicking={scene.at("klick")}
               animate={moving}
             />
-          </ScenePanel>
+          </UiWindow>
         );
       }}
     </SceneTimeline>

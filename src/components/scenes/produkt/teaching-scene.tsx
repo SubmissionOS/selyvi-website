@@ -3,12 +3,13 @@
 import { Check } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { DEMO_MATERIAL } from "@/config/demo-data";
+import { DEMO_CLASS, DEMO_MATERIAL } from "@/config/demo-data";
 import { ChipPop } from "@/components/scenes/chip-pop";
 import { FakeCursor } from "@/components/scenes/fake-cursor";
 import { SceneTimeline, type SceneStep } from "@/components/scenes/scene-timeline";
 import { TypingText } from "@/components/scenes/typing-text";
-import { ScenePanel, SceneLabel } from "@/components/scenes/produkt/scene-panel";
+import { SceneLabel } from "@/components/scenes/produkt/scene-panel";
+import { UiWindow } from "@/components/scenes/ui-window";
 
 /**
  * Szene C – Unterricht, „Material mit Quellen".
@@ -26,22 +27,30 @@ import { ScenePanel, SceneLabel } from "@/components/scenes/produkt/scene-panel"
  * würde die Fundstellen auf Mobilgeräten weit nach oben schieben – und die
  * Zeigerpositionen sind Prozentwerte der Bühne, die dann nicht mehr passen.
  */
+/*
+ * DER EINE FILTER-MOMENT DIESER SZENE: Der Zeiger waehlt das Fach "Deutsch",
+ * BEVOR die Fundstellen erscheinen. Damit ist sichtbar, dass der Fachkorpus
+ * durchsucht wird und nicht irgendein Modellgedaechtnis abgefragt.
+ */
 const STEPS: SceneStep[] = [
-  { id: "thema", duration: 1600 },
-  { id: "fundstellen", duration: 900, delay: 200 },
-  { id: "zeiger-1", duration: 600 },
-  { id: "haken-1", duration: 400 },
-  { id: "zeiger-2", duration: 600 },
-  { id: "haken-2", duration: 400 },
-  { id: "material", duration: 1600, delay: 250 },
-  { id: "ruhe", duration: 1000 },
+  { id: "thema", duration: 1500 },
+  { id: "fach-zeiger", duration: 550, delay: 200 },
+  { id: "fach-klick", duration: 400 },
+  { id: "fundstellen", duration: 800, delay: 150 },
+  { id: "zeiger-1", duration: 550 },
+  { id: "haken-1", duration: 380 },
+  { id: "zeiger-2", duration: 550 },
+  { id: "haken-2", duration: 380 },
+  { id: "material", duration: 1500, delay: 200 },
+  { id: "ruhe", duration: 900 },
 ];
 
 /** Zeigerpositionen in Prozent der Bühne, am Bildschirm ausgemessen. */
-const CURSOR_REST = { x: 10, y: 22 };
+const CURSOR_REST = { x: 47, y: 24 };
+const CURSOR_SUBJECT = { x: 36, y: 42 };
 const CURSOR_SOURCES = [
-  { x: 8, y: 45 },
-  { x: 8, y: 56 },
+  { x: 34, y: 66 },
+  { x: 34, y: 78 },
 ];
 
 export function TeachingScene() {
@@ -49,12 +58,14 @@ export function TeachingScene() {
     <SceneTimeline
       steps={STEPS}
       loopPauseMs={2000}
+      kicker="16:30 · Vorbereitung für morgen"
       label="Animierte Darstellung der Materialerzeugung: Ein Thema wird eingegeben, aus dem Fachkorpus erscheinen drei Fundstellen, von denen zwei ausgewählt werden. Rechts entsteht daraus ein Arbeitsblatt, in dem die verwendeten Quellen als Marker und in einer Quellenzeile ausgewiesen sind. Alle Daten sind erfunden."
     >
       {(scene) => {
         const moving = !scene.isStatic;
         const paused = !scene.running;
 
+        const chosen = scene.reached("fach-klick");
         const listed = scene.reached("fundstellen");
         const checked = [scene.reached("haken-1"), scene.reached("haken-2"), false];
         const building = scene.reached("material");
@@ -63,10 +74,17 @@ export function TeachingScene() {
           ? CURSOR_SOURCES[1]
           : scene.reached("zeiger-1")
             ? CURSOR_SOURCES[0]
-            : CURSOR_REST;
+            : scene.reached("fach-zeiger")
+              ? CURSOR_SUBJECT
+              : CURSOR_REST;
 
         return (
-          <ScenePanel className="h-[23rem] sm:h-[20.5rem]">
+          <UiWindow
+            variant="app"
+            active="material"
+            chips={[`Klasse ${DEMO_CLASS}`]}
+            className="h-[29rem] sm:h-[27rem]"
+          >
             <div className="flex h-full flex-col">
               <div className="grid min-h-0 flex-1 grid-cols-[1.1fr_1fr] gap-3">
                 {/* ---------- links: Thema und Fundstellen ---------- */}
@@ -83,7 +101,28 @@ export function TeachingScene() {
                     />
                   </div>
 
-                  <div className="mt-4">
+                  {/* Fach-Filter. Die Auswahl steht VOR den Fundstellen –
+                      erst das Fach, dann die Treffer. */}
+                  <div className="mt-3">
+                    <SceneLabel>Fach</SceneLabel>
+                    <div className="mt-1.5 flex flex-wrap gap-1">
+                      {DEMO_MATERIAL.subjects.map((subject, position) => (
+                        <span
+                          key={subject}
+                          className={cn(
+                            "rounded-full border px-2 py-0.5 text-[9px] font-medium",
+                            chosen && position === 0
+                              ? "border-brand-600 bg-brand-100 text-brand-800"
+                              : "border-gray-200 text-gray-500",
+                          )}
+                        >
+                          {subject}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mt-3">
                     <SceneLabel>Fundstellen im Fachkorpus</SceneLabel>
                   </div>
 
@@ -208,10 +247,12 @@ export function TeachingScene() {
               x={cursor.x}
               y={cursor.y}
               visible={moving}
-              clicking={scene.at("haken-1") || scene.at("haken-2")}
+              clicking={
+                scene.at("fach-klick") || scene.at("haken-1") || scene.at("haken-2")
+              }
               animate={moving}
             />
-          </ScenePanel>
+          </UiWindow>
         );
       }}
     </SceneTimeline>

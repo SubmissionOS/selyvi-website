@@ -60,6 +60,13 @@ export function HowItWorks() {
           So funktioniert’s
         </h2>
 
+        {/* Überleitung in den roten Faden: Ab hier erzählen alle Szenen –
+            auf dieser Seite, auf /produkt und auf /schulen – denselben Tag mit
+            derselben Klasse. Die Zeit-Kicker über den Fenstern ordnen sie ein. */}
+        <p className="mt-6 max-w-2xl text-lg text-gray-500">
+          So sieht ein ganz normaler Dienstag mit {PRODUCT_NAME} aus:
+        </p>
+
         <SceneGroup>
           <ol className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
             {steps.map((step, index) => (

@@ -256,17 +256,41 @@ Animierte Oberflächen-Ausschnitte unter `src/components/scenes/`. **Ohne
 Zusatzpakete** – CSS-Keyframes, React-Zustand und `requestAnimationFrame`
 reichen; eine Animationsbibliothek ist weder nötig noch erwünscht.
 
-| Baustein        | Zweck                                              | Technik                        |
-| --------------- | -------------------------------------------------- | ------------------------------ |
-| `SceneTimeline` | Schrittfolge, Schleife, Pause, reduced motion      | rAF + IntersectionObserver     |
-| `SceneGroup`    | EIN Beobachter für mehrere Szenen nebeneinander    | IntersectionObserver + Context |
-| `UiWindow`      | Fensterrahmen mit Wortmarke, in dem Szenen leben   | reines Markup                  |
-| `TypingText`    | Text erscheint zeichenweise, Rhythmus unregelmäßig | rAF                            |
-| `ChipPop`       | Tags ploppen gestaffelt ein                        | CSS-Keyframes                  |
-| `CountUp`       | Zahl zählt hoch                                    | rAF                            |
-| `FakeCursor`    | Weicher Zeiger, der gleitet und „klickt"           | CSS-Transition                 |
-| `ProgressPulse` | Ruhiger Puls, z. B. Mikrofon                       | CSS-Keyframes                  |
-| `MorphLine`     | Textzeile, die sich beim Sprachwechsel umbaut      | CSS-Transition (`scaleX`)      |
+| Baustein        | Zweck                                                                                                   | Technik                        |
+| --------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `SceneTimeline` | Schrittfolge, Schleife, Pause, reduced motion                                                           | rAF + IntersectionObserver     |
+| `SceneGroup`    | EIN Beobachter für mehrere Szenen nebeneinander                                                         | IntersectionObserver + Context |
+| `UiWindow`      | Fensterrahmen: `variant="app"` mit Seitenleiste und Kontext-Chips, `variant="browser"` als alte Fassung | reines Markup                  |
+| `TypingText`    | Text erscheint zeichenweise, Rhythmus unregelmäßig                                                      | rAF                            |
+| `ChipPop`       | Tags ploppen gestaffelt ein                                                                             | CSS-Keyframes                  |
+| `CountUp`       | Zahl zählt hoch                                                                                         | rAF                            |
+| `FakeCursor`    | Weicher Zeiger, der gleitet und „klickt"                                                                | CSS-Transition                 |
+| `ProgressPulse` | Ruhiger Puls, z. B. Mikrofon                                                                            | CSS-Keyframes                  |
+| `MorphLine`     | Textzeile, die sich beim Sprachwechsel umbaut                                                           | CSS-Transition (`scaleX`)      |
+
+### Ein Cast, ein Tag
+
+Alle Szenen erzählen **denselben Schultag**: dieselbe Klasse 3b, dieselben
+sechs Kinder, dieselbe Lehrkraft A. Weber. Die Besetzung steht an einer Stelle
+in [demo-data.ts](src/config/demo-data.ts) – wer dort einen Namen austauscht,
+tauscht ihn auf allen Bühnen aus.
+
+Über jedem Fenster steht ein **Zeit-Kicker** (`kicker`-Prop an
+`SceneTimeline`), der die Szene in den Tag einordnet: 08:15 im Unterricht →
+16:30 Vorbereitung → 17:10 Elternpost → Monatsende. Der Kicker liegt bewusst
+**ausserhalb** des `aria-hidden`-Bereichs: Er trägt Bedeutung, die es sonst
+nur optisch gäbe.
+
+Eine Reihenfolge-Eigenheit, bewusst so belassen: Auf /produkt folgen die
+Blöcke den vier Bereichen des Produktstands (Dokumentation, Kommunikation,
+Unterricht, Steuerung). Die Uhrzeiten laufen dadurch nicht monoton – 17:10
+steht vor 16:30. Die Gliederung nach dem Produktstand wiegt schwerer als eine
+saubere Uhr.
+
+Zwei Szenen haben je **einen** Filter-Moment, mehr nicht: Szene A setzt den
+Kontext-Chip „Klasse 3b", Szene C wählt das Fach „Deutsch". Szene F hat ihren
+Umschalter. Alle anderen Szenen zeigen Seitenleiste und Chips als stillen
+Kontext, ohne zusätzliche Interaktion.
 
 ### Wo Szenen laufen
 

@@ -8,7 +8,8 @@ import { CountUp } from "@/components/scenes/count-up";
 import { FakeCursor } from "@/components/scenes/fake-cursor";
 import { SceneTimeline, type SceneStep } from "@/components/scenes/scene-timeline";
 import { TypingText } from "@/components/scenes/typing-text";
-import { ScenePanel, SceneLabel } from "@/components/scenes/produkt/scene-panel";
+import { SceneLabel } from "@/components/scenes/produkt/scene-panel";
+import { UiWindow } from "@/components/scenes/ui-window";
 
 /**
  * Szene D – Steuerung, „Entlastungsbericht".
@@ -64,6 +65,7 @@ const SIZES: Record<
   SteeringSceneSize,
   {
     panel: string;
+    kicker: string;
     number: string;
     barBox: string;
     bar: string;
@@ -73,22 +75,26 @@ const SIZES: Record<
   }
 > = {
   default: {
-    panel: "h-[22rem] sm:h-[18rem]",
+    panel: "h-[24rem] sm:h-[19rem]",
+    kicker: "Monatsende · Bericht für die Leitung",
     number: "text-3xl",
     barBox: "h-16",
     bar: "w-3",
     survey: "mt-5 min-h-12 text-[11px] sm:min-h-9",
-    cursorRest: { x: 16, y: 30 },
-    cursorExport: { x: 18, y: 68 },
+    cursorRest: { x: 51, y: 21 },
+    cursorExport: { x: 44, y: 79 },
   },
   large: {
-    panel: "h-[26rem] sm:h-[22rem]",
+    panel: "h-[27rem] sm:h-[22.5rem]",
+    // Auf /schulen traegt die Sektion bereits die Ueberschrift
+    // "Der Entlastungsbericht" – der Kicker nennt deshalb nur die Zeit.
+    kicker: "Monatsende",
     number: "text-4xl",
     barBox: "h-24",
     bar: "w-4",
     survey: "mt-6 min-h-14 text-xs sm:min-h-11",
-    cursorRest: { x: 14, y: 26 },
-    cursorExport: { x: 18, y: 78 },
+    cursorRest: { x: 50, y: 19 },
+    cursorExport: { x: 44, y: 78 },
   },
 };
 
@@ -143,6 +149,7 @@ export function SteeringScene({ size = "default" }: { size?: SteeringSceneSize }
     <SceneTimeline
       steps={STEPS}
       loopPauseMs={2000}
+      kicker={layout.kicker}
       label={`Animierte Darstellung des Entlastungsberichts: Für ${DEMO_RELIEF_REPORT.month} zählt die Anzeige auf ${DEMO_RELIEF_REPORT.hours} Stunden gewonnene Zeit hoch, ausdrücklich als Schätzwert gekennzeichnet, daneben der Vergleich mit dem Vormonat. Darunter steht, dass die Befragung zur Wirkung noch läuft und sich dazu nichts Belastbares sagen lässt. Zuletzt wird der Bericht als PDF exportiert. Alle Daten sind erfunden.`}
     >
       {(scene) => {
@@ -156,7 +163,12 @@ export function SteeringScene({ size = "default" }: { size?: SteeringSceneSize }
         const cursor = scene.reached("zeiger") ? layout.cursorExport : layout.cursorRest;
 
         return (
-          <ScenePanel className={layout.panel}>
+          <UiWindow
+            variant="app"
+            active="berichte"
+            chips={[DEMO_RELIEF_REPORT.month]}
+            className={layout.panel}
+          >
             <div className="flex items-center justify-between gap-3">
               <SceneLabel>Entlastungsbericht</SceneLabel>
               <span className="text-[10px] text-gray-500">
@@ -251,7 +263,7 @@ export function SteeringScene({ size = "default" }: { size?: SteeringSceneSize }
               clicking={scene.at("klick")}
               animate={moving}
             />
-          </ScenePanel>
+          </UiWindow>
         );
       }}
     </SceneTimeline>

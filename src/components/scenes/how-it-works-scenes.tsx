@@ -65,6 +65,7 @@ export function ObserveScene({ startDelayMs = 0 }: { startDelayMs?: number }) {
       steps={OBSERVE_STEPS}
       startDelayMs={startDelayMs}
       loopPauseMs={2000}
+      kicker="08:15"
       label="Kleine Animation: Eine kurze Unterrichtsbeobachtung wird ins Eingabefeld getippt oder diktiert und anschliessend automatisch dem Fach Mathematik zugeordnet. Die gezeigten Daten sind erfunden."
     >
       {(scene) => {
@@ -138,6 +139,7 @@ export function GenerateScene({ startDelayMs = 0 }: { startDelayMs?: number }) {
       steps={GENERATE_STEPS}
       startDelayMs={startDelayMs}
       loopPauseMs={2000}
+      kicker="17:10 · Nach dem Unterricht"
       label={`Kleine Animation: Aus der Beobachtung entstehen zwei Entwürfe – eine Zeugnisbemerkung und eine Elternmail. In der Elternmail wird die Sprache von Deutsch auf Türkisch umgeschaltet; insgesamt stehen ${TRANSLATION_LANGUAGE_COUNT} Zielsprachen zur Verfügung.`}
     >
       {(scene) => {
@@ -255,6 +257,7 @@ export function ReportScene({ startDelayMs = 0 }: { startDelayMs?: number }) {
       steps={REPORT_STEPS}
       startDelayMs={startDelayMs}
       loopPauseMs={2000}
+      kicker="Monatsende"
       label={`Kleine Animation: Der Entlastungsbericht der Schulleitung zählt auf ${DEMO_RELIEF_MONTH.hours} Stunden gewonnene Zeit im Monat hoch, ausdrücklich als Schätzwert gekennzeichnet.`}
     >
       {(scene) => {

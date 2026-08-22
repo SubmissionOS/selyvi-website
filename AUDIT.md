@@ -589,6 +589,97 @@ Balken.
 Die Balken sind bewusst **unsortiert** hinterlegt: Eine absteigende Reihe ist
 optisch bereits ein Ranking, auch ohne Beschriftung.
 
+## 12. Erzählstrang: App-Rahmen und Zeit-Kicker (22.08.2026)
+
+Alle Szenen bekommen denselben Anwendungsrahmen mit Seitenleiste und
+Kontext-Chips, dieselbe Besetzung und einen Zeit-Kicker.
+
+### Lighthouse, je fünf Läufe
+
+| Seite      | Baseline           | Nachher            | Median vorher → nachher |
+| ---------- | ------------------ | ------------------ | ----------------------- |
+| `/`        | 95, 95, 95, 95, 95 | 95, 95, 95, 95, 95 | **95 → 95**             |
+| `/produkt` | 96, 96, 96, 96, 96 | 95, 95, 95, 95, 95 | **96 → 95**             |
+| `/schulen` | 95, 95, 95, 95, 95 | 95, 95, 95, 95, 95 | **95 → 95**             |
+
+Accessibility, Best Practices und SEO bleiben auf allen drei Seiten bei je
+100, CLS bei 0.
+
+**Auf /produkt ist die Vorgabe nicht erfüllt** – ein Punkt unter der Baseline,
+und diesmal war ausdrücklich kein Budget vereinbart.
+
+### Warum, und woher das gemessen ist
+
+Die Annahme war: Die Seitenleiste ist statisches DOM, also kostet sie nichts.
+Der erste Teil stimmt, der zweite nicht.
+
+Statt zu vermuten, wurde derselbe Stand mit `variant="browser"` gemessen –
+identischer Code, identisches JavaScript, nur ohne Seitenleisten:
+
+| Variante                        | Performance je Lauf | Median | LCP   | JavaScript |
+| ------------------------------- | ------------------- | ------ | ----- | ---------- |
+| mit Seitenleiste (ausgeliefert) | 95, 95, 95, 95, 95  | **95** | 2,9 s | 189,8 kB   |
+| ohne Seitenleiste (nur Test)    | 96, 96, 96, 96, 96  | **96** | 2,8 s | 189,8 kB   |
+
+**Das übertragene JavaScript ist in beiden Fällen exakt gleich.** Die
+Seitenleiste kostet keine Laufzeit – sie kostet DOM und Malen: /produkt trägt
+vier Fenster, also vier Seitenleisten mit je fünf Einträgen und je einem
+Inline-SVG. Das sind rund 100 zusätzliche Elemente und 20 SVGs auf einer
+Seite, und dafür wandert LCP von 2,8 s auf 2,9 s.
+
+Ein zweiter Versuch, den Punkt über getrimmte Fensterhöhen zurückzuholen
+(gemessener Leerraum in zwei Szenen entfernt), blieb bei 95. Die Ursache ist
+die Seitenleiste selbst, nicht die Seitenlänge.
+
+Wer den Punkt braucht: Seitenleiste auf /produkt auf zwei der vier Szenen
+beschränken oder `variant="browser"` verwenden. Beides schwächt den
+Erzählstrang, um den es hier ging – deshalb ausgeliefert wie beauftragt und
+hier vermerkt.
+
+### Die Seitenleiste kostet keine Laufzeit – geprüft
+
+| Szene             | Im Sichtbereich | Weggescrollt | Hintergrund-Tab |
+| ----------------- | --------------- | ------------ | --------------- |
+| Startseite, Hero  | 230 rAF         | **0**        | **0**           |
+| /produkt, Szene A | 252 rAF         | **0**        | **0**           |
+| /schulen, Szene F | 181 rAF         | **0**        | **0**           |
+
+Szene A lag vor dem Umbau bei 265 rAF, jetzt bei 252 – die Seitenleiste hat
+keine einzige zusätzliche Schleife gebracht.
+
+### prefers-reduced-motion
+
+Je zwei Aufnahmen im Abstand von 6,9 Sekunden, alle acht geänderten Szenen
+hashgleich:
+
+| Szene                   | Hash               |
+| ----------------------- | ------------------ |
+| Hero                    | `a60d45b49657165e` |
+| „So funktioniert's" (3) | `fd8e2a39beefeeef` |
+| A Dokumentation         | `2dfe0ddfb6e979f0` |
+| B Kommunikation         | `844d85641c8dd8f2` |
+| C Unterricht            | `133731957652aaa7` |
+| D Steuerung             | `da79c82d8d1ae85a` |
+| E Entlastungsbericht    | `4fd0f42055094748` |
+| F Leitungsmodus         | `91da05af28f764cf` |
+
+### Barrierefreiheit
+
+axe-core über alle 9 Seiten: **0 Verstöße**. Lighthouse Accessibility auf allen
+drei Szenen-Seiten: **100**.
+
+Der Zeit-Kicker war der Kandidat für einen erneuten Kontrastfehler – er steht
+deshalb bei voller Deckkraft in `gray-500`. Die Seitenleiste ist
+`aria-hidden` und trägt weder Button noch Link noch `tabIndex`: Was aussieht
+wie Navigation, aber nicht navigiert, wäre für Tastaturnutzende eine Falle.
+
+### Inhaltliche Grenze
+
+Eine Demo-Beobachtung mit dem Marker „Förderbedarf" und der Formulierung
+„braucht noch Übung" ist **ersatzlos entfallen**. Sie war ungenutzt, hätte aber
+in einem Screenshot ein – wenn auch erfundenes – Kind vorgeführt. Alle
+verbleibenden Beobachtungen beschreiben etwas, das gelingt.
+
 ## Gefunden und behoben
 
 | #   | Befund                                                  | Behebung                                      |

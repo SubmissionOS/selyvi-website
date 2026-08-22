@@ -2,6 +2,20 @@
  * Demo-Daten für die UI-Szenen.
  *
  * ==========================================================================
+ * ROTER FADEN – ALLE SZENEN ERZÄHLEN DENSELBEN SCHULTAG.
+ * ÄNDERUNGEN HIER ÄNDERN DIE GESCHICHTE ÜBERALL.
+ * --------------------------------------------------------------------------
+ * Dieselbe Klasse (3b), dieselben sechs Kinder, dieselbe Lehrkraft
+ * (A. Weber) – vom Hero über „So funktioniert's" und /produkt bis /schulen.
+ * Wer hier einen Namen austauscht, tauscht ihn auf allen fünf Bühnen aus,
+ * und genau das ist der Zweck: Zehn Szenen mit zehn erfundenen Klassen wären
+ * zehn Beispiele, eine durchgehende Besetzung ist ein Tag.
+ *
+ * Die Zeit-Kicker über den Fenstern (08:15 → 16:30 → 17:10 → Monatsende)
+ * stehen in den Szenen selbst, nicht hier – sie sind Erzählung, nicht Daten.
+ * ==========================================================================
+ *
+ * ==========================================================================
  * ALLE DATEN SIND FREI ERFUNDEN.
  *
  * Keine realen Personen, keine reale Klasse, keine reale Schule. Die
@@ -20,6 +34,48 @@
 
 /** Fiktive Klasse, auf die sich alle Szenen beziehen. */
 export const DEMO_CLASS = "3b";
+
+/**
+ * Fiktive Lehrkraft. Sie signiert die Elternmail und ist die Person, deren
+ * Bildschirm alle Szenen zeigen.
+ */
+export const DEMO_TEACHER = "A. Weber";
+
+/**
+ * KEINE NEGATIVEN INHALTE ÜBER KINDER – auch nicht über erfundene.
+ *
+ * Alle Beobachtungen unten beschreiben etwas, das gelingt. Keine schlechten
+ * Noten, keine Defizitzuschreibungen, kein Förderdrama. Das ist keine
+ * Beschönigung des Produkts: Es kann selbstverständlich auch Schwierigkeiten
+ * dokumentieren. Aber eine öffentliche Marketingseite ist nicht der Ort, an
+ * dem ein – wenn auch erfundenes – Kind vorgeführt wird, und ein Screenshot
+ * mit „braucht noch Übung" wandert erfahrungsgemäß durch Präsentationen.
+ *
+ * Eine frühere Beobachtung mit dem Marker „Förderbedarf" ist aus diesem Grund
+ * ersatzlos entfallen.
+ */
+
+/**
+ * Navigation der Anwendung, wie sie in der Seitenleiste jeder Szene steht.
+ *
+ * Reihenfolge und Beschriftung sind überall gleich – eine Navigation, die je
+ * Szene anders aussähe, wäre kein Produkt, sondern eine Sammlung Illustrationen.
+ *
+ * BIBLIOTHEK IST IN KEINER SZENE AKTIV. Sie existiert laut Produktstand und
+ * darf deshalb in der Navigation stehen. Aber keine Szene zeigt sie, also
+ * behauptet auch keine etwas über sie. Ein Eintrag in einer Seitenleiste sagt
+ * „es gibt das"; eine aufgeklappte Ansicht sagt „so sieht es aus", und das
+ * wäre hier ungedeckt.
+ */
+export const DEMO_NAV = [
+  { key: "beobachtungen", label: "Beobachtungen" },
+  { key: "klassen", label: "Klassen" },
+  { key: "material", label: "Material" },
+  { key: "berichte", label: "Berichte" },
+  { key: "bibliothek", label: "Bibliothek" },
+] as const;
+
+export type DemoNavKey = (typeof DEMO_NAV)[number]["key"];
 
 export type DemoChild = {
   /** Vorname plus abgekürzter Nachname. */
@@ -69,22 +125,6 @@ export const DEMO_READING: DemoObservation = {
     "Emma liest zunehmend flüssig und sicher vor der Klasse vor. Sie traut sich dabei mehr zu und bringt sich im Deutschunterricht immer häufiger von sich aus ein.",
 };
 
-/**
- * Szene 2 (vorgesehen für /produkt): Kopfrechnen im Zahlenraum bis 100.
- *
- * Noch von keiner Szene verwendet. Steht hier, weil Demo-Daten an einem Ort
- * gehören – nicht verstreut in den Szenen, wo niemand sie auf Plausibilität
- * gegenlesen kann.
- */
-export const DEMO_ARITHMETIC: DemoObservation = {
-  child: "Yusuf A.",
-  input:
-    "Yusuf rechnet im Zahlenraum bis 100 sicher, verrechnet sich beim Zehnerübergang aber noch.",
-  chips: ["Mathematik · Kopfrechnen", "Beobachtung", "Förderbedarf"],
-  reportDraft:
-    "Yusuf löst Aufgaben im Zahlenraum bis 100 überwiegend sicher. Beim Übergang über den Zehner braucht er noch Übung, arbeitet aber konzentriert an eigenen Strategien.",
-};
-
 /* ==========================================================================
    Daten der vier Szenen auf /produkt.
    ========================================================================== */
@@ -116,7 +156,8 @@ export const DEMO_LIVE_NOTES = [
 export const DEMO_PARENT_MAIL = {
   greeting: "Liebe Frau Kaya,",
   closing: "Mit freundlichen Grüßen",
-  signature: "A. Weber",
+  // Aus der Konstante, damit die Lehrkraft in allen Szenen dieselbe ist.
+  signature: DEMO_TEACHER,
   stableNote: "Namen & Signatur bleiben unangetastet",
   /** Angedeutete Sprachliste im Auswahlfeld. */
   dropdown: ["Deutsch", "Türkisch", "Arabisch", "Ukrainisch"],
@@ -130,6 +171,8 @@ export const DEMO_PARENT_MAIL = {
  * selbst gewählt werden können, statt sie automatisch ziehen zu lassen.
  */
 export const DEMO_MATERIAL = {
+  /** Fach-Filter über den Fundstellen. Der erste Eintrag wird gewählt. */
+  subjects: ["Deutsch", "Mathe", "Sachunterricht"],
   topic: "Wortarten, Klasse 3",
   sources: [
     "Wortarten bestimmen – Übungsblatt",

@@ -9,7 +9,8 @@ import { FakeCursor } from "@/components/scenes/fake-cursor";
 import { ProgressPulse } from "@/components/scenes/progress-pulse";
 import { SceneTimeline, type SceneStep } from "@/components/scenes/scene-timeline";
 import { TypingText } from "@/components/scenes/typing-text";
-import { ScenePanel, SceneLabel } from "@/components/scenes/produkt/scene-panel";
+import { SceneLabel } from "@/components/scenes/produkt/scene-panel";
+import { UiWindow } from "@/components/scenes/ui-window";
 
 /**
  * Szene A – Dokumentation, „Live-Unterricht-Modus".
@@ -24,17 +25,26 @@ import { ScenePanel, SceneLabel } from "@/components/scenes/produkt/scene-panel"
  * Blöcke liegen weit auseinander, eine gemeinsame <SceneGroup /> würde alle
  * vier starten, sobald der erste zu sehen ist.
  */
+/*
+ * DER EINE FILTER-MOMENT DIESER SZENE steht ganz am Anfang: Der Zeiger setzt
+ * den Kontext-Chip „Klasse 3b" in der Kopfzeile, und ERST DANN erscheinen die
+ * Kacheln. Damit ist ohne ein Wort erklärt, worauf sich das Raster bezieht.
+ *
+ * Genau einer je Szene – mehr, und aus dem Ablauf würde ein Jahrmarkt.
+ */
 const STEPS: SceneStep[] = [
-  { id: "raster", duration: 600 },
-  { id: "emma-zeiger", duration: 600 },
+  { id: "filter-zeiger", duration: 600 },
+  { id: "filter-klick", duration: 500 },
+  { id: "raster", duration: 600, delay: 150 },
+  { id: "emma-zeiger", duration: 550 },
   { id: "emma-klick", duration: 350 },
-  { id: "emma-tippen", duration: 1400 },
-  { id: "emma-chip", duration: 600 },
-  { id: "yusuf-zeiger", duration: 600, delay: 300 },
+  { id: "emma-tippen", duration: 1300 },
+  { id: "emma-chip", duration: 550 },
+  { id: "yusuf-zeiger", duration: 550, delay: 250 },
   { id: "yusuf-klick", duration: 350 },
-  { id: "yusuf-tippen", duration: 1400 },
-  { id: "yusuf-chip", duration: 600 },
-  { id: "ruhe", duration: 800 },
+  { id: "yusuf-tippen", duration: 1300 },
+  { id: "yusuf-chip", duration: 550 },
+  { id: "ruhe", duration: 700 },
 ];
 
 /**
@@ -42,10 +52,10 @@ const STEPS: SceneStep[] = [
  * Das Raster ist 3 × 2; angetippt werden die erste und die zweite Kachel der
  * oberen Reihe.
  */
-const CURSOR_REST = { x: 12, y: 86 };
+const CURSOR_CHIP = { x: 19, y: 6 };
 const CURSOR_TILES = [
-  { x: 19, y: 33 },
-  { x: 50, y: 33 },
+  { x: 42, y: 37 },
+  { x: 64, y: 37 },
 ];
 
 export function DocumentationScene() {
@@ -53,6 +63,7 @@ export function DocumentationScene() {
     <SceneTimeline
       steps={STEPS}
       loopPauseMs={2000}
+      kicker="08:15 · Live im Unterricht"
       label={`Animierte Darstellung des Live-Unterricht-Modus: In einer Raster-Ansicht der Klasse ${DEMO_CLASS} werden nacheinander zwei Kinder angetippt und je eine kurze Beobachtung erfasst, die automatisch einem Fach zugeordnet wird. Ein Zähler zeigt die Zahl der erfassten Beobachtungen. Alle Daten sind erfunden.`}
     >
       {(scene) => {
@@ -83,16 +94,25 @@ export function DocumentationScene() {
         const done = [scene.reached("emma-chip"), scene.reached("yusuf-chip")];
         const counted = done.filter(Boolean).length;
 
+        const filtered = scene.reached("filter-klick");
+        const tiles = scene.reached("raster");
+
         const cursor = scene.reached("yusuf-zeiger")
           ? CURSOR_TILES[1]
           : scene.reached("emma-zeiger")
             ? CURSOR_TILES[0]
-            : CURSOR_REST;
+            : CURSOR_CHIP;
 
         return (
-          <ScenePanel className="h-[21rem] sm:h-[19.5rem]">
+          <UiWindow
+            variant="app"
+            active="beobachtungen"
+            chips={[`Klasse ${DEMO_CLASS}`]}
+            highlightChip={filtered ? 0 : -1}
+            className="h-[27rem] sm:h-[22rem]"
+          >
             <div className="flex items-center justify-between gap-3">
-              <SceneLabel>Live-Unterricht-Modus · Klasse {DEMO_CLASS}</SceneLabel>
+              <SceneLabel>Live-Unterricht-Modus</SceneLabel>
 
               {/* Der Zähler poppt bei jeder Änderung kurz auf – der `key`
                   sorgt dafür, dass die Animation neu startet. */}
@@ -107,7 +127,20 @@ export function DocumentationScene() {
               </span>
             </div>
 
-            <div className="mt-4 grid grid-cols-3 gap-2">
+            {/* Die Kacheln erscheinen erst, nachdem der Chip gesetzt ist.
+                Sie stehen trotzdem von Anfang an im DOM und belegen ihren
+                Platz – sonst wüchse das Fenster mitten im Durchlauf. */}
+            <div
+              key={`raster-${scene.cycle}`}
+              className={cn(
+                // Zwei Spalten auf Mobilgeraeten: Bei drei brachen die Namen
+                // nach drei Zeichen ab („Emm…“), und ein abgeschnittener Name
+                // sieht nach Fehler aus statt nach Klassenliste.
+                "mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3",
+                moving && tiles && "animate-panel-rise",
+                !tiles && "opacity-0",
+              )}
+            >
               {DEMO_CHILDREN.map((child, position) => {
                 const isActive = active === position;
                 const isDone = position < done.length && done[position];
@@ -179,10 +212,14 @@ export function DocumentationScene() {
               x={cursor.x}
               y={cursor.y}
               visible={moving}
-              clicking={scene.at("emma-klick") || scene.at("yusuf-klick")}
+              clicking={
+                scene.at("filter-klick") ||
+                scene.at("emma-klick") ||
+                scene.at("yusuf-klick")
+              }
               animate={moving}
             />
-          </ScenePanel>
+          </UiWindow>
         );
       }}
     </SceneTimeline>

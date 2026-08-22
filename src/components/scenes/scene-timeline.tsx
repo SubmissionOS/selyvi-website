@@ -114,6 +114,28 @@ type Props = {
    * das Bild stehen bleiben, das nichts zeigt.
    */
   staticStepId?: string;
+  /**
+   * Zeit-Kicker über dem Fenster, z. B. „08:15 · Deutschstunde in der 3b".
+   *
+   * ==========================================================================
+   * ER STEHT AUSSERHALB DES aria-hidden-BEREICHS – ABSICHTLICH.
+   * --------------------------------------------------------------------------
+   * Die Szene selbst ist ein Bild: role="img", Inhalt verborgen, Aussage im
+   * aria-label. Der Kicker gehört NICHT dazu. Er trägt Bedeutung, die es ohne
+   * ihn nicht gäbe – er ordnet die Szene in den Tagesablauf ein, den alle
+   * Szenen gemeinsam erzählen. Läge er unter aria-hidden, ginge genau diese
+   * Ordnung für Screenreader verloren, und der rote Faden wäre nur noch
+   * optisch vorhanden.
+   *
+   * Konsequenz: normaler Text, volle Deckkraft, gray-500. Abgedunkelt ginge
+   * hier ohnehin nicht – die Kontrastregel gilt hier wie überall.
+   * ==========================================================================
+   *
+   * Kicker sind ERZÄHLUNG, keine Produktzusage. Formulierungen ohne
+   * Funktionsbehauptung: „17:10 · Elternpost" beschreibt eine Tageszeit, nicht
+   * eine Funktion.
+   */
+  kicker?: string;
   className?: string;
   children: (scene: SceneState) => ReactNode;
 };
@@ -142,6 +164,7 @@ export function SceneTimeline({
   loopPauseMs = 2000,
   startDelayMs = 0,
   staticStepId,
+  kicker,
   className,
   children,
 }: Props) {
@@ -318,11 +341,21 @@ export function SceneTimeline({
   }, [steps, index, isStatic, visible, delayPassed, cycle]);
 
   return (
-    <div ref={hostRef} role="img" aria-label={label} className={className}>
-      {/* Alles innerhalb der Szene ist für Screenreader unsichtbar – die
-          Aussage steht vollständig im aria-label. Gleiches Muster wie bei den
-          statischen Skeletten. */}
-      <div aria-hidden="true">{children(scene)}</div>
+    <div className={className}>
+      {/* Der Kicker liegt VOR dem role="img"-Kasten und damit ausserhalb des
+          aria-hidden-Bereichs. Siehe die Begründung an der Prop. */}
+      {kicker ? (
+        <p className="mb-3 text-xs font-medium tracking-wide text-gray-500 uppercase">
+          {kicker}
+        </p>
+      ) : null}
+
+      <div ref={hostRef} role="img" aria-label={label}>
+        {/* Alles innerhalb der Szene ist für Screenreader unsichtbar – die
+            Aussage steht vollständig im aria-label. Gleiches Muster wie bei den
+            statischen Skeletten. */}
+        <div aria-hidden="true">{children(scene)}</div>
+      </div>
     </div>
   );
 }

@@ -65,17 +65,22 @@ const HERO_STEPS: SceneStep[] = [
  * bemerkt niemand. Eine an das Element gebundene Messung wäre dafür der
  * falsche Aufwand: Sie müsste bei jeder Größenänderung neu rechnen.
  */
-const CURSOR_REST = { x: 14, y: 70 };
+const CURSOR_REST = { x: 35, y: 78 };
 
 /** Schaltfläche „Speichern". */
-const CURSOR_BUTTON = { x: 87, y: 40 };
+const CURSOR_BUTTON = { x: 89, y: 43 };
 
 const SCENE_LABEL =
   "Animierte Darstellung der Programmoberfläche: Eine im Unterricht getippte Beobachtung wird zu Fach- und Kategorie-Markierungen strukturiert, und daraus entsteht ein Entwurf für die Zeugnisbemerkung im Schreibstil der Lehrkraft. Alle gezeigten Daten sind erfunden.";
 
 export function HeroScene() {
   return (
-    <SceneTimeline steps={HERO_STEPS} label={SCENE_LABEL} loopPauseMs={2000}>
+    <SceneTimeline
+      steps={HERO_STEPS}
+      label={SCENE_LABEL}
+      loopPauseMs={2000}
+      kicker={`08:15 · Deutschstunde in der ${DEMO_CLASS}`}
+    >
       {(scene) => {
         const moving = !scene.isStatic;
         // Verlässt die Szene den Sichtbereich, halten auch die Bausteine mit
@@ -86,8 +91,12 @@ export function HeroScene() {
         const drafting = scene.reached("zeugnistext");
 
         return (
-          <UiWindow path={`Klasse ${DEMO_CLASS} · ${DEMO_READING.child}`}>
-            <div className="relative space-y-5 p-5 sm:p-6">
+          <UiWindow
+            variant="app"
+            active="beobachtungen"
+            chips={[`Klasse ${DEMO_CLASS}`, "Deutsch"]}
+          >
+            <div className="space-y-4">
               {/* ---------- Bereich 1: Beobachtung ---------- */}
               <div>
                 <div className="flex items-center justify-between gap-3">
