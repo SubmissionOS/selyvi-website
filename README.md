@@ -275,6 +275,13 @@ reichen; eine Animationsbibliothek ist weder nötig noch erwünscht.
 | Hero: „Beobachtung wird Zeugnistext" | `scenes/hero-scene.tsx` – grosse Bühne im `UiWindow`, ~13 s |
 | „So funktioniert's", drei Karten     | `scenes/how-it-works-scenes.tsx` – 112-px-Bühnen, je ~6–7 s |
 | /produkt, vier Funktionsblöcke       | `scenes/produkt/` – vier Bühnen fester Höhe, je ~8–10 s     |
+| /schulen, Entlastungsbericht         | `scenes/produkt/steering-scene.tsx` mit `size="large"`      |
+| /schulen, Rollen-Block               | `scenes/schulen/leadership-mode-scene.tsx` – Umschalter     |
+
+**Der Entlastungsbericht ist EINE Komponente für zwei Seiten.** Auf /produkt
+läuft sie als `size="default"`, auf /schulen als `size="large"`. Beide zeigen
+dieselbe Zahl mit demselben Schätzwert-Hinweis und derselben Erhebungs-Zeile –
+eine Kopie wären zwei Gelegenheiten, genau das auseinanderlaufen zu lassen.
 
 **Auf /produkt hat jede Szene ihren EIGENEN Beobachter** – dort ist die
 `SceneGroup` bewusst NICHT im Einsatz. Die vier Blöcke liegen über die ganze
@@ -310,8 +317,10 @@ Demo-Daten liegen zentral in [demo-data.ts](src/config/demo-data.ts) und sind
    `TypingText` ausserhalb des Bildes zu Ende, messbar rund 165
    rAF-Aufrufe in drei Sekunden. Siehe [AUDIT.md](AUDIT.md), Abschnitt 8.
 3. **Bei `prefers-reduced-motion` rendert die Szene statisch ihren
-   Endzustand.** Deshalb muss der LETZTE Schritt immer der vollständige
-   Zustand sein, nie ein Zwischenbild.
+   Endzustand.** Deshalb muss der LETZTE Schritt der vollständige Zustand
+   sein, nie ein Zwischenbild. Szenen, die am Ende wieder an ihren Anfang
+   zurückkehren, geben stattdessen `staticStepId` an – sonst friert
+   ausgerechnet das Bild ein, das nichts zeigt.
 4. **Schrift wird nie abgedunkelt.** Ein Element mit Text darf keinen
    Ruhezustand bei reduzierter Opazität haben. `gray-500` erreicht auf Weiss
    nur rund 4,8:1 und hat damit keinen Spielraum: Bei 40 % sind es 1,69:1, und

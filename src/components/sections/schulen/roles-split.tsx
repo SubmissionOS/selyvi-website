@@ -1,6 +1,7 @@
 import { Check } from "lucide-react";
 
 import { DATA_SEPARATION_NOTE } from "@/config/product";
+import { LeadershipModeScene } from "@/components/scenes/schulen/leadership-mode-scene";
 
 /**
  * Sektion – Rollen-Block.
@@ -77,6 +78,13 @@ export function RolesSplit() {
               ))}
             </ul>
           </div>
+        </div>
+
+        {/* Der Umschalter als Szene. Sie zeigt, was die Aufzählungen darüber
+            nur behaupten können: dass es zwei getrennte Ansichten sind – und
+            dass die Nutzungsbalken im Leitungsmodus keine Namen tragen. */}
+        <div className="mx-auto mt-10 max-w-4xl">
+          <LeadershipModeScene />
         </div>
 
         <p className="mt-10 max-w-3xl border-l-2 border-gray-200 pl-6 text-gray-500">

@@ -23,9 +23,10 @@ import { SceneVisibilityContext } from "@/components/scenes/scene-group";
  *    Fortschritt bleibt stehen, statt zurückgesetzt zu werden.
  *
  * 2. BEI prefers-reduced-motion rendert die Szene STATISCH ihren Endzustand.
- *    Kein Autoplay, nichts blinkt, keine Schleife. Der Endzustand ist der
- *    letzte Schritt – deshalb muss der letzte Schritt immer der vollständige
- *    Zustand sein, nicht ein Zwischenbild.
+ *    Kein Autoplay, nichts blinkt, keine Schleife. Endzustand ist der letzte
+ *    Schritt – deshalb muss der letzte Schritt der vollständige Zustand sein,
+ *    nicht ein Zwischenbild. Szenen, die zu ihrem Anfang zurückkehren, geben
+ *    stattdessen `staticStepId` an.
  *
  * 3. OHNE JAVASCRIPT sieht man ebenfalls den Endzustand. Das ist kein
  *    Zufall: `isStatic` startet auf `true`, der Server rendert damit den
@@ -99,6 +100,20 @@ type Props = {
    * Mal erneut warten.
    */
   startDelayMs?: number;
+  /**
+   * Welcher Schritt gilt als Endzustand?
+   *
+   * Ohne Angabe der LETZTE – das passt für Szenen, die auf ihr Ergebnis
+   * zulaufen. Es passt NICHT für Szenen, die am Ende wieder dorthin
+   * zurückkehren, wo sie angefangen haben: Der Leitungsmodus auf /schulen
+   * schaltet um, zeigt die Leitungsansicht und schaltet zurück. Sein letzter
+   * Schritt ist die Lehrkraft-Ansicht – und genau die ist NICHT die Aussage
+   * der Szene.
+   *
+   * Bei prefers-reduced-motion und im Serverrender würde sonst ausgerechnet
+   * das Bild stehen bleiben, das nichts zeigt.
+   */
+  staticStepId?: string;
   className?: string;
   children: (scene: SceneState) => ReactNode;
 };
@@ -126,11 +141,24 @@ export function SceneTimeline({
   label,
   loopPauseMs = 2000,
   startDelayMs = 0,
+  staticStepId,
   className,
   children,
 }: Props) {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const lastIndex = steps.length - 1;
+
+  /**
+   * Index des Endzustands. Ohne `staticStepId` der letzte Schritt.
+   *
+   * Eine unbekannte Kennung fällt bewusst auf den letzten Schritt zurück,
+   * statt zu werfen: Ein Tippfehler soll die Seite nicht lahmlegen.
+   */
+  const staticIndex = (() => {
+    if (!staticStepId) return lastIndex;
+    const found = steps.findIndex((step) => step.id === staticStepId);
+    return found === -1 ? lastIndex : found;
+  })();
 
   /**
    * Sichtbarkeit aus einer <SceneGroup />, falls die Szene in einer liegt.
@@ -142,13 +170,13 @@ export function SceneTimeline({
   const [isStatic, setIsStatic] = useState(true);
   const [ownVisible, setOwnVisible] = useState(false);
   const [delayPassed, setDelayPassed] = useState(startDelayMs === 0);
-  const [index, setIndex] = useState(lastIndex);
+  const [index, setIndex] = useState(staticIndex);
   const [cycle, setCycle] = useState(0);
 
   const visible = groupVisible ?? ownVisible;
 
   const elapsedRef = useRef(0);
-  const indexRef = useRef(lastIndex);
+  const indexRef = useRef(staticIndex);
 
   /**
    * Start- und Endzeitpunkt jedes Schritts, aufsummiert.
@@ -179,7 +207,7 @@ export function SceneTimeline({
 
     const apply = () => {
       const reduce = query.matches;
-      const start = reduce ? lastIndex : 0;
+      const start = reduce ? staticIndex : 0;
 
       elapsedRef.current = 0;
       indexRef.current = start;
@@ -190,7 +218,7 @@ export function SceneTimeline({
     apply();
     query.addEventListener("change", apply);
     return () => query.removeEventListener("change", apply);
-  }, [lastIndex]);
+  }, [staticIndex]);
 
   // Sichtbarkeit. Erst im Viewport läuft überhaupt etwas.
   //
@@ -280,8 +308,10 @@ export function SceneTimeline({
       at: (id) => order.get(id) === index,
       reached: (id) => {
         const position = order.get(id);
-        // Im statischen Endzustand gilt jeder Schritt als erreicht.
-        if (isStatic) return position !== undefined;
+        // Auch im statischen Fall gilt schlicht „bis zum aktuellen Schritt".
+        // Der steht dort auf `staticIndex` – bei Szenen, die zu ihrem Anfang
+        // zurückkehren, ist das NICHT der letzte Schritt, und dann darf hier
+        // auch nicht alles als erreicht gelten.
         return position !== undefined && position <= index;
       },
     };

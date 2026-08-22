@@ -43,9 +43,54 @@ const STEPS: SceneStep[] = [
   { id: "ruhe", duration: 600 },
 ];
 
-/** Zeigerpositionen in Prozent der Bühne, am Bildschirm ausgemessen. */
-const CURSOR_REST = { x: 16, y: 30 };
-const CURSOR_EXPORT = { x: 18, y: 68 };
+/**
+ * Zwei Grössen, EINE Szene.
+ *
+ * Auf /produkt steht sie als einer von vier Funktionsblöcken in einer halben
+ * Spalte, auf /schulen trägt sie die Sektion „Der Entlastungsbericht" und darf
+ * deutlich mehr Raum nehmen. Das ist der einzige Unterschied – Ablauf, Texte
+ * und Wortlaut-Sperren sind identisch, weil es dieselbe Komponente ist.
+ *
+ * Eine Kopie hätte hier besonders geschadet: Beide Fassungen zeigen dieselbe
+ * Zahl mit demselben „Schätzwert"-Hinweis und derselben Erhebungs-Zeile. Zwei
+ * Dateien wären zwei Gelegenheiten, genau das auseinanderlaufen zu lassen.
+ *
+ * Die Zeigerpositionen sind Prozentwerte der Bühne und deshalb je Grösse
+ * eigens ausgemessen – bei anderer Höhe sitzt der Export-Knopf woanders.
+ */
+export type SteeringSceneSize = "default" | "large";
+
+const SIZES: Record<
+  SteeringSceneSize,
+  {
+    panel: string;
+    number: string;
+    barBox: string;
+    bar: string;
+    survey: string;
+    cursorRest: { x: number; y: number };
+    cursorExport: { x: number; y: number };
+  }
+> = {
+  default: {
+    panel: "h-[22rem] sm:h-[18rem]",
+    number: "text-3xl",
+    barBox: "h-16",
+    bar: "w-3",
+    survey: "mt-5 min-h-12 text-[11px] sm:min-h-9",
+    cursorRest: { x: 16, y: 30 },
+    cursorExport: { x: 18, y: 68 },
+  },
+  large: {
+    panel: "h-[26rem] sm:h-[22rem]",
+    number: "text-4xl",
+    barBox: "h-24",
+    bar: "w-4",
+    survey: "mt-6 min-h-14 text-xs sm:min-h-11",
+    cursorRest: { x: 14, y: 26 },
+    cursorExport: { x: 18, y: 78 },
+  },
+};
 
 /** Eine Balkengruppe: drei Balken plus Monatsbeschriftung darunter. */
 function BarGroup({
@@ -54,21 +99,26 @@ function BarGroup({
   animate,
   label,
   muted,
+  boxClass,
+  barClass,
 }: {
   heights: readonly number[];
   grown: boolean;
   animate: boolean;
   label: string;
   muted?: boolean;
+  boxClass: string;
+  barClass: string;
 }) {
   return (
     <div className="flex flex-col items-center gap-1.5">
-      <div className="flex h-16 items-end gap-1">
+      <div className={cn("flex items-end gap-1", boxClass)}>
         {heights.map((height, position) => (
           <span
             key={position}
             className={cn(
-              "h-full w-3 origin-bottom rounded-t",
+              "h-full origin-bottom rounded-t",
+              barClass,
               muted ? "bg-gray-200" : "bg-brand-100",
               animate && "transition-transform duration-700 ease-out",
             )}
@@ -86,7 +136,9 @@ function BarGroup({
   );
 }
 
-export function SteeringScene() {
+export function SteeringScene({ size = "default" }: { size?: SteeringSceneSize }) {
+  const layout = SIZES[size];
+
   return (
     <SceneTimeline
       steps={STEPS}
@@ -101,10 +153,10 @@ export function SteeringScene() {
         const grown = scene.reached("balken");
         const surveying = scene.reached("erhebung");
         const exported = scene.reached("haken");
-        const cursor = scene.reached("zeiger") ? CURSOR_EXPORT : CURSOR_REST;
+        const cursor = scene.reached("zeiger") ? layout.cursorExport : layout.cursorRest;
 
         return (
-          <ScenePanel className="h-[22rem] sm:h-[18rem]">
+          <ScenePanel className={layout.panel}>
             <div className="flex items-center justify-between gap-3">
               <SceneLabel>Entlastungsbericht</SceneLabel>
               <span className="text-[10px] text-gray-500">
@@ -114,7 +166,7 @@ export function SteeringScene() {
 
             <div className="mt-4 flex items-end justify-between gap-4">
               <div className="min-w-0">
-                <div className="text-3xl leading-none font-semibold text-ink">
+                <div className={cn("leading-none font-semibold text-ink", layout.number)}>
                   {counting ? (
                     <CountUp
                       key={`stunden-${scene.cycle}`}
@@ -140,6 +192,8 @@ export function SteeringScene() {
                   grown={grown}
                   animate={moving}
                   label={DEMO_RELIEF_REPORT.month.split(" ")[0]}
+                  boxClass={layout.barBox}
+                  barClass={layout.bar}
                 />
                 <BarGroup
                   heights={DEMO_RELIEF_REPORT.previousBars}
@@ -147,13 +201,20 @@ export function SteeringScene() {
                   animate={moving}
                   label={DEMO_RELIEF_REPORT.previousMonth}
                   muted
+                  boxClass={layout.barBox}
+                  barClass={layout.bar}
                 />
               </div>
             </div>
 
             {/* Erhebungs-Zeile. Feste Mindesthöhe für den fertigen Satz,
                 damit der Export-Knopf darunter beim Tippen nicht wandert. */}
-            <p className="mt-5 min-h-12 border-l-2 border-gray-200 pl-3 text-[11px] leading-relaxed text-gray-500 sm:min-h-9">
+            <p
+              className={cn(
+                "border-l-2 border-gray-200 pl-3 leading-relaxed text-gray-500",
+                layout.survey,
+              )}
+            >
               {surveying ? (
                 <TypingText
                   key={`erhebung-${scene.cycle}`}

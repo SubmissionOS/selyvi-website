@@ -514,6 +514,81 @@ rechte Hälfte der Bühne zwei Drittel des Durchlaufs leer. Jetzt sind Rahmen un
 Titel von Beginn an bei voller Deckkraft sichtbar, und nur der Inhalt entsteht.
 Unsichtbar (`opacity-0`) ist unproblematisch – abgedunkelt wäre es nicht.
 
+## 11. Zwei Szenen auf /schulen (22.08.2026)
+
+Der Entlastungsbericht wird von /produkt wiederverwendet (`size="large"`,
+keine Kopie), dazu kommt der Leitungsmodus im Rollen-Block. Beide mit eigenem
+IntersectionObserver.
+
+### Lighthouse /schulen, je fünf Läufe
+
+| Zustand                | Performance je Lauf | Median | A11y | LCP   | TBT      | CLS |
+| ---------------------- | ------------------- | ------ | ---- | ----- | -------- | --- |
+| Baseline (ohne Szenen) | 95, 96, 96, 96, 96  | **96** | 100  | 2,8 s | 20–80 ms | 0   |
+| Nachher (zwei Szenen)  | 95, 95, 95, 95, 95  | **95** | 100  | 2,9 s | 20–30 ms | 0   |
+
+Ein Punkt unter der Baseline – innerhalb der vereinbarten Toleranz und
+derselbe Betrag wie auf /produkt. Die Szenen-Kosten sind damit über drei
+Seiten hinweg konsistent: rund ein Lighthouse-Punkt für hydrierte
+Client-Komponenten.
+
+**Regressionsprüfung /produkt nach dem Refactor:** 96, 96, 96, 96, 96 –
+Median unverändert bei 96. Das Herausziehen der Grössen-Varianten hat dort
+nichts gekostet.
+
+### Derselbe Kontrastfehler ein zweites Mal – und derselbe Befund
+
+Der erste Messlauf ergab Accessibility **96 statt 100**. Ursache war wieder
+abgedunkelte Schrift, diesmal die inaktive Seite des Umschalters
+(`text-gray-500 opacity-70`):
+
+| Element                    | Vordergrund | Hintergrund | Kontrast   | Nötig |
+| -------------------------- | ----------- | ----------- | ---------- | ----- |
+| Umschalter, inaktive Seite | `#909cad`   | `#f6fafd`   | **2,65:1** | 4,5:1 |
+
+Das ist exakt die Regel, die seit Abschnitt 9 im README steht. Sie ist beim
+Bauen trotzdem wieder gebrochen worden – ein Beleg dafür, dass die Messung
+nicht durch eine Notiz zu ersetzen ist. **Behoben** durch Wegfall der
+Deckkraft: Aktiv und inaktiv unterscheiden sich jetzt über die Fläche, nicht
+über die Schrift. Danach wieder 100.
+
+axe-core über alle 9 Seiten: **0 Verstöße**.
+
+### Ruheverhalten, 3 Sekunden je Zustand
+
+| Szene                | Im Sichtbereich | Weggescrollt | Hintergrund-Tab |
+| -------------------- | --------------- | ------------ | --------------- |
+| E Entlastungsbericht | 295 rAF         | **0**        | **0**           |
+| F Leitungsmodus      | 181 rAF         | **0**        | **0**           |
+
+### prefers-reduced-motion
+
+Je zwei Aufnahmen im Abstand von 7,4 Sekunden, hashgleich:
+
+| Szene                | Hash               |
+| -------------------- | ------------------ |
+| E Entlastungsbericht | `ca76680fecb1b56f` |
+| F Leitungsmodus      | `a11395b8d65aa0e7` |
+
+**Beim Leitungsmodus war dafür eine Erweiterung nötig.** Die Szene schaltet
+um, zeigt die Leitungsansicht und schaltet zurück – ihr letzter Schritt ist
+die Lehrkraft-Ansicht. Ohne Eingriff fröre sie bei reduced motion also
+ausgerechnet auf dem Bild ein, das die Aussage der Szene NICHT enthält. Die
+Zeitleiste kennt dafür jetzt `staticStepId`; die Szene hält auf
+`"leitung"` an, samt Badge „Verteilung statt Rangliste" und den namenlosen
+Balken.
+
+### Wortlaut-Sperren
+
+| Sperre                               | Geprüft                                         |
+| ------------------------------------ | ----------------------------------------------- |
+| „Wirkung" nur in der Erhebungs-Zeile | ja                                              |
+| Nutzungsbalken ohne Personenbezug    | ja – weder Namen noch Initialen noch Sortierung |
+| Nichts animiert, was nicht Live ist  | ja                                              |
+
+Die Balken sind bewusst **unsortiert** hinterlegt: Eine absteigende Reihe ist
+optisch bereits ein Ranking, auch ohne Beschriftung.
+
 ## Gefunden und behoben
 
 | #   | Befund                                                  | Behebung                                      |

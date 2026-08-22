@@ -1,5 +1,7 @@
 import { FileDown } from "lucide-react";
 
+import { SteeringScene } from "@/components/scenes/produkt/steering-scene";
+
 /**
  * Sektion – Der Entlastungsbericht.
  *
@@ -63,28 +65,33 @@ export function ReliefReport() {
             </ul>
           </div>
 
-          <div className="space-y-6 lg:pt-4">
-            <div className="rounded-xl border border-gray-200 bg-surface-alt p-6 lg:p-8">
-              <h3 className="text-lg font-semibold text-ink">Bewusst ohne Euro-Betrag</h3>
-
-              <p className="mt-4 text-gray-500">
-                Grundlage der Berechnung sind hinterlegte Minutenannahmen. Die sind als
-                Schätzwerte gekennzeichnet und werden nicht zu einer Summe hochgerechnet,
-                die einer Nachfrage nicht standhält.
-              </p>
-            </div>
-
-            <div className="rounded-xl border border-gray-200 bg-surface-alt p-6 lg:p-8">
-              <h3 className="text-lg font-semibold text-ink">Die Wirkungszeile</h3>
-
-              <p className="mt-4 text-gray-500">
-                Direkt unter dem Bericht steht ein Satz zur gemessenen Wirkung. Wir zeigen
-                gemessene Wirkung – oder sagen ehrlich, warum sich noch nichts sagen
-                lässt. Eingesparte Stunden sind eine Prozesskennzahl, kein
-                Wirkungsnachweis.
-              </p>
-            </div>
+          {/* Dieselbe Komponente wie der Steuerungs-Block auf /produkt, nur in
+              der grossen Ausführung. KEINE Kopie: Zahl, Schätzwert-Hinweis und
+              Erhebungs-Zeile dürfen zwischen den beiden Seiten nicht
+              auseinanderlaufen. */}
+          <div className="lg:pt-4">
+            <SteeringScene size="large" />
           </div>
+        </div>
+
+        {/* Die beiden Einschränkungen standen bis zur Einführung der Szene als
+            eigene Karten rechts. Sie bleiben als Fliesstext erhalten, weil die
+            Szene aria-hidden ist und ihren Inhalt nur als Bildbeschreibung
+            trägt – wer sie hier streicht, streicht sie aus der Seite. */}
+        <div className="mt-12 grid gap-8 md:grid-cols-2">
+          <p className="text-gray-500">
+            <span className="font-medium text-ink">Bewusst ohne Euro-Betrag.</span>{" "}
+            Grundlage der Berechnung sind hinterlegte Minutenannahmen. Die sind als
+            Schätzwerte gekennzeichnet und werden nicht zu einer Summe hochgerechnet, die
+            einer Nachfrage nicht standhält.
+          </p>
+
+          <p className="text-gray-500">
+            <span className="font-medium text-ink">Die Wirkungszeile.</span> Direkt unter
+            dem Bericht steht ein Satz zur gemessenen Wirkung. Wir zeigen gemessene
+            Wirkung – oder sagen ehrlich, warum sich noch nichts sagen lässt. Eingesparte
+            Stunden sind eine Prozesskennzahl, kein Wirkungsnachweis.
+          </p>
         </div>
       </div>
     </section>
