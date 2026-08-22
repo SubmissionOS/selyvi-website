@@ -87,3 +87,35 @@ export const DEMO_RELIEF_REPORT = {
   automationRate: 68,
   processes: 9,
 } as const;
+
+/* ==========================================================================
+   Kurzfassungen für die kleinen Szenen in „So funktioniert's".
+   --------------------------------------------------------------------------
+   Dort ist die Bühne nur gut 110 px hoch. Die Texte sind deshalb deutlich
+   kürzer als in der Hero-Szene – ein Gedanke je Szene, mehr passt nicht und
+   mehr soll auch nicht.
+   ========================================================================== */
+
+/** Szene 1: eine Beobachtung, wie sie zwischen Tür und Angel entsteht. */
+export const DEMO_QUICK_NOTE = {
+  input: "Yusuf rechnet heute sicher im ZR 100.",
+  chip: "Mathe",
+} as const;
+
+/**
+ * Szene 3: gewonnene Zeit im Entlastungsbericht.
+ *
+ * WORTWAHL IST HIER KEINE GESCHMACKSFRAGE. „Gewonnene Zeit" und „Entlastung"
+ * sind zulässig, „Wirkung" NICHT: Eingesparte Stunden sind eine
+ * Prozesskennzahl, kein Wirkungsnachweis. Die Trennung stammt aus
+ * docs/produktstand-2026-08.md und gilt auch in Grafiken – gerade dort, weil
+ * eine Zahl in einem Diagramm schneller als Beleg gelesen wird als ein Satz.
+ *
+ * `note` steht in der Szene dauerhaft neben der Zahl, nicht als Fussnote:
+ * Die Grundlage sind hinterlegte Minutenannahmen, und die sind Schätzwerte.
+ */
+export const DEMO_RELIEF_MONTH = {
+  hours: 14.5,
+  unit: "Std.",
+  note: "Schätzwert",
+} as const;

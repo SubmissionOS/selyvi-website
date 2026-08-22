@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 /**
  * Zahl, die hochzählt.
@@ -26,6 +26,14 @@ type Props = {
    * <TypingText />: Die Szene hat den Sichtbereich verlassen.
    */
   paused?: boolean;
+  /**
+   * Nachkommastellen. 0 = ganze Zahlen.
+   *
+   * Wird sowohl zum Runden als auch zum Formatieren verwendet – sonst zählte
+   * die Zahl in Zehntelschritten, würde aber ohne Nachkommastelle angezeigt
+   * und sähe wie ein Fehler aus.
+   */
+  decimals?: number;
   suffix?: string;
   className?: string;
 };
@@ -35,8 +43,6 @@ function easeOutCubic(t: number): number {
   return 1 - Math.pow(1 - t, 3);
 }
 
-const formatter = new Intl.NumberFormat("de-DE");
-
 /** Ein Frame darf höchstens so viel Zeit vorspulen – wie in der Zeitleiste. */
 const MAX_FRAME_DELTA_MS = 100;
 
@@ -45,9 +51,24 @@ export function CountUp({
   durationMs = 1400,
   animate = true,
   paused = false,
+  decimals = 0,
   suffix,
   className,
 }: Props) {
+  // Locale fest auf de-DE: Sonst hinge das Dezimaltrennzeichen an der
+  // Spracheinstellung des Browsers und Server- und Client-Render könnten
+  // auseinanderlaufen – „14,5" hier, „14.5" dort.
+  const formatter = useMemo(
+    () =>
+      new Intl.NumberFormat("de-DE", {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      }),
+    [decimals],
+  );
+
+  /** 10^decimals – Rundungsraster für die gezeigte Zahl. */
+  const grid = useMemo(() => Math.pow(10, decimals), [decimals]);
   const [counted, setCounted] = useState(0);
   const countedRef = useRef(0);
   /** Verstrichene Zählzeit. Überlebt eine Pause, deshalb ein Ref. */
@@ -70,7 +91,9 @@ export function CountUp({
       previous = now;
 
       const progress = Math.min(elapsedRef.current / durationMs, 1);
-      const next = Math.round(easeOutCubic(progress) * value);
+      // Auf das Anzeigeraster runden, nicht auf ganze Zahlen: Sonst stünde die
+      // Zahl bei einer Nachkommastelle die halbe Zeit still.
+      const next = Math.round(easeOutCubic(progress) * value * grid) / grid;
 
       if (next !== countedRef.current) {
         countedRef.current = next;
@@ -82,7 +105,7 @@ export function CountUp({
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [animate, paused, value, durationMs]);
+  }, [animate, paused, value, durationMs, grid]);
 
   return (
     <span className={className}>

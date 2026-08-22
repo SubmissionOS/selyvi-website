@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  useContext,
   useEffect,
   useLayoutEffect,
   useMemo,
@@ -8,6 +9,8 @@ import {
   useState,
   type ReactNode,
 } from "react";
+
+import { SceneVisibilityContext } from "@/components/scenes/scene-group";
 
 /**
  * Deklarative Schrittfolge für eine UI-Szene.
@@ -84,6 +87,18 @@ type Props = {
   label: string;
   /** Atempause am Ende, bevor die Schleife neu beginnt. */
   loopPauseMs?: number;
+  /**
+   * Verzögerter Start, nachdem die Szene sichtbar geworden ist.
+   *
+   * Für Kaskaden gedacht: Liegen mehrere Szenen nebeneinander in einer
+   * <SceneGroup />, starten sie sonst im selben Bild und drei Dinge bewegen
+   * sich gleichzeitig. Ein Versatz von wenigen hundert Millisekunden je Szene
+   * macht daraus eine Abfolge, der das Auge folgen kann.
+   *
+   * Wirkt nur beim ERSTEN Sichtbarwerden. Wer zurückscrollt, soll nicht jedes
+   * Mal erneut warten.
+   */
+  startDelayMs?: number;
   className?: string;
   children: (scene: SceneState) => ReactNode;
 };
@@ -110,17 +125,27 @@ export function SceneTimeline({
   steps,
   label,
   loopPauseMs = 2000,
+  startDelayMs = 0,
   className,
   children,
 }: Props) {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const lastIndex = steps.length - 1;
 
+  /**
+   * Sichtbarkeit aus einer <SceneGroup />, falls die Szene in einer liegt.
+   * `null` heisst: keine Gruppe, also eigener Beobachter weiter unten.
+   */
+  const groupVisible = useContext(SceneVisibilityContext);
+
   // Startwert bewusst der Endzustand – siehe Zustand 3 im Kopfkommentar.
   const [isStatic, setIsStatic] = useState(true);
-  const [visible, setVisible] = useState(false);
+  const [ownVisible, setOwnVisible] = useState(false);
+  const [delayPassed, setDelayPassed] = useState(startDelayMs === 0);
   const [index, setIndex] = useState(lastIndex);
   const [cycle, setCycle] = useState(0);
+
+  const visible = groupVisible ?? ownVisible;
 
   const elapsedRef = useRef(0);
   const indexRef = useRef(lastIndex);
@@ -174,6 +199,10 @@ export function SceneTimeline({
   // JavaScript, und ein bewusster Verzicht auf eine Ersatzlösung, die im
   // Hintergrund Rechenzeit verbrauchen würde.
   useEffect(() => {
+    // Liegt die Szene in einer <SceneGroup />, beobachtet die für uns mit –
+    // dann braucht es hier keinen zweiten Beobachter.
+    if (groupVisible !== null) return;
+
     const host = hostRef.current;
     if (!host) return;
 
@@ -187,17 +216,26 @@ export function SceneTimeline({
     // dann ausserhalb des Bildschirms weiter, also genau das, was hier
     // verhindert werden soll.
     const observer = new IntersectionObserver((entries) =>
-      setVisible(entries[0]?.isIntersecting ?? false),
+      setOwnVisible(entries[0]?.isIntersecting ?? false),
     );
 
     observer.observe(host);
     return () => observer.disconnect();
-  }, []);
+  }, [groupVisible]);
+
+  // Versetzter Start für Kaskaden. Der Timer läuft erst, wenn die Szene
+  // sichtbar ist, und genau einmal – danach bleibt `delayPassed` true.
+  useEffect(() => {
+    if (delayPassed || !visible || isStatic) return;
+
+    const timer = setTimeout(() => setDelayPassed(true), startDelayMs);
+    return () => clearTimeout(timer);
+  }, [delayPassed, visible, isStatic, startDelayMs]);
 
   // Die Schleife. Läuft ausschliesslich, wenn die Szene sichtbar ist UND
   // Bewegung erlaubt ist – sonst wird der Effekt gar nicht erst aufgesetzt.
   useEffect(() => {
-    if (isStatic || !visible || cycleMs <= 0) return;
+    if (isStatic || !visible || !delayPassed || cycleMs <= 0) return;
 
     let frame = 0;
     let previous = performance.now();
@@ -228,7 +266,7 @@ export function SceneTimeline({
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [isStatic, visible, bounds, cycleMs, lastIndex]);
+  }, [isStatic, visible, delayPassed, bounds, cycleMs, lastIndex]);
 
   const scene: SceneState = useMemo(() => {
     const order = new Map(steps.map((step, position) => [step.id, position]));
@@ -237,7 +275,7 @@ export function SceneTimeline({
       index,
       id: steps[index]?.id ?? "",
       isStatic,
-      running: !isStatic && visible,
+      running: !isStatic && visible && delayPassed,
       cycle,
       at: (id) => order.get(id) === index,
       reached: (id) => {
@@ -247,7 +285,7 @@ export function SceneTimeline({
         return position !== undefined && position <= index;
       },
     };
-  }, [steps, index, isStatic, visible, cycle]);
+  }, [steps, index, isStatic, visible, delayPassed, cycle]);
 
   return (
     <div ref={hostRef} role="img" aria-label={label} className={className}>

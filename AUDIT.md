@@ -366,6 +366,75 @@ axe-core über alle 9 Seiten erneut ausgeführt: **0 Verstöße**. Die Szene tr�
 `role="img"` mit einem beschreibenden `aria-label`; alle Elemente darin sind
 `aria-hidden` – dasselbe Muster wie bei den bisherigen statischen Skeletten.
 
+## 9. Drei Szenen in „So funktioniert's" (22.08.2026)
+
+Nachtrag zur Ablösung der drei statischen Mini-Skelette durch kleine Szenen
+(`src/components/scenes/how-it-works-scenes.tsx`), gemeinsam beobachtet über
+eine `SceneGroup`.
+
+### Lighthouse Startseite, fünf Läufe
+
+| Zustand                           | Performance je Lauf | Median | A11y    | LCP   | TBT       | CLS |
+| --------------------------------- | ------------------- | ------ | ------- | ----- | --------- | --- |
+| Vorher (nur Hero-Szene)           | 94, 95, 95, 95, 95  | **95** | 100     | 2,9 s | 30–80 ms  | 0   |
+| Zwischenstand (mit 40 % Dämpfung) | 93, 95, 95, 95, 95  | 95     | **96**  | 2,9 s | 10–140 ms | 0   |
+| Nachher (behoben)                 | 95, 95, 95, 97, 95  | **95** | **100** | 2,9 s | 10–60 ms  | 0   |
+
+Performance-Median unverändert bei 95, CLS bleibt 0, Best Practices und SEO
+je 100.
+
+### Ein Kontrastfehler, den erst Lighthouse zeigte
+
+Der Zwischenstand fiel bei Accessibility von **100 auf 96**. Ursache war nicht
+eine der neuen Szenen, sondern der Nachschliff am Hero: Die Kopfzeile des
+Zeugnis-Bereichs stand vor ihrem Schritt bei 40 % Opazität.
+
+Gemessen:
+
+| Element                      | Vordergrund | Hintergrund | Kontrast   | Nötig |
+| ---------------------------- | ----------- | ----------- | ---------- | ----- |
+| „Zeugnisbemerkung (Entwurf)" | `#c1c7d1`   | `#ffffff`   | **1,69:1** | 4,5:1 |
+| Badge „In Ihrem Schreibstil" | `#99bdd5`   | `#e9f7ff`   | **1,81:1** | 4,5:1 |
+
+`gray-500` (`#64748b`) erreicht auf Weiss nur rund 4,8:1. Dieser Wert lässt
+keine Abdunklung zu – schon bei 90 % Opazität fällt er unter 4,5:1. Eine
+gedämpfte Schrift ist an dieser Stelle also nicht umsetzbar, egal welcher
+Prozentwert gewählt wird.
+
+**Behoben** durch Verzicht auf den gedämpften Ruhezustand: Die Überschrift
+steht von Anfang an bei voller Deckkraft, das Badge erscheint zusammen mit dem
+Text (Einblendung von 0 auf 1, kein Ruhezustand dazwischen). Das ist auch
+inhaltlich stimmiger – „In Ihrem Schreibstil" ist eine Aussage über den
+Entwurf und sollte nicht dastehen, solange es keinen gibt. Danach wieder 100.
+
+axe-core über alle 9 Seiten: **0 Verstöße**.
+
+### Ruheverhalten, je 3 Sekunden
+
+Diesmal von Anfang an mit dem `scene.running`-Muster gebaut.
+
+| Zustand            | Hero-Szene | Sektion (3 Szenen) |
+| ------------------ | ---------- | ------------------ |
+| Im Sichtbereich    | 228 rAF    | 698 rAF            |
+| Weggescrollt       | **0**      | **0**              |
+| Tab im Hintergrund | **0**      | **0**              |
+
+698 entspricht rund dem Dreifachen einer einzelnen Szene – die drei laufen
+tatsächlich parallel, wenn sie zu sehen sind, und gemeinsam gar nicht, wenn
+nicht.
+
+### prefers-reduced-motion
+
+Je zwei Aufnahmen im Abstand von 6,4 Sekunden, hashgleich:
+
+| Bereich              | Hash               |
+| -------------------- | ------------------ |
+| Hero-Szene           | `c7dccccb088be035` |
+| Sektion mit 3 Szenen | `3780c9b5281a6a1a` |
+
+Gegenprobe ohne reduced motion: beide Bereiche liefern zu verschiedenen
+Zeitpunkten verschiedene Hashes.
+
 ## Gefunden und behoben
 
 | #   | Befund                                                  | Behebung                                      |

@@ -143,24 +143,47 @@ export function HeroScene() {
               </div>
 
               {/* ---------- Bereich 2: Zeugnisbemerkung ---------- */}
-              {/* Immer im DOM, damit die Höhe des Fensters konstant bleibt.
-                  Vor seinem Schritt nur durchsichtig. */}
-              <div
-                className={cn(
-                  "border-t border-gray-200 pt-5",
-                  !drafting && "opacity-0",
-                  drafting && moving && "animate-panel-rise",
-                )}
-              >
-                <div className="flex flex-wrap items-center justify-between gap-2">
+              {/* Die STRUKTUR steht von Anfang an da – erst der TEXT entsteht.
+
+                  Vorher war der ganze Bereich unsichtbar. Das reservierte zwar
+                  korrekt seinen Platz, liess das Fenster in den ersten Sekunden
+                  aber halb leer wirken: ein grosser weisser Block ohne
+                  erkennbaren Zweck. Die sichtbare Überschrift sagt dagegen von
+                  der ersten Sekunde an, was dort gleich passiert.
+
+                  KEINE ABGEDUNKELTE SCHRIFT, und das ist gemessen:
+                  Die Überschrift stand zwischenzeitlich bei 40 % Opazität. Das
+                  ergibt gegen Weiss einen Kontrast von 1,69:1 (Badge: 1,81:1)
+                  statt der geforderten 4,5:1 – Lighthouse fiel dadurch von 100
+                  auf 96 Accessibility-Punkte. gray-500 hat auf Weiss nur rund
+                  4,8:1 und damit praktisch keinen Spielraum nach unten: JEDE
+                  Abdunklung dieser Schrift verletzt AA.
+
+                  Das Badge erscheint stattdessen zusammen mit dem Text. Das ist
+                  auch inhaltlich richtiger – „In Ihrem Schreibstil" ist eine
+                  Aussage ÜBER den Entwurf und sollte nicht dastehen, solange es
+                  keinen Entwurf gibt.
+
+                  `min-h-7` hält die Kopfzeile auf konstanter Höhe, damit das
+                  auftauchende Badge den Text darunter nicht verschiebt. */}
+              <div className="border-t border-gray-200 pt-5">
+                <div className="flex min-h-7 flex-wrap items-center justify-between gap-2">
                   <span className="text-xs font-medium tracking-wide text-gray-500 uppercase">
                     Zeugnisbemerkung (Entwurf)
                   </span>
 
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-100 px-2.5 py-1 text-xs font-medium text-brand-800">
-                    <Sparkles className="size-3" />
-                    In Ihrem Schreibstil
-                  </span>
+                  {drafting ? (
+                    <span
+                      key={`stil-${scene.cycle}`}
+                      className={cn(
+                        "inline-flex items-center gap-1.5 rounded-full bg-brand-100 px-2.5 py-1 text-xs font-medium text-brand-800",
+                        moving && "animate-chip-pop",
+                      )}
+                    >
+                      <Sparkles className="size-3" />
+                      In Ihrem Schreibstil
+                    </span>
+                  ) : null}
                 </div>
 
                 <p className="mt-3 min-h-28 text-sm leading-relaxed text-ink sm:min-h-20">

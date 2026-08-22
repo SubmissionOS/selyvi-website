@@ -256,15 +256,34 @@ Animierte Oberflächen-Ausschnitte unter `src/components/scenes/`. **Ohne
 Zusatzpakete** – CSS-Keyframes, React-Zustand und `requestAnimationFrame`
 reichen; eine Animationsbibliothek ist weder nötig noch erwünscht.
 
-| Baustein        | Zweck                                              | Technik                    |
-| --------------- | -------------------------------------------------- | -------------------------- |
-| `SceneTimeline` | Schrittfolge, Schleife, Pause, reduced motion      | rAF + IntersectionObserver |
-| `UiWindow`      | Fensterrahmen mit Wortmarke, in dem Szenen leben   | reines Markup              |
-| `TypingText`    | Text erscheint zeichenweise, Rhythmus unregelmäßig | rAF                        |
-| `ChipPop`       | Tags ploppen gestaffelt ein                        | CSS-Keyframes              |
-| `CountUp`       | Zahl zählt hoch                                    | rAF                        |
-| `FakeCursor`    | Weicher Zeiger, der gleitet und „klickt"           | CSS-Transition             |
-| `ProgressPulse` | Ruhiger Puls, z. B. Mikrofon                       | CSS-Keyframes              |
+| Baustein        | Zweck                                              | Technik                        |
+| --------------- | -------------------------------------------------- | ------------------------------ |
+| `SceneTimeline` | Schrittfolge, Schleife, Pause, reduced motion      | rAF + IntersectionObserver     |
+| `SceneGroup`    | EIN Beobachter für mehrere Szenen nebeneinander    | IntersectionObserver + Context |
+| `UiWindow`      | Fensterrahmen mit Wortmarke, in dem Szenen leben   | reines Markup                  |
+| `TypingText`    | Text erscheint zeichenweise, Rhythmus unregelmäßig | rAF                            |
+| `ChipPop`       | Tags ploppen gestaffelt ein                        | CSS-Keyframes                  |
+| `CountUp`       | Zahl zählt hoch                                    | rAF                            |
+| `FakeCursor`    | Weicher Zeiger, der gleitet und „klickt"           | CSS-Transition                 |
+| `ProgressPulse` | Ruhiger Puls, z. B. Mikrofon                       | CSS-Keyframes                  |
+
+### Wo Szenen laufen
+
+| Ort                                  | Bühne                                                       |
+| ------------------------------------ | ----------------------------------------------------------- |
+| Hero: „Beobachtung wird Zeugnistext" | `scenes/hero-scene.tsx` – grosse Bühne im `UiWindow`, ~13 s |
+| „So funktioniert's", drei Karten     | `scenes/how-it-works-scenes.tsx` – 112-px-Bühnen, je ~6–7 s |
+
+Die drei kleinen Szenen liegen gemeinsam in einer `SceneGroup`: **ein**
+IntersectionObserver für die ganze Sektion statt drei einzelner. Sie starten
+dadurch zusammen, sobald die Sektion zu sehen ist, und über `startDelayMs`
+gestaffelt (300 ms je Szene). Ohne Staffelung bewegen sich drei Karten
+gleichzeitig und keine bekommt Aufmerksamkeit; ohne gemeinsamen Beobachter
+springt jede an, wann es der Scrollverlauf gerade ergibt.
+
+Sie sind bewusst sparsamer als der Hero: ein Gedanke je Szene, kein
+Fensterchrome, kürzerer Durchlauf. Die Bühnenhöhe entspricht exakt der der
+früheren statischen Skelette – die Kartengrösse der Sektion ist unverändert.
 
 Demo-Daten liegen zentral in [demo-data.ts](src/config/demo-data.ts) und sind
 **frei erfunden** – keine realen Personen, keine reale Klasse. Wer dort etwas
@@ -285,6 +304,12 @@ Demo-Daten liegen zentral in [demo-data.ts](src/config/demo-data.ts) und sind
 3. **Bei `prefers-reduced-motion` rendert die Szene statisch ihren
    Endzustand.** Deshalb muss der LETZTE Schritt immer der vollständige
    Zustand sein, nie ein Zwischenbild.
+4. **Schrift wird nie abgedunkelt.** Ein Element mit Text darf keinen
+   Ruhezustand bei reduzierter Opazität haben. `gray-500` erreicht auf Weiss
+   nur rund 4,8:1 und hat damit keinen Spielraum: Bei 40 % sind es 1,69:1, und
+   Lighthouse fällt von 100 auf 96 Accessibility-Punkte. Elemente, die später
+   dazukommen, blenden von 0 auf 1 ein – nicht von 0,4 auf 1. Siehe
+   [AUDIT.md](AUDIT.md), Abschnitt 9.
 
 ### Kein Layout-Sprung
 

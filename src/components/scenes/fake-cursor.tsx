@@ -34,6 +34,14 @@ type Props = {
   clicking?: boolean;
   /** false = kein Gleiten, kein Ring (prefers-reduced-motion). */
   animate?: boolean;
+  /**
+   * Kleinere Ausführung für kleine Bühnen.
+   *
+   * Auf einer 112 px hohen Fläche füllt der normale Klick-Ring beim Aufblitzen
+   * fast das ganze Bild – aus einem Hinweis wird dann ein Blitzen, das vom
+   * eigentlichen Vorgang ablenkt.
+   */
+  compact?: boolean;
   className?: string;
 };
 
@@ -43,6 +51,7 @@ export function FakeCursor({
   visible = true,
   clicking = false,
   animate = true,
+  compact = false,
   className,
 }: Props) {
   return (
@@ -64,13 +73,23 @@ export function FakeCursor({
     >
       {/* Klick-Ring. Läuft genau einmal und verschwindet. */}
       {clicking && animate ? (
-        <span className="absolute size-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-brand-600 animate-click-ring" />
+        <span
+          className={cn(
+            "absolute -translate-x-1/2 -translate-y-1/2 rounded-full border border-brand-600 animate-click-ring",
+            compact ? "size-6" : "size-10",
+          )}
+        />
       ) : null}
 
       {/* Der Zeiger selbst: ein weicher Punkt, kein Mauspfeil. Ein Pfeil sähe
           nach Betriebssystem aus und würde die Szene zum Bildschirmvideo
           machen. */}
-      <span className="absolute size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-600 opacity-70" />
+      <span
+        className={cn(
+          "absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-600 opacity-70",
+          compact ? "size-2.5" : "size-3.5",
+        )}
+      />
     </span>
   );
 }
