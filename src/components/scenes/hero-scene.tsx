@@ -1,0 +1,202 @@
+"use client";
+
+import { Mic, Sparkles } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { DEMO_CLASS, DEMO_READING } from "@/config/demo-data";
+import { ChipPop } from "@/components/scenes/chip-pop";
+import { FakeCursor } from "@/components/scenes/fake-cursor";
+import { ProgressPulse } from "@/components/scenes/progress-pulse";
+import { SceneTimeline, type SceneStep } from "@/components/scenes/scene-timeline";
+import { TypingText } from "@/components/scenes/typing-text";
+import { UiWindow } from "@/components/scenes/ui-window";
+
+/**
+ * Hero-Szene: „Beobachtung wird Zeugnistext".
+ *
+ * Ersetzt das statische <InterfaceSkeleton />. Sie zeigt in einem Durchlauf
+ * genau die Aussage der Hero-Subline: Was im Unterricht nebenbei erfasst wird,
+ * ist am Zeugnistag die Grundlage des Textes.
+ *
+ * ==========================================================================
+ * KEINE LAYOUT-SPRÜNGE
+ * --------------------------------------------------------------------------
+ * Alle Bereiche sind von Anfang an im DOM und belegen ihren Platz – auch der
+ * Zeugnis-Entwurf, der erst spät sichtbar wird. Er ist bis dahin nur
+ * durchsichtig.
+ *
+ * Der Grund ist messbar: Würden die Bereiche nachträglich eingehängt, wüchse
+ * das Fenster mitten im Durchlauf, und der Cumulative Layout Shift der
+ * Startseite stiege von 0 auf einen sichtbaren Wert. Aus demselben Grund haben
+ * alle Textkästen eine Mindesthöhe, die den fertigen Text fasst: Sonst schöbe
+ * jede neue Zeile beim Tippen den Rest der Seite nach unten.
+ * ==========================================================================
+ *
+ * Die Daten stehen in src/config/demo-data.ts und sind frei erfunden.
+ */
+
+/**
+ * Der Ablauf.
+ *
+ * „zeiger" und „klick" sind getrennt, weil der Ring erst aufblitzen darf, wenn
+ * der Zeiger angekommen ist – die Gleitbewegung dauert 700 ms (Transition in
+ * <FakeCursor />), der Schritt gibt ihr 800 ms.
+ *
+ * Der letzte Schritt ist der vollständige Zustand. Das ist Bedingung, nicht
+ * Zufall: <SceneTimeline /> rendert bei prefers-reduced-motion genau ihn.
+ */
+const HERO_STEPS: SceneStep[] = [
+  { id: "beobachten", duration: 3200 },
+  { id: "zeiger", duration: 800, delay: 350 },
+  { id: "klick", duration: 1200 },
+  { id: "zeugnistext", duration: 4000, delay: 250 },
+  { id: "endzustand", duration: 1500 },
+];
+
+/**
+ * Zeigerpositionen, in Prozent der Breite und Höhe des Fensterinhalts.
+ *
+ * Am Bildschirm ausgemessen, nicht geschätzt: Die Ruheposition liegt links
+ * unterhalb des Eingabefelds, das Ziel auf der Schaltfläche „Speichern".
+ *
+ * Die Prozentwerte verschieben sich leicht, wenn sich das Seitenverhältnis des
+ * Fensters ändert (Mobil ist es schmaler und höher). Das ist hinnehmbar –
+ * einen Zeiger, der ein paar Pixel neben der Mitte der Schaltfläche landet,
+ * bemerkt niemand. Eine an das Element gebundene Messung wäre dafür der
+ * falsche Aufwand: Sie müsste bei jeder Größenänderung neu rechnen.
+ */
+const CURSOR_REST = { x: 14, y: 70 };
+
+/** Schaltfläche „Speichern". */
+const CURSOR_BUTTON = { x: 87, y: 40 };
+
+const SCENE_LABEL =
+  "Animierte Darstellung der Programmoberfläche: Eine im Unterricht getippte Beobachtung wird zu Fach- und Kategorie-Markierungen strukturiert, und daraus entsteht ein Entwurf für die Zeugnisbemerkung im Schreibstil der Lehrkraft. Alle gezeigten Daten sind erfunden.";
+
+export function HeroScene() {
+  return (
+    <SceneTimeline steps={HERO_STEPS} label={SCENE_LABEL} loopPauseMs={2000}>
+      {(scene) => {
+        const moving = !scene.isStatic;
+        // Verlässt die Szene den Sichtbereich, halten auch die Bausteine mit
+        // eigener Schleife an – sonst tippen sie ausserhalb des Bildes zu Ende.
+        const paused = !scene.running;
+        const cursor = scene.at("beobachten") ? CURSOR_REST : CURSOR_BUTTON;
+        const structured = scene.reached("klick");
+        const drafting = scene.reached("zeugnistext");
+
+        return (
+          <UiWindow path={`Klasse ${DEMO_CLASS} · ${DEMO_READING.child}`}>
+            <div className="relative space-y-5 p-5 sm:p-6">
+              {/* ---------- Bereich 1: Beobachtung ---------- */}
+              <div>
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-xs font-medium tracking-wide text-gray-500 uppercase">
+                    Beobachtung
+                  </span>
+
+                  {/* Der Puls läuft nur, solange getippt wird – danach hätte
+                      ein dauerhaft pulsierendes Mikrofon keine Aussage mehr.
+                      `scene.running` schaltet ihn zusätzlich ab, sobald die
+                      Szene den Sichtbereich verlässt: eine unendliche
+                      CSS-Animation, die niemand sieht, ist trotzdem Arbeit. */}
+                  <ProgressPulse active={scene.running && scene.at("beobachten")}>
+                    <Mic className="size-4" />
+                  </ProgressPulse>
+                </div>
+
+                <div className="mt-2 min-h-24 rounded-lg border border-gray-200 bg-surface-alt p-3 text-sm leading-relaxed text-ink sm:min-h-20">
+                  <TypingText
+                    key={`beobachtung-${scene.cycle}`}
+                    text={DEMO_READING.input}
+                    durationMs={HERO_STEPS[0].duration}
+                    animate={moving}
+                    paused={paused}
+                  />
+                </div>
+
+                <div className="mt-3 flex items-center justify-between gap-3">
+                  <span className="text-xs text-gray-500">Getippt oder diktiert</span>
+
+                  {/* Klickziel des Zeigers. Kein echter Button und deshalb
+                      auch kein <button>: Die Szene ist als Ganzes ein Bild. */}
+                  <span className="rounded-md bg-brand-600 px-3 py-1.5 text-xs font-medium text-surface">
+                    Speichern
+                  </span>
+                </div>
+
+                {/* Feste Mindesthöhe: Die Chips dürfen den Rest nicht
+                    verschieben, wenn sie erscheinen. */}
+                <div className="mt-3 flex min-h-8 flex-wrap items-center gap-2">
+                  {structured
+                    ? DEMO_READING.chips.map((chip, position) => (
+                        <ChipPop
+                          key={`${chip}-${scene.cycle}`}
+                          delayMs={position * 110}
+                          animate={moving}
+                        >
+                          {chip}
+                        </ChipPop>
+                      ))
+                    : null}
+                </div>
+              </div>
+
+              {/* ---------- Bereich 2: Zeugnisbemerkung ---------- */}
+              {/* Immer im DOM, damit die Höhe des Fensters konstant bleibt.
+                  Vor seinem Schritt nur durchsichtig. */}
+              <div
+                className={cn(
+                  "border-t border-gray-200 pt-5",
+                  !drafting && "opacity-0",
+                  drafting && moving && "animate-panel-rise",
+                )}
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="text-xs font-medium tracking-wide text-gray-500 uppercase">
+                    Zeugnisbemerkung (Entwurf)
+                  </span>
+
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-100 px-2.5 py-1 text-xs font-medium text-brand-800">
+                    <Sparkles className="size-3" />
+                    In Ihrem Schreibstil
+                  </span>
+                </div>
+
+                <p className="mt-3 min-h-28 text-sm leading-relaxed text-ink sm:min-h-20">
+                  {drafting ? (
+                    <TypingText
+                      key={`entwurf-${scene.cycle}`}
+                      text={DEMO_READING.reportDraft}
+                      durationMs={HERO_STEPS[3].duration}
+                      animate={moving}
+                      paused={paused}
+                    />
+                  ) : null}
+                </p>
+              </div>
+
+              {/* ---------- Zeiger ---------- */}
+              {/* Im statischen Fall ausgeblendet: Ein Zeiger, der nichts tut,
+                  ist nur ein Punkt im Bild. */}
+              {/* Der key enthält NUR den Durchlauf, nicht den Schritt. Mit dem
+                  Schritt im key würde React den Zeiger bei jedem Wechsel neu
+                  montieren – er stünde dann sofort am Ziel, statt dorthin zu
+                  gleiten. Der Klick-Ring braucht trotzdem keinen eigenen key:
+                  Er wird erst eingehängt, wenn `clicking` umspringt, und
+                  startet damit von selbst. */}
+              <FakeCursor
+                key={`zeiger-${scene.cycle}`}
+                x={cursor.x}
+                y={cursor.y}
+                visible={moving}
+                clicking={scene.at("klick")}
+                animate={moving}
+              />
+            </div>
+          </UiWindow>
+        );
+      }}
+    </SceneTimeline>
+  );
+}

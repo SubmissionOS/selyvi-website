@@ -78,6 +78,41 @@
   /* Auf-/Zuklappen der FAQ. Die Hoehe liefert Radix zur Laufzeit. */
   --animate-accordion-down: accordion-down 200ms ease-out;
   --animate-accordion-up: accordion-up 200ms ease-out;
+
+  /* ==========================================================================
+     UI-SZENEN (src/components/scenes/)
+     --------------------------------------------------------------------------
+     LEISTUNGSREGEL, VERBINDLICH: Diese Keyframes animieren ausschliesslich
+     `transform` und `opacity`. Beide laufen im Compositor und loesen weder
+     Layout noch Neuzeichnen aus.
+
+     NICHT animiert werden duerfen: width, height, top/left/right/bottom,
+     margin, padding, font-size, border-width – jede dieser Eigenschaften
+     zwingt den Browser zu einem Layout-Durchlauf, und zwar fuer jedes Bild.
+     Eine Szene, die dauerhaft im Hero laeuft, macht das 60-mal pro Sekunde.
+
+     `will-change` steht bewusst in KEINER dieser Regeln. Es bekommt nur das
+     Element, das sich wirklich dauerhaft bewegt (der Szenen-Cursor), und dort
+     als Inline-Angabe. Flaechendeckend gesetzt kostet es Speicher fuer jede
+     Ebene, die der Browser vorsorglich anlegt.
+
+     Der prefers-reduced-motion-Block in @layer base schaltet alles davon ab.
+     ========================================================================== */
+
+  /* Chips/Badges: ploppen mit leichtem Ueberschwung ein. */
+  --animate-chip-pop: chip-pop 340ms cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  /* Schreibmarke im Tippfeld. */
+  --animate-caret-blink: caret-blink 1.05s steps(2, jump-none) infinite;
+
+  /* Ruhiger Puls, z. B. Mikrofon waehrend des Diktats. */
+  --animate-soft-pulse: soft-pulse 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  /* Klick-Ring des Szenen-Cursors. Laeuft genau einmal. */
+  --animate-click-ring: click-ring 560ms ease-out both;
+
+  /* Ein Bereich blendet sich ein und steigt leicht auf. */
+  --animate-panel-rise: panel-rise 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes accordion-down {
@@ -95,6 +130,67 @@
   }
   to {
     height: 0;
+  }
+}
+
+/* --- Keyframes der UI-Szenen. Nur transform und opacity, siehe oben. --- */
+
+@keyframes chip-pop {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0) scale(0.92);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.08;
+    transform: scale(1.4);
+  }
+}
+
+@keyframes click-ring {
+  from {
+    opacity: 0.5;
+    transform: translate3d(-50%, -50%, 0) scale(0.35);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(-50%, -50%, 0) scale(1.9);
+  }
+}
+
+@keyframes panel-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }
 

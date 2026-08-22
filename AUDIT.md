@@ -296,6 +296,76 @@ derzeit statisch vorgerendert. Eine CSP **mit** `unsafe-inline` schützt genau
 gegen das nicht, wogegen eine CSP schützen soll. Statt einer Alibi-Zeile steht
 der Punkt offen (siehe unten und README).
 
+## 8. UI-Szenen: Leistung und Ruheverhalten (22.08.2026)
+
+Nachtrag zur Einführung der animierten Hero-Szene
+(`src/components/scenes/`). Gemessen jeweils gegen den Produktionsbuild auf
+`localhost:3210`.
+
+### Lighthouse Startseite, vorher gegen nachher
+
+Fünf Läufe je Zustand, weil der Performance-Score zwischen einzelnen Läufen um
+mehrere Punkte schwankt. Ein einzelner Lauf taugt nicht als Vergleich.
+
+| Zustand                        | Performance je Lauf | Median | LCP   | TBT      | CLS |
+| ------------------------------ | ------------------- | ------ | ----- | -------- | --- |
+| Vorher (statisches Skelett)    | 95, 95, 95, 95, 95  | **95** | 2,9 s | 10–50 ms | 0   |
+| Nachher (animierte Hero-Szene) | 94, 95, 95, 95, 95  | **95** | 2,9 s | 30–80 ms | 0   |
+
+**Median unverändert bei 95.** Accessibility, Best Practices und SEO bleiben
+bei je 100.
+
+Ehrlich dazugesagt: Ein Lauf von fünf lag bei 94, und die Total Blocking Time
+ist gestiegen – von 10–50 ms auf 30–80 ms. Das ist der Preis für gut 23 kB
+zusätzliches Client-JavaScript (das Szenen-Bündel, unkomprimiert gemessen).
+Beides liegt innerhalb der Streuung bzw. weit unter der Schwelle von 200 ms,
+ab der Lighthouse TBT abwertet.
+
+**CLS bleibt 0.** Das war nicht selbstverständlich: Eine Szene, die Bereiche
+nachträglich einhängt, lässt das Fenster mitten im Durchlauf wachsen. Alle
+Bereiche stehen deshalb von Beginn an im DOM und alle Textkästen haben eine
+Mindesthöhe, die den fertigen Text fasst.
+
+### Ruheverhalten: rAF-Aufrufe je 3 Sekunden
+
+Gemessen über einen Zähler, der `requestAnimationFrame` umschließt, zusammen
+mit `Performance.getMetrics` (`ScriptDuration`).
+
+| Zustand               | rAF-Aufrufe | Skriptlaufzeit |
+| --------------------- | ----------- | -------------- |
+| Szene im Sichtbereich | 221         | 8,9 ms         |
+| Szene weggescrollt    | **0**       | 0,1 ms         |
+| Tab im Hintergrund    | **0**       | 0,0 ms         |
+
+Kontrollmessung auf `/produkt` (Seite ohne Szene): 0 Aufrufe in allen drei
+Zuständen.
+
+**Ein Fehler, den erst die Messung zeigte.** Der erste Durchlauf ergab bei
+weggescrollter Szene **165 Aufrufe statt 0**. Die Zeitleiste selbst pausierte
+korrekt – nachgewiesen über den IntersectionObserver, der ordnungsgemäß
+`[true, false]` meldete, und über den unveränderten Textinhalt der Szene. Der
+Aufrufstapel führte zu `TypingText`: Der Baustein hat eine EIGENE
+rAF-Schleife und tippte ausserhalb des Bildes zu Ende. Behoben über
+`scene.running`, das die Zeitleiste an alle Bausteine mit eigener Schleife
+weiterreicht (`paused`-Feld). Ohne die Messung wäre das nicht aufgefallen: Die
+Szene sah in jedem Screenshot richtig aus.
+
+### prefers-reduced-motion
+
+Über die Geräteemulation erzwungen. Die Szene rendert sofort ihren
+vollständigen Endzustand: kein Autoplay, keine Schreibmarke, kein Zeiger.
+
+Belegt über einen Hash-Vergleich zweier Aufnahmen im Abstand von 6,4 Sekunden:
+beide `1f44ecc9be8c1b61` – **in der gesamten Zeit hat sich kein Pixel bewegt.**
+Gegenprobe ohne reduced motion: zwei Aufnahmen derselben Szene ergeben
+verschiedene Hashes.
+
+### Barrierefreiheit
+
+axe-core über alle 9 Seiten erneut ausgeführt: **0 Verstöße**. Die Szene trägt
+`role="img"` mit einem beschreibenden `aria-label`; alle Elemente darin sind
+`aria-hidden` – dasselbe Muster wie bei den bisherigen statischen Skeletten.
+
 ## Gefunden und behoben
 
 | #   | Befund                                                  | Behebung                                      |

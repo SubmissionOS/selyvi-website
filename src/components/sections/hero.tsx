@@ -3,11 +3,18 @@ import Link from "next/link";
 import { PRODUCT_NAME } from "@/config/brand";
 import { primaryCta } from "@/config/site";
 import { Button } from "@/components/ui/button";
-import { InterfaceSkeleton } from "@/components/sections/interface-skeleton";
+import { HeroScene } from "@/components/scenes/hero-scene";
 
 /**
  * Sektion 1 – Hero.
  * Traegt die einzige H1 der Seite.
+ *
+ * Rechts stand bis zur Einfuehrung der Szenen ein statisches
+ * <InterfaceSkeleton />. Ersetzt durch <HeroScene />, die denselben Vorgang
+ * zeigt, den die Subline beschreibt: Beobachtung wird Zeugnistext.
+ *
+ * Die Szene ist eine Client-Komponente; der Rest der Sektion bleibt eine
+ * Server-Komponente. Nur die Szene selbst landet damit im Browser-Buendel.
  */
 export function Hero() {
   return (
@@ -64,7 +71,7 @@ export function Hero() {
           </div>
         </div>
 
-        <InterfaceSkeleton />
+        <HeroScene />
       </div>
     </section>
   );

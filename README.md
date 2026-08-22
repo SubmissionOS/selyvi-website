@@ -250,22 +250,73 @@ ungeprüft eine Version aus dem Netz nachgeladen wird. Neu hinzugefügte
 Komponenten bringen shadcn-Standardfarben mit (`bg-primary`, `bg-background`, …)
 und müssen auf die Projekt-Tokens umgestellt werden.
 
+## UI-Szenen
+
+Animierte Oberflächen-Ausschnitte unter `src/components/scenes/`. **Ohne
+Zusatzpakete** – CSS-Keyframes, React-Zustand und `requestAnimationFrame`
+reichen; eine Animationsbibliothek ist weder nötig noch erwünscht.
+
+| Baustein        | Zweck                                              | Technik                    |
+| --------------- | -------------------------------------------------- | -------------------------- |
+| `SceneTimeline` | Schrittfolge, Schleife, Pause, reduced motion      | rAF + IntersectionObserver |
+| `UiWindow`      | Fensterrahmen mit Wortmarke, in dem Szenen leben   | reines Markup              |
+| `TypingText`    | Text erscheint zeichenweise, Rhythmus unregelmäßig | rAF                        |
+| `ChipPop`       | Tags ploppen gestaffelt ein                        | CSS-Keyframes              |
+| `CountUp`       | Zahl zählt hoch                                    | rAF                        |
+| `FakeCursor`    | Weicher Zeiger, der gleitet und „klickt"           | CSS-Transition             |
+| `ProgressPulse` | Ruhiger Puls, z. B. Mikrofon                       | CSS-Keyframes              |
+
+Demo-Daten liegen zentral in [demo-data.ts](src/config/demo-data.ts) und sind
+**frei erfunden** – keine realen Personen, keine reale Klasse. Wer dort etwas
+ändert, setzt niemals echte Schülerdaten ein.
+
+### Drei Regeln, die das Fundament durchsetzt
+
+1. **Nur `transform` und `opacity` werden animiert.** Keine Layout-Eigenschaften
+   (`width`, `height`, `top`/`left`, `margin`). Die Keyframes stehen gesammelt
+   in `globals.css`, jede mit dieser Begründung im Kommentar. `will-change`
+   trägt genau ein Element: der Zeiger, weil er sich als einziges dauerhaft
+   bewegt.
+2. **Ausserhalb des Sichtbereichs läuft nichts.** Der IntersectionObserver
+   hält die Zeitleiste an – und über `scene.running` auch die Bausteine mit
+   eigener Schleife. Das ist kein Detail: Ohne diese Weitergabe tippte
+   `TypingText` ausserhalb des Bildes zu Ende, messbar rund 165
+   rAF-Aufrufe in drei Sekunden. Siehe [AUDIT.md](AUDIT.md), Abschnitt 8.
+3. **Bei `prefers-reduced-motion` rendert die Szene statisch ihren
+   Endzustand.** Deshalb muss der LETZTE Schritt immer der vollständige
+   Zustand sein, nie ein Zwischenbild.
+
+### Kein Layout-Sprung
+
+Alle Bereiche einer Szene stehen von Anfang an im DOM und belegen ihren Platz;
+was noch nicht dran ist, ist nur durchsichtig. Textkästen haben eine
+Mindesthöhe, die den fertigen Text fasst. Ohne beides wüchse das Fenster
+mitten im Durchlauf und der CLS der Startseite stiege von 0 an.
+
+### Eine neue Szene bauen
+
+Schritte deklarieren, `SceneTimeline` mit einem `label` versehen (die Szene
+trägt `role="img"`, alles darin ist `aria-hidden`), Bausteine über den
+`scene`-Parameter schalten. `key={...scene.cycle}` an jeden Baustein, der pro
+Durchlauf neu beginnen soll, und `paused={!scene.running}` an jeden mit eigener
+Schleife.
+
 ## Startseite
 
 Neun Sektionen, jede als eigene Komponente unter `src/components/sections/`.
 [page.tsx](src/app/page.tsx) ist reine Komposition.
 
-| #   | Sektion                                 | Komponente                            |
-| --- | --------------------------------------- | ------------------------------------- |
-| 1   | Hero (einzige H1)                       | `hero.tsx` + `interface-skeleton.tsx` |
-| 2   | Trust-Zeile                             | `trust-bar.tsx`                       |
-| 3   | Problem → Lösung                        | `problem-solution.tsx`                |
-| 4   | So funktioniert’s (`#so-funktionierts`) | `how-it-works.tsx`                    |
-| 5   | Kernfunktionen                          | `features.tsx`                        |
-| 6   | DSGVO-Block                             | `privacy.tsx`                         |
-| 7   | Testimonials (abgeschaltet)             | `testimonials.tsx`                    |
-| 8   | FAQ                                     | `faq.tsx`                             |
-| 9   | Abschluss-CTA                           | `final-cta.tsx`                       |
+| #   | Sektion                                 | Komponente                           |
+| --- | --------------------------------------- | ------------------------------------ |
+| 1   | Hero (einzige H1)                       | `hero.tsx` + `scenes/hero-scene.tsx` |
+| 2   | Trust-Zeile                             | `trust-bar.tsx`                      |
+| 3   | Problem → Lösung                        | `problem-solution.tsx`               |
+| 4   | So funktioniert’s (`#so-funktionierts`) | `how-it-works.tsx`                   |
+| 5   | Kernfunktionen                          | `features.tsx`                       |
+| 6   | DSGVO-Block                             | `privacy.tsx`                        |
+| 7   | Testimonials (abgeschaltet)             | `testimonials.tsx`                   |
+| 8   | FAQ                                     | `faq.tsx`                            |
+| 9   | Abschluss-CTA                           | `final-cta.tsx`                      |
 
 ## Produktseite (/produkt)
 
