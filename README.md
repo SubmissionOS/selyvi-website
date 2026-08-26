@@ -859,12 +859,25 @@ Vercel-Preview-URL, und `SITE_URL` bleibt auf dem `.example`-Platzhalter.
 | 6   | OG-Vorschau prüfen und Cache leeren lassen                           | LinkedIn Post Inspector, Facebook Sharing Debugger |
 | 7   | Property anlegen, Sitemap einreichen                                 | Google Search Console, Bing Webmaster Tools        |
 | 8   | `npm run smoke https://selyvi.de` erneut ausführen                   | lokal                                              |
+| 9   | Vercel-Region verifizieren (schon nach dem ersten Deploy möglich)    | Vercel → Settings → Functions                      |
 
 Zu Schritt 3: Canonical, `og:url`, Sitemap und robots.txt leiten sich alle aus
 `SITE_URL` ab – es ist genau **eine** Zeile.
 
 Zu Schritt 6: Das OG-Bild trägt `?v=2`. Falls das Motiv später ausgetauscht
 wird, die Zahl in `OG_IMAGE.url` erhöhen, damit die Netzwerke es neu holen.
+
+Zu Schritt 9: [vercel.json](vercel.json) fordert `"regions": ["fra1"]` – also
+Frankfurt. Erwartet wird genau das. Auf dieser Angabe steht die Aussage
+„Diese Website wird in Frankfurt am Main gehostet" auf
+[/datenschutz-sicherheit](src/components/sections/sicherheit/principles-grid.tsx);
+solange sie nicht einmal am laufenden Deployment nachgesehen wurde, ist sie
+angenommen und nicht geprüft.
+
+Das Ergebnis gehört als Kommentar hierher, nicht in `vercel.json` – die Datei
+muss gültiges JSON bleiben und verträgt keine Kommentare. Also nach der
+Prüfung diesen Absatz ergänzen, zum Beispiel:
+`<!-- Geprüft am TT.MM.JJJJ: Region fra1 bestätigt. -->`
 
 **Nicht vergessen, unabhängig vom Domainkauf:** `PRIVACY_APPROVED` steht auf
 `false`. Solange trägt `/datenschutz` ein `noindex` und fehlt in der Sitemap.

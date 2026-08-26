@@ -3,6 +3,7 @@ import { FileDown } from "lucide-react";
 import { IMPACT_LINE_PRINCIPLE } from "@/config/product";
 
 import { SteeringScene } from "@/components/scenes/produkt/steering-scene";
+import { SampleDataNote } from "@/components/scenes/sample-data-note";
 
 /**
  * Sektion – Der Entlastungsbericht.
@@ -73,6 +74,7 @@ export function ReliefReport() {
               auseinanderlaufen. */}
           <div className="lg:pt-4">
             <SteeringScene size="large" />
+            <SampleDataNote />
           </div>
         </div>
 

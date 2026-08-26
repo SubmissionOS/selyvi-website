@@ -5,6 +5,7 @@ import {
   ObserveScene,
   ReportScene,
 } from "@/components/scenes/how-it-works-scenes";
+import { SampleDataNote } from "@/components/scenes/sample-data-note";
 
 /**
  * Sektion 4 – So funktioniert’s.
@@ -42,6 +43,8 @@ const steps = [
   {
     title: "Die Schulleitung sieht die gewonnene Zeit",
     scene: <ReportScene startDelayMs={CASCADE_MS * 2} />,
+    // Einzige der drei Mini-Szenen mit einer Kennzahl.
+    sceneHasFigures: true,
   },
 ];
 
@@ -80,7 +83,10 @@ export function HowItWorks() {
 
                 <h3 className="mt-5 text-lg font-semibold text-ink">{step.title}</h3>
 
-                <div className="mt-6">{step.scene}</div>
+                <div className="mt-6">
+                  {step.scene}
+                  {step.sceneHasFigures ? <SampleDataNote /> : null}
+                </div>
               </li>
             ))}
           </ol>

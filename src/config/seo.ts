@@ -133,7 +133,10 @@ export const routes: RouteMeta[] = [
   },
   {
     path: "/demo",
-    title: "Demo buchen",
+    // Angeglichen an die H1 und an den Absende-Button der Seite. „Demo buchen“
+    // ist die Beschriftung des CTA im Header – auf der Zielseite wird aber
+    // nichts gebucht, sondern eine Anfrage geschickt, auf die wir uns melden.
+    title: "Demo anfragen",
     description:
       "In 20 Minuten zeigen wir Ihnen die echte Oberfläche – kein Video, keine Folien. Ihre Fragen kommen zuerst.",
     priority: 0.9,

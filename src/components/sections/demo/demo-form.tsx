@@ -308,7 +308,7 @@ export function DemoForm() {
             <p className="mt-4 text-sm text-gray-500">
               <span aria-hidden="true">*</span> Pflichtfeld. Ihre Angaben verwenden wir
               ausschließlich zur Bearbeitung dieser Anfrage – kein Newsletter, keine
-              Weitergabe.
+              Werbung.
             </p>
           </div>
         </form>

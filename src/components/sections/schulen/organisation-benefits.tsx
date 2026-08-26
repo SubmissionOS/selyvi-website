@@ -15,9 +15,9 @@ import { Button } from "@/components/ui/button";
 const benefits = [
   {
     icon: Users,
-    title: "Entlastung, die ankommt",
+    title: "Entlastung dort, wo die Arbeit anfällt",
     description:
-      "Der Aufwand sinkt dort, wo er im Kollegium tatsächlich anfällt: bei Zeugnisbemerkungen, bei Elternmails und beim Zusammensuchen von Material.",
+      "Die Schreibarbeit übernimmt Selyvi an den drei Stellen, an denen sie im Kollegium wirklich anfällt: Zeugnisbemerkungen, Elternmails und das Zusammensuchen von Material.",
     // Beleg-Satz: dieselbe kanonische Aussage wie auf Startseite und /produkt.
     evidence: PRACTICE_CLAIM,
   },

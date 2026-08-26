@@ -30,7 +30,7 @@ export default function DemoPage() {
             id="demo-titel"
             className="text-4xl font-semibold tracking-tight text-ink sm:text-5xl"
           >
-            Sehen Sie {PRODUCT_NAME} live.
+            Sehen Sie, was {PRODUCT_NAME} Ihnen abnimmt.
           </h1>
 
           <p className="mt-6 text-lg text-gray-500">

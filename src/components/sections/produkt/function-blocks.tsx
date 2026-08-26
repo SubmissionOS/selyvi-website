@@ -13,6 +13,7 @@ import { DocumentationScene } from "@/components/scenes/produkt/documentation-sc
 import { CommunicationScene } from "@/components/scenes/produkt/communication-scene";
 import { TeachingScene } from "@/components/scenes/produkt/teaching-scene";
 import { SteeringScene } from "@/components/scenes/produkt/steering-scene";
+import { SampleDataNote } from "@/components/scenes/sample-data-note";
 
 type FunctionBlock = {
   id: string;
@@ -29,6 +30,11 @@ type FunctionBlock = {
   paragraphs: string[];
   bullets: string[];
   scene: ReactNode;
+  /**
+   * Zeigt die Szene Kennzahlen? Dann steht darunter ein sichtbarer
+   * „Beispieldaten“-Hinweis – siehe sample-data-note.tsx.
+   */
+  sceneHasFigures?: boolean;
   action?: { label: string; href: string };
 };
 
@@ -37,13 +43,13 @@ type FunctionBlock = {
  * Dokumentation, Kommunikation, Unterricht, Steuerung.
  *
  * ==========================================================================
- * NUR „LIVE"-FUNKTIONEN. Was im Dokument „Rollout offen", „Teilweise" oder
- * „Nicht gebaut" traegt, steht hier NICHT – auch nicht abgeschwaecht.
+ * NUR „LIVE“-FUNKTIONEN. Was im Dokument „Rollout offen“, „Teilweise“ oder
+ * „Nicht gebaut“ traegt, steht hier NICHT – auch nicht abgeschwaecht.
  * ==========================================================================
  *
  * Konkret nicht auf dieser Seite, obwohl es naheliegend waere:
- *   - Uebernahme von Original-Arbeitsblaettern aus dem Korpus („Rollout offen")
- *   - Stilprofil per Upload eigener Texte („Teilweise" – Backend steht, die
+ *   - Uebernahme von Original-Arbeitsblaettern aus dem Korpus („Rollout offen“)
+ *   - Stilprofil per Upload eigener Texte („Teilweise“ – Backend steht, die
  *     Oberflaeche fehlt). Es steht stattdessen in <Roadmap />.
  *   - Der KI-Vorschlag zum Sitzplan – der Sitzplan selbst ist live, der
  *     Vorschlag ist Prototyp. Der Stichpunkt nennt deshalb nur den Sitzplan.
@@ -118,6 +124,7 @@ const blocks: FunctionBlock[] = [
       "Einzelne Beobachtungen und Bewertungen bleiben bei der Lehrkraft",
     ],
     scene: <SteeringScene />,
+    sceneHasFigures: true,
     action: {
       label: "Für Schulleitungen",
       href: "/schulen",
@@ -183,7 +190,10 @@ export function FunctionBlocks() {
                 ) : null}
               </div>
 
-              <div className={reversed ? "lg:order-1" : undefined}>{block.scene}</div>
+              <div className={reversed ? "lg:order-1" : undefined}>
+                {block.scene}
+                {block.sceneHasFigures ? <SampleDataNote /> : null}
+              </div>
             </div>
           </div>
         );
