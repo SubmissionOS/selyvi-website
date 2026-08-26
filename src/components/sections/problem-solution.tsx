@@ -20,8 +20,15 @@ const pairs = [
       "Beobachtungen aus dem Unterricht – getippt oder diktiert – werden am Zeugnistag zur Grundlage des Textes.",
   },
   {
+    // „in Ihrem Stil“ stand bis zur Straffung in diesem Satz. Die Stil-Aussage
+    // ist eines der drei Alleinstellungsmerkmale und gehoert seither genau
+    // einmal auf die Startseite – in die Spalte „Fuer Lehrkraefte“ der Sektion
+    // „Was Selyvi zurueckgibt“. Hier stand sie nur nebenbei und hat die Aussage
+    // dort entwertet. Der Satz nennt jetzt, was der Produktstand woertlich
+    // sagt: Die Mail entsteht auf Deutsch und wird in einem zweiten Schritt
+    // uebersetzt.
     problem: "Elternmails kosten Abende, in mehreren Sprachen erst recht",
-    solution: `Die Mail entsteht in Ihrem Stil und wird auf Wunsch übersetzt – in ${TRANSLATION_LANGUAGE_COUNT} Sprachen.`,
+    solution: `Die Mail entsteht auf Deutsch und wird auf Wunsch übersetzt – in ${TRANSLATION_LANGUAGE_COUNT} Sprachen.`,
   },
   {
     problem: "Material von der Stange passt nie zur eigenen Klasse",

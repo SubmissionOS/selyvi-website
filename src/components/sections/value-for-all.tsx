@@ -1,5 +1,4 @@
 import { PRODUCT_NAME } from "@/config/brand";
-import { TRANSLATION_LANGUAGE_COUNT } from "@/config/product";
 
 /**
  * Sektion 8 – Was Selyvi zurueckgibt.
@@ -27,6 +26,43 @@ import { TRANSLATION_LANGUAGE_COUNT } from "@/config/product";
  *     Der Produktstand fuehrt sie unter „Fuer den Vertrieb – nichts davon
  *     gehoert auf die oeffentliche Website“.
  *
+ *
+ * ==========================================================================
+ * WARUM DIE SPALTE „FUER LEHRKRAEFTE“ ANDERS GEBAUT IST ALS DIE ANDEREN BEIDEN
+ * ==========================================================================
+ * Sie nannte urspruenglich Zeugnistext, Elternmail und Material – also genau
+ * die drei Tatsachen, die auf der Startseite ohnehin schon im Hero, in „Was
+ * sich im Alltag ändert“, in „Was Ihnen abgenommen wird“ und in der FAQ
+ * stehen. Gemessen ueber die Quelldateien waren das fuenf Sektionen fuer
+ * dieselben drei Aussagen; diese hier war die fuenfte und hat nichts
+ * hinzugefuegt.
+ *
+ * Jetzt traegt sie drei Merkmale, die sonst NIRGENDS auf der Startseite
+ * stehen – nachgezaehlt vor der Aenderung, jeweils 0 Treffer ueber alle
+ * Startseiten-Sektionen und die beiden Szenen-Dateien:
+ *
+ *   1. Gelernter Schreibstil.  Produktstand: „Zeugnisbemerkungen — Live …
+ *      im gelernten Schreibstil der Lehrkraft.“
+ *      ACHTUNG BEIM UEBERARBEITEN: „Schreibstil lernen“ steht separat als
+ *      „Teilweise“ – gemeint ist dort der UPLOAD eigener Texte, dessen
+ *      Oberflaeche fehlt. Heute entsteht das Profil aus den in der Anwendung
+ *      geschriebenen Texten. Der Stichpunkt sagt deshalb, DASS der Stil
+ *      gelernt wird, und nicht, dass man Texte hochlaedt. Wer das aendert,
+ *      macht aus einer gedeckten Aussage eine ungedeckte.
+ *   2. Keine Automatik bei Kompetenzen.  Produktstand: „Kompetenzen statt
+ *      Notendurchschnitt — Live … Bewusst ohne automatischen Vorschlag aus
+ *      der Note.“
+ *   3. Fundstellen selbst waehlbar.  Produktstand: „Unterrichtsmaterial aus
+ *      echtem Fachwissen — Live … Die Lehrkraft kann die Fundstellen auch
+ *      selbst auswaehlen statt sie automatisch ziehen zu lassen.“
+ *
+ * Der dritte Punkt vermeidet bewusst das Wort „Material“: Die Aussage
+ * „Material, das zur Klasse passt“ steht schon vier Mal auf der Seite. Hier
+ * geht es um etwas anderes – wer die Quellen auswaehlt.
+ *
+ * Alle drei passen unter dieselbe Ueberschrift: Es sind die Stellen, an denen
+ * die Entscheidung ausdruecklich bei der Lehrkraft bleibt.
+ *
  * Und es gibt bewusst KEINE vierte Spalte fuer Schuelerinnen und Schueler.
  * Es gibt kein Schuelerportal; eine eigene Spalte wuerde einen Zugang
  * suggerieren, den das Produkt nicht hat und nicht haben will. Der eine
@@ -43,9 +79,9 @@ const columns: ValueColumn[] = [
     audience: "Für Lehrkräfte",
     headline: "Die Schreibarbeit, nicht das Urteil.",
     points: [
-      "Zeugnistexte entstehen aus der eigenen Dokumentation – im eigenen Schreibstil",
-      `Elternpost in Minuten, auf Wunsch in ${TRANSLATION_LANGUAGE_COUNT} Sprachen`,
-      "Material, das zur eigenen Klasse passt – mit ausgewiesenen Quellen",
+      `Texte, die nach Ihnen klingen – ${PRODUCT_NAME} lernt Ihren Schreibstil und schreibt darin, nicht in KI-Sprache`,
+      "Keine Automatik bei Kompetenzen – aus einer Deutschnote folgt nicht, ob ein Kind flüssig liest. Eingeschätzt wird, was Sie beobachtet haben",
+      "Welche Fundstellen aus dem Fachkorpus einfließen, wählen Sie auf Wunsch selbst – statt sie automatisch ziehen zu lassen",
     ],
   },
   {

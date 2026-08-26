@@ -20,7 +20,11 @@ const features = [
   {
     icon: Mail,
     title: "Kommunikation",
-    description: `Zeugnisbemerkungen und Elternmails entstehen aus den eigenen Beobachtungen, im gelernten Schreibstil – Elternmails auf Wunsch in ${TRANSLATION_LANGUAGE_COUNT} Sprachen.`,
+    // „im gelernten Schreibstil“ ist hier entfallen – siehe value-for-all.tsx:
+    // Die Stil-Aussage traegt seit der Straffung die Spalte „Fuer Lehrkraefte“,
+    // und zwar als einzige Stelle der Startseite. Diese Karte beschreibt den
+    // BEREICH Kommunikation; dafuer braucht sie das Merkmal nicht.
+    description: `Zeugnisbemerkungen und Elternmails entstehen aus den eigenen Beobachtungen – Elternmails auf Wunsch in ${TRANSLATION_LANGUAGE_COUNT} Sprachen.`,
   },
   {
     icon: BookOpen,
