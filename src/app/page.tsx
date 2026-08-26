@@ -1,10 +1,12 @@
 import { HomeJsonLd } from "@/components/seo/json-ld";
 import { Hero } from "@/components/sections/hero";
 import { TrustBar } from "@/components/sections/trust-bar";
+import { AudienceSwitch } from "@/components/sections/audience-switch";
 import { ProblemSolution } from "@/components/sections/problem-solution";
 import { HowItWorks } from "@/components/sections/how-it-works";
 import { FromPractice } from "@/components/sections/from-practice";
 import { Features } from "@/components/sections/features";
+import { ValueForAll } from "@/components/sections/value-for-all";
 import { Privacy } from "@/components/sections/privacy";
 import { Testimonials } from "@/components/sections/testimonials";
 import { Faq } from "@/components/sections/faq";
@@ -27,10 +29,12 @@ export default function HomePage() {
       <HomeJsonLd />
       <Hero />
       <TrustBar />
+      <AudienceSwitch />
       <ProblemSolution />
       <HowItWorks />
       <FromPractice />
       <Features />
+      <ValueForAll />
       <Privacy />
       <Testimonials />
       <Faq />
