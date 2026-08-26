@@ -1,5 +1,7 @@
 import { FileDown } from "lucide-react";
 
+import { IMPACT_LINE_PRINCIPLE } from "@/config/product";
+
 import { SteeringScene } from "@/components/scenes/produkt/steering-scene";
 
 /**
@@ -88,8 +90,7 @@ export function ReliefReport() {
 
           <p className="text-gray-500">
             <span className="font-medium text-ink">Die Wirkungszeile.</span> Direkt unter
-            dem Bericht steht ein Satz zur gemessenen Wirkung. Wir zeigen gemessene
-            Wirkung – oder sagen ehrlich, warum sich noch nichts sagen lässt. Eingesparte
+            dem Bericht steht ein Satz zur Wirkung: „{IMPACT_LINE_PRINCIPLE}“ Eingesparte
             Stunden sind eine Prozesskennzahl, kein Wirkungsnachweis.
           </p>
         </div>

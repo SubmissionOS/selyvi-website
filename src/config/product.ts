@@ -96,3 +96,21 @@ export const TRANSLATION_LANGUAGE_COUNT = TRANSLATION_LANGUAGES.length;
  * beim naechsten Zuwachs von der Zahl ab, und beides steht auf derselben Seite.
  */
 export const TRANSLATION_LANGUAGES_SENTENCE = `${TRANSLATION_LANGUAGES.slice(0, -1).join(", ")} und ${TRANSLATION_LANGUAGES[TRANSLATION_LANGUAGES.length - 1]}`;
+
+/**
+ * Der Grundsatz hinter der Wirkungszeile – WORTGLEICH so, wie ihn
+ * docs/produktstand-2026-08.md beschreibt („Wirkungszeile — Live").
+ *
+ * Warum das eine geteilte Konstante ist und keine zwei Formulierungen:
+ * Der Satz stand auf /forschung und auf /schulen in zwei Fassungen, und die
+ * /schulen-Fassung war ungenauer als die Quelle. Dort hiess es „Wir zeigen
+ * gemessene Wirkung" – das Produkt zeigt aber gemessene BEFRAGUNGSWERTE.
+ * Der Unterschied ist nicht spitzfindig, er ist der ganze Punkt: Genau weil
+ * eingesparte Stunden eben KEIN Wirkungsnachweis sind, darf die Zeile, die
+ * das klarstellt, nicht selbst Wirkung versprechen.
+ *
+ * Wer den Wortlaut aendert, aendert ihn auf beiden Seiten gleichzeitig – und
+ * sollte vorher im Produktstand nachlesen, was die Zeile wirklich anzeigt.
+ */
+export const IMPACT_LINE_PRINCIPLE =
+  "Unser System zeigt gemessene Befragungswerte – oder sagt in Klartext, warum sich noch nichts sagen lässt. Diese Zeile verschwindet nie.";

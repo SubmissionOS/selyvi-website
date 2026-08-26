@@ -1,3 +1,5 @@
+import { IMPACT_LINE_PRINCIPLE } from "@/config/product";
+
 /**
  * Sektion 3 – Der Grundsatz hinter der Wirkungszeile, als Zitat-Band.
  *
@@ -21,8 +23,7 @@ export function ImpactLineQuote() {
       <div className="mx-auto w-full max-w-6xl px-6 py-16 lg:px-8 lg:py-20">
         <blockquote className="max-w-3xl border-l-2 border-brand-600 pl-6">
           <p className="text-2xl leading-snug font-medium tracking-tight text-ink sm:text-3xl">
-            „Unser System zeigt gemessene Befragungswerte – oder sagt in Klartext, warum
-            sich noch nichts sagen lässt. Diese Zeile verschwindet nie.“
+            „{IMPACT_LINE_PRINCIPLE}“
           </p>
         </blockquote>
 
