@@ -7,7 +7,7 @@ import { FunctionBlocks } from "@/components/sections/produkt/function-blocks";
 import { Roadmap } from "@/components/sections/produkt/roadmap";
 import { FinalCta } from "@/components/sections/final-cta";
 
-export const metadata: Metadata = pageMetadata("/produkt");
+export const metadata: Metadata = pageMetadata("/fuer-lehrkraefte");
 
 /**
  * Produktseite.

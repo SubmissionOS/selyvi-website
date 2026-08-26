@@ -14,10 +14,10 @@ export type NavItem = {
 
 /** Hauptnavigation im Header (Desktop und Burger-Menue nutzen dieselbe Liste). */
 export const mainNav: NavItem[] = [
-  { label: "Produkt", href: "/produkt" },
-  { label: "Für Schulen", href: "/schulen" },
+  { label: "Für Lehrkräfte", href: "/fuer-lehrkraefte" },
+  { label: "Für Schulleitungen", href: "/schulen" },
   { label: "Sicherheit", href: "/datenschutz-sicherheit" },
-  { label: "Über uns", href: "/ueber-uns" },
+  { label: "Unsere Geschichte", href: "/ueber-uns" },
 ];
 
 /** Primaerer Call-to-Action – die einzige Stelle, an der --cta zum Einsatz kommt. */
@@ -34,10 +34,10 @@ export type FooterColumn = {
 /** Vier Footer-Spalten mit Platzhalter-Links. */
 export const footerColumns: FooterColumn[] = [
   {
-    title: "Produkt",
+    title: "Selyvi",
     items: [
-      { label: "Überblick", href: "/produkt" },
-      { label: "Für Schulen", href: "/schulen" },
+      { label: "Für Lehrkräfte", href: "/fuer-lehrkraefte" },
+      { label: "Für Schulleitungen", href: "/schulen" },
       { label: "Datenschutz & Sicherheit", href: "/datenschutz-sicherheit" },
       { label: "Demo buchen", href: "/demo" },
     ],
@@ -54,8 +54,7 @@ export const footerColumns: FooterColumn[] = [
      * Eintrag mit eigener Route ergänzen.
      */
     items: [
-      { label: "Über uns", href: "/ueber-uns" },
-      { label: "Unsere Geschichte", href: "/ueber-uns#warum" },
+      { label: "Unsere Geschichte", href: "/ueber-uns" },
       // Als gewöhnlicher Link, nicht als Button: Der primäre CTA steht bereits
       // in der Kopfzeile, und --cta bleibt genau ihm vorbehalten.
       { label: "Demo buchen", href: "/demo" },

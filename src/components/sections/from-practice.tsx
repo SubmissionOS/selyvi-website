@@ -5,7 +5,7 @@ import { PRACTICE_CLAIM } from "@/config/brand";
 import { Button } from "@/components/ui/button";
 
 /**
- * Sektion „Aus der Praxis“ – zwischen „So funktioniert’s“ und „Kernfunktionen“.
+ * Sektion „Aus der Praxis“ – zwischen „So funktioniert’s“ und „Was Ihnen abgenommen wird“.
  *
  * Bewusst ohne Karten-Raster: Die Aussage traegt sich selbst, ein Raster wuerde
  * sie zu einem weiteren Feature-Block machen. Zwei Saetze, viel Weissraum, ein
@@ -42,7 +42,7 @@ export function FromPractice() {
 
           <div className="mt-8">
             <Button asChild variant="link" size="sm" className="h-auto px-0">
-              <Link href="/produkt">
+              <Link href="/fuer-lehrkraefte">
                 Was daraus entstanden ist
                 <ArrowRight aria-hidden="true" />
               </Link>

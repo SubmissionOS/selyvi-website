@@ -24,7 +24,7 @@ if (!base) {
 
 const PAGES = [
   "/",
-  "/produkt",
+  "/fuer-lehrkraefte",
   "/schulen",
   "/datenschutz-sicherheit",
   "/ueber-uns",

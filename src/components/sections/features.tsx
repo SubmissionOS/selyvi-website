@@ -3,7 +3,7 @@ import { BarChart3, BookOpen, ClipboardList, Mail } from "lucide-react";
 import { TRANSLATION_LANGUAGE_COUNT } from "@/config/product";
 
 /**
- * Sektion 5 – Kernfunktionen.
+ * Sektion 5 – Was Ihnen abgenommen wird.
  * Je Karte genau ein Nutzensatz. Keine Adjektivketten, keine Superlative.
  *
  * Die vier Karten sind die vier Bereiche, in die docs/produktstand-2026-08.md
@@ -38,13 +38,13 @@ const features = [
 
 export function Features() {
   return (
-    <section aria-labelledby="kernfunktionen-titel">
+    <section aria-labelledby="abgenommen-titel">
       <div className="mx-auto w-full max-w-6xl px-6 py-24 lg:px-8 lg:py-32">
         <h2
-          id="kernfunktionen-titel"
+          id="abgenommen-titel"
           className="max-w-2xl text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
         >
-          Kernfunktionen
+          Was Ihnen abgenommen wird
         </h2>
 
         <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

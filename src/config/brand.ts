@@ -53,6 +53,32 @@ export const PRACTICE_CLAIM_SHORT =
   "Mit Lehrkräften aus ganz Baden-Württemberg entwickelt";
 
 /**
+ * Antwort auf die Schulform-Frage – EINE Formulierung für die ganze Website.
+ *
+ * Sie steht in der FAQ der Startseite und auf /fuer-lehrkraefte. Dieselbe
+ * Bauweise wie PRACTICE_CLAIM und <DpaBand />: Die Frage „für welche
+ * Schulform?" ist die erste, die eine Lehrkraft stellt, und zwei leicht
+ * verschiedene Antworten darauf wären genau die Art Widerspruch, die im
+ * Erstgespräch auffällt.
+ *
+ * DREI TEILE, DREI VERSCHIEDENE GELTUNGSBEREICHE – bitte nicht vermischen:
+ *
+ *   1. „heute für die Grundschule gebaut, Klassen 1 bis 4" ist eine
+ *      Tatsachenaussage und durch docs/produktstand-2026-08.md gedeckt.
+ *   2. „entwickelt gemeinsam mit Lehrkräften von der Grundschule bis zum
+ *      Abitur" beschreibt die ENTSTEHUNG, nicht die Eignung. Gedeckt durch
+ *      PRACTICE_CLAIM. Deshalb steht der Zusatz hier und nur hier – im
+ *      Trust-Band und auf /schulen bleibt PRACTICE_CLAIM ohne ihn.
+ *   3. „Weitere Schulformen folgen." ist AUSBLICK, keine Funktionszusage. Der
+ *      Produktstand sagt dazu nichts; das Wort „folgen" macht die Aussage als
+ *      Zukunft erkennbar und nennt bewusst weder Schulform noch Zeitpunkt.
+ *      Sobald eine zweite Schulform ausgeliefert ist, gehört hier eine
+ *      Tatsache hin – kein Ausblick mehr.
+ */
+export const SCHOOL_TYPE_ANSWER =
+  "Selyvi ist heute für die Grundschule gebaut, Klassen 1 bis 4 – entwickelt gemeinsam mit Lehrkräften von der Grundschule bis zum Abitur. Weitere Schulformen folgen.";
+
+/**
  * CTA-Farbvariante.
  *
  * "a" = #2c40ff (kontrastierendes Blau-Violett)

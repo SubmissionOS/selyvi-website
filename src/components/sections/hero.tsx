@@ -21,15 +21,26 @@ export function Hero() {
     <section aria-labelledby="hero-titel" className="border-b border-gray-200">
       <div className="mx-auto grid w-full max-w-6xl gap-16 px-6 py-20 lg:grid-cols-2 lg:items-center lg:gap-20 lg:px-8 lg:py-28">
         <div>
-          {/* Zwei Saetze, zwei Zeilen: die block-spans erzwingen den Umbruch an
-              der Satzgrenze. Ohne sie verteilt text-wrap: balance (globals.css)
-              die Woerter gleichmaessig und bricht mitten im ersten Satz um. */}
+          {/* DREI block-Spans, nicht zwei – und das ist gemessen, nicht
+              Geschmack.
+
+              Mit zwei Spans (Umbruch nur an der Satzgrenze) verteilt
+              `text-wrap: balance` aus globals.css den ersten Satz selbst, und
+              auf 390 px endete die zweite Zeile dann mitten in der Wendung:
+              „Sie sind Lehrkraft / geworden, um / zu unterrichten." Ein
+              Zeilenende auf „um" liest sich wie ein Stolpern.
+
+              Jetzt bricht die Zeile an den beiden natürlichen Grenzen des
+              Satzes – nach dem Komma und nach dem Punkt. Die Schriftgröße ist
+              so gewählt, dass jeder der drei Teile auf 390 px wie auf 1440 px
+              in EINE Zeile passt; damit hat `balance` nichts mehr zu tun. */}
           <h1
             id="hero-titel"
-            className="text-4xl font-semibold tracking-tight text-ink sm:text-5xl"
+            className="text-2xl font-semibold tracking-tight text-ink sm:text-4xl"
           >
-            <span className="block">Weniger Verwaltung.</span>
-            <span className="block">Mehr Unterricht.</span>
+            <span className="block">Sie sind Lehrkraft geworden,</span>
+            <span className="block">um zu unterrichten.</span>
+            <span className="block">Nicht, um zu verwalten.</span>
           </h1>
 
           {/* Subline nach docs/produktstand-2026-08.md: benennt die drei
@@ -38,10 +49,10 @@ export function Hero() {
               zwei Dinge zu, die es so nicht gibt – eine Korrekturfunktion und
               EU-Hosting des Produkts. */}
           <p className="mt-6 max-w-xl text-lg text-gray-500">
-            {PRODUCT_NAME} ist die KI-Assistenz für Grundschullehrkräfte – nimmt
-            Beobachtungen aus dem Unterricht auf und macht daraus Zeugnisbemerkungen,
-            Elternmails und passendes Unterrichtsmaterial. In Ihrer Sprache, nicht in
-            KI-Sprache.
+            {PRODUCT_NAME} nimmt Ihre Beobachtungen aus dem Unterricht auf – getippt oder
+            gesprochen – und macht daraus, was Sie ohnehin schreiben müssen:
+            Zeugnisbemerkungen, Elternmails, passendes Material. In Ihrer Sprache, nicht
+            in KI-Sprache.
           </p>
 
           {/* Herkunftszeile. Nennt bewusst keinen Namen – die Person bleibt

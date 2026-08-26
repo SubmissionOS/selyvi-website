@@ -1,4 +1,4 @@
-import { PRODUCT_NAME } from "@/config/brand";
+import { PRODUCT_NAME, SCHOOL_TYPE_ANSWER } from "@/config/brand";
 
 /**
  * Sektion 1 – Intro.
@@ -21,14 +21,22 @@ export function ProductIntro() {
           id="produkt-intro-titel"
           className="max-w-3xl text-4xl font-semibold tracking-tight text-ink sm:text-5xl"
         >
-          Aus Beobachtungen werden Texte und Material.
+          Die Abende gehören wieder Ihnen.
         </h1>
 
         <p className="mt-6 max-w-2xl text-lg text-gray-500">
-          {PRODUCT_NAME} deckt vier Bereiche ab: Dokumentation, Kommunikation, Unterricht
-          und Steuerung. Was Sie nebenbei im Unterricht erfassen, ist am Zeugnistag die
-          Grundlage des Textes – und bestimmt, welches Material zu Ihrer Klasse passt.
+          Zeugniszeit heißt Wochenenden am Schreibtisch. Elternpost heißt Abende. Und die
+          Dokumentation, die man das ganze Jahr nebenbei machen sollte, fehlt genau dann,
+          wenn man sie braucht.
         </p>
+
+        <p className="mt-4 max-w-2xl text-lg text-gray-500">
+          Genau diese Arbeit nimmt {PRODUCT_NAME} Ihnen ab – nicht die Entscheidungen. Was
+          Sie im Unterricht nebenbei festhalten, wird am Zeugnistag zur Grundlage des
+          Textes und bestimmt, welches Material zu Ihrer Klasse passt.
+        </p>
+
+        <p className="mt-4 max-w-2xl text-lg text-gray-500">{SCHOOL_TYPE_ANSWER}</p>
 
         <p className="mt-4 max-w-2xl text-lg text-gray-500">
           Auf dieser Seite steht, was die Anwendung heute tut. Was noch nicht fertig ist,

@@ -1,4 +1,4 @@
-import { PRODUCT_NAME } from "@/config/brand";
+import { PRODUCT_NAME, SCHOOL_TYPE_ANSWER } from "@/config/brand";
 import { DATA_SEPARATION_NOTE } from "@/config/product";
 import { FaqAccordion, type FaqItem } from "@/components/faq-accordion";
 
@@ -18,7 +18,8 @@ const faqItems: FaqItem[] = [
     // Diese Frage war eine Zeit lang entfernt, weil die Antwort nicht
     // feststand. Sie steht fest: Grundschule, Klassen 1–4.
     question: "Für welche Schulformen ist es gedacht?",
-    answer: `${PRODUCT_NAME} ist für die Grundschule gebaut, Klassen 1–4 – Kompetenzen, Fächer und Zeugnistexte sind darauf zugeschnitten.`,
+    // Geteilte Formulierung – Quelle ist src/config/brand.ts.
+    answer: SCHOOL_TYPE_ANSWER,
   },
   {
     // Fruehere Antwort: „Über das Rollen- und Rechtekonzept entscheiden wir

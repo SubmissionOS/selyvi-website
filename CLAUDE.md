@@ -1,7 +1,7 @@
 # CLAUDE.md – produkt-website
 
 ## Projekt
-Marketing-Website für eine B2B-SaaS-Plattform für Schulen (Zielgruppe: Lehrkräfte & Schulleitungen, Sprache: Deutsch). Produktname und Logo sind PLATZHALTER (<Wordmark/>-Komponente), bis der finale Name feststeht. Seiten: /, /produkt, /schulen, /datenschutz-sicherheit, /ueber-uns, /demo, /impressum, /datenschutz.
+Marketing-Website für eine B2B-SaaS-Plattform für Schulen (Zielgruppe: Lehrkräfte & Schulleitungen, Sprache: Deutsch). Produktname und Logo sind PLATZHALTER (<Wordmark/>-Komponente), bis der finale Name feststeht. Seiten: /, /fuer-lehrkraefte, /schulen, /datenschutz-sicherheit, /ueber-uns, /demo, /impressum, /datenschutz. (/produkt leitet permanent auf /fuer-lehrkraefte um.)
 
 ## SICHERHEIT – PFLICHT VOR JEDER PAKET-INSTALLATION (keine Ausnahme)
 1. WEBSUCHE nach "<paketname> compromised / supply chain / malware" – npm-Lieferketten-Angriffe (TanStack-Hack, Shai-Hulud, keyv/cacheable, node-gyp) sind Standard-Bedrohung, nicht Ausnahme. Bei irgendeinem Treffer: STOPP und nachfragen.
@@ -16,6 +16,9 @@ REGELN: --cta ausschließlich für den primären CTA-Button. Keine Farben außer
 
 ## DSGVO (nicht verhandelbar)
 Zur Laufzeit KEINE Requests an Drittserver (Fonts lokal via next/font – nach jedem Font-Change im Network-Log verifizieren). Kein Google Analytics, keine externen Embeds ohne Zwei-Klick-Lösung. Formulare nur über EU-Dienste (Brevo).
+
+## TON
+Jede Sektion beantwortet zuerst, welche Last sie nimmt oder was sie zurückgibt — dann erst, wie. Verkaufssprache ("Jetzt sichern", "Vorteile nutzen", "Tester") ist verboten. Wir sprechen mit Menschen in einem sozialen Beruf, nicht mit Käufern.
 
 ## STIL (Anti-KI-Slop)
 Deutsch, präzise, keine Emojis im UI, keine Gradients, keine Superlative im Copy, viel Weißraum. Messlatte: behördentauglich. Icons: lucide-react (Brand-Icons: lokale SVGs in brand-icons.tsx).

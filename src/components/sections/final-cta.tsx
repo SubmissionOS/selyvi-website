@@ -18,7 +18,7 @@ export function FinalCta() {
           id="final-cta-titel"
           className="max-w-2xl text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
         >
-          Sehen Sie {PRODUCT_NAME} in 20 Minuten.
+          Zwanzig Minuten, dann wissen Sie, ob {PRODUCT_NAME} Ihnen hilft.
         </h2>
 
         <div className="mt-10">

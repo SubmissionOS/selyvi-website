@@ -16,6 +16,15 @@ import { SteeringScene } from "@/components/scenes/produkt/steering-scene";
 
 type FunctionBlock = {
   id: string;
+  /**
+   * Bereichsname aus docs/produktstand-2026-08.md.
+   *
+   * Steht als kleine Zeile ueber der Ueberschrift. Die Ueberschrift selbst
+   * benennt seit dem Ton-Wechsel die LAST, die wegfaellt – ohne diese Zeile
+   * ginge die Gliederung nach der Wahrheitsquelle verloren, und niemand
+   * koennte die Seite mehr gegen das Dokument gegenlesen.
+   */
+  area: string;
   title: string;
   paragraphs: string[];
   bullets: string[];
@@ -47,7 +56,8 @@ type FunctionBlock = {
 const blocks: FunctionBlock[] = [
   {
     id: "dokumentation",
-    title: "Dokumentation",
+    area: "Dokumentation",
+    title: "Die Zeugniszeit verliert ihren Schrecken.",
     paragraphs: [
       "Was Ihnen im Unterricht auffällt, halten Sie sofort fest – getippt oder diktiert. Aus dem Freitext wird eine strukturierte Beobachtung mit Fach, Kategorie, Priorität und Förderhinweis.",
       "Für die Stunde selbst gibt es einen Live-Unterricht-Modus, in dem Sie für mehrere Kinder gleichzeitig erfassen. Für zwischendurch eine Kurzform.",
@@ -63,7 +73,8 @@ const blocks: FunctionBlock[] = [
   },
   {
     id: "kommunikation",
-    title: "Kommunikation",
+    area: "Kommunikation",
+    title: "Elternpost ohne Abendprogramm.",
     paragraphs: [
       "Zeugnisbemerkungen entstehen aus Ihren eigenen Beobachtungen, Noten und Kompetenzeinschätzungen – in dem Schreibstil, den die Anwendung aus Ihren Texten gelernt hat. Beobachtungen von Kolleginnen und Kollegen fließen bewusst nicht ein.",
       `Elternmails entstehen auf Deutsch und werden in einem zweiten Schritt übersetzt: ${TRANSLATION_LANGUAGES_SENTENCE}. Namen und Signatur bleiben dabei unangetastet.`,
@@ -78,7 +89,8 @@ const blocks: FunctionBlock[] = [
   },
   {
     id: "unterricht",
-    title: "Unterricht",
+    area: "Unterricht",
+    title: "Vorbereitung, die zu Ihrer Klasse passt – nicht von der Stange.",
     paragraphs: [
       "Material entsteht nicht aus dem Gedächtnis eines Sprachmodells, sondern aus einem durchsuchbaren Fachkorpus – kombiniert mit dem, was Sie über Ihre Klasse dokumentiert haben. Jedes erzeugte Material weist seine Quellen aus.",
       "Welche Fundstellen einfließen, können Sie auch selbst auswählen, statt sie automatisch ziehen zu lassen.",
@@ -94,7 +106,8 @@ const blocks: FunctionBlock[] = [
   },
   {
     id: "steuerung",
-    title: "Steuerung",
+    area: "Steuerung",
+    title: "Ihre Arbeit wird sichtbar – als Entlastung, nie als Kontrolle.",
     paragraphs: [
       "Die Schulleitung schaltet im Kopf der Anwendung in den Leitungsmodus. Der Einstieg dort ist der Entlastungsbericht: eingesparte Stunden, Automatisierungsquoten und Vorgänge je Prozess, für den letzten abgeschlossenen Monat im Vergleich zum Vormonat.",
       "Der Bericht nennt bewusst keinen Euro-Betrag. Grundlage sind hinterlegte Minutenannahmen, und die sind als Schätzwerte gekennzeichnet.",
@@ -132,9 +145,13 @@ export function FunctionBlocks() {
           >
             <div className="mx-auto grid w-full max-w-6xl gap-12 px-6 py-20 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8 lg:py-24">
               <div className={reversed ? "lg:order-2" : undefined}>
+                <p className="text-xs font-medium tracking-wide text-gray-500 uppercase">
+                  {block.area}
+                </p>
+
                 <h2
                   id={block.id}
-                  className="text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
+                  className="mt-2 text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
                 >
                   {block.title}
                 </h2>

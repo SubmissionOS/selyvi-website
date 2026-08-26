@@ -99,15 +99,15 @@ export const routes: RouteMeta[] = [
     priority: 1,
   },
   {
-    path: "/produkt",
-    title: "Produkt",
+    path: "/fuer-lehrkraefte",
+    title: "Für Lehrkräfte",
     description:
       "Vier Bereiche: Dokumentation, Kommunikation, Unterricht und Steuerung. Was Sie nebenbei im Unterricht erfassen, wird am Zeugnistag zur Grundlage des Textes – und bestimmt, welches Material zur Klasse passt.",
     priority: 0.9,
   },
   {
     path: "/schulen",
-    title: "Für Schulen",
+    title: "Für Schulleitungen",
     description: `${PRODUCT_NAME} nimmt Ihrem Kollegium die Schreibarbeit am Zeugnistag und an den Elternabenden ab. Der Entlastungsbericht weist eingesparte Stunden je Monat aus – als PDF für Ihren Schulträger.`,
     priority: 0.9,
   },
@@ -120,7 +120,7 @@ export const routes: RouteMeta[] = [
   },
   {
     path: "/ueber-uns",
-    title: "Über uns",
+    title: "Unsere Geschichte",
     description: `Angefangen am Küchentisch einer angehenden Grundschullehrerin: Hinter ${PRODUCT_NAME} steht ein kleines Team aus Produkt, Technik und Bildungspraxis. Wir wollen Lehrkräften Verwaltungsarbeit abnehmen – nicht die Verantwortung.`,
     priority: 0.6,
   },

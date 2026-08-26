@@ -48,6 +48,28 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+
+  /**
+   * Umleitungen für umbenannte Routen.
+   *
+   * `/produkt` hiess so, solange die Seite nach dem Produkt benannt war. Sie
+   * heisst jetzt nach den Menschen, für die sie geschrieben ist.
+   *
+   * PERMANENT (308), nicht temporär: Die alte Adresse kommt nicht zurück.
+   * Suchmaschinen übertragen damit die Bewertung der alten Adresse auf die
+   * neue, und Links aus Mails, Präsentationen oder einem Pitchdeck laufen
+   * weiter – eine Marketing-Adresse ist nach dem Versenden nicht mehr in
+   * unserer Hand.
+   */
+  async redirects() {
+    return [
+      {
+        source: "/produkt",
+        destination: "/fuer-lehrkraefte",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
