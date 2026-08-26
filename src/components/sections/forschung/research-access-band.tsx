@@ -1,0 +1,71 @@
+/**
+ * Sektion 5 – Der Datenschutz-Grundsatz. Vertrauens-Kern dieser Seite.
+ *
+ * ==========================================================================
+ * ABWEICHUNG VOM PROMPT – BEWUSST UND GEPRUEFT.
+ * ==========================================================================
+ * Vorgegeben war der Satz „Zwei davon sind gebaut, die Prüfung läuft.“
+ * Der Prompt hat ausdruecklich um Gegenpruefung gebeten. Sie faellt negativ
+ * aus – „zwei gebaut“ ist durch docs/produktstand-2026-08.md nicht gedeckt:
+ *
+ *   1. Erhebungsmodell dokumentiert    -> GEDECKT. Der Produktstand fuehrt ein
+ *      vollstaendiges Erhebungsmodell samt Codebuch und Mindestfallzahlen auf;
+ *      der „Wirkungsbericht je Schule“ mit Modellversion, Annahmeketten und
+ *      offenen Methodenluecken ist als Live gefuehrt.
+ *   2. Aggregation statt Rohdaten      -> NICHT GEDECKT als gebaute Funktion.
+ *      Die Mindestfallzahl ist als REGEL im Modell festgelegt, und die
+ *      Wirkungszeile wendet sie im Produkt an. Der „Forschungsdaten-Export mit
+ *      k-Anonymitaet“ – also die Mechanik, die Forschenden aggregierte Daten
+ *      herausgeben wuerde – steht dort woertlich als „Nicht gebaut“.
+ *   3. Gepruefte Einwilligungen      -> AUSDRUECKLICH NICHT. Der Produktstand
+ *      sagt: „solange die Einwilligungstexte nicht juristisch geprueft sind“.
+ *
+ * Es steht also EINES von drei Dingen, nicht zwei. Der Text unten sagt das –
+ * und benennt zusaetzlich, dass die Sperre technisch ist und nicht nur eine
+ * fehlende Funktion. Fuer die Zielgruppe dieser Seite ist die schwaechere
+ * Aussage die glaubwuerdigere: Wer beruflich Forschungsantraege schreibt,
+ * prueft genau solche Saetze nach.
+ */
+export function ResearchAccessBand() {
+  return (
+    <section
+      aria-labelledby="forschungszugang-titel"
+      className="border-b border-gray-200 bg-surface-alt"
+    >
+      <div className="mx-auto w-full max-w-6xl px-6 py-20 lg:px-8 lg:py-24">
+        <div className="max-w-3xl">
+          <h2
+            id="forschungszugang-titel"
+            className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
+          >
+            Warum es heute noch keinen Datenzugang gibt
+          </h2>
+
+          <p className="mt-6 text-lg text-gray-500">
+            Forschungszugänge gibt es bei uns erst, wenn drei Dinge stehen: juristisch
+            geprüfte, zweckgranulare Einwilligungen der Beteiligten – Aggregation mit
+            Mindestfallzahlen statt Rohdaten – und ein dokumentiertes Erhebungsmodell.
+          </p>
+
+          <p className="mt-4 text-lg text-gray-500">
+            Eines davon steht. Das Erhebungsmodell ist dokumentiert, die Mindestfallzahlen
+            sind darin festgelegt, und die Wirkungszeile im Produkt arbeitet bereits
+            danach.
+          </p>
+
+          <p className="mt-4 text-lg text-gray-500">
+            Die beiden anderen nicht. Die Einwilligungstexte liegen zur juristischen
+            Prüfung. Und der Export, der Wirkungsindikatoren aggregiert herausgeben würde,
+            ist nicht gebaut – Forschungszwecke sind bis zur Freigabe zusätzlich technisch
+            gesperrt.
+          </p>
+
+          <p className="mt-6 text-lg text-ink">
+            Wir glauben: Genau diese Reihenfolge macht Forschung mit Schuldaten überhaupt
+            erst vertretbar.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -17,3 +17,8 @@ tsconfig.json
 # Wahrheitsquelle fuer Produktaussagen: wortgleich so gepflegt, wie sie
 # abgestimmt wurde. Prettier wuerde Tabellen und Zeilenumbrueche umformatieren.
 docs/produktstand-2026-08.md
+
+# Zielbild-Dokument aus der Geschaeftsfuehrung: wortgleich so abgelegt, wie es
+# uebergeben wurde. Prettier wuerde Absaetze umbrechen und damit den Eindruck
+# erwecken, jemand haette den Text redigiert.
+docs/selyvi-kompakt.md

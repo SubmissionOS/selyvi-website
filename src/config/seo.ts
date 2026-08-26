@@ -112,6 +112,13 @@ export const routes: RouteMeta[] = [
     priority: 0.9,
   },
   {
+    path: "/forschung",
+    title: "Forschung & Wirkung",
+    description:
+      "Wirkung wollen wir belegen, nicht behaupten: Erhebungsmodell entlang der PHINEO-Wirkungstreppe, drei Befragungswellen, zweckgranulare Einwilligung. Wir suchen Forschungspartner, die genauer hinschauen wollen.",
+    priority: 0.7,
+  },
+  {
     path: "/datenschutz-sicherheit",
     title: "Datenschutz & Sicherheit",
     description:

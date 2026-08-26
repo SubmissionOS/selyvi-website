@@ -26,6 +26,7 @@ const PAGES = [
   "/",
   "/fuer-lehrkraefte",
   "/schulen",
+  "/forschung",
   "/datenschutz-sicherheit",
   "/ueber-uns",
   "/demo",

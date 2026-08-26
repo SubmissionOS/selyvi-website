@@ -16,6 +16,7 @@ export type NavItem = {
 export const mainNav: NavItem[] = [
   { label: "Für Lehrkräfte", href: "/fuer-lehrkraefte" },
   { label: "Für Schulleitungen", href: "/schulen" },
+  { label: "Forschung", href: "/forschung" },
   { label: "Sicherheit", href: "/datenschutz-sicherheit" },
   { label: "Unsere Geschichte", href: "/ueber-uns" },
 ];
@@ -38,6 +39,7 @@ export const footerColumns: FooterColumn[] = [
     items: [
       { label: "Für Lehrkräfte", href: "/fuer-lehrkraefte" },
       { label: "Für Schulleitungen", href: "/schulen" },
+      { label: "Forschung & Wirkung", href: "/forschung" },
       { label: "Datenschutz & Sicherheit", href: "/datenschutz-sicherheit" },
       { label: "Demo buchen", href: "/demo" },
     ],

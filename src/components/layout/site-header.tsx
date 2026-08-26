@@ -20,16 +20,20 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2">
           {/* Primaerer CTA – einzige Verwendung von --cta im Header.
-              Ab md in voller Groesse. */}
-          <Button asChild variant="cta" size="md" className="hidden md:inline-flex">
+              Ab sm in voller Groesse. */}
+          <Button asChild variant="cta" size="md" className="hidden sm:inline-flex">
             <Link href={primaryCta.href}>{primaryCta.label}</Link>
           </Button>
 
+          {/* Der Umschaltpunkt ist sm, nicht mehr md: Seit die Hauptnavigation
+              erst ab lg erscheint (siehe main-nav.tsx), ist die Kopfzeile
+              zwischen 640 und 1023 px nur noch Wortmarke, CTA und Burger – dort
+              passt der Button in voller Groesse. */}
           {/* Darunter dieselbe Aktion kompakt neben dem Burger-Icon: das
               Conversion-Element bleibt auf jeder Viewport-Breite sichtbar,
               ohne die Kopfzeile zu ueberladen. Im Burger-Menue steht der CTA
               zusaetzlich in voller Breite. */}
-          <Button asChild variant="cta" size="sm" className="md:hidden">
+          <Button asChild variant="cta" size="sm" className="sm:hidden">
             <Link href={primaryCta.href}>{primaryCta.label}</Link>
           </Button>
 
