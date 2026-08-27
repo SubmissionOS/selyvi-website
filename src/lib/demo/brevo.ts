@@ -1,4 +1,4 @@
-import type { DemoFormValues } from "@/lib/demo/schema";
+import { SOURCE_LABELS, type DemoFormValues, type SourceValue } from "@/lib/demo/schema";
 
 /**
  * Versand der Demo-Anfrage über die Brevo-API (EU-Anbieter).
@@ -32,8 +32,9 @@ function escapeHtml(value: string) {
     .replace(/"/g, "&quot;");
 }
 
-function buildHtml(values: DemoFormValues) {
+function buildHtml(values: DemoFormValues, source: SourceValue) {
   const rows: [string, string][] = [
+    ["Herkunft", SOURCE_LABELS[source]],
     ["Name", values.name],
     ["Schule", values.school],
     ["E-Mail", values.email],
@@ -42,7 +43,7 @@ function buildHtml(values: DemoFormValues) {
   ];
 
   return [
-    "<h1>Neue Demo-Anfrage</h1>",
+    `<h1>Neue Anfrage: ${escapeHtml(SOURCE_LABELS[source])}</h1>`,
     "<table>",
     ...rows.map(
       ([label, value]) =>
@@ -52,7 +53,10 @@ function buildHtml(values: DemoFormValues) {
   ].join("");
 }
 
-export async function sendDemoRequest(values: DemoFormValues): Promise<SendResult> {
+export async function sendDemoRequest(
+  values: DemoFormValues,
+  source: SourceValue = "demo",
+): Promise<SendResult> {
   const apiKey = process.env.BREVO_API_KEY;
   const mailTo = process.env.DEMO_MAIL_TO;
   const senderEmail = process.env.DEMO_MAIL_FROM;
@@ -62,7 +66,7 @@ export async function sendDemoRequest(values: DemoFormValues): Promise<SendResul
   if (dryRun) {
     console.info(
       "[demo] DEMO_DRY_RUN=true – Anfrage wird NICHT versendet:",
-      JSON.stringify({ ...values, email: "<gekürzt>" }),
+      JSON.stringify({ ...values, source, email: "<gekürzt>" }),
     );
     return { ok: true, dryRun: true };
   }
@@ -96,8 +100,8 @@ export async function sendDemoRequest(values: DemoFormValues): Promise<SendResul
         to: [{ email: mailTo }],
         // Antworten gehen direkt an die anfragende Person.
         replyTo: { email: values.email, name: values.name },
-        subject: `Demo-Anfrage: ${values.school}`,
-        htmlContent: buildHtml(values),
+        subject: `${SOURCE_LABELS[source]}: ${values.school}`,
+        htmlContent: buildHtml(values, source),
       }),
     });
 

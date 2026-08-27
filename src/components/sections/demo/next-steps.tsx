@@ -1,4 +1,7 @@
+import Link from "next/link";
 import { Check } from "lucide-react";
+
+import { PRODUCT_NAME } from "@/config/brand";
 
 /**
  * Rechte Spalte der Demo-Seite.
@@ -54,6 +57,26 @@ export function NextSteps() {
             </li>
           ))}
         </ol>
+      </div>
+
+      {/* Dritter Einstieg zu /mitgestalten – die Seite hat bewusst keinen
+          Navigationspunkt. Sie steht hier, weil manche gar keine Demo wollen,
+          sondern mitbauen: Der Hinweis gehoert neben den Ablauf und nicht
+          hinter das abgeschickte Formular. */}
+      <div className="rounded-xl border border-gray-200 p-6">
+        <h2 className="text-sm font-semibold text-ink">Lieber gleich mitbauen?</h2>
+
+        <p className="mt-3 text-sm text-gray-500">
+          Wenn Sie {PRODUCT_NAME} nicht nur sehen, sondern mitentwickeln wollen, führt
+          dieser Weg direkter dorthin.
+        </p>
+
+        <Link
+          href="/mitgestalten"
+          className="mt-4 inline-block text-sm text-brand-600 underline underline-offset-4"
+        >
+          {PRODUCT_NAME} mitgestalten
+        </Link>
       </div>
 
       <div className="rounded-xl border border-gray-200 bg-surface-alt p-6">

@@ -6,6 +6,7 @@ import { WhyItExists } from "@/components/sections/ueber-uns/why-it-exists";
 import { Mission } from "@/components/sections/ueber-uns/mission";
 import { TeamGrid } from "@/components/sections/ueber-uns/team-grid";
 import { HowWeWork } from "@/components/sections/ueber-uns/how-we-work";
+import { Promises } from "@/components/sections/ueber-uns/promises";
 import { ContactBand } from "@/components/sections/ueber-uns/contact-band";
 
 export const metadata: Metadata = pageMetadata("/ueber-uns");
@@ -27,6 +28,7 @@ export default function UeberUnsPage() {
       <Mission />
       <TeamGrid />
       <HowWeWork />
+      <Promises />
       <ContactBand />
     </>
   );

@@ -1,4 +1,14 @@
-import { Ban, Cpu, FileText, KeyRound, Lock, Server, Trash2, UserX } from "lucide-react";
+import {
+  Accessibility,
+  Ban,
+  Cpu,
+  FileText,
+  KeyRound,
+  Lock,
+  Server,
+  Trash2,
+  UserX,
+} from "lucide-react";
 
 import { PRODUCT_NAME } from "@/config/brand";
 import {
@@ -69,6 +79,25 @@ const principles = [
     icon: Cpu,
     title: "KI-Verarbeitung",
     description: `${PRODUCT_NAME} setzt KI-Modelle ein, um aus den Beobachtungen einer Lehrkraft Texte und Unterrichtsmaterial zu erzeugen. Die genauen Verarbeitungsdetails unserer KI-Komponenten veröffentlichen wir hier vor dem Start.`,
+  },
+  {
+    icon: Accessibility,
+    title: "Barrierefreiheit als Praxis",
+    /**
+     * BEWUSST OHNE ZERTIFIKATS-BEHAUPTUNG.
+     *
+     * Der Satz sagt, WIE gebaut wird – nicht, dass ein Prüfsiegel vorliegt.
+     * „WCAG 2.1 AA" bezieht sich hier ausdruecklich auf die Kontraste, und
+     * die sind gemessen: axe meldet ueber alle Seiten null Verstoesse, und
+     * jeder neue Textton wird gegen den tatsaechlich gerenderten Hintergrund
+     * nachgerechnet.
+     *
+     * Eine formale Erklaerung nach BFSG bzw. BITV ist etwas anderes und steht
+     * als Punkt 18 in der NACH-LAUNCH-LISTE der README. Wer diesen Text
+     * spaeter verschaerfen moechte, braucht vorher diese Erklaerung.
+     */
+    description:
+      "Tastaturbedienung, Screenreader-Struktur, Kontraste nach WCAG 2.1 AA und respektierte Bewegungs-Reduzierung sind bei uns Bau-Standard, nicht Nachrüstung.",
   },
   {
     icon: Trash2,

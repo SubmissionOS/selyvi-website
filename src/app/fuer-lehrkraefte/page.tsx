@@ -6,6 +6,7 @@ import { PrincipleBand } from "@/components/sections/produkt/principle-band";
 import { FunctionBlocks } from "@/components/sections/produkt/function-blocks";
 import { EverydayExtras } from "@/components/sections/produkt/everyday-extras";
 import { Roadmap } from "@/components/sections/produkt/roadmap";
+import { CoCreateBand } from "@/components/sections/produkt/co-create-band";
 import { FinalCta } from "@/components/sections/final-cta";
 
 export const metadata: Metadata = pageMetadata("/fuer-lehrkraefte");
@@ -24,6 +25,7 @@ export default function ProduktPage() {
       <FunctionBlocks />
       <EverydayExtras />
       <Roadmap />
+      <CoCreateBand />
       <FinalCta />
     </>
   );

@@ -1,3 +1,4 @@
+import { DECISION_PROMISE } from "@/config/product";
 import { PRACTICE_CLAIM } from "@/config/brand";
 
 /**
@@ -20,7 +21,7 @@ export function PrincipleBand() {
             id="prinzip-titel"
             className="text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
           >
-            Die KI schlägt vor. Sie entscheiden.
+            {DECISION_PROMISE}
           </h2>
 
           <p className="mt-6 text-lg text-gray-500">

@@ -9,6 +9,8 @@ import {
   ELAPSED_FIELD,
   EMPTY_VALUES,
   HONEYPOT_FIELD,
+  SOURCE_FIELD,
+  type SourceValue,
   ROLE_OPTIONS,
   type DemoField,
 } from "@/lib/demo/schema";
@@ -37,7 +39,29 @@ import { Button } from "@/components/ui/button";
  * Eingaben sind kontrolliert. Dadurch bleibt das Formular nach einem Fehler
  * gefuellt, unabhaengig davon, ob React das DOM-Formular zuruecksetzt.
  */
-export function DemoForm() {
+/**
+ * Dasselbe Formular auf /demo und auf /mitgestalten.
+ *
+ * Bewusst EINE Komponente und EINE Server Action statt zweier Endpunkte: Der
+ * Spamschutz (Honeypot, Zeitmessung, Rate-Limit), die Validierung und der
+ * Versandweg sind an beiden Stellen dieselben. Ein zweiter Endpunkt waere ein
+ * zweiter Ort, an dem eine dieser Huerden fehlen kann.
+ *
+ * Unterschieden wird nur, WOHER die Anfrage kam – ueber ein verstecktes Feld,
+ * das serverseitig gegen eine Liste geprueft wird. Es steht in Betreff und
+ * Mailtext, damit beim Lesen klar ist, worauf jemand geantwortet hat.
+ */
+/**
+ * Beschriftung des Absende-Knopfes je Herkunft. „Demo anfragen" auf einer
+ * Seite, die gar keine Demo anbietet, waere die Stelle, an der auffaellt,
+ * dass hier ein Formular zweitverwendet wurde.
+ */
+const SUBMIT_LABELS: Record<SourceValue, string> = {
+  demo: "Demo anfragen",
+  mitgestalten: "Anfrage senden",
+};
+
+export function DemoForm({ source = "demo" }: { source?: SourceValue }) {
   const [values, setValues] = useState(EMPTY_VALUES);
   const formRef = useRef<HTMLFormElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
@@ -124,6 +148,11 @@ export function DemoForm() {
         </div>
       ) : (
         <form ref={formRef} action={formAction} noValidate className="space-y-6">
+          {/* Herkunft der Anfrage. Kein Nutzereingabefeld – der Wert wird
+              serverseitig gegen SOURCE_VALUES geprueft und faellt sonst auf
+              „demo" zurueck. */}
+          <input type="hidden" name={SOURCE_FIELD} value={source} />
+
           {state.status === "error" && state.message ? (
             <div
               role="alert"
@@ -302,7 +331,7 @@ export function DemoForm() {
           <div className="pt-2">
             {/* Primaerer CTA – einzige Verwendung von --cta auf dieser Seite. */}
             <Button type="submit" variant="cta" size="lg" disabled={isPending}>
-              {isPending ? "Wird gesendet …" : "Demo anfragen"}
+              {isPending ? "Wird gesendet …" : SUBMIT_LABELS[source]}
             </Button>
 
             <p className="mt-4 text-sm text-gray-500">

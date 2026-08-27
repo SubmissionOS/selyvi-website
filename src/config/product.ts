@@ -114,3 +114,18 @@ export const TRANSLATION_LANGUAGES_SENTENCE = `${TRANSLATION_LANGUAGES.slice(0, 
  */
 export const IMPACT_LINE_PRINCIPLE =
   "Unser System zeigt gemessene Befragungswerte – oder sagt in Klartext, warum sich noch nichts sagen lässt. Diese Zeile verschwindet nie.";
+
+/**
+ * Versprechen 1 aus dem Manifest auf /ueber-uns – und zugleich die Ueberschrift
+ * des Prinzip-Bands auf /fuer-lehrkraefte.
+ *
+ * Geteilte Konstante, weil derselbe Satz an zwei Stellen steht und beide
+ * gemeint sind: einmal als Produktprinzip ueber den Funktionen, einmal als
+ * Selbstverpflichtung im Manifest. Zwei Fassungen desselben Versprechens
+ * waeren genau das, was das Manifest bestreitet.
+ *
+ * Das „Immer." gehoert NUR ins Manifest: Dort ist der Satz ein Schwur, ueber
+ * den Funktionsbloecken ist er eine Ueberschrift. Deshalb steht die Konstante
+ * ohne das Wort, und das Manifest haengt es an.
+ */
+export const DECISION_PROMISE = "Die KI schlägt vor. Sie entscheiden.";

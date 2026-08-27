@@ -18,6 +18,36 @@ export const HONEYPOT_FIELD = "website";
 /** Feld mit der auf dem Client gemessenen Ausfuelldauer in Millisekunden. */
 export const ELAPSED_FIELD = "elapsedMs";
 
+/**
+ * Feld mit der Herkunft der Anfrage: von welcher Seite wurde abgeschickt?
+ *
+ * Es steht als verstecktes Feld im Formular und landet in der Betreffzeile
+ * und im Mailtext. Zweck ist ausschliesslich, dass beim Lesen der Mail klar
+ * ist, worauf jemand geantwortet hat – eine Demo-Anfrage und eine Anfrage zum
+ * Mitgestalten brauchen unterschiedliche Antworten.
+ *
+ * Der Wert ist CLIENT-EINGABE und wird deshalb nie uebernommen, sondern gegen
+ * die Liste unten geprueft. Ein unbekannter Wert faellt still auf „demo"
+ * zurueck, statt eine Fehlermeldung zu erzeugen: Wer hier manipuliert, soll
+ * keine Rueckmeldung darueber bekommen, was das Formular akzeptiert.
+ */
+export const SOURCE_FIELD = "source";
+
+export const SOURCE_VALUES = ["demo", "mitgestalten"] as const;
+export type SourceValue = (typeof SOURCE_VALUES)[number];
+
+/** Beschriftung fuer die Mail. Keine Rohwerte in der Betreffzeile. */
+export const SOURCE_LABELS: Record<SourceValue, string> = {
+  demo: "Demo-Anfrage",
+  mitgestalten: "Mitgestalten",
+};
+
+export function normalizeSource(raw: string): SourceValue {
+  return (SOURCE_VALUES as readonly string[]).includes(raw)
+    ? (raw as SourceValue)
+    : "demo";
+}
+
 /** Mindestdauer zwischen Formular-Anzeige und Absenden. */
 export const MIN_FILL_MS = 3000;
 

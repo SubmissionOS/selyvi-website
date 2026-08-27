@@ -57,6 +57,7 @@ export const footerColumns: FooterColumn[] = [
      */
     items: [
       { label: "Unsere Geschichte", href: "/ueber-uns" },
+      { label: "Mitgestalten", href: "/mitgestalten" },
       // Als gewöhnlicher Link, nicht als Button: Der primäre CTA steht bereits
       // in der Kopfzeile, und --cta bleibt genau ihm vorbehalten.
       { label: "Demo buchen", href: "/demo" },

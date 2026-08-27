@@ -132,6 +132,15 @@ export const routes: RouteMeta[] = [
     priority: 0.6,
   },
   {
+    path: "/mitgestalten",
+    // Nicht „Selyvi mitgestalten": fullTitle() haengt den Produktnamen an,
+    // und „Selyvi mitgestalten – Selyvi" nennt ihn zweimal.
+    title: "Mitgestalten",
+    description:
+      "Selyvi ist mit Lehrkräften entstanden und wächst nur so weiter. Wer früh dabei ist, prägt, was gebaut wird – ohne Vertrag, ohne Kaufdruck.",
+    priority: 0.7,
+  },
+  {
     path: "/demo",
     // Angeglichen an die H1 und an den Absende-Button der Seite. „Demo buchen“
     // ist die Beschriftung des CTA im Header – auf der Zielseite wird aber

@@ -6,6 +6,8 @@ import {
   ELAPSED_FIELD,
   HONEYPOT_FIELD,
   MIN_FILL_MS,
+  normalizeSource,
+  SOURCE_FIELD,
   validateDemoRequest,
 } from "@/lib/demo/schema";
 import type { DemoFormState } from "@/lib/demo/state";
@@ -98,8 +100,13 @@ export async function submitDemoRequest(
     };
   }
 
-  // 5. Versand.
-  const sent = await sendDemoRequest(result.values);
+  // 5. Versand. Die Herkunft wird erst hier ausgewertet und nie aus dem
+  //    Formular uebernommen – normalizeSource() laesst nur bekannte Werte
+  //    durch und faellt sonst still auf „demo" zurueck.
+  const sent = await sendDemoRequest(
+    result.values,
+    normalizeSource(readString(formData, SOURCE_FIELD)),
+  );
 
   if (!sent.ok) {
     return {
