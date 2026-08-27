@@ -4,6 +4,7 @@ import { pageMetadata } from "@/config/seo";
 import { ProductIntro } from "@/components/sections/produkt/product-intro";
 import { PrincipleBand } from "@/components/sections/produkt/principle-band";
 import { FunctionBlocks } from "@/components/sections/produkt/function-blocks";
+import { EverydayExtras } from "@/components/sections/produkt/everyday-extras";
 import { Roadmap } from "@/components/sections/produkt/roadmap";
 import { FinalCta } from "@/components/sections/final-cta";
 
@@ -21,6 +22,7 @@ export default function ProduktPage() {
       <ProductIntro />
       <PrincipleBand />
       <FunctionBlocks />
+      <EverydayExtras />
       <Roadmap />
       <FinalCta />
     </>

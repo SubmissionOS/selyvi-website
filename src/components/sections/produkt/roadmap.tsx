@@ -1,3 +1,10 @@
+import type { ReactNode } from "react";
+
+import {
+  OriginalSheetScene,
+  StyleProfileScene,
+} from "@/components/scenes/produkt/outlook-scenes";
+
 /**
  * Sektion 4 – Ausblick „In Arbeit“.
  *
@@ -13,15 +20,28 @@
  * Die drei Punkte sind die echten offenen Baustellen aus
  * docs/produktstand-2026-08.md – nicht drei plausible Roadmap-Themen.
  *
- * Der Status steht im Badge statt im Titel: „in Vorbereitung", „geplant" und
- * „in Arbeit" sind drei verschiedene Entfernungen, und wer wartet, will genau
+ * Der Status steht im Badge statt im Titel: „in Vorbereitung“, „geplant“ und
+ * „in Arbeit“ sind drei verschiedene Entfernungen, und wer wartet, will genau
  * diesen Unterschied lesen koennen.
  *
  * Der erste Punkt ist der wichtigste auf der ganzen Seite. Er nennt eine
  * Einschraenkung, nach der eine Datenschutzbeauftragte ohnehin fragt – und
  * beantwortet sie, bevor gefragt wird.
  */
-const upcoming = [
+type UpcomingItem = {
+  title: string;
+  status: string;
+  description: string;
+  /**
+   * Optionale Ausblicks-Szene. Nur zwei der vier Punkte haben eine – die
+   * beiden, die laut Produktstand „Rollout offen“ bzw. „Teilweise“ sind und
+   * deshalb ueberhaupt gezeigt werden duerfen. Serverumzug und Anbindung
+   * sind Vorhaben ohne Oberflaeche; dafuer gibt es nichts zu animieren.
+   */
+  scene?: ReactNode;
+};
+
+const upcoming: UpcomingItem[] = [
   {
     title: "Serverumzug nach Deutschland",
     status: "In Vorbereitung",
@@ -35,10 +55,20 @@ const upcoming = [
       "Klassen und Kinder werden heute angelegt, nicht importiert. Eine Schnittstelle zu vorhandener Schulverwaltungssoftware gibt es noch nicht – für große Schulen ist das ein spürbarer Startaufwand.",
   },
   {
+    title: "Originalarbeitsblätter übernehmen",
+    // Der Produktstand nennt diesen Status woertlich „Rollout offen“ – anders
+    // als „geplant“ heisst das: gebaut, aber noch nicht ausgeliefert.
+    status: "Rollout steht aus",
+    description:
+      "Passt ein vorhandenes Arbeitsblatt aus dem Fachkorpus zum Thema, soll es sich direkt übernehmen lassen – formatgetreu, mit einer vorangestellten Rahmungsseite.",
+    scene: <OriginalSheetScene />,
+  },
+  {
     title: "Stilprofil per Upload",
     status: "In Arbeit",
     description:
       "Den Schreibstil lernt die Anwendung heute aus den Texten, die Sie in ihr schreiben. Eigene Texte hochzuladen ist vorbereitet, die Oberfläche dafür fehlt noch.",
+    scene: <StyleProfileScene startDelayMs={300} />,
   },
 ];
 
@@ -58,7 +88,7 @@ export function Roadmap() {
           einschätzen können, was bereits geht und worauf Sie warten würden.
         </p>
 
-        <ul className="mt-14 grid gap-6 md:grid-cols-3">
+        <ul className="mt-14 grid items-start gap-6 md:grid-cols-2">
           {upcoming.map((item) => (
             <li
               key={item.title}
@@ -71,6 +101,8 @@ export function Roadmap() {
               <h3 className="mt-5 text-base font-semibold text-ink">{item.title}</h3>
 
               <p className="mt-3 text-sm text-gray-500">{item.description}</p>
+
+              {item.scene ? <div className="mt-6">{item.scene}</div> : null}
             </li>
           ))}
         </ul>

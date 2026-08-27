@@ -59,6 +59,25 @@ type Props = {
    * -1 = keiner. Nur Szene A nutzt das.
    */
   highlightChip?: number;
+  /**
+   * Zeigt die Szene eine Funktion, die laut docs/produktstand-2026-08.md noch
+   * NICHT ausgeliefert ist („Rollout offen" oder „Teilweise")?
+   *
+   * Dann steht dauerhaft „In Entwicklung" im Fensterkopf – in jedem Frame und
+   * auch im Endbild bei prefers-reduced-motion. Genau das ist die Bedingung,
+   * unter der CLAUDE.md solche Szenen ueberhaupt erlaubt: Eine Szene ohne
+   * Badge ist eine Verfuegbarkeitszusage, auch wenn der Text daneben etwas
+   * anderes sagt.
+   *
+   * Bewusst ein BOOLEAN und kein freier Text: Der Wortlaut darf nicht je
+   * Aufrufstelle abweichen, und „bald verfuegbar" waere schon wieder eine
+   * Zusage.
+   *
+   * Der Badge liegt im aria-hidden-Bereich wie der ganze Fensterinhalt. Die
+   * Szene MUSS den Hinweis deshalb zusaetzlich in ihr aria-label schreiben –
+   * sonst erfahren Screenreader-Nutzende ihn nicht.
+   */
+  inDevelopment?: boolean;
   className?: string;
 };
 
@@ -78,6 +97,7 @@ export function UiWindow({
   active,
   chips,
   highlightChip = -1,
+  inDevelopment = false,
   className,
 }: Props) {
   if (variant === "app") {
@@ -110,7 +130,18 @@ export function UiWindow({
             </div>
           ) : null}
 
-          <span className="ml-auto size-5 shrink-0 rounded-full bg-gray-200" />
+          {inDevelopment ? (
+            <span className="ml-auto shrink-0 rounded-full border border-gray-200 bg-surface px-2 py-0.5 text-[11px] font-medium whitespace-nowrap text-ink">
+              In Entwicklung
+            </span>
+          ) : null}
+
+          <span
+            className={cn(
+              "size-5 shrink-0 rounded-full bg-gray-200",
+              inDevelopment ? "ml-2" : "ml-auto",
+            )}
+          />
         </div>
 
         <div className="flex min-h-0 flex-1">

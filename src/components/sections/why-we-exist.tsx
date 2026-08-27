@@ -16,17 +16,23 @@ import { PRODUCT_NAME } from "@/config/brand";
  * material statt wie der Grund, aus dem jemand angefangen hat zu bauen.
  *
  * ==========================================================================
- * ZU DEN ZAHLEN – BITTE VOR DEM LIVEGANG PRÜFEN
+ * ZU DEN ZAHLEN – WELCHE STAMMT WOHER
  * ==========================================================================
- * Die drei Werte stammen aus dem Deutschen Schulbarometer der Robert Bosch
- * Stiftung und sind PARAPHRASIERT, nicht wörtlich zitiert. Das Schulbarometer
- * erscheint in mehreren Befragungswellen mit unterschiedlichen Werten.
+ * Alle drei sind PARAPHRASIERT, nicht woertlich zitiert, und stammen aus dem
+ * Deutschen Schulbarometer der Robert Bosch Stiftung. Sie kommen aus ZWEI
+ * verschiedenen Befragungen – deshalb nennt die Quellenzeile beide Jahre:
  *
- * Ich konnte die Werte hier nicht selbst gegen die Veröffentlichung prüfen.
- * Vor dem Livegang gehört deshalb geklärt: Aus WELCHER Welle stammen sie?
- * Anschliessend hier die Jahreszahl ergänzen – „Deutsches Schulbarometer 2024“
- * ist überprüfbar, „Deutsches Schulbarometer“ allein nicht. Siehe README,
- * NACH-LAUNCH-LISTE.
+ *   83 % ueben ihren Beruf gern aus          -> Befragung 2026
+ *   84 % fuehlen sich stark belastet         -> 4. Befragung 2022
+ *   ueber 75 % Wochenendarbeit als Regel     -> 4. Befragung 2022
+ *
+ * Die Jahreszahlen gehoeren in die Quellenzeile und nicht nur hierher: Ein
+ * Wert ohne Welle ist bei einer Reihenuntersuchung nicht nachpruefbar.
+ *
+ * Offen bleibt eine Kleinigkeit, siehe README, Punkt 19a: Vor dem Livegang
+ * einmal gegen die Original-Reports lesen. Die Uebersichtsseite der Stiftung
+ * fuehrt die Einzelwerte nicht; sie stehen in den Berichten der jeweiligen
+ * Welle.
  */
 const findings = [
   {
@@ -95,7 +101,7 @@ export function WhyWeExist() {
           >
             Deutschen Schulbarometer
           </a>{" "}
-          der Robert Bosch Stiftung – Lehrkräftebefragungen.
+          der Robert Bosch Stiftung – Lehrkräftebefragungen 2022 und 2026.
         </p>
       </div>
     </section>

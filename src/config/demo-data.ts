@@ -263,3 +263,65 @@ export const DEMO_RELIEF_MONTH = {
   unit: "Std.",
   note: "Schätzwert",
 } as const;
+
+/* ==========================================================================
+ * SZENE „FRAGEN SIE IHRE EIGENE DOKUMENTATION"
+ * ==========================================================================
+ * Der Chat auf der Startseite. Er greift bewusst auf DEMO_READING zurueck:
+ * Die Antwort schoepft aus genau der Beobachtung, die der Hero eintippt und
+ * die auf /fuer-lehrkraefte zum Zeugnistext wird. Derselbe Tag, dasselbe
+ * Kind – die Szene schliesst den Kreis, statt einen vierten aufzumachen.
+ *
+ * Die beiden Verweis-Chips tragen Daten, keine Inhalte: Sie zeigen, DASS die
+ * Antwort auf Eintraege zurueckgeht, nicht welche. Erfundene Zusatz-
+ * beobachtungen waeren hier ueberfluessiger Ballast.
+ * ========================================================================== */
+export const DEMO_CHAT = {
+  question: "Wie hat sich Emma im Lesen entwickelt?",
+  /**
+   * Zwei Saetze, erkennbar aus DEMO_READING abgeleitet – der erste nimmt die
+   * Beobachtung auf, der zweite ordnet sie ein. Keine Note, keine Prognose:
+   * Die Anwendung fasst zusammen, was dokumentiert wurde.
+   *
+   * Und keine Defizit-Aussage: Ein „im Mai noch stockend" waere eine
+   * Entwicklung VON etwas weg und damit ein negativer Satz ueber ein Kind –
+   * verboten laut Kopf dieser Datei, auch ueber ein erfundenes.
+   */
+  answer:
+    "Emma liest inzwischen flüssig und sicher vor der Klasse vor und traut sich dabei mehr zu. Seit Mai bringt sie sich im Deutschunterricht immer häufiger von sich aus ein.",
+  references: ["Beobachtung 12.05.", "Beobachtung 03.07."],
+} as const;
+
+/* ==========================================================================
+ * SZENE „SITZPLAN"
+ * ==========================================================================
+ * Sechs Plaetze, besetzt mit demselben Cast wie ueberall. Ein Platz ist
+ * gesperrt und bleibt leer – das ist die Funktion, die der Produktstand
+ * ausdruecklich nennt („gesperrte Plaetze").
+ *
+ * Bewegt wird Lotta B. – NICHT Emma K. und nicht Yusuf A.: Die beiden tragen
+ * schon die Beobachtungs- und die Chat-Szene. Wenn immer dasselbe Kind
+ * angefasst wird, wirkt der Cast wie eine Person mit sechs Namen.
+ *
+ * KEIN Grund fuer den Umzug, weder im Bild noch im Label. Ein „sitzt jetzt
+ * neben ..." waere eine paedagogische Aussage ueber ein Kind, und der
+ * KI-Sitzplanvorschlag ist laut Produktstand ohnehin nur Prototyp.
+ * ========================================================================== */
+export const DEMO_SEATING = {
+  /**
+   * Raster 3 x 2, von links oben nach rechts unten.
+   *   s3 ist GESPERRT – bleibt leer und traegt ein Schloss.
+   *   s5 ist frei – dorthin wird gezogen.
+   *   s4 sitzt Lotta B., das Kind, das umzieht.
+   */
+  seats: [
+    { id: "s1", initials: "EK", locked: false },
+    { id: "s2", initials: "YA", locked: false },
+    { id: "s3", initials: null, locked: true },
+    { id: "s4", initials: "LB", locked: false },
+    { id: "s5", initials: null, locked: false },
+    { id: "s6", initials: "FS", locked: false },
+  ],
+  /** Wer zieht um, von wo nach wo. */
+  move: { initials: "LB", from: "s4", to: "s5" },
+} as const;

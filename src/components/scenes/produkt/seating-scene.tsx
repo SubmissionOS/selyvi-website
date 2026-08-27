@@ -1,0 +1,134 @@
+"use client";
+
+import { Lock } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { DEMO_CLASS, DEMO_SEATING } from "@/config/demo-data";
+import { FakeCursor } from "@/components/scenes/fake-cursor";
+import { SceneTimeline, type SceneStep } from "@/components/scenes/scene-timeline";
+import { SceneLabel } from "@/components/scenes/produkt/scene-panel";
+import { UiWindow } from "@/components/scenes/ui-window";
+
+/**
+ * Szene „Sitzplan".
+ *
+ * Laut docs/produktstand-2026-08.md **Live**: „Grafischer Sitzplan mit
+ * gesperrten Plätzen und Drag-and-drop."
+ *
+ * ==========================================================================
+ * WAS DIESE SZENE BEWUSST NICHT ZEIGT
+ * ==========================================================================
+ * Den KI-Vorschlag. Derselbe Absatz im Produktstand sagt: „Ein KI-Vorschlag
+ * berücksichtigt Beobachtungen und Förderbedarfe – dieser Teil ist noch
+ * Prototyp, der Sitzplan selbst nicht."
+ *
+ * Prototyp ist nach der Leitplanke in CLAUDE.md tabu – auch mit Badge. Die
+ * Szene zeigt deshalb ausschliesslich, was eine Lehrkraft selbst tut: ziehen
+ * und sperren. Kein Vorschlag, kein Grund, keine Begruendung fuer den Umzug.
+ *
+ * Der gesperrte Platz ist nicht Beiwerk: Er ist die halbe Funktion. Ein
+ * Sitzplan ohne Sperren ist ein Zeichenprogramm.
+ */
+const STEPS: SceneStep[] = [
+  { id: "raster", duration: 700 },
+  { id: "greifen", duration: 600 },
+  { id: "ziehen", duration: 1100 },
+  { id: "einrasten", duration: 450 },
+  { id: "ruhe", duration: 1000 },
+];
+
+/**
+ * Zeigerpositionen in Prozent der Buehne, am Bildschirm ausgemessen.
+ * Ausgangsplatz ist die erste Kachel der unteren Reihe, Ziel die zweite.
+ */
+const CURSOR_FROM = { x: 22, y: 66 };
+const CURSOR_TO = { x: 52, y: 66 };
+
+export function SeatingScene() {
+  return (
+    <SceneTimeline
+      steps={STEPS}
+      loopPauseMs={2200}
+      kicker="07:50 · Vor der ersten Stunde"
+      label={`Animierte Darstellung des Sitzplans der Klasse ${DEMO_CLASS}: In einem Raster aus sechs Plätzen wird eine Kinder-Kachel mit dem Zeiger aufgenommen, auf einen freien Platz gezogen und rastet dort ein. Ein weiterer Platz ist gesperrt, trägt ein Schloss-Symbol und bleibt frei. Alle Daten sind erfunden.`}
+    >
+      {(scene) => {
+        const moving = !scene.isStatic;
+
+        const grabbed = scene.reached("greifen");
+        const dragging = scene.reached("ziehen");
+        const landed = scene.reached("einrasten");
+
+        return (
+          <UiWindow
+            variant="app"
+            active="klassen"
+            chips={[`Klasse ${DEMO_CLASS}`]}
+            className="h-[19rem] sm:h-[17rem]"
+          >
+            <SceneLabel>Sitzplan</SceneLabel>
+
+            {/* Tafel-Kante: gibt dem Raster oben eine Richtung, damit es als
+                Klassenzimmer lesbar ist und nicht als Tabelle. */}
+            <p className="mt-3 rounded-md bg-surface-alt py-1 text-center text-[10px] tracking-wide text-gray-500 uppercase">
+              Tafel
+            </p>
+
+            <div className="mt-3 grid grid-cols-3 gap-2">
+              {DEMO_SEATING.seats.map((seat) => {
+                const isSource = seat.id === DEMO_SEATING.move.from;
+                const isTarget = seat.id === DEMO_SEATING.move.to;
+
+                /* Die ziehende Kachel verlaesst ihren Platz optisch, sobald
+                   gegriffen wurde – der Quellplatz wird leer, der Zielplatz
+                   fuellt sich erst beim Einrasten. */
+                const showsChild =
+                  (seat.initials !== null && !(isSource && grabbed)) ||
+                  (isTarget && landed);
+                const initials =
+                  isTarget && landed ? DEMO_SEATING.move.initials : seat.initials;
+
+                return (
+                  <div
+                    key={seat.id}
+                    className={cn(
+                      "flex h-14 items-center justify-center rounded-lg border text-[11px] font-medium transition-colors sm:h-12",
+                      seat.locked
+                        ? "border-gray-200 bg-surface-alt text-gray-500"
+                        : isTarget && dragging && !landed
+                          ? "border-brand-600 bg-brand-100 text-brand-800"
+                          : "border-gray-200 bg-surface text-ink",
+                    )}
+                  >
+                    {seat.locked ? (
+                      <Lock aria-hidden="true" className="size-3.5" />
+                    ) : showsChild ? (
+                      <span className="flex size-7 items-center justify-center rounded-full bg-brand-100 text-brand-800">
+                        {initials}
+                      </span>
+                    ) : null}
+                  </div>
+                );
+              })}
+            </div>
+
+            <p className="mt-3 text-[11px] text-gray-500">
+              Plätze lassen sich sperren – gesperrt bleibt gesperrt.
+            </p>
+
+            {/* Die gezogene Kachel haengt am Zeiger. Nur transform/opacity –
+                deshalb kostet die Bewegung keinen Layout-Durchgang. */}
+            <FakeCursor
+              x={dragging ? CURSOR_TO.x : CURSOR_FROM.x}
+              y={CURSOR_FROM.y}
+              visible={grabbed && !landed}
+              clicking={grabbed}
+              animate={moving}
+              compact
+            />
+          </UiWindow>
+        );
+      }}
+    </SceneTimeline>
+  );
+}
