@@ -66,6 +66,12 @@ export function WhyItExists() {
             mit einem einfachen Maßstab: Würde das einer Lehrerin, die wir kennen,
             wirklich einen Abend zurückgeben? Wenn nein, bauen wir es nicht.
           </p>
+
+          <p>
+            Und vielleicht noch das: Wir drei saßen selbst lange genug in diesen
+            Klassenzimmern. Wir bauen das hier auch für die Lehrkräfte, die wir damals
+            hatten.
+          </p>
         </div>
       </div>
     </section>

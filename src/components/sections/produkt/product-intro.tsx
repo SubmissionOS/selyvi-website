@@ -36,6 +36,11 @@ export function ProductIntro() {
           Textes und bestimmt, welches Material zu Ihrer Klasse passt.
         </p>
 
+        <p className="mt-4 max-w-2xl text-lg text-gray-500">
+          Entstanden ist all das nicht am Reißbrett, sondern aus Rückmeldungen von
+          Lehrkräften – zuerst von einer, dann von vielen.
+        </p>
+
         <p className="mt-4 max-w-2xl text-lg text-gray-500">{SCHOOL_TYPE_ANSWER}</p>
 
         <p className="mt-4 max-w-2xl text-lg text-gray-500">

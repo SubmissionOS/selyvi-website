@@ -2,6 +2,8 @@ import { HomeJsonLd } from "@/components/seo/json-ld";
 import { Hero } from "@/components/sections/hero";
 import { TrustBar } from "@/components/sections/trust-bar";
 import { AudienceSwitch } from "@/components/sections/audience-switch";
+import { WhyWeExist } from "@/components/sections/why-we-exist";
+import { StoryLine } from "@/components/sections/story-line";
 import { ProblemSolution } from "@/components/sections/problem-solution";
 import { HowItWorks } from "@/components/sections/how-it-works";
 import { FromPractice } from "@/components/sections/from-practice";
@@ -30,14 +32,34 @@ export default function HomePage() {
       <Hero />
       <TrustBar />
       <AudienceSwitch />
+      <WhyWeExist />
       <ProblemSolution />
+
+      <StoryLine>
+        Wir kennen diese Abende nicht aus einem Marktreport. Wir kennen sie vom
+        Küchentisch – von einer angehenden Grundschullehrerin, die uns gezeigt hat, wo die
+        Zeit wirklich bleibt.
+      </StoryLine>
+
       <HowItWorks />
       <FromPractice />
       <Features />
+
+      <StoryLine>
+        Alles hier drin geht auf einen Hinweis aus einem echten Lehrerzimmer zurück.
+        Manches haben wir gebaut, weil eine einzige Lehrkraft nicht lockergelassen hat.
+      </StoryLine>
+
       <ValueForAll />
       <Privacy />
       <Testimonials />
       <Faq />
+
+      <StoryLine>
+        Wir waren selbst lange genug Schüler. Jetzt bauen wir für die Menschen, die damals
+        für uns dageblieben sind.
+      </StoryLine>
+
       <FinalCta />
     </>
   );
