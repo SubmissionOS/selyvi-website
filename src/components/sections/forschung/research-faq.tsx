@@ -1,4 +1,7 @@
+import Link from "next/link";
+
 import { PRODUCT_NAME } from "@/config/brand";
+import { Button } from "@/components/ui/button";
 import { FaqAccordion, type FaqItem } from "@/components/faq-accordion";
 
 /**
@@ -15,6 +18,11 @@ import { FaqAccordion, type FaqItem } from "@/components/faq-accordion";
  *     ein genanntes Quartal waere geraten.
  *   - keine Zusage zu Ko-Autorenschaft, Publikationsrechten oder exklusivem
  *     Datenzugang. Darueber entscheidet niemand vor dem ersten Gespraech.
+ *
+ * Die zweite Antwort nennt bewusst KEINE feste Liste von drei Formen mehr.
+ * Drei Kaestchen laden dazu ein, sich in keinem wiederzufinden – und die
+ * Formen haengen ohnehin an der Fragestellung. Statt der Aufzaehlung steht
+ * dort jetzt der naechste Schritt.
  */
 const faqItems: FaqItem[] = [
   {
@@ -24,7 +32,7 @@ const faqItems: FaqItem[] = [
   {
     question: "Wie kann eine Zusammenarbeit aussehen?",
     answer:
-      "Drei Formen halten wir heute für realistisch: Sie begleiten einen Piloten wissenschaftlich; Sie gestalten die Erhebungsinstrumente mit, bevor sie festgeschrieben werden; oder wir werten nach Freigabe gemeinsam aus. Was wir nicht zusagen, weil es niemand vor dem ersten Gespräch entscheiden kann: Publikationen, Autorenschaften oder exklusive Zugänge.",
+      "Von Pilotbegleitung über die Mitgestaltung der Erhebungsinstrumente bis zu gemeinsamen Auswertungen nach Freigabe – die Formen sind so unterschiedlich wie die Fragestellungen. Am schnellsten klärt das ein kurzes Kennenlernen. Was wir vorher nicht zusagen, weil es niemand vor dem ersten Gespräch entscheiden kann: Publikationen, Autorenschaften oder exklusive Zugänge.",
   },
   {
     question: "Ab wann gibt es Datenzugänge?",
@@ -51,6 +59,16 @@ export function ResearchFaq() {
 
         <div className="mt-12 max-w-3xl">
           <FaqAccordion items={faqItems} idPrefix="forschung-faq" />
+        </div>
+
+        {/* Der naechste Schritt steht ausserhalb des Accordions: Wer die
+            Antwort zur Zusammenarbeit gelesen hat, hat sie wieder zugeklappt,
+            bevor er handelt. Als Link und nicht als --cta-Knopf – die Farbe
+            gehoert dem Kopfzeilen-Aufruf. */}
+        <div className="mt-10">
+          <Button asChild variant="outline" size="lg">
+            <Link href="/demo">Kennenlernen vereinbaren</Link>
+          </Button>
         </div>
       </div>
     </section>

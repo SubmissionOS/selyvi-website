@@ -21,9 +21,9 @@ import { SampleDataNote } from "@/components/scenes/sample-data-note";
  *      Summe waere die Zahl, die in einer Vorlage an den Schultraeger landet –
  *      und dort haelt sie keiner Nachfrage stand.
  *   2. Die Wirkungszeile. „Eingesparte Stunden" ist eine Prozesskennzahl, keine
- *      belegte Wirkung. Im Produkt steht direkt darunter ein Satz, der
- *      entweder gemessene Befragungswerte nennt oder in Klartext sagt, warum
- *      sich noch nichts sagen laesst – und er verschwindet nie.
+ *      belegte Wirkung. Der Grundsatz dazu kommt aus IMPACT_LINE_PRINCIPLE
+ *      und steht wortgleich auf /forschung. Er wird hier NICHT eingeleitet:
+ *      Die Konstante sagt selbst, wo der Satz im Produkt steht.
  *
  * Beides gehoert auf die Website, weil eine Schulleitung genau hier nachfragt.
  */
@@ -91,9 +91,9 @@ export function ReliefReport() {
           </p>
 
           <p className="text-gray-500">
-            <span className="font-medium text-ink">Die Wirkungszeile.</span> Direkt unter
-            dem Bericht steht ein Satz zur Wirkung: „{IMPACT_LINE_PRINCIPLE}“ Eingesparte
-            Stunden sind eine Prozesskennzahl, kein Wirkungsnachweis.
+            <span className="font-medium text-ink">Die Wirkungszeile.</span>{" "}
+            {IMPACT_LINE_PRINCIPLE} Denn eingesparte Stunden sind eine Prozesskennzahl,
+            kein Wirkungsnachweis.
           </p>
         </div>
       </div>

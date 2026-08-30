@@ -10,16 +10,35 @@ import { PRODUCT_NAME } from "@/config/brand";
  * gebaut“, und die Forschungszwecke sind zusaetzlich technisch gesperrt,
  * solange die Einwilligungstexte nicht juristisch geprueft sind.
  *
- * Deshalb drei Vorkehrungen in dieser Sektion, die niemand wegkuerzen sollte:
- *   1. Der Vorspann sagt AUSDRUECKLICH, dass heute nichts davon abrufbar ist.
- *      Er steht vor den Karten, nicht darunter.
- *   2. Jede Karte ist im Wir-Modus und im Futur/Konjunktiv formuliert
- *      („gemeinsam untersuchen“, „liesse sich“, „waere“). Kein Satz behauptet
- *      einen vorhandenen Datenbestand.
- *   3. Kein Feld nennt eine Fallzahl, eine Schule oder ein Ergebnis.
+ * Der Vorspann sagt das weiterhin – aber als EINLADUNG statt als Defizit.
+ * Die frueheren Saetze („Keine davon lässt sich heute aus Selyvi beantworten
+ * – die Erhebungsinstrumente dafür gibt es noch nicht.“) waren wahr und
+ * trotzdem falsch platziert: Sie erklaerten einer Leserin als Erstes, was
+ * nicht geht. Der Inhalt ist unveraendert – es gibt heute nichts abzurufen –,
+ * die Blickrichtung ist neu: Die Instrumente entstehen gerade, und wer jetzt
+ * einsteigt, gestaltet sie mit. Das ist kein Schoenreden, sondern der
+ * tatsaechliche Grund, warum diese Seite existiert.
  *
- * Die Themen stammen aus dem Zielbild-Dokument docs/selyvi-kompakt.md. Dort
- * stehen sie als Potenzial – hier duerfen sie deshalb nur als Vorhaben stehen.
+ * Zwei Vorkehrungen bleiben:
+ *   1. Der Vorspann steht VOR den Karten, nicht darunter.
+ *   2. Jede Karte ist im Wir-Modus und im Futur/Konjunktiv formuliert. Kein
+ *      Satz behauptet einen vorhandenen Datenbestand.
+ *
+ * ==========================================================================
+ * TEXTLAENGE: ALLE KARTEN AUF EIN MASS
+ * ==========================================================================
+ * Richtwert ist „Regionale Unterschiede“ mit 185 Zeichen – die Karte, die im
+ * Layout am besten sass. Toleranz rund 165 bis 200 Zeichen. Zwei Saetze je
+ * Karte: Der erste nennt die Frage, der zweite sagt, warum wir sie nicht
+ * allein beantworten koennen.
+ *
+ * Wer eine Karte ergaenzt, prueft die Laenge mit – ungleich lange Texte
+ * lassen ein Raster aus neun Karten unruhig wirken, und genau daran ist die
+ * Vorgaenger-Fassung aufgefallen.
+ *
+ * Die Themen stammen aus docs/selyvi-kompakt.md, Abschnitt
+ * „Wissenschaftliches Potenzial“. Dort stehen sie als Potenzial – hier
+ * duerfen sie deshalb nur als Vorhaben stehen.
  */
 type ResearchField = {
   title: string;
@@ -28,28 +47,49 @@ type ResearchField = {
 
 const fields: ResearchField[] = [
   {
-    title: "Unterrichtsvorbereitung im Alltag",
+    title: "Evidenzbasierte Unterrichtskonzepte",
     description:
-      "Wie Vorbereitung tatsächlich abläuft – zwischen Tür und Angel, am Abend, am Wochenende – statt so, wie sie in Studienplänen beschrieben wird. Das ließe sich gemeinsam untersuchen, sobald die Instrumente dafür stehen.",
+      "Welche Unterrichtskonzepte im Alltag tatsächlich tragen und welche nur auf dem Papier funktionieren. Eine Frage, die sich gemeinsam prüfen ließe, statt sie weiter zu vermuten.",
+  },
+  {
+    title: "Tatsächliche Unterrichtsprozesse",
+    description:
+      "Wie eine Stunde wirklich verläuft – zwischen Plan, Zwischenfall und Improvisation. Diesen Abstand zwischen Entwurf und Wirklichkeit würden wir gern mit Ihnen vermessen.",
+  },
+  {
+    title: "Unterschiedliche Lehrstile",
+    description:
+      "Woran sich Lehrstile im Alltag unterscheiden und was das im Unterricht bewirkt. Ein Feld, in dem wir uns Forschung wünschen, die mehr sieht als eine einzelne Schule.",
+  },
+  {
+    title: "Neue Lehr- und Lernmaterialien",
+    description:
+      "Wie Material aussehen müsste, das auf den dokumentierten Beobachtungen einer konkreten Klasse aufbaut. Wir würden es gern gemeinsam entwerfen und danach prüfen lassen.",
+  },
+  {
+    title: "Evaluation digitaler Unterstützung",
+    description: `Ob digitale Werkzeuge im Schulalltag wirklich halten, was sie versprechen. Für uns die unbequemste Frage – und der Grund, warum ${PRODUCT_NAME} sie nicht allein beantworten sollte.`,
   },
   {
     title: "Organisatorische Belastung von Lehrkräften",
     description:
-      "Welcher Anteil der Arbeitszeit auf Dokumentation, Kommunikation und Verwaltung entfällt – und welche dieser Tätigkeiten als belastend erlebt wird und welche nicht.",
-  },
-  {
-    title: "Wirkung digitaler Entlastung",
-    description: `Ob eingesparte Zeit tatsächlich als Entlastung ankommt oder nur an anderer Stelle wieder gebunden wird. Für uns die unbequemste Frage – und der Grund, warum ${PRODUCT_NAME} sie nicht allein beantworten sollte.`,
-  },
-  {
-    title: "Entwicklung von Fördermaterial",
-    description:
-      "Wie sich Material verändert, wenn es auf dokumentierten Beobachtungen einer konkreten Klasse aufbaut statt auf einem allgemeinen Jahrgangsbild. Ein Feld, in dem wir uns fachliche Gegenrede wünschen.",
+      "Welcher Anteil der Arbeitszeit auf Dokumentation, Kommunikation und Verwaltung entfällt – und welche dieser Tätigkeiten überhaupt als belastend erlebt wird und welche nicht.",
   },
   {
     title: "Regionale Unterschiede",
+    /** Die Referenzkarte fuer die Textlaenge – 185 Zeichen. */
     description:
       "Ob sich Belastung und Vorbereitungspraxis zwischen Bundesländern, Schulgrößen und Einzugsgebieten systematisch unterscheiden. Dafür bräuchte es mehr Schulen, als heute mit uns arbeiten.",
+  },
+  {
+    title: "Neue Förderkonzepte",
+    description:
+      "Wie Förderung aussieht, wenn sie auf laufender Beobachtung aufbaut statt auf einer einzelnen Momentaufnahme. Dafür braucht es fachliche Gegenrede, nicht nur Software.",
+  },
+  {
+    title: "Langfristige Wirkungsanalysen",
+    description:
+      "Was von schulischen Maßnahmen nach Jahren tatsächlich übrig bleibt. Eine Frage, für die drei Befragungswellen nicht reichen – hier brauchen wir Partner mit langem Atem.",
   },
 ];
 
@@ -67,17 +107,17 @@ export function ResearchFields() {
           Woran sich mit {PRODUCT_NAME} forschen lässt
         </h2>
 
-        {/* Diese beiden Saetze sind die Absicherung der ganzen Sektion. Ohne sie
-            liest sich die Kartenliste wie ein Datenkatalog. */}
+        {/* Diese beiden Saetze sind die Absicherung der ganzen Sektion – und
+            zugleich die Einladung. Ohne sie liest sich die Kartenliste wie ein
+            Datenkatalog. */}
         <p className="mt-6 max-w-2xl text-lg text-gray-500">
-          Fünf Fragen, die uns beschäftigen. Keine davon lässt sich heute aus{" "}
-          {PRODUCT_NAME} beantworten – die Erhebungsinstrumente dafür gibt es noch nicht.
+          Neun Fragen, die uns beschäftigen. Die Erhebungsinstrumente dafür entstehen
+          gerade – wer jetzt einsteigt, gestaltet sie mit.
         </p>
 
         <p className="mt-4 max-w-2xl text-lg text-gray-500">
-          Wir stellen sie hier trotzdem, weil wir sie nicht allein entwerfen wollen. Wer
-          in einem dieser Felder arbeitet, soll mitentscheiden, was überhaupt erhoben
-          wird.
+          Wir entwerfen sie nicht gern allein. Wer in einem dieser Felder arbeitet, soll
+          mitentscheiden, was überhaupt erhoben wird – und was besser nicht.
         </p>
 
         <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

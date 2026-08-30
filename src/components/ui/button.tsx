@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
  *
  * WICHTIG – Variante "cta":
  * Sie ist die einzige Stelle im gesamten Projekt, die `bg-cta` verwendet, und
- * bleibt dem primaeren Call-to-Action vorbehalten ("Demo buchen").
+ * bleibt dem primaeren Call-to-Action vorbehalten ("Selyvi kennenlernen").
  * Fuer alle anderen Aktionen: "primary" (brand-600), "outline" oder "ghost".
  *
  * Hover-Zustaende arbeiten bewusst mit Deckkraft statt mit zusaetzlichen

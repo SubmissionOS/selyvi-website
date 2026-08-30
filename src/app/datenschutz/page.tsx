@@ -120,9 +120,9 @@ export default function DatenschutzPage() {
               4. Demo- und Kontaktformular
             </h2>
             <p className="mt-4 text-gray-500">
-              Wenn Sie das Formular auf der Seite „Demo buchen“ absenden, verarbeiten wir
-              die von Ihnen eingegebenen Daten, um Ihre Anfrage zu bearbeiten und mit
-              Ihnen Kontakt aufzunehmen.
+              Wenn Sie das Anfrageformular absenden – auf „Kennenlernen“ oder auf
+              „Mitgestalten“ –, verarbeiten wir die von Ihnen eingegebenen Daten, um Ihre
+              Anfrage zu bearbeiten und mit Ihnen Kontakt aufzunehmen.
             </p>
             <p className="mt-4 text-gray-500">Verarbeitet werden dabei:</p>
             <ul className="mt-3 space-y-2 text-gray-500">

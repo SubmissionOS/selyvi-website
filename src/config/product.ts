@@ -98,7 +98,7 @@ export const TRANSLATION_LANGUAGE_COUNT = TRANSLATION_LANGUAGES.length;
 export const TRANSLATION_LANGUAGES_SENTENCE = `${TRANSLATION_LANGUAGES.slice(0, -1).join(", ")} und ${TRANSLATION_LANGUAGES[TRANSLATION_LANGUAGES.length - 1]}`;
 
 /**
- * Der Grundsatz hinter der Wirkungszeile – WORTGLEICH so, wie ihn
+ * Der Grundsatz hinter der Wirkungszeile – inhaltlich so, wie ihn
  * docs/produktstand-2026-08.md beschreibt („Wirkungszeile — Live").
  *
  * Warum das eine geteilte Konstante ist und keine zwei Formulierungen:
@@ -109,11 +109,23 @@ export const TRANSLATION_LANGUAGES_SENTENCE = `${TRANSLATION_LANGUAGES.slice(0, 
  * eingesparte Stunden eben KEIN Wirkungsnachweis sind, darf die Zeile, die
  * das klarstellt, nicht selbst Wirkung versprechen.
  *
+ * ==========================================================================
+ * UMFORMULIERT, WEIL DIE ALTE FASSUNG NICHT VERSTANDEN WURDE
+ * ==========================================================================
+ * Sie endete auf „Diese Zeile verschwindet nie." – ein Satz, der nur trägt,
+ * wenn man vorher weiss, wovon er handelt. Wer die Anwendung nicht kennt,
+ * liest ihn als Behauptung ohne Gegenstand.
+ *
+ * Die neue Fassung liefert den Kontext mit: WO der Satz steht, WAS er sagt
+ * und WER ihn nicht abschalten kann. Der Kern ist unveraendert – gemessene
+ * Befragungswerte ODER Klartext, und nicht ausblendbar. „Auch wir nicht" ist
+ * dabei kein Schmuck: Es beantwortet die Frage, die sich sofort stellt.
+ *
  * Wer den Wortlaut aendert, aendert ihn auf beiden Seiten gleichzeitig – und
  * sollte vorher im Produktstand nachlesen, was die Zeile wirklich anzeigt.
  */
 export const IMPACT_LINE_PRINCIPLE =
-  "Unser System zeigt gemessene Befragungswerte – oder sagt in Klartext, warum sich noch nichts sagen lässt. Diese Zeile verschwindet nie.";
+  "Im Produkt steht direkt unter jedem Entlastungsbericht ein Satz, der die Zahlen einordnet: entweder tatsächlich gemessene Befragungswerte – oder im Klartext, warum sich noch nichts sagen lässt. Diesen Satz kann niemand ausblenden, auch wir nicht.";
 
 /**
  * Versprechen 1 aus dem Manifest auf /ueber-uns – und zugleich die Ueberschrift

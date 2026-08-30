@@ -142,10 +142,9 @@ export const routes: RouteMeta[] = [
   },
   {
     path: "/demo",
-    // Angeglichen an die H1 und an den Absende-Button der Seite. „Demo buchen“
-    // ist die Beschriftung des CTA im Header – auf der Zielseite wird aber
-    // nichts gebucht, sondern eine Anfrage geschickt, auf die wir uns melden.
-    title: "Demo anfragen",
+    // Nicht „Selyvi kennenlernen": fullTitle() haengt den Produktnamen an,
+    // und „Selyvi kennenlernen – Selyvi" nennt ihn zweimal.
+    title: "Kennenlernen",
     description:
       "In 20 Minuten zeigen wir Ihnen die echte Oberfläche – kein Video, keine Folien. Ihre Fragen kommen zuerst.",
     priority: 0.9,

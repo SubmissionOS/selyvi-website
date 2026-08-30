@@ -22,14 +22,14 @@ export function ImpactLineQuote() {
     <section aria-label="Grundsatz der Wirkungszeile" className="bg-surface-alt">
       <div className="mx-auto w-full max-w-6xl px-6 py-16 lg:px-8 lg:py-20">
         <blockquote className="max-w-3xl border-l-2 border-brand-600 pl-6">
-          <p className="text-2xl leading-snug font-medium tracking-tight text-ink sm:text-3xl">
+          <p className="text-xl leading-snug font-medium tracking-tight text-ink sm:text-2xl">
             „{IMPACT_LINE_PRINCIPLE}“
           </p>
         </blockquote>
 
         <p className="mt-6 max-w-2xl text-base text-gray-500">
-          Sie steht im Produkt direkt unter dem Entlastungsbericht – als Gegengewicht
-          dazu, dass „140 Stunden gespart“ sonst als belegte Wirkung gelesen wird.
+          Sie ist das Gegengewicht dazu, dass „140 Stunden gespart“ sonst als belegte
+          Wirkung gelesen wird.
         </p>
       </div>
     </section>

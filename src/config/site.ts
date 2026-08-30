@@ -23,7 +23,19 @@ export const mainNav: NavItem[] = [
 
 /** Primaerer Call-to-Action – die einzige Stelle, an der --cta zum Einsatz kommt. */
 export const primaryCta: NavItem = {
-  label: "Demo buchen",
+  /**
+   * „Selyvi kennenlernen" statt „Demo buchen".
+   *
+   * Auf /demo wird nichts gebucht – es wird ein Erstgespraech angefragt, auf
+   * das wir uns melden. „Buchen" versprach einen Kalender, den es nicht gibt,
+   * und setzte die Huerde hoeher als noetig: Wer nur schauen will, bucht
+   * nichts. „Kennenlernen" liegt zwischen locker und foermlich und beschreibt,
+   * was tatsaechlich passiert.
+   *
+   * Der Knopf bleibt an allen bisherigen Stellen stehen – die staendige
+   * Erreichbarkeit oben rechts ist Absicht, nicht Zufall.
+   */
+  label: "Selyvi kennenlernen",
   href: "/demo",
 };
 
@@ -41,7 +53,7 @@ export const footerColumns: FooterColumn[] = [
       { label: "Für Schulleitungen", href: "/schulen" },
       { label: "Forschung & Wirkung", href: "/forschung" },
       { label: "Datenschutz & Sicherheit", href: "/datenschutz-sicherheit" },
-      { label: "Demo buchen", href: "/demo" },
+      { label: "Selyvi kennenlernen", href: "/demo" },
     ],
   },
   {
@@ -60,7 +72,7 @@ export const footerColumns: FooterColumn[] = [
       { label: "Mitgestalten", href: "/mitgestalten" },
       // Als gewöhnlicher Link, nicht als Button: Der primäre CTA steht bereits
       // in der Kopfzeile, und --cta bleibt genau ihm vorbehalten.
-      { label: "Demo buchen", href: "/demo" },
+      { label: "Selyvi kennenlernen", href: "/demo" },
     ],
   },
   {
@@ -91,7 +103,7 @@ export const footerColumns: FooterColumn[] = [
      */
     items: [
       { label: imprint.email, href: `mailto:${imprint.email}` },
-      { label: "Demo buchen", href: "/demo" },
+      { label: "Selyvi kennenlernen", href: "/demo" },
     ],
   },
 ];

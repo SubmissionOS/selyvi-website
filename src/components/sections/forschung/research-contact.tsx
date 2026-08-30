@@ -7,15 +7,15 @@ import { Button } from "@/components/ui/button";
  * Sektion 7 – Kontakt. Schliesst die Seite ab.
  *
  * Bewusst NICHT <FinalCta />, obwohl die Komponente vorhanden ist und auf drei
- * anderen Seiten steht: Deren Aufruf lautet „Demo buchen“ und richtet sich an
+ * anderen Seiten steht: Deren Aufruf richtet sich an
  * jemanden, der eine Kaufentscheidung vorbereitet. Diese Seite bittet um
  * fachliche Gegenrede – der Weg dorthin ist eine E-Mail, nicht ein
  * Terminformular.
  *
- * Die Demo bleibt als zweite Moeglichkeit stehen, weil manche Forschende das
- * Produkt zuerst sehen wollen. Sie steht als schlichter Link, nicht als
- * --cta-Button: --cta gehoert dem primaeren Handlungsaufruf, und der ist hier
- * die E-Mail.
+ * Das Kennenlernen bleibt als ZWEITER Weg stehen – als schlichter Link, nicht
+ * als --cta-Button. Die E-Mail ist hier der primaere Weg: Wer beruflich
+ * Forschungsanfragen schreibt, formuliert lieber aus, als ein Formular
+ * auszufuellen. Wer schneller sprechen will, nimmt den Link.
  *
  * Die Adresse kommt aus src/config/legal.ts – eine Quelle mit Impressum und
  * Fusszeile, damit nicht drei verschiedene Kontaktadressen entstehen.
@@ -45,7 +45,7 @@ export function ResearchContact() {
               href="/demo"
               className="text-base text-brand-600 underline underline-offset-4"
             >
-              Oder zuerst die Anwendung ansehen
+              Oder ein Kennenlernen vereinbaren
             </Link>
           </div>
         </div>

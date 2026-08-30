@@ -38,12 +38,12 @@ export function ResearchAccessBand() {
             id="forschungszugang-titel"
             className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
           >
-            Warum es heute noch keinen Datenzugang gibt
+            Datenzugänge nach klaren Regeln
           </h2>
 
           <p className="mt-6 text-lg text-gray-500">
-            Forschungszugänge gibt es bei uns erst, wenn drei Dinge stehen: juristisch
-            geprüfte, zweckgranulare Einwilligungen der Beteiligten – Aggregation mit
+            Daten geben wir erst frei, wenn drei Dinge stehen: juristisch geprüfte,
+            zweckgranulare Einwilligungen der Beteiligten – Aggregation mit
             Mindestfallzahlen statt Rohdaten – und ein dokumentiertes Erhebungsmodell.
           </p>
 
@@ -61,8 +61,8 @@ export function ResearchAccessBand() {
           </p>
 
           <p className="mt-6 text-lg text-ink">
-            Wir glauben: Genau diese Reihenfolge macht Forschung mit Schuldaten überhaupt
-            erst vertretbar.
+            Diese Reihenfolge ist langsamer. Sie ist auch der Grund, warum man mit uns
+            guten Gewissens forschen kann.
           </p>
         </div>
       </div>

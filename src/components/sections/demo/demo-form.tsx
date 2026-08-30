@@ -57,7 +57,7 @@ import { Button } from "@/components/ui/button";
  * dass hier ein Formular zweitverwendet wurde.
  */
 const SUBMIT_LABELS: Record<SourceValue, string> = {
-  demo: "Demo anfragen",
+  demo: "Kennenlernen anfragen",
   mitgestalten: "Anfrage senden",
 };
 
