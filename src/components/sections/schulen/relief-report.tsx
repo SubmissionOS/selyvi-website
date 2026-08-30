@@ -74,7 +74,14 @@ export function ReliefReport() {
               auseinanderlaufen. */}
           <div className="lg:pt-4">
             <SteeringScene size="large" />
-            <SampleDataNote />
+            <SampleDataNote excerpt />
+
+            {/* Der Bruchteil-Hinweis. Die Seitenleiste der Szene zeigt fuenf
+                Leitungsbereiche, erklaert wird hier einer – das gehoert
+                gesagt, und zwar als Feststellung, nicht als Anreisser. */}
+            <p className="mt-2 text-xs text-gray-500">
+              Der Entlastungsbericht ist eine von mehreren Auswertungen im Leitungsmodus.
+            </p>
           </div>
         </div>
 

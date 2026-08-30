@@ -70,7 +70,7 @@ export function CommunicationScene() {
         return (
           <UiWindow
             variant="app"
-            active="klassen"
+            active="elternpost"
             chips={[`Klasse ${DEMO_CLASS}`]}
             className="h-[23rem] sm:h-[19rem]"
           >

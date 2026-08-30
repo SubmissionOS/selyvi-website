@@ -1,15 +1,27 @@
 import type { ReactNode } from "react";
 import {
+  Bell,
   BookMarked,
+  CalendarDays,
   ClipboardList,
   FileBarChart,
+  Files,
   FolderOpen,
+  LayoutGrid,
+  Mail,
+  NotebookPen,
+  ScrollText,
+  TrendingUp,
   Users,
   type LucideIcon,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { DEMO_NAV, type DemoNavKey } from "@/config/demo-data";
+import {
+  DEMO_NAV_LEADERSHIP,
+  DEMO_NAV_TEACHER,
+  type DemoNavKey,
+} from "@/config/demo-data";
 import { Wordmark } from "@/components/layout/wordmark";
 
 /**
@@ -78,6 +90,16 @@ type Props = {
    * sonst erfahren Screenreader-Nutzende ihn nicht.
    */
   inDevelopment?: boolean;
+  /**
+   * Welche Seitenleiste? „lehrkraft" ist der Arbeitsbereich einer Lehrkraft,
+   * „leitung" der Leitungsmodus.
+   *
+   * Die Lehrkraft-Liste ist bewusst LANG und traegt am Ende eine
+   * ausgegraute „+ weitere"-Zeile: Wer eine Szene sieht, soll erkennen, dass
+   * die erklaerte Funktion ein Ausschnitt ist. Die Leitungs-Liste ist
+   * vollstaendig und traegt die Zeile deshalb NICHT.
+   */
+  navSet?: "lehrkraft" | "leitung";
   className?: string;
 };
 
@@ -85,9 +107,20 @@ type Props = {
 const NAV_ICONS: Record<DemoNavKey, LucideIcon> = {
   beobachtungen: ClipboardList,
   klassen: Users,
+  zeugnisse: ScrollText,
+  elternpost: Mail,
   material: FolderOpen,
-  berichte: FileBarChart,
+  entwuerfe: NotebookPen,
+  sitzplan: LayoutGrid,
+  stundenplan: CalendarDays,
+  dokumente: Files,
+  entwicklung: TrendingUp,
   bibliothek: BookMarked,
+  entlastungsbericht: FileBarChart,
+  "lehrer-klassen": Users,
+  nutzung: TrendingUp,
+  schulentwicklung: TrendingUp,
+  aufmerksamkeit: Bell,
 };
 
 export function UiWindow({
@@ -98,9 +131,12 @@ export function UiWindow({
   chips,
   highlightChip = -1,
   inDevelopment = false,
+  navSet = "lehrkraft",
   className,
 }: Props) {
   if (variant === "app") {
+    const entries = navSet === "leitung" ? DEMO_NAV_LEADERSHIP : DEMO_NAV_TEACHER;
+
     return (
       <div
         className={cn(
@@ -147,30 +183,56 @@ export function UiWindow({
         <div className="flex min-h-0 flex-1">
           {/* ---------- Seitenleiste ----------
               Unter 640 px schrumpft sie auf eine reine Icon-Spalte: Die
-              Beschriftungen verschwinden, die Struktur bleibt. */}
+              Beschriftungen verschwinden, die Struktur bleibt. Genau das ist
+              der Grund, warum die lange Liste auf 390 px kein Problem wird.
+
+              Die Liste laeuft in einem `overflow-hidden`-Bereich: In hohen
+              Fenstern steht sie vollstaendig, in niedrigen bricht sie unten ab
+              – wie eine echte Seitenleiste, die weitergeht. Die „+ weitere"-
+              Zeile ist deshalb am Fuss ANGEHEFTET und nicht das letzte
+              Listenelement: Sie muss auch dann sichtbar sein, wenn abgeschnitten
+              wird, denn sie traegt die Aussage. */}
           <div
             aria-hidden="true"
-            className="flex w-11 shrink-0 flex-col gap-0.5 border-r border-gray-200 bg-surface-alt p-1.5 sm:w-36 sm:p-2"
+            className={cn(
+              "flex w-11 shrink-0 flex-col border-r border-gray-200 bg-surface-alt p-1.5 sm:p-2",
+              // Der Leitungsmodus braucht 16 px mehr: „Nutzung im Kollegium"
+              // wird bei w-40 abgeschnitten, und ein halber Bereichsname sieht
+              // aus wie ein Fehler statt wie eine lange Liste.
+              navSet === "leitung" ? "sm:w-44" : "sm:w-40",
+            )}
           >
-            {DEMO_NAV.map((entry) => {
-              const Icon = NAV_ICONS[entry.key];
-              const isActive = entry.key === active;
+            <div className="flex min-h-0 flex-1 flex-col gap-0.5 overflow-hidden">
+              {entries.map((entry) => {
+                const Icon = NAV_ICONS[entry.key];
+                const isActive = entry.key === active;
 
-              return (
-                <span
-                  key={entry.key}
-                  className={cn(
-                    "flex items-center justify-center gap-2 rounded-md px-2 py-1.5 sm:justify-start",
-                    isActive ? "bg-brand-100 text-brand-800" : "text-gray-500",
-                  )}
-                >
-                  <Icon className="size-3.5 shrink-0" />
-                  <span className="hidden truncate text-[11px] sm:inline">
-                    {entry.label}
+                return (
+                  <span
+                    key={entry.key}
+                    className={cn(
+                      "flex shrink-0 items-center justify-center gap-2 rounded-md px-2 py-1.5 sm:justify-start",
+                      isActive ? "bg-brand-100 text-brand-800" : "text-gray-500",
+                    )}
+                  >
+                    <Icon className="size-3.5 shrink-0" />
+                    <span className="hidden truncate text-[11px] sm:inline">
+                      {entry.label}
+                    </span>
                   </span>
-                </span>
-              );
-            })}
+                );
+              })}
+            </div>
+
+            {/* Ausgegraut und ohne Symbol – sie ist kein Bereich, sondern der
+                Hinweis, dass die Liste weitergeht. Auf der Icon-Spalte steht
+                dafuer nur ein Auslassungszeichen. */}
+            {navSet === "lehrkraft" ? (
+              <span className="mt-1 flex shrink-0 items-center justify-center px-2 py-1 text-[11px] text-gray-500 sm:justify-start">
+                <span className="sm:hidden">…</span>
+                <span className="hidden sm:inline">+ weitere</span>
+              </span>
+            ) : null}
           </div>
 
           {/* ---------- Inhaltsbereich: hier lebt die Szene ----------

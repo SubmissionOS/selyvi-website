@@ -5,6 +5,7 @@ import { ProductIntro } from "@/components/sections/produkt/product-intro";
 import { LearnsWithYou } from "@/components/sections/produkt/learns-with-you";
 import { PrincipleBand } from "@/components/sections/produkt/principle-band";
 import { FunctionBlocks } from "@/components/sections/produkt/function-blocks";
+import { ExcerptNote } from "@/components/sections/produkt/excerpt-note";
 import { EverydayExtras } from "@/components/sections/produkt/everyday-extras";
 import { Roadmap } from "@/components/sections/produkt/roadmap";
 import { CoCreateBand } from "@/components/sections/produkt/co-create-band";
@@ -25,6 +26,7 @@ export default function ProduktPage() {
       <LearnsWithYou />
       <PrincipleBand />
       <FunctionBlocks />
+      <ExcerptNote />
       <EverydayExtras />
       <Roadmap />
       <CoCreateBand />

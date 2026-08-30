@@ -165,7 +165,8 @@ export function SteeringScene({ size = "default" }: { size?: SteeringSceneSize }
         return (
           <UiWindow
             variant="app"
-            active="berichte"
+            navSet="leitung"
+            active="entlastungsbericht"
             chips={[DEMO_RELIEF_REPORT.month]}
             className={layout.panel}
           >

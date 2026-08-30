@@ -131,7 +131,7 @@ export function StyleProfileScene({ startDelayMs = 0 }: { startDelayMs?: number 
         const profile = scene.reached("profil");
 
         return (
-          <UiWindow variant="app" active="berichte" inDevelopment className="h-[16rem]">
+          <UiWindow variant="app" active="zeugnisse" inDevelopment className="h-[16rem]">
             <SceneLabel>Eigene Texte</SceneLabel>
 
             <div className="mt-3 flex flex-col gap-1.5">

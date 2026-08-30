@@ -67,15 +67,71 @@ export const DEMO_TEACHER = "A. Weber";
  * „es gibt das"; eine aufgeklappte Ansicht sagt „so sieht es aus", und das
  * wäre hier ungedeckt.
  */
-export const DEMO_NAV = [
+/* ==========================================================================
+ * SEITENLEISTEN – AM ECHTEN PRODUKT ORIENTIERT
+ * ==========================================================================
+ * Die Liste war bis hierher auf fuenf Eintraege gekuerzt. Sie ist jetzt so
+ * lang, wie der Funktionsumfang tatsaechlich ist – DAS IST DIE AUSSAGE: Wer
+ * eine Szene sieht, soll erkennen, dass die erklaerte Funktion ein Ausschnitt
+ * ist und nicht das Ganze.
+ *
+ * JEDER EINTRAG IST EINE ALS LIVE GEFUEHRTE FUNKTION aus
+ * docs/produktstand-2026-08.md. Die Zuordnung im Einzelnen:
+ *
+ *   Beobachtungen  <- „Beobachtungen strukturieren — Live"
+ *   Klassen        <- „Kompetenzen statt Notendurchschnitt — Live" und
+ *                     „Förderempfehlungen, Timeline, Klassenanalyse — Live"
+ *   Zeugnisse      <- „Zeugnisbemerkungen — Live"
+ *   Elternpost     <- „Elternmails, auf Wunsch übersetzt — Live"
+ *   Material       <- „Unterrichtsmaterial aus echtem Fachwissen — Live"
+ *   Entwürfe       <- „Unterrichtsentwürfe und Varianten — Live"
+ *   Sitzplan       <- „Sitzpläne — Live" (der KI-Vorschlag darin ist Prototyp
+ *                     und wird nirgends gezeigt – der Sitzplan selbst nicht)
+ *   Stundenplan    <- „Klassenstundenplan ohne Pflegeaufwand — Live"
+ *   Dokumente      <- „Dokumentenablage für Schülerarbeiten — Live"
+ *   Entwicklung    <- „Fachverlauf und Stundenprotokoll — Live"
+ *                     (Klassenentwicklung ueber Monate)
+ *   Bibliothek     <- „Bibliothek — Live"
+ *
+ * NICHT aufgenommen, obwohl Live: „Freie Fragen an die eigenen Daten" und
+ * „Daten aus Scans auslesen". Beides sind Funktionen INNERHALB eines
+ * Bereichs – ein Chat und ein Haekchen –, keine eigenen Navigationspunkte.
+ * Eine Seitenleiste, die Schalter auffuehrt, waere kein Abbild mehr.
+ * ========================================================================== */
+export const DEMO_NAV_TEACHER = [
   { key: "beobachtungen", label: "Beobachtungen" },
   { key: "klassen", label: "Klassen" },
+  { key: "zeugnisse", label: "Zeugnisse" },
+  { key: "elternpost", label: "Elternpost" },
   { key: "material", label: "Material" },
-  { key: "berichte", label: "Berichte" },
+  { key: "entwuerfe", label: "Entwürfe" },
+  { key: "sitzplan", label: "Sitzplan" },
+  { key: "stundenplan", label: "Stundenplan" },
+  { key: "dokumente", label: "Dokumente" },
+  { key: "entwicklung", label: "Entwicklung" },
   { key: "bibliothek", label: "Bibliothek" },
 ] as const;
 
-export type DemoNavKey = (typeof DEMO_NAV)[number]["key"];
+/**
+ * Leitungsmodus. Der Produktstand fuehrt unter „Bereich 2 – Für die
+ * Schulleitung" genau diese fuenf Bereiche als Live:
+ * Entlastungsbericht, Lehrer & Klassen, Nutzung im Kollegium,
+ * Schulentwicklung, Aufmerksamkeit.
+ *
+ * Diese Liste ist VOLLSTAENDIG – deshalb traegt sie im Gegensatz zur
+ * Lehrkraft-Liste KEINE „+ weitere"-Zeile. Eine Andeutung von mehr waere hier
+ * eine Behauptung.
+ */
+export const DEMO_NAV_LEADERSHIP = [
+  { key: "entlastungsbericht", label: "Entlastungsbericht" },
+  { key: "lehrer-klassen", label: "Lehrer & Klassen" },
+  { key: "nutzung", label: "Nutzung im Kollegium" },
+  { key: "schulentwicklung", label: "Schulentwicklung" },
+  { key: "aufmerksamkeit", label: "Aufmerksamkeit" },
+] as const;
+
+export type DemoNavKey =
+  (typeof DEMO_NAV_TEACHER)[number]["key"] | (typeof DEMO_NAV_LEADERSHIP)[number]["key"];
 
 export type DemoChild = {
   /** Vorname plus abgekürzter Nachname. */
