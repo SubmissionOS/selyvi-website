@@ -49,6 +49,7 @@ export const footerColumns: FooterColumn[] = [
   {
     title: "Selyvi",
     items: [
+      { label: "Einblick", href: "/einblick" },
       { label: "Für Lehrkräfte", href: "/fuer-lehrkraefte" },
       { label: "Für Schulleitungen", href: "/schulen" },
       { label: "Forschung & Wirkung", href: "/forschung" },

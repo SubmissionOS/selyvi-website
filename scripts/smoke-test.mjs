@@ -29,6 +29,7 @@ const PAGES = [
   "/forschung",
   "/datenschutz-sicherheit",
   "/ueber-uns",
+  "/einblick",
   "/mitgestalten",
   "/demo",
   "/impressum",

@@ -5,7 +5,7 @@ import { AudienceSwitch } from "@/components/sections/audience-switch";
 import { WhyWeExist } from "@/components/sections/why-we-exist";
 import { StoryLine } from "@/components/sections/story-line";
 import { ProblemSolution } from "@/components/sections/problem-solution";
-import { HowItWorks } from "@/components/sections/how-it-works";
+import { TakeALook } from "@/components/sections/take-a-look";
 import { FromPractice } from "@/components/sections/from-practice";
 import { Features } from "@/components/sections/features";
 import { ValueForAll } from "@/components/sections/value-for-all";
@@ -33,7 +33,6 @@ export default function HomePage() {
       <TrustBar />
       <AudienceSwitch />
       <WhyWeExist />
-      <ProblemSolution />
 
       <StoryLine>
         Wir kennen diese Abende nicht aus einem Marktreport. Wir kennen sie vom
@@ -41,7 +40,9 @@ export default function HomePage() {
         Zeit wirklich bleibt.
       </StoryLine>
 
-      <HowItWorks />
+      <ProblemSolution />
+
+      <TakeALook />
       <FromPractice />
       <Features />
 

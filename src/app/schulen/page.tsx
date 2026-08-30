@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import { pageMetadata } from "@/config/seo";
 import { SchoolIntro } from "@/components/sections/schulen/school-intro";
-import { OrganisationBenefits } from "@/components/sections/schulen/organisation-benefits";
 import { ReliefReport } from "@/components/sections/schulen/relief-report";
 import { TeachingQuality } from "@/components/sections/schulen/teaching-quality";
 import { RolloutTimeline } from "@/components/sections/schulen/rollout-timeline";
@@ -22,7 +21,6 @@ export default function SchulenPage() {
   return (
     <>
       <SchoolIntro />
-      <OrganisationBenefits />
       <ReliefReport />
       <TeachingQuality />
       <RolloutTimeline />

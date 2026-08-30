@@ -132,6 +132,13 @@ export const routes: RouteMeta[] = [
     priority: 0.6,
   },
   {
+    path: "/einblick",
+    title: "Einblick",
+    description:
+      "Ein geführter Einblick mit Beispieldaten: eine Beobachtung festhalten, daraus einen Zeugnistext entstehen lassen, den Sitzplan umstellen. Drei von elf Bereichen sind offen.",
+    priority: 0.8,
+  },
+  {
     path: "/mitgestalten",
     // Nicht „Selyvi mitgestalten": fullTitle() haengt den Produktnamen an,
     // und „Selyvi mitgestalten – Selyvi" nennt ihn zweimal.

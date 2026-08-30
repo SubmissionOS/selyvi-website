@@ -357,3 +357,50 @@ export const DEMO_SEATING = {
   /** Wer zieht um, von wo nach wo. */
   move: { initials: "LB", from: "s4", to: "s5" },
 } as const;
+
+/* ==========================================================================
+ * GEFÜHRTER EINBLICK (/einblick)
+ * ==========================================================================
+ * Drei vorbereitete Beobachtungen aus derselben 3b und je ein passender
+ * Zeugnistext. Der Besucher waehlt eine Beobachtung; daraus entsteht in
+ * Station 2 GENAU der zugehoerige Entwurf – das ist der Moment, in dem die
+ * Umgebung sich echt anfuehlt.
+ *
+ * Es wird nichts erzeugt und nichts gesendet: Beide Texte stehen hier fertig.
+ * Genau das sagt die Seite auch, dauerhaft ueber dem Fenster.
+ *
+ * KEINE NEGATIVEN INHALTE ÜBER KINDER – die Regel aus dem Kopf dieser Datei
+ * gilt hier besonders, weil ein Besucher die Karten einzeln anklickt und
+ * liest. Alle drei beschreiben eine Beobachtung, keine Bewertung eines Kindes.
+ * ========================================================================== */
+export const DEMO_TOUR_OBSERVATIONS = [
+  {
+    id: "emma",
+    child: "Emma K.",
+    initials: "EK",
+    note: "Emma liest heute zum ersten Mal flüssig vor der Klasse – traut sich mehr zu.",
+    chips: ["Deutsch · Lesen", "Beobachtung"],
+    report:
+      "Emma liest zunehmend flüssig und sicher vor der Klasse vor. Sie traut sich dabei mehr zu und bringt sich im Deutschunterricht immer häufiger von sich aus ein.",
+  },
+  {
+    id: "yusuf",
+    child: "Yusuf A.",
+    initials: "YA",
+    note: "Yusuf rechnet sicher im Zahlenraum bis 100 und erklärt seinen Weg der Nachbarin.",
+    chips: ["Mathe · Zahlenraum", "Beobachtung"],
+    report:
+      "Yusuf bewegt sich sicher im Zahlenraum bis 100. Er kann seinen Rechenweg in eigenen Worten erklären und hilft damit auch anderen Kindern weiter.",
+  },
+  {
+    id: "lotta",
+    child: "Lotta B.",
+    initials: "LB",
+    note: "Lotta hat in der Gruppenarbeit die Aufgabenverteilung übernommen, ganz von selbst.",
+    chips: ["Sozialverhalten", "Beobachtung"],
+    report:
+      "Lotta übernimmt in Gruppenarbeiten von sich aus Verantwortung und verteilt Aufgaben umsichtig. Sie achtet dabei darauf, dass alle Kinder beteiligt sind.",
+  },
+] as const;
+
+export type DemoTourObservation = (typeof DEMO_TOUR_OBSERVATIONS)[number];

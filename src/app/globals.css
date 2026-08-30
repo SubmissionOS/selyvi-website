@@ -108,6 +108,10 @@
   /* Ruhiger Puls, z. B. Mikrofon waehrend des Diktats. */
   --animate-soft-pulse: soft-pulse 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 
+  /* Gesperrter Sitzplatz im gefuehrten Einblick: kurzes Verweigern.
+     Nur transform – kein Layout-Durchgang. */
+  --animate-seat-refuse: seat-refuse 400ms ease-in-out both;
+
   /* Klick-Ring des Szenen-Cursors. Laeuft genau einmal. */
   --animate-click-ring: click-ring 560ms ease-out both;
 
@@ -151,6 +155,19 @@
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes seat-refuse {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(-3px, 0, 0);
+  }
+  75% {
+    transform: translate3d(3px, 0, 0);
   }
 }
 

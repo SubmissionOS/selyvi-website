@@ -100,6 +100,16 @@ type Props = {
    * vollstaendig und traegt die Zeile deshalb NICHT.
    */
   navSet?: "lehrkraft" | "leitung";
+  /**
+   * Ersetzt die statische Seitenleiste vollstaendig.
+   *
+   * Nur der gefuehrte Einblick nutzt das: Dort ist die Leiste BEDIENBAR –
+   * drei Bereiche sind Schalter, acht tragen ein Schloss. Die eingebaute
+   * Leiste ist bewusst tote Dekoration (aria-hidden, keine Buttons, kein
+   * tabIndex); sie nachtraeglich bedienbar zu machen haette diese Zusage in
+   * allen Szenen aufgeweicht. Ein Ersatz-Slot laesst beide Welten getrennt.
+   */
+  navSlot?: ReactNode;
   className?: string;
 };
 
@@ -132,6 +142,7 @@ export function UiWindow({
   highlightChip = -1,
   inDevelopment = false,
   navSet = "lehrkraft",
+  navSlot,
   className,
 }: Props) {
   if (variant === "app") {
@@ -192,48 +203,50 @@ export function UiWindow({
               Zeile ist deshalb am Fuss ANGEHEFTET und nicht das letzte
               Listenelement: Sie muss auch dann sichtbar sein, wenn abgeschnitten
               wird, denn sie traegt die Aussage. */}
-          <div
-            aria-hidden="true"
-            className={cn(
-              "flex w-11 shrink-0 flex-col border-r border-gray-200 bg-surface-alt p-1.5 sm:p-2",
-              // Der Leitungsmodus braucht 16 px mehr: „Nutzung im Kollegium"
-              // wird bei w-40 abgeschnitten, und ein halber Bereichsname sieht
-              // aus wie ein Fehler statt wie eine lange Liste.
-              navSet === "leitung" ? "sm:w-44" : "sm:w-40",
-            )}
-          >
-            <div className="flex min-h-0 flex-1 flex-col gap-0.5 overflow-hidden">
-              {entries.map((entry) => {
-                const Icon = NAV_ICONS[entry.key];
-                const isActive = entry.key === active;
+          {navSlot ?? (
+            <div
+              aria-hidden="true"
+              className={cn(
+                "flex w-11 shrink-0 flex-col border-r border-gray-200 bg-surface-alt p-1.5 sm:p-2",
+                // Der Leitungsmodus braucht 16 px mehr: „Nutzung im Kollegium"
+                // wird bei w-40 abgeschnitten, und ein halber Bereichsname sieht
+                // aus wie ein Fehler statt wie eine lange Liste.
+                navSet === "leitung" ? "sm:w-44" : "sm:w-40",
+              )}
+            >
+              <div className="flex min-h-0 flex-1 flex-col gap-0.5 overflow-hidden">
+                {entries.map((entry) => {
+                  const Icon = NAV_ICONS[entry.key];
+                  const isActive = entry.key === active;
 
-                return (
-                  <span
-                    key={entry.key}
-                    className={cn(
-                      "flex shrink-0 items-center justify-center gap-2 rounded-md px-2 py-1.5 sm:justify-start",
-                      isActive ? "bg-brand-100 text-brand-800" : "text-gray-500",
-                    )}
-                  >
-                    <Icon className="size-3.5 shrink-0" />
-                    <span className="hidden truncate text-[11px] sm:inline">
-                      {entry.label}
+                  return (
+                    <span
+                      key={entry.key}
+                      className={cn(
+                        "flex shrink-0 items-center justify-center gap-2 rounded-md px-2 py-1.5 sm:justify-start",
+                        isActive ? "bg-brand-100 text-brand-800" : "text-gray-500",
+                      )}
+                    >
+                      <Icon className="size-3.5 shrink-0" />
+                      <span className="hidden truncate text-[11px] sm:inline">
+                        {entry.label}
+                      </span>
                     </span>
-                  </span>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
 
-            {/* Ausgegraut und ohne Symbol – sie ist kein Bereich, sondern der
-                Hinweis, dass die Liste weitergeht. Auf der Icon-Spalte steht
-                dafuer nur ein Auslassungszeichen. */}
-            {navSet === "lehrkraft" ? (
-              <span className="mt-1 flex shrink-0 items-center justify-center px-2 py-1 text-[11px] text-gray-500 sm:justify-start">
-                <span className="sm:hidden">…</span>
-                <span className="hidden sm:inline">+ weitere</span>
-              </span>
-            ) : null}
-          </div>
+              {/* Ausgegraut und ohne Symbol – sie ist kein Bereich, sondern der
+                  Hinweis, dass die Liste weitergeht. Auf der Icon-Spalte steht
+                  dafuer nur ein Auslassungszeichen. */}
+              {navSet === "lehrkraft" ? (
+                <span className="mt-1 flex shrink-0 items-center justify-center px-2 py-1 text-[11px] text-gray-500 sm:justify-start">
+                  <span className="sm:hidden">…</span>
+                  <span className="hidden sm:inline">+ weitere</span>
+                </span>
+              ) : null}
+            </div>
+          )}
 
           {/* ---------- Inhaltsbereich: hier lebt die Szene ----------
               BEWUSST OHNE `overflow-hidden`: Der Szenen-Zeiger liegt als
