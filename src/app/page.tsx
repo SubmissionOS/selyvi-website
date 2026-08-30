@@ -60,7 +60,7 @@ export default function HomePage() {
         für uns dageblieben sind.
       </StoryLine>
 
-      <FinalCta />
+      <FinalCta withMission />
     </>
   );
 }

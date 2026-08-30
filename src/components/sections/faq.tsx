@@ -37,7 +37,7 @@ const faqItems: FaqItem[] = [
     answer: "Preise werden aktuell mit Pilotschulen festgelegt – sprechen Sie uns an.",
   },
   {
-    question: "Ersetzt die KI meine Bewertung?",
+    question: `Ersetzt ${PRODUCT_NAME} meine Bewertung?`,
     answer: `Nein. Jeder Vorschlag ist ein Vorschlag – jede Entscheidung bleibt bei der Lehrkraft. Kompetenzeinschätzungen leitet ${PRODUCT_NAME} bewusst nicht automatisch aus Noten ab: Aus einer Deutschnote folgt nicht, ob ein Kind flüssig liest.`,
   },
   {

@@ -59,12 +59,12 @@ export function WhyItExists() {
 
           <p>
             Aus den Abenden wurde ein System. Wir haben es gemeinsam mit Lehrkräften aus
-            ganz Baden-Württemberg weiterentwickelt – von der Grundschule bis zum Abitur –
-            und dabei mehr gelernt, als jedes Lehrbuch hergibt: Was im Alltag wirklich
-            hilft, entscheidet sich im Alltag. Gebaut haben wir {PRODUCT_NAME} zuerst für
-            die Grundschule. Aus uns dreien – Christian, Tobi und Rafael – wurde ein Team
-            mit einem einfachen Maßstab: Würde das einer Lehrerin, die wir kennen,
-            wirklich einen Abend zurückgeben? Wenn nein, bauen wir es nicht.
+            ganz Deutschland weiterentwickelt – von der Grundschule bis zum Abitur – und
+            dabei mehr gelernt, als jedes Lehrbuch hergibt: Was im Alltag wirklich hilft,
+            entscheidet sich im Alltag. Gebaut haben wir {PRODUCT_NAME} zuerst für die
+            Grundschule. Aus uns dreien – Christian, Tobi und Rafael – wurde ein Team mit
+            einem einfachen Maßstab: Würde das einer Lehrerin, die wir kennen, wirklich
+            einen Abend zurückgeben? Wenn nein, bauen wir es nicht.
           </p>
 
           <p>

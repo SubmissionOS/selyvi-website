@@ -52,7 +52,9 @@ export const team: TeamMember[] = [
     approved: true,
   },
   {
-    name: "Rafael Gutmann",
+    // Voller Name auf eigenen Wunsch. Die Initialen bleiben „RG": Sie stehen
+    // fuer Vor- und Nachnamen, der Mittelname zaehlt dafuer nicht mit.
+    name: "Rafael René Gutmann",
     role: "Marketing (CMO)",
     initials: "RG",
     description: "",

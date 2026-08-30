@@ -43,16 +43,45 @@ export function Hero() {
             <span className="block">Nicht, um zu verwalten.</span>
           </h1>
 
-          {/* Subline nach docs/produktstand-2026-08.md: benennt die drei
-              Ergebnisse, die das Produkt heute wirklich erzeugt. Der frueher hier
-              stehende Satz („korrigiert Abgaben … entwickelt in der EU") sagte
-              zwei Dinge zu, die es so nicht gibt – eine Korrekturfunktion und
-              EU-Hosting des Produkts. */}
+          {/* ==================================================================
+              SUBLINE – POSITIONIERUNG „MITLERNEND"
+              ==================================================================
+              Jede Teilaussage ist einzeln gegen docs/produktstand-2026-08.md
+              geprueft:
+
+                „lernt Ihren Stil"        -> Zeugnisbemerkungen entstehen „im
+                                             gelernten Schreibstil der
+                                             Lehrkraft" (Live).
+                „waechst mit Ihrer
+                 Klasse mit"              -> Timeline je Kind, Fachverlauf und
+                                             Klassenentwicklung ueber Monate
+                                             (beides Live).
+                „orientiert sich an
+                 aktuellen Bildungs-
+                 vorgaben"                -> Kompetenzmodell mit Jahrgangsbezug,
+                                             43 Faecher (Live).
+
+              ==================================================================
+              WORTLAUT-SPERRE – NICHT AUFWEICHEN
+              ==================================================================
+              Niemals „greift auf Lehrpläne zu", „nutzt Teilrahmenpläne" oder
+              irgendeine Formulierung, die einen ZUGRIFF behauptet. Der
+              Produktstand ist da eindeutig: Die Lehrplaene aller 16
+              Bundeslaender liegen erhoben vor, sind aus Lizenzgruenden aber
+              BEWUSST NICHT ANGEBUNDEN. „Orientiert sich an" beschreibt, wonach
+              das Kompetenzmodell gebaut ist – und behauptet keine Anbindung.
+              Wer diesen Satz umformuliert, liest vorher den Abschnitt „Der
+              Fachkorpus ist noch duenn" im Produktstand. */}
           <p className="mt-6 max-w-xl text-lg text-gray-500">
-            {PRODUCT_NAME} nimmt Ihre Beobachtungen aus dem Unterricht auf – getippt oder
-            gesprochen – und macht daraus, was Sie ohnehin schreiben müssen:
-            Zeugnisbemerkungen, Elternmails, passendes Material. In Ihrer Sprache, nicht
-            in KI-Sprache.
+            {PRODUCT_NAME} ist die mitlernende Assistenz für Grundschullehrkräfte: Sie
+            lernt Ihren Stil, wächst mit Ihrer Klasse mit und orientiert sich an aktuellen
+            Bildungsvorgaben – von der Beobachtung im Unterricht bis zur Zeugnisbemerkung.
+          </p>
+
+          {/* Der Satz bleibt: Er ist das Unterscheidungsmerkmal, an dem
+              generische KI im Zeugnis scheitert. */}
+          <p className="mt-4 max-w-xl text-lg text-gray-500">
+            In Ihrer Sprache, nicht in KI-Sprache.
           </p>
 
           {/* Herkunftszeile. Nennt bewusst keinen Namen – die Person bleibt

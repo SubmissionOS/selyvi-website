@@ -79,7 +79,7 @@ const columns: ValueColumn[] = [
     audience: "Für Lehrkräfte",
     headline: "Die Schreibarbeit, nicht das Urteil.",
     points: [
-      `Texte, die nach Ihnen klingen – ${PRODUCT_NAME} lernt Ihren Schreibstil und schreibt darin, nicht in KI-Sprache`,
+      "Beobachtungen für mehrere Kinder gleichzeitig, während die Stunde läuft – statt abends aus dem Gedächtnis",
       "Keine Automatik bei Kompetenzen – aus einer Deutschnote folgt nicht, ob ein Kind flüssig liest. Eingeschätzt wird, was Sie beobachtet haben",
       "Welche Fundstellen aus dem Fachkorpus einfließen, wählen Sie auf Wunsch selbst – statt sie automatisch ziehen zu lassen",
     ],

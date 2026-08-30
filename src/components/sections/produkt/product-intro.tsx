@@ -24,29 +24,20 @@ export function ProductIntro() {
           Die Abende gehören wieder Ihnen.
         </h1>
 
+        {/* ZWEI SAETZE, mehr nicht. Die Ueberschrift traegt die Aussage; der
+            Text darunter soll sie nicht verduennen.
+
+            Entfallen ist der Hinweis „Was noch nicht fertig ist, finden Sie
+            weiter unten unter In Arbeit". Er ging nicht verloren: Die Sektion
+            „In Arbeit" fuehrt ihn selbst („Diese Punkte sind noch nicht
+            verfügbar. Wir führen sie hier auf, damit Sie einschätzen können,
+            was bereits geht und worauf Sie warten würden."). */}
         <p className="mt-6 max-w-2xl text-lg text-gray-500">
-          Zeugniszeit heißt Wochenenden am Schreibtisch. Elternpost heißt Abende. Und die
-          Dokumentation, die man das ganze Jahr nebenbei machen sollte, fehlt genau dann,
-          wenn man sie braucht.
-        </p>
-
-        <p className="mt-4 max-w-2xl text-lg text-gray-500">
-          Genau diese Arbeit nimmt {PRODUCT_NAME} Ihnen ab – nicht die Entscheidungen. Was
-          Sie im Unterricht nebenbei festhalten, wird am Zeugnistag zur Grundlage des
-          Textes und bestimmt, welches Material zu Ihrer Klasse passt.
-        </p>
-
-        <p className="mt-4 max-w-2xl text-lg text-gray-500">
-          Entstanden ist all das nicht am Reißbrett, sondern aus Rückmeldungen von
-          Lehrkräften – zuerst von einer, dann von vielen.
+          Zeugniszeit heißt Wochenenden am Schreibtisch, Elternpost heißt Abende. Genau
+          diese Arbeit nimmt {PRODUCT_NAME} Ihnen ab – nicht die Entscheidungen.
         </p>
 
         <p className="mt-4 max-w-2xl text-lg text-gray-500">{SCHOOL_TYPE_ANSWER}</p>
-
-        <p className="mt-4 max-w-2xl text-lg text-gray-500">
-          Auf dieser Seite steht, was die Anwendung heute tut. Was noch nicht fertig ist,
-          finden Sie weiter unten unter „In Arbeit“ – nicht dazwischengemischt.
-        </p>
       </div>
     </section>
   );

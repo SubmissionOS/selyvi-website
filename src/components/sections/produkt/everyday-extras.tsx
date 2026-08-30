@@ -6,7 +6,7 @@ import { SeatingScene } from "@/components/scenes/produkt/seating-scene";
  * ==========================================================================
  * WARUM EIGENE SEKTION UND NICHT INS PRINZIP-BAND
  * ==========================================================================
- * Das Prinzip-Band ist eine Haltungsaussage in zwei Saetzen („Die KI schlägt
+ * Das Prinzip-Band ist eine Haltungsaussage in zwei Saetzen („Selyvi schlägt
  * vor. Sie entscheiden.“). Eine Szene daneben wuerde dort zwei Dinge
  * gleichzeitig behaupten und die Aussage schwaechen – das Band lebt davon,
  * dass es nichts zeigt.

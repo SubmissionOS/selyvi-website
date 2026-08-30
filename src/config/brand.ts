@@ -40,7 +40,7 @@ export const PRODUCT_NAME = "Selyvi";
  * erzaehlt: im Fliesstext auf /ueber-uns.
  */
 export const PRACTICE_CLAIM =
-  "Entwickelt in Zusammenarbeit mit Lehrkräften aus ganz Baden-Württemberg.";
+  "Entwickelt in Zusammenarbeit mit Lehrkräften aus ganz Deutschland.";
 
 /**
  * Kurzform fuer die Trust-Zeile, wo nur eine Zeile Platz ist.
@@ -49,8 +49,7 @@ export const PRACTICE_CLAIM =
  * gekuerzten Fassung an eine Datei gebunden. Wer PRACTICE_CLAIM anpasst, sieht
  * die Kurzform direkt daneben und vergisst sie nicht.
  */
-export const PRACTICE_CLAIM_SHORT =
-  "Mit Lehrkräften aus ganz Baden-Württemberg entwickelt";
+export const PRACTICE_CLAIM_SHORT = "Mit Lehrkräften aus ganz Deutschland entwickelt";
 
 /**
  * Antwort auf die Schulform-Frage – EINE Formulierung für die ganze Website.

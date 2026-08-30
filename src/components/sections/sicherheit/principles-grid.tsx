@@ -66,7 +66,19 @@ const principles = [
   },
   {
     icon: Ban,
-    title: "Keine Datenweitergabe",
+    /**
+     * Titel ohne „Keine". Das Wort waere schlicht falsch: Selyvi gibt sehr
+     * wohl Daten weiter – an Auftragsverarbeiter, an das Mailprogramm der
+     * Lehrkraft. Tabu ist der Verkauf und die Werbenutzung von SCHUELERdaten,
+     * und genau das sagt der Kartentext.
+     *
+     * Die Verneinung traegt stattdessen das durchgestrichene Symbol – und
+     * weil es damit Bedeutung traegt, ist es hier NICHT aria-hidden, sondern
+     * bekommt ein eigenes Label. Ein Symbol, das etwas aussagt und fuer
+     * Screenreader unsichtbar ist, sagt es nur der Haelfte der Leute.
+     */
+    iconLabel: "kein Verkauf von Schülerdaten",
+    title: "Datenweitergabe",
     description:
       "Schülerdaten werden nicht verkauft und nicht zu Werbezwecken verarbeitet.",
   },
@@ -127,7 +139,20 @@ export function PrinciplesGrid() {
                 key={principle.title}
                 className="rounded-xl border border-gray-200 bg-surface p-6"
               >
-                <Icon aria-hidden="true" className="size-6 text-brand-600" />
+                {/* Die Symbole sind sonst reine Dekoration und deshalb
+                    aria-hidden. Genau eines traegt Bedeutung – das
+                    durchgestrichene bei „Datenweitergabe", weil dort die
+                    Verneinung im Symbol steckt und nicht mehr im Titel.
+                    Dieses eine bekommt ein Label. */}
+                {principle.iconLabel ? (
+                  <Icon
+                    role="img"
+                    aria-label={principle.iconLabel}
+                    className="size-6 text-brand-600"
+                  />
+                ) : (
+                  <Icon aria-hidden="true" className="size-6 text-brand-600" />
+                )}
 
                 <h3 className="mt-5 text-base font-semibold text-ink">
                   {principle.title}

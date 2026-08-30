@@ -136,8 +136,25 @@ export const IMPACT_LINE_PRINCIPLE =
  * Selbstverpflichtung im Manifest. Zwei Fassungen desselben Versprechens
  * waeren genau das, was das Manifest bestreitet.
  *
+ * „Die KI" ist hier bewusst zu „Selyvi" geworden: Als handelnder Akteur in
+ * einer Vertrauensformel loest „die KI" Misstrauen aus, der Produktname nicht.
+ * Die Technologie-Kategorie („KI-Assistenz fuer Grundschullehrkraefte") bleibt
+ * davon unberuehrt – sie sagt, WAS das Produkt ist, und nicht, wer entscheidet.
+ *
  * Das „Immer." gehoert NUR ins Manifest: Dort ist der Satz ein Schwur, ueber
  * den Funktionsbloecken ist er eine Ueberschrift. Deshalb steht die Konstante
  * ohne das Wort, und das Manifest haengt es an.
  */
-export const DECISION_PROMISE = "Die KI schlägt vor. Sie entscheiden.";
+export const DECISION_PROMISE = "Selyvi schlägt vor. Sie entscheiden.";
+
+/**
+ * Der Satz aus „Warum wir das bauen" auf /ueber-uns – steht zusaetzlich ueber
+ * dem Kennenlernen-Aufruf am Ende der Startseite.
+ *
+ * Geteilte Konstante, weil er an beiden Stellen dasselbe leisten soll: die
+ * Arbeitsteilung benennen, bevor jemand auf einen Knopf drueckt. Zwei
+ * Fassungen desselben Satzes waeren an genau der Stelle unglaubwuerdig, an
+ * der es um Vertrauen geht.
+ */
+export const MISSION_PROMISE =
+  "Wir bauen die Assistenz, die Routinearbeit übernimmt. Die pädagogische Entscheidung bleibt beim Menschen.";

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { pageMetadata } from "@/config/seo";
 import { ProductIntro } from "@/components/sections/produkt/product-intro";
+import { LearnsWithYou } from "@/components/sections/produkt/learns-with-you";
 import { PrincipleBand } from "@/components/sections/produkt/principle-band";
 import { FunctionBlocks } from "@/components/sections/produkt/function-blocks";
 import { EverydayExtras } from "@/components/sections/produkt/everyday-extras";
@@ -21,6 +22,7 @@ export default function ProduktPage() {
   return (
     <>
       <ProductIntro />
+      <LearnsWithYou />
       <PrincipleBand />
       <FunctionBlocks />
       <EverydayExtras />
