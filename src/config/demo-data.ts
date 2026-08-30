@@ -264,30 +264,6 @@ export const DEMO_RELIEF_REPORT = {
   previousBars: [0.5, 0.74, 0.3],
 } as const;
 
-/**
- * Szene F – Nutzung im Kollegium (Leitungsmodus auf /schulen).
- *
- * ==========================================================================
- * DIE BALKEN TRAGEN KEINE NAMEN. DAS IST DER PUNKT.
- * --------------------------------------------------------------------------
- * Der Produktstand nennt es Produktpolitik, und zwar begründet: „Eine
- * namentliche Rangliste des Kollegiums wäre in einer Schule ein
- * Personalinstrument."
- *
- * Deshalb stehen hier ausschliesslich Höhen – keine Namen, keine Initialen,
- * keine Reihenfolge, die sich als Rangliste lesen liesse. Wer hier Namen
- * ergänzt, dreht die Aussage der Szene ins Gegenteil: Aus „die Schulleitung
- * sieht Nutzung" würde „die Schulleitung sieht, wer wenig tut".
- *
- * Die Höhen sind bewusst NICHT absteigend sortiert – eine sortierte Reihe ist
- * optisch bereits ein Ranking, auch ohne Beschriftung.
- * ==========================================================================
- */
-export const DEMO_COLLEGIUM_USAGE = {
-  bars: [0.55, 0.92, 0.68, 0.4, 1, 0.62, 0.78],
-  badge: "Verteilung statt Rangliste",
-} as const;
-
 /* ==========================================================================
    Kurzfassungen für die kleinen Szenen in „So funktioniert's".
    --------------------------------------------------------------------------

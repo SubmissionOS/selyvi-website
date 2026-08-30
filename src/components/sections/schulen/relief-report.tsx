@@ -1,6 +1,6 @@
 import { FileDown } from "lucide-react";
 
-import { IMPACT_LINE_PRINCIPLE } from "@/config/product";
+import { DATA_SEPARATION_NOTE, IMPACT_LINE_PRINCIPLE } from "@/config/product";
 
 import { SteeringScene } from "@/components/scenes/produkt/steering-scene";
 import { SampleDataNote } from "@/components/scenes/sample-data-note";
@@ -103,6 +103,23 @@ export function ReliefReport() {
             kein Wirkungsnachweis.
           </p>
         </div>
+
+        {/* ==================================================================
+            UMGEZOGEN AUS DER GELOESCHTEN SEKTION „WER WAS NUTZT"
+            ==================================================================
+            Dieser Absatz war dort die einzige Aussage, die es auf /schulen
+            sonst nirgends gibt – und ausgerechnet die, nach der ein
+            Personalrat als Erstes fragt: Die Schulleitung sieht ausgewertete
+            Kennzahlen, keine einzelnen Beobachtungen.
+
+            Er waere mit der Sektion ersatzlos verschwunden. Hier steht er
+            inhaltlich richtiger als vorher: direkt neben den Zahlen, die die
+            Schulleitung tatsaechlich sieht. */}
+        <p className="mt-12 max-w-3xl border-l-2 border-gray-200 pl-6 text-gray-500">
+          Was die Schulleitung ausdrücklich nicht sieht: einzelne Beobachtungen und
+          Bewertungen. {DATA_SEPARATION_NOTE} Eine Rolle mit Gesamtsicht auf die Daten
+          mehrerer Lehrkräfte gibt es nicht – auch nicht für die Schulleitung.
+        </p>
       </div>
     </section>
   );

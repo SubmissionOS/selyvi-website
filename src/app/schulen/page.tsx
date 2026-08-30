@@ -4,8 +4,8 @@ import { pageMetadata } from "@/config/seo";
 import { SchoolIntro } from "@/components/sections/schulen/school-intro";
 import { OrganisationBenefits } from "@/components/sections/schulen/organisation-benefits";
 import { ReliefReport } from "@/components/sections/schulen/relief-report";
+import { TeachingQuality } from "@/components/sections/schulen/teaching-quality";
 import { RolloutTimeline } from "@/components/sections/schulen/rollout-timeline";
-import { RolesSplit } from "@/components/sections/schulen/roles-split";
 import { DpaBand } from "@/components/sections/dpa-band";
 import { LeadershipFaq } from "@/components/sections/schulen/leadership-faq";
 import { FinalCta } from "@/components/sections/final-cta";
@@ -24,8 +24,8 @@ export default function SchulenPage() {
       <SchoolIntro />
       <OrganisationBenefits />
       <ReliefReport />
+      <TeachingQuality />
       <RolloutTimeline />
-      <RolesSplit />
       <DpaBand />
       <LeadershipFaq />
       <FinalCta />
