@@ -1,3 +1,16 @@
+import type { LucideIcon } from "lucide-react";
+import {
+  Blocks,
+  CalendarClock,
+  ClipboardList,
+  Compass,
+  FileStack,
+  Map,
+  Microscope,
+  Sprout,
+  Timer,
+} from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import { PRODUCT_NAME } from "@/config/brand";
 
@@ -42,52 +55,62 @@ import { PRODUCT_NAME } from "@/config/brand";
  * duerfen sie deshalb nur als Vorhaben stehen.
  */
 type ResearchField = {
+  icon: LucideIcon;
   title: string;
   description: string;
 };
 
 const fields: ResearchField[] = [
   {
+    icon: Compass,
     title: "Evidenzbasierte Unterrichtskonzepte",
     description:
       "Welche Unterrichtskonzepte im Alltag tatsächlich tragen und welche nur auf dem Papier funktionieren. Eine Frage, die sich gemeinsam prüfen ließe, statt sie weiter zu vermuten.",
   },
   {
+    icon: Microscope,
     title: "Tatsächliche Unterrichtsprozesse",
     description:
       "Wie eine Stunde wirklich verläuft – zwischen Plan, Zwischenfall und Improvisation. Diesen Abstand zwischen Entwurf und Wirklichkeit würden wir gern mit Ihnen vermessen.",
   },
   {
+    icon: Blocks,
     title: "Unterschiedliche Lehrstile",
     description:
       "Woran sich Lehrstile im Alltag unterscheiden und was das im Unterricht bewirkt. Ein Feld, in dem wir uns Forschung wünschen, die mehr sieht als eine einzelne Schule.",
   },
   {
+    icon: FileStack,
     title: "Neue Lehr- und Lernmaterialien",
     description:
       "Wie Material aussehen müsste, das auf den dokumentierten Beobachtungen einer konkreten Klasse aufbaut. Wir würden es gern gemeinsam entwerfen und danach prüfen lassen.",
   },
   {
+    icon: ClipboardList,
     title: "Evaluation digitaler Unterstützung",
     description: `Ob digitale Werkzeuge im Schulalltag wirklich halten, was sie versprechen. Für uns die unbequemste Frage – und der Grund, warum ${PRODUCT_NAME} sie nicht allein beantworten sollte.`,
   },
   {
+    icon: Timer,
     title: "Organisatorische Belastung von Lehrkräften",
     description:
       "Welcher Anteil der Arbeitszeit auf Dokumentation, Kommunikation und Verwaltung entfällt – und welche dieser Tätigkeiten überhaupt als belastend erlebt wird und welche nicht.",
   },
   {
+    icon: Map,
     title: "Regionale Unterschiede",
     /** Die Referenzkarte fuer die Textlaenge – 185 Zeichen. */
     description:
-      "Ob sich Belastung und Vorbereitungspraxis zwischen Bundesländern, Schulgrößen und Einzugsgebieten systematisch unterscheiden. Dafür bräuchte es mehr Schulen, als heute mit uns arbeiten.",
+      "Ob sich Belastung und Vorbereitungspraxis zwischen Bundesländern, Schulgrößen und Einzugsgebieten systematisch unterscheiden. Eine Frage, die nur ein Verbund über Ländergrenzen hinweg beantwortet.",
   },
   {
+    icon: Sprout,
     title: "Neue Förderkonzepte",
     description:
       "Wie Förderung aussieht, wenn sie auf laufender Beobachtung aufbaut statt auf einer einzelnen Momentaufnahme. Dafür braucht es fachliche Gegenrede, nicht nur Software.",
   },
   {
+    icon: CalendarClock,
     title: "Langfristige Wirkungsanalysen",
     description:
       "Was von schulischen Maßnahmen nach Jahren tatsächlich übrig bleibt. Eine Frage, für die drei Befragungswellen nicht reichen – hier brauchen wir Partner mit langem Atem.",
@@ -135,7 +158,12 @@ export function ResearchFields() {
                 position === fields.length - 1 && "sm:col-span-2 lg:col-span-1",
               )}
             >
-              <h3 className="text-base font-semibold text-ink">{field.title}</h3>
+              <field.icon
+                aria-hidden="true"
+                className="size-6 text-brand-600"
+                strokeWidth={1.75}
+              />
+              <h3 className="mt-4 text-base font-semibold text-ink">{field.title}</h3>
               <p className="mt-3 text-sm text-gray-500">{field.description}</p>
             </li>
           ))}

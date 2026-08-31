@@ -130,7 +130,7 @@ export const routes: RouteMeta[] = [
   {
     path: "/ueber-uns",
     title: "Unsere Geschichte",
-    description: `Angefangen am Küchentisch einer angehenden Grundschullehrerin: Hinter ${PRODUCT_NAME} steht ein kleines Team aus Produkt, Technik und Bildungspraxis. Wir wollen Lehrkräften Verwaltungsarbeit abnehmen – nicht die Verantwortung.`,
+    description: `Angefangen am Küchentisch einer angehenden Grundschullehrerin: Hinter ${PRODUCT_NAME} steht ein Team aus Produkt, Technik und Bildungspraxis. Wir wollen Lehrkräften Verwaltungsarbeit abnehmen – nicht die Verantwortung.`,
     priority: 0.6,
   },
   {

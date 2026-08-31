@@ -19,8 +19,7 @@ export function AboutIntro() {
         </h1>
 
         <p className="mt-6 max-w-2xl text-lg text-gray-500">
-          Hinter {PRODUCT_NAME} steht ein kleines Team aus Produkt, Technik und
-          Bildungspraxis.
+          Hinter {PRODUCT_NAME} steht ein Team aus Produkt, Technik und Bildungspraxis.
         </p>
 
         <p className="mt-4 max-w-2xl text-lg text-gray-500">

@@ -19,11 +19,6 @@ import { FaqAccordion, type FaqItem } from "@/components/faq-accordion";
  */
 const faqItems: FaqItem[] = [
   {
-    question: "Werden Daten meiner Schülerinnen und Schüler für KI-Training verwendet?",
-    answer:
-      "Diese Frage beantworten wir erst, wenn die Verträge mit unseren Modell-Anbietern geprüft sind. Eine Zusicherung ohne vertragliche Grundlage wäre an dieser Stelle wertlos – gerade hier. Den aktuellen Stand finden Sie oben im Abschnitt „KI-Verarbeitung“.",
-  },
-  {
     // Die Antwort trennt Website und Anwendung ausdruecklich. Eine gemeinsame
     // Antwort („in der EU, Frankfurt") stand hier bis zum Abgleich mit dem
     // Produktstand und war fuer die Anwendung nicht gedeckt.
@@ -37,7 +32,7 @@ const faqItems: FaqItem[] = [
   {
     question: "Was passiert bei Vertragsende mit den Daten?",
     answer:
-      "Aufbewahrungs- und Löschfristen veröffentlichen wir vor dem Produktstart – einschließlich der Frist, in der Daten nach Vertragsende gelöscht werden.",
+      "Die Daten Ihrer Schule gehören Ihrer Schule. Aufbewahrungs- und Löschfristen – einschließlich der Frist nach Vertragsende – veröffentlichen wir vor dem Produktstart an dieser Stelle.",
   },
 ];
 
@@ -48,15 +43,26 @@ export function SecurityFaq() {
       className="border-b border-gray-200 bg-surface-alt"
     >
       <div className="mx-auto w-full max-w-6xl px-6 py-24 lg:px-8 lg:py-32">
-        <h2
-          id="sicherheit-faq-titel"
-          className="max-w-2xl text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
-        >
-          Häufige Fragen aus der Prüfung
-        </h2>
+        {/* Zweispaltig ab lg: Überschrift links, Antworten rechts.
+            Vorher stand hier ein 672 px breiter Fragenstapel in einem
+            1088 px breiten Container – die halbe Bildschirmbreite blieb
+            leer. Die Überschrift klebt beim Scrollen, damit auch weit
+            unten in der Liste noch dasteht, welche Fragen das sind. */}
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-4">
+            <div className="lg:sticky lg:top-24">
+              <h2
+                id="sicherheit-faq-titel"
+                className="max-w-2xl text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
+              >
+                Häufige Fragen aus der Prüfung
+              </h2>
+            </div>
+          </div>
 
-        <div className="mt-12 max-w-3xl">
-          <FaqAccordion items={faqItems} idPrefix="sicherheit-faq" />
+          <div className="lg:col-span-8">
+            <FaqAccordion items={faqItems} idPrefix="sicherheit-faq" />
+          </div>
         </div>
       </div>
     </section>

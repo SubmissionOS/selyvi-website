@@ -19,17 +19,40 @@ import { IMPACT_LINE_PRINCIPLE } from "@/config/product";
 export function ImpactLineQuote() {
   return (
     <section aria-label="Grundsatz der Wirkungszeile" className="bg-surface-alt">
-      <div className="mx-auto w-full max-w-6xl px-6 py-16 lg:px-8 lg:py-20">
-        <blockquote className="max-w-3xl border-l-2 border-brand-600 pl-6">
-          <p className="text-xl leading-snug font-medium tracking-tight text-ink sm:text-2xl">
-            „{IMPACT_LINE_PRINCIPLE}“
-          </p>
-        </blockquote>
+      {/* ==================================================================
+          ANKER STATT TEXTWAND
+          ==================================================================
+          Das Band stand als 768 px breiter Absatz mit einer 2 px dünnen Kante
+          links – aus zwei Metern Entfernung nicht von Fließtext zu
+          unterscheiden. Es traegt jetzt drei Anker: ein grosses
+          Anfuehrungszeichen, eine kraeftige farbige Kante und eine schmalere
+          Zeilenlaenge.
 
-        <p className="mt-6 max-w-2xl text-base text-gray-500">
-          Sie ist das Gegengewicht dazu, dass „140 Stunden gespart“ sonst als belegte
-          Wirkung gelesen wird.
-        </p>
+          Das Anfuehrungszeichen ist `aria-hidden` und der Satz behaelt seine
+          typografischen Zeichen: Screenreader sollen das Zitat einmal hoeren,
+          nicht dreimal ein Anfuehrungszeichen. */}
+      <div className="mx-auto w-full max-w-6xl px-6 py-16 lg:px-8 lg:py-20">
+        <div className="flex max-w-3xl gap-5 border-l-4 border-brand-600 pl-6 sm:gap-7">
+          <span
+            aria-hidden="true"
+            className="-mt-3 text-6xl leading-none font-semibold text-brand-100 select-none sm:-mt-5 sm:text-8xl"
+          >
+            „
+          </span>
+
+          <div>
+            <blockquote>
+              <p className="text-xl leading-snug font-medium tracking-tight text-ink sm:text-2xl">
+                „{IMPACT_LINE_PRINCIPLE}“
+              </p>
+            </blockquote>
+
+            <p className="mt-6 text-base text-gray-500">
+              Sie ist das Gegengewicht dazu, dass „140 Stunden gespart“ sonst als belegte
+              Wirkung gelesen wird.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );

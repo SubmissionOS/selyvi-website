@@ -25,37 +25,56 @@ import { cn } from "@/lib/utils";
  *   - Sie besteht aus echtem Text in einer geordneten Liste. Eine SVG-Treppe
  *     mit Beschriftung waere fuer Screenreader eine einzige alt-Zeile; hier
  *     liest jede Stufe sich einzeln vor, in der richtigen Reihenfolge.
- *   - Die Staffelung entsteht ueber feste Hoehen ab sm. Auf schmalen Displays
- *     stehen die vier Stufen schlicht untereinander – eine 2x2-Anordnung
- *     zerstoert die Aussage „aufsteigend“, und vier gequetschte Saeulen
- *     nebeneinander sind auf 390 px unlesbar.
- *   - Feste Hoehen statt inhaltsabhaengiger: haelt CLS bei 0.
+ *
+ * ==========================================================================
+ * VON VIER SAEULEN ZU VIER ZEILEN – UND WARUM DAS BESSER IST
+ * ==========================================================================
+ * Bis zum Leerraum-Audit stand die Treppe als vier Saeulen mit aufsteigenden
+ * Hoehen ueber die volle Seitenbreite, UNTER zwei Absaetzen Text. Auf 1440
+ * war der erste Bildschirm dieser Seite dadurch reine Textwand.
+ *
+ * Jetzt steht der Text links und die Treppe rechts daneben. In einer
+ * 7/12-Spalte (rund 600 px) waeren vier Saeulen je 138 px breit – dort passt
+ * keine Stufenbeschreibung mehr hinein, ohne die feste Hoehe zu sprengen.
+ *
+ * Die Treppe steigt deshalb jetzt in der BREITE statt in der Hoehe: vier
+ * Zeilen, jede mit einem Balken, der laenger ist als der darueber. Das ist
+ * derselbe Sachverhalt in derselben Reihenfolge – und hat zwei Vorteile, die
+ * nichts mit dem Platz zu tun haben:
+ *   - Es gibt die Treppe jetzt auf JEDER Breite. Die Saeulen entstanden erst
+ *     ab sm; auf 390 px stapelten sich vier gleich aussehende Kaesten, und
+ *     die Aussage „aufsteigend“ fiel dort ersatzlos aus.
+ *   - Die Beschreibungen duerfen unterschiedlich lang sein, ohne dass eine
+ *     Stufe aus ihrer Hoehe laeuft.
+ *
+ * Der Balken waechst ueber `scaleX` aus `origin-left` – Transform, kein
+ * Layout. CLS bleibt 0, so wie vorher bei `scaleY`.
  */
 const stages = [
   {
     name: "Input",
     description:
       "Was hineingeht: Entwicklungsarbeit, Fachkorpus, die Einführung an einer Schule.",
-    /** Aufsteigende Hoehen ab sm – die Treppe entsteht hier und nirgends sonst. */
-    height: "sm:h-44",
+    /** Aufsteigende Balkenlaengen – die Treppe entsteht hier und nirgends sonst. */
+    width: "w-[40%]",
   },
   {
     name: "Output",
     description:
       "Was messbar entsteht: Beobachtungen, Zeugnisbemerkungen, Elternmails, Material.",
-    height: "sm:h-52",
+    width: "w-[60%]",
   },
   {
     name: "Outcome",
     description:
       "Was sich bei den Beteiligten ändert: Zeitaufwand, erlebte Belastung, Rückmeldung an Eltern.",
-    height: "sm:h-60",
+    width: "w-[80%]",
   },
   {
     name: "Impact",
     description:
       "Was darüber hinaus bleibt. Die Stufe, für die drei Befragungswellen allein nicht reichen – hier brauchen wir Forschungspartner.",
-    height: "sm:h-68",
+    width: "w-full",
   },
 ];
 
@@ -103,44 +122,53 @@ export function ImpactModel() {
           Wie wir messen
         </h2>
 
-        <p className="mt-6 max-w-2xl text-lg text-gray-500">
-          Das Erhebungsmodell orientiert sich an der Wirkungstreppe von PHINEO und
-          unterscheidet Input, Output, Outcome und Impact. Erhoben wird über drei
-          Befragungswellen – nicht einmalig, weil eine einzelne Momentaufnahme
-          Gewöhnungseffekte nicht von Entlastung trennen kann.
-        </p>
+        {/* Text links, Treppe rechts. Mobil stapelt das Grid in
+            DOM-Reihenfolge: erst der Text, dann das Bild. */}
+        <div className="mt-8 grid gap-12 lg:grid-cols-12 lg:gap-14">
+          <div className="space-y-4 text-lg text-gray-500 lg:col-span-5">
+            <p>
+              Das Erhebungsmodell orientiert sich an der Wirkungstreppe von PHINEO und
+              unterscheidet Input, Output, Outcome und Impact. Erhoben wird über drei
+              Befragungswellen – nicht einmalig, weil eine einzelne Momentaufnahme
+              Gewöhnungseffekte nicht von Entlastung trennen kann.
+            </p>
 
-        <p className="mt-4 max-w-2xl text-lg text-gray-500">
-          Wer teilnimmt, willigt zweckgranular ein: nicht pauschal in „Forschung“, sondern
-          je Zweck einzeln. Wie ausgewertet wird, steht vorab in einem Codebuch. Und
-          ausgewiesen wird ein Wert erst ab einer festgelegten Mindestfallzahl – darunter
-          bleibt das Feld leer, statt eine Zahl zu zeigen, die niemanden trägt.
-        </p>
+            <p>
+              Wer teilnimmt, willigt zweckgranular ein: nicht pauschal in „Forschung“,
+              sondern je Zweck einzeln. Wie ausgewertet wird, steht vorab in einem
+              Codebuch. Und ausgewiesen wird ein Wert erst ab einer festgelegten
+              Mindestfallzahl – darunter bleibt das Feld leer, statt eine Zahl zu zeigen,
+              die niemanden trägt.
+            </p>
+          </div>
 
-        <ol ref={hostRef} className="mt-14 grid gap-4 sm:grid-cols-4 sm:items-end">
-          {stages.map((stage, index) => (
-            <li
-              key={stage.name}
-              /* Die Stufe waechst von unten. `origin-bottom` ist der Grund,
-                 warum sie waechst statt zu rutschen – und scaleY beruehrt
-                 kein Layout, die Hoehe steht von Anfang an. CLS bleibt 0. */
-              style={animiert ? { transitionDelay: `${index * 110}ms` } : undefined}
-              className={cn(
-                "flex origin-bottom flex-col justify-end rounded-lg border border-gray-200 bg-surface-alt p-5",
-                stage.height,
-                animiert && "transition-[opacity,transform] duration-[420ms] ease-out",
-                animiert && !gebaut && "scale-y-75 opacity-0",
-                animiert && gebaut && "scale-y-100 opacity-100",
-              )}
-            >
-              <p className="text-xs font-medium tracking-wide text-brand-600 uppercase">
-                Stufe {index + 1}
-              </p>
-              <p className="mt-2 text-base font-semibold text-ink">{stage.name}</p>
-              <p className="mt-2 text-sm text-gray-500">{stage.description}</p>
-            </li>
-          ))}
-        </ol>
+          <ol ref={hostRef} className="flex flex-col gap-5 lg:col-span-7">
+            {stages.map((stage, index) => (
+              <li key={stage.name}>
+                {/* Der Balken. Er waechst nach rechts – `origin-left` ist der
+                    Grund, warum er waechst statt zu rutschen. Die Zeile
+                    darunter steht von Anfang an, deshalb verschiebt nichts. */}
+                <span
+                  aria-hidden="true"
+                  style={animiert ? { transitionDelay: `${index * 110}ms` } : undefined}
+                  className={cn(
+                    "block h-2 origin-left rounded-full bg-brand-100",
+                    stage.width,
+                    animiert && "transition-transform duration-[520ms] ease-out",
+                    animiert && !gebaut && "scale-x-0",
+                    animiert && gebaut && "scale-x-100",
+                  )}
+                />
+
+                <p className="mt-3 text-xs font-medium tracking-wide text-brand-600 uppercase">
+                  Stufe {index + 1}
+                </p>
+                <p className="mt-1 text-base font-semibold text-ink">{stage.name}</p>
+                <p className="mt-1 text-sm text-gray-500">{stage.description}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   );

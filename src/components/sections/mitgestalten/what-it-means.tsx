@@ -1,3 +1,5 @@
+import { FlaskConical, MessageSquareQuote, Unlock } from "lucide-react";
+
 import { PRODUCT_NAME } from "@/config/brand";
 
 /**
@@ -23,10 +25,12 @@ import { PRODUCT_NAME } from "@/config/brand";
  */
 const points = [
   {
+    icon: FlaskConical,
     title: "Ausprobieren im echten Alltag",
     description: `${PRODUCT_NAME} läuft in Ihrer eigenen Klasse, im laufenden Schuljahr – nicht in einer Testumgebung, sondern dort, wo sich zeigt, ob es trägt.`,
   },
   {
+    icon: MessageSquareQuote,
     title: "Gehört werden",
     /**
      * „Landen beim Team" ist durch den Produktstand gedeckt („Feedback aus
@@ -39,6 +43,7 @@ const points = [
       "Ihre Rückmeldungen landen nicht in einem Ticketsystem, sondern beim Team. Was klein ist, steht oft in derselben Woche im Produkt.",
   },
   {
+    icon: Unlock,
     title: "Nichts verkaufen müssen",
     description:
       "Mitgestalten verpflichtet zu nichts: kein Vertrag, kein Kaufdruck. Aufhören können Sie jederzeit, ohne Begründung.",
@@ -62,7 +67,12 @@ export function WhatItMeans() {
               key={point.title}
               className="rounded-xl border border-gray-200 bg-surface p-6"
             >
-              <h3 className="text-base font-semibold text-ink">{point.title}</h3>
+              <point.icon
+                aria-hidden="true"
+                className="size-6 text-brand-600"
+                strokeWidth={1.75}
+              />
+              <h3 className="mt-4 text-base font-semibold text-ink">{point.title}</h3>
               <p className="mt-3 text-sm text-gray-500">{point.description}</p>
             </li>
           ))}

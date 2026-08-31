@@ -1,3 +1,5 @@
+import { FileSignature, Server } from "lucide-react";
+
 import { PRODUCT_HOSTING_NOTE } from "@/config/product";
 
 /**
@@ -27,16 +29,47 @@ export function DpaBand() {
       className="border-b border-gray-200 bg-surface-alt"
     >
       <div className="mx-auto w-full max-w-6xl px-6 py-16 lg:px-8 lg:py-20">
-        <div className="max-w-3xl">
+        {/* ==============================================================
+            ZWEI KARTEN STATT EINES ABSATZBLOCKS
+            ==============================================================
+            Das Band stand als 768 px breiter Textblock in einem 1088 px
+            breiten Container – rechts daneben nichts, gemessen im
+            Leerraum-Audit. Es enthält aber zwei getrennte Aussagen: den
+            Stand der Umsetzung und den Weg dorthin. Als zwei Karten mit
+            Symbol tragen sie den Ausschnitt und sind schneller zu erfassen.
+
+            WICHTIG: PRODUCT_HOSTING_NOTE steht in Karte 1 UNGETEILT. Eine
+            frühere Fassung hat die Konstante an ihrer Konjunktion
+            aufgetrennt, um zwei Karten daraus zu machen – das hätte die
+            geteilte Zusage von der Formatierung dieser einen Sektion
+            abhängig gemacht. Wer den Satz in product.ts umformuliert, hätte
+            hier stillschweigend einen halben Satz bekommen. */}
+        <div className="max-w-4xl">
           <h2 id="avv-titel" className="text-2xl font-semibold tracking-tight text-ink">
             Auftragsverarbeitung nach Art. 28 DSGVO
           </h2>
 
-          <p className="mt-4 text-lg text-gray-500">{PRODUCT_HOSTING_NOTE}</p>
-
-          <p className="mt-4 text-lg text-gray-500">
-            Alle Fragen dazu klären wir transparent im Erstgespräch.
-          </p>
+          <ul className="mt-8 grid gap-6 sm:grid-cols-2">
+            {[
+              { icon: Server, text: PRODUCT_HOSTING_NOTE },
+              {
+                icon: FileSignature,
+                text: "Alle Fragen dazu klären wir transparent im Erstgespräch.",
+              },
+            ].map((karte) => (
+              <li
+                key={karte.text}
+                className="rounded-xl border border-gray-200 bg-surface p-6"
+              >
+                <karte.icon
+                  aria-hidden="true"
+                  className="size-6 text-brand-600"
+                  strokeWidth={1.75}
+                />
+                <p className="mt-4 text-base text-gray-500">{karte.text}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

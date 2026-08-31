@@ -62,7 +62,21 @@ const STATIONS = [
 /** Abstand der Punkte auf der Linie, in Prozent der Länge. */
 const SCHRITT = 100 / (STATIONS.length - 1);
 
-export function StoryStations() {
+/**
+ * „breit"  – waagerecht ab lg, darunter senkrecht. Für die volle Seitenbreite.
+ * „schmal" – IMMER senkrecht. Für die schmale Spalte neben dem Erzähltext.
+ *
+ * Die zweite Variante ist entstanden, als die Stationen von UNTER den Text
+ * NEBEN ihn gewandert sind (Leerraum-Audit): In einer 5/12-Spalte bekämen
+ * fünf waagerechte Stationen je rund 90 px – dort passt kein einziger
+ * Stationsname mehr in eine Zeile. Senkrecht ist in dieser Spalte nicht die
+ * Notlösung, sondern die richtige Form: Die Linie läuft dann parallel zum
+ * Erzähltext daneben und begleitet ihn.
+ */
+type StationsVariant = "breit" | "schmal";
+
+export function StoryStations({ variant = "breit" }: { variant?: StationsVariant }) {
+  const schmal = variant === "schmal";
   const hostRef = useRef<HTMLDivElement | null>(null);
   const [gezogen, setGezogen] = useState(true);
   const [animiert, setAnimiert] = useState(false);
@@ -109,7 +123,7 @@ export function StoryStations() {
           style={{
             width: `calc(${((STATIONS.length - 1) / STATIONS.length) * 100}% + 13px)`,
           }}
-          className="absolute top-[13px] left-0 hidden h-0.5 lg:block"
+          className={cn("absolute top-[13px] left-0 hidden h-0.5", !schmal && "lg:block")}
         >
           <line
             x1="0"
@@ -133,7 +147,10 @@ export function StoryStations() {
           aria-hidden="true"
           viewBox="0 0 2 100"
           preserveAspectRatio="none"
-          className="absolute top-0 left-[13px] h-full w-0.5 lg:hidden"
+          className={cn(
+            "absolute top-0 left-[13px] h-full w-0.5",
+            !schmal && "lg:hidden",
+          )}
         >
           <line
             x1="1"
@@ -153,9 +170,17 @@ export function StoryStations() {
           />
         </svg>
 
-        <ol className="relative flex flex-col gap-8 lg:flex-row lg:gap-6">
+        <ol
+          className={cn(
+            "relative flex flex-col gap-8",
+            !schmal && "lg:flex-row lg:gap-6",
+          )}
+        >
           {STATIONS.map((station, position) => (
-            <li key={station.title} className="flex gap-4 lg:flex-1 lg:flex-col lg:gap-0">
+            <li
+              key={station.title}
+              className={cn("flex gap-4", !schmal && "lg:flex-1 lg:flex-col lg:gap-0")}
+            >
               {/* Der Punkt. Er ploppt, sobald die Linie bei ihm angekommen
                   ist – die Verzögerung leitet sich aus seiner Position ab. */}
               <span
@@ -173,7 +198,7 @@ export function StoryStations() {
                 )}
               />
 
-              <div className="lg:mt-4 lg:pr-4">
+              <div className={cn(!schmal && "lg:mt-4 lg:pr-4")}>
                 <p className="text-sm font-semibold text-ink">{station.title}</p>
                 <p className="mt-1.5 text-sm text-gray-500">{station.text}</p>
               </div>

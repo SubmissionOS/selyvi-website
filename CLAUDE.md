@@ -35,7 +35,31 @@ Ehrlichkeit bleibt Pflicht — sie wird positiv formuliert:
 
 Eine definitive Aussage über eine bewusste Produktgrenze ist KEIN Selbstzweifel und bleibt: "Ein Elternportal gibt es nicht", "Eine Einzelansicht gibt es nicht – auch nicht für die Schulleitung", "Offene Punkte kennzeichnen wir, statt sie zu überspielen". Der Unterschied ist Haltung gegen Unwissen.
 
-Beide Regeln werden bei jedem Deployment gegen das ausgelieferte HTML geprüft: `npm run smoke <url>`, Abschnitt "Ton-Regeln A und B". Ein Treffer lässt den Smoke-Test fehlschlagen.
+### Regel C — Kein Reifegrad-Geständnis
+Wir nennen freiwillig keine Reifegrad-Defizite: fehlende Piloten, fehlende Referenzschulen, fehlende Zertifikate, Teamgröße, Alter der Firma, Anzahl der Kundinnen. Wir treten auf, als seien wir dort, wo wir hinwollen — ohne eine einzige ungedeckte Behauptung. Verboten sind Muster wie "noch keine Pilotschule", "bisher keine Referenzen", "erst seit", "kleines Team", "Preise werden aktuell mit Pilotschulen festgelegt".
+
+Eine Antwort, die ein solches Defizit einräumt, wird ENTFERNT (samt Frage) oder beschreibt, WIE etwas läuft, statt DASS es fehlt. "Gibt es Referenzschulen?" entfällt; "Wie läuft ein Pilot?" beschreibt den Ablauf.
+
+GRENZE DER REGEL — sie zielt auf UNTERNEHMENS-Reife, nicht auf Rechts- und Produktangaben. Diese bleiben und werden nur positiv formuliert:
+- Produktgrenzen, die Verkaufsargumente sind: kein Elternportal, keine Gesamtsicht-Rolle, keine namentliche Rangliste.
+- Rechtlich erhebliche Angaben, die eine Datenschutzbeauftragte sehen muss: Serverstandort, Auftragsverarbeitung, Löschfristen. Sie als "in Vorbereitung" zu kennzeichnen ist Pflicht (siehe Regel B); sie zu verschweigen erzeugt genau den Widerspruch, den wir abgeschafft haben.
+- Methodische Offenheit gegenüber Forschenden ("offene Methodenlücken sind dokumentiert") — das ist wissenschaftliche Strenge, kein Geständnis.
+
+### Layout-Regel — Kein Bildschirm nur Text
+Auf Desktop (1440, Viewport ~900) enthält jeder Viewport-Ausschnitt einer Inhaltsseite etwas Bildliches: Szene, Illustration, Diagramm, Stationen-Linie oder ein Karten-Raster MIT Icons. Kein Textblock breiter als ~60 % mit leerer Nachbarspalte. Kein Zustand, in dem drei Scroll-Ticks nur Text zeigen und das Bild erst darunter kommt.
+
+Drei Lösungsmuster, in dieser Reihenfolge zu prüfen:
+- **(a) Zwei Spalten mit dem BESTEHENDEN Bild daneben statt darunter.** Begleitet das Bild einen längeren Text, klebt es (`lg:sticky lg:top-24` — 24 wegen der 64 px hohen, ebenfalls klebenden Kopfzeile).
+- **(b) Langer Absatz → 2–3 Karten mit Icon.** Ein Karten-Raster OHNE Icons zählt nicht als bildlich.
+- **(c) Zitat-Band schmaler, mit visuellem Anker** (großes Anführungszeichen, kräftige farbige Kante) statt Textwand.
+
+Keine neuen aufwendigen Szenen dafür. Die vorhandenen Visuals reichen — sie stehen nur am falschen Ort.
+
+MOBIL GILT DAS NICHT: Dort bleibt die Reihenfolge Text, dann Bild. Ein Grid ohne `lg:`-Spalten stapelt in DOM-Reihenfolge, `sticky` greift unterhalb von `lg` nicht — deshalb ist die Desktop-Lösung mobil automatisch richtig herum. Niemals `order-*` dafür einsetzen: Das entkoppelt Lese- von Vorlesereihenfolge (WCAG 1.3.2).
+
+Gemessen wird mit `leerraum.js`: Es geht die Seite in 900-px-Schritten durch und meldet jeden Ausschnitt ohne bildliches Element.
+
+Alle drei Ton-Regeln werden bei jedem Deployment gegen das ausgelieferte HTML geprüft: `npm run smoke <url>`, Abschnitt "Ton-Regeln A, B und C". Ein Treffer lässt den Smoke-Test fehlschlagen.
 
 ### Zukunfts-Szenen
 Funktionen mit Status "Rollout offen" oder "Teilweise" dürfen als Szene gezeigt werden — ausschließlich mit einem dauerhaft sichtbaren Badge "In Entwicklung" IM UiWindow-Fensterkopf, das in JEDEM Frame steht, auch im reduced-motion-Endbild (staticStepId entsprechend wählen). Status "Nicht gebaut" und "Prototyp" bleiben tabu. Eine Szene ohne Badge ist eine Verfügbarkeitszusage — auch wenn der Text daneben etwas anderes sagt.

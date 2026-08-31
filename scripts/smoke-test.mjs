@@ -11,7 +11,7 @@
  *   4. noindex ausschließlich auf /datenschutz
  *   5. Sitemap und robots.txt erreichbar und konsistent
  *   6. Kein alter Produktname, keine Secret-Muster in der Ausgabe
- *   7. Ton-Regeln A und B aus CLAUDE.md im sichtbaren Text und in aria-labels
+ *   7. Ton-Regeln A, B und C aus CLAUDE.md im sichtbaren Text und in aria-labels
  *
  * Die vier Formular-Pfade lassen sich so nicht prüfen – Server Actions
  * brauchen einen Browser. Anleitung dazu im README, Abschnitt „Smoke-Test“.
@@ -147,7 +147,7 @@ console.log("\n=== Ausgabe-Hygiene ===");
   console.log(`  Secret-Muster:     ${secrets}`);
 }
 
-// --- 7: Ton-Regeln A und B (CLAUDE.md, Abschnitt TON) ---
+// --- 7: Ton-Regeln A, B und C (CLAUDE.md, Abschnitt TON) ---
 //
 // Geprüft wird der SICHTBARE TEXT plus alle aria-labels und der
 // Meta-Description – also genau das, was ein Mensch liest oder vorgelesen
@@ -157,7 +157,7 @@ console.log("\n=== Ausgabe-Hygiene ===");
 // Die Muster sind bewusst eng. Eine definitive Aussage über eine gewollte
 // Produktgrenze („Ein Elternportal gibt es nicht") ist erlaubt und darf hier
 // nicht hängenbleiben; verboten ist die Selbstauskunft über Unwissen.
-console.log("\n=== Ton-Regeln A und B ===");
+console.log("\n=== Ton-Regeln A, B und C ===");
 {
   const RULES = [
     // A – dem Leser zuschreiben, wer er ist, was er tut oder warum
@@ -186,6 +186,28 @@ console.log("\n=== Ton-Regeln A und B ===");
     [/sagen lässt/, "B", "„… sagen lässt“"],
     [/steht (noch )?nicht fest/, "B", "„steht nicht fest“"],
     [/fehlt noch/, "B", "„fehlt noch“"],
+
+    // C – Reifegrad-Defizite, die niemand von uns verlangt hat
+    [
+      /noch keine? (Pilot|Referenz|Schule|Kunde)/i,
+      "C",
+      "„noch keine Pilot-/Referenzschule“",
+    ],
+    [/bisher keine?\b/i, "C", "„bisher keine …“"],
+    [/(sind|existieren) wir erst seit/i, "C", "„wir sind erst seit …“"],
+    [/erst seit (Kurzem|kurzem|wenigen|einigen|\d)/, "C", "„erst seit …“"],
+    [/kleines Team/i, "C", "„kleines Team“"],
+    [/(junges|neues) (Unternehmen|Start-?up)/i, "C", "„junges Unternehmen“"],
+    [/(noch )?keine Referenz/i, "C", "„keine Referenzen“"],
+    // Nur die VERNEINUNG faengt das Muster. „ISO 27001 zertifiziert" waere
+    // eine Zusage und gehoert nicht hierher – sie faellt unter die
+    // Wahrheitsquelle, nicht unter den Ton.
+    // Die Zeichenklasse war anfangs auf Kleinbuchstaben begrenzt und hat
+    // „nicht nach ISO 27001 zertifiziert" durchgelassen – gefunden in der
+    // Gegenprobe, nicht auf der Website.
+    [/(nicht|ohne|kein[e]?)\s[^.!?]{0,30}zertifiz/i, "C", "Zertifikats-Geständnis"],
+    [/mit Pilotschulen festgelegt/i, "C", "„Preise werden mit Pilotschulen festgelegt“"],
+    [/mehr Schulen, als/i, "C", "Anzahl der Schulen als Mangel"],
   ];
 
   // Der Datenschutztext ist Rechtstext nach Art. 13 DSGVO und wird nicht

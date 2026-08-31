@@ -1,3 +1,5 @@
+import { BookOpenCheck, PenLine, Users } from "lucide-react";
+
 import { PRODUCT_NAME } from "@/config/brand";
 
 /**
@@ -50,16 +52,19 @@ import { PRODUCT_NAME } from "@/config/brand";
  */
 const traits = [
   {
+    icon: PenLine,
     title: "Ihr Stil",
     description:
       "Lernt, wie Sie schreiben und arbeiten. Was entsteht, klingt nach Ihnen – nicht nach einem Sprachmodell.",
   },
   {
+    icon: Users,
     title: "Ihre Klasse",
     description:
       "Begleitet die Entwicklung über Monate. Beobachtungen, Fachverlauf und Kompetenzen wachsen zusammen statt nebeneinander.",
   },
   {
+    icon: BookOpenCheck,
     title: "Der aktuelle Stand",
     description:
       "Orientiert sich an aktuellen Bildungsvorgaben wie Rahmen- und Teilrahmenplänen – damit bewährter Unterricht und heutige Anforderungen zusammenfinden, ganz ohne Fortbildungsmarathon.",
@@ -86,7 +91,12 @@ export function LearnsWithYou() {
               key={trait.title}
               className="rounded-xl border border-gray-200 bg-surface p-6"
             >
-              <h3 className="text-base font-semibold text-ink">{trait.title}</h3>
+              <trait.icon
+                aria-hidden="true"
+                className="size-6 text-brand-600"
+                strokeWidth={1.75}
+              />
+              <h3 className="mt-4 text-base font-semibold text-ink">{trait.title}</h3>
               <p className="mt-3 text-sm text-gray-500">{trait.description}</p>
             </li>
           ))}

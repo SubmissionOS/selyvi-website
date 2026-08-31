@@ -1,3 +1,5 @@
+import { Building2, ClipboardPen, LineChart, type LucideIcon } from "lucide-react";
+
 import { PRODUCT_NAME } from "@/config/brand";
 
 /**
@@ -69,6 +71,7 @@ import { PRODUCT_NAME } from "@/config/brand";
  * Abschlusssatz sagt das Wesentliche, ohne etwas zu versprechen.
  */
 type ValueColumn = {
+  icon: LucideIcon;
   audience: string;
   headline: string;
   points: string[];
@@ -76,6 +79,7 @@ type ValueColumn = {
 
 const columns: ValueColumn[] = [
   {
+    icon: ClipboardPen,
     audience: "Für Lehrkräfte",
     headline: "Die Schreibarbeit, nicht das Urteil.",
     points: [
@@ -85,6 +89,7 @@ const columns: ValueColumn[] = [
     ],
   },
   {
+    icon: LineChart,
     audience: "Für Schulleitungen",
     headline: "Überblick, der niemanden vorführt.",
     points: [
@@ -94,6 +99,7 @@ const columns: ValueColumn[] = [
     ],
   },
   {
+    icon: Building2,
     audience: "Für Schulträger",
     headline: "Etwas Vorlegbares statt Bauchgefühl.",
     points: [
@@ -121,7 +127,13 @@ export function ValueForAll() {
         <div className="mt-14 grid gap-10 lg:grid-cols-3 lg:gap-12">
           {columns.map((column) => (
             <div key={column.audience}>
-              <p className="text-xs font-medium tracking-wide text-gray-500 uppercase">
+              <column.icon
+                aria-hidden="true"
+                className="size-7 text-brand-600"
+                strokeWidth={1.5}
+              />
+
+              <p className="mt-4 text-xs font-medium tracking-wide text-gray-500 uppercase">
                 {column.audience}
               </p>
 

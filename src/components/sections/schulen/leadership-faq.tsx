@@ -11,7 +11,9 @@ import { FaqAccordion, type FaqItem } from "@/components/faq-accordion";
 const faqItems: FaqItem[] = [
   {
     question: `Was kostet ${PRODUCT_NAME} für unsere Schule?`,
-    answer: "Preise werden aktuell mit Pilotschulen festgelegt – sprechen Sie uns an.",
+    // Wortgleich mit der Startseiten-FAQ – siehe dort die Begründung.
+    answer:
+      "Den Preis besprechen wir im Erstgespräch – zusammen mit dem Umfang, den Ihre Schule braucht.",
   },
   {
     question: "Müssen Personalrat und Datenschutzbeauftragte einbezogen werden?",
@@ -27,15 +29,26 @@ export function LeadershipFaq() {
       className="border-b border-gray-200"
     >
       <div className="mx-auto w-full max-w-6xl px-6 py-24 lg:px-8 lg:py-32">
-        <h2
-          id="schulleitung-faq-titel"
-          className="max-w-2xl text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
-        >
-          Fragen aus Schulleitungen
-        </h2>
+        {/* Zweispaltig ab lg: Überschrift links, Antworten rechts.
+            Vorher stand hier ein 672 px breiter Fragenstapel in einem
+            1088 px breiten Container – die halbe Bildschirmbreite blieb
+            leer. Die Überschrift klebt beim Scrollen, damit auch weit
+            unten in der Liste noch dasteht, welche Fragen das sind. */}
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-4">
+            <div className="lg:sticky lg:top-24">
+              <h2
+                id="schulleitung-faq-titel"
+                className="max-w-2xl text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
+              >
+                Fragen aus Schulleitungen
+              </h2>
+            </div>
+          </div>
 
-        <div className="mt-12 max-w-3xl">
-          <FaqAccordion items={faqItems} idPrefix="schulleitung-faq" />
+          <div className="lg:col-span-8">
+            <FaqAccordion items={faqItems} idPrefix="schulleitung-faq" />
+          </div>
         </div>
       </div>
     </section>
