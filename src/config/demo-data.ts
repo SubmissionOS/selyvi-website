@@ -297,34 +297,6 @@ export const DEMO_RELIEF_MONTH = {
 } as const;
 
 /* ==========================================================================
- * SZENE „FRAGEN SIE IHRE EIGENE DOKUMENTATION"
- * ==========================================================================
- * Der Chat auf der Startseite. Er greift bewusst auf DEMO_READING zurueck:
- * Die Antwort schoepft aus genau der Beobachtung, die der Hero eintippt und
- * die auf /fuer-lehrkraefte zum Zeugnistext wird. Derselbe Tag, dasselbe
- * Kind – die Szene schliesst den Kreis, statt einen vierten aufzumachen.
- *
- * Die beiden Verweis-Chips tragen Daten, keine Inhalte: Sie zeigen, DASS die
- * Antwort auf Eintraege zurueckgeht, nicht welche. Erfundene Zusatz-
- * beobachtungen waeren hier ueberfluessiger Ballast.
- * ========================================================================== */
-export const DEMO_CHAT = {
-  question: "Wie hat sich Emma im Lesen entwickelt?",
-  /**
-   * Zwei Saetze, erkennbar aus DEMO_READING abgeleitet – der erste nimmt die
-   * Beobachtung auf, der zweite ordnet sie ein. Keine Note, keine Prognose:
-   * Die Anwendung fasst zusammen, was dokumentiert wurde.
-   *
-   * Und keine Defizit-Aussage: Ein „im Mai noch stockend" waere eine
-   * Entwicklung VON etwas weg und damit ein negativer Satz ueber ein Kind –
-   * verboten laut Kopf dieser Datei, auch ueber ein erfundenes.
-   */
-  answer:
-    "Emma liest inzwischen flüssig und sicher vor der Klasse vor und traut sich dabei mehr zu. Seit Mai bringt sie sich im Deutschunterricht immer häufiger von sich aus ein.",
-  references: ["Beobachtung 12.05.", "Beobachtung 03.07."],
-} as const;
-
-/* ==========================================================================
  * SZENE „SITZPLAN"
  * ==========================================================================
  * Sechs Plaetze, besetzt mit demselben Cast wie ueberall. Ein Platz ist
@@ -359,20 +331,35 @@ export const DEMO_SEATING = {
 } as const;
 
 /* ==========================================================================
- * GEFÜHRTER EINBLICK (/einblick)
+ * EINBLICK (/einblick) – VORBEREITETE DATEN FÜR SIEBEN BEDIENBARE BEREICHE
  * ==========================================================================
- * Drei vorbereitete Beobachtungen aus derselben 3b und je ein passender
- * Zeugnistext. Der Besucher waehlt eine Beobachtung; daraus entsteht in
- * Station 2 GENAU der zugehoerige Entwurf – das ist der Moment, in dem die
- * Umgebung sich echt anfuehlt.
- *
- * Es wird nichts erzeugt und nichts gesendet: Beide Texte stehen hier fertig.
- * Genau das sagt die Seite auch, dauerhaft ueber dem Fenster.
+ * Es gibt kein Backend. JEDER Text hier steht fertig; ein Klick waehlt aus,
+ * er erzeugt nichts. Genau das sagt das Banner ueber dem Fenster.
  *
  * KEINE NEGATIVEN INHALTE ÜBER KINDER – die Regel aus dem Kopf dieser Datei
- * gilt hier besonders, weil ein Besucher die Karten einzeln anklickt und
- * liest. Alle drei beschreiben eine Beobachtung, keine Bewertung eines Kindes.
+ * gilt hier besonders, weil ein Besucher jeden Eintrag einzeln aufklappt.
+ * Alle Timeline-Eintraege beschreiben Gelingendes.
+ *
+ * Der Cast bleibt die 3b aus DEMO_CHILDREN.
  * ========================================================================== */
+
+/**
+ * Drei vorbereitete Beobachtungen. Je Kind ein Zeugnistext UND eine zweite
+ * Formulierung, dazu die Elternmail in vier Sprachen und eine Timeline.
+ *
+ * Produktstand-Deckung je Feld:
+ *   note      -> „Beobachtungen strukturieren — Live"
+ *   chips     -> ebenda (Fach, Kategorie)
+ *   report    -> „Zeugnisbemerkungen — Live … im gelernten Schreibstil"
+ *   report2   -> dieselbe Funktion, ein zweites Mal aufgerufen. Der
+ *                Produktstand kennt keinen Knopf „andere Formulierung"; er
+ *                kennt das Erzeugen von Texten. Die Karte im Einblick
+ *                beschriftet ihn deshalb als zweiten Entwurf, nicht als
+ *                eigenes Feature.
+ *   mail      -> „Elternmails, auf Wunsch übersetzt — Live … Namen und
+ *                Signatur bleiben unangetastet"
+ *   timeline  -> „Förderempfehlungen, Timeline, Klassenanalyse — Live"
+ */
 export const DEMO_TOUR_OBSERVATIONS = [
   {
     id: "emma",
@@ -381,7 +368,47 @@ export const DEMO_TOUR_OBSERVATIONS = [
     note: "Emma liest heute zum ersten Mal flüssig vor der Klasse – traut sich mehr zu.",
     chips: ["Deutsch · Lesen", "Beobachtung"],
     report:
-      "Emma liest zunehmend flüssig und sicher vor der Klasse vor. Sie traut sich dabei mehr zu und bringt sich im Deutschunterricht immer häufiger von sich aus ein.",
+      "Emma liest inzwischen flüssig und sicher vor der Klasse vor und traut sich dabei mehr zu. Seit Mai bringt sie sich im Deutschunterricht immer häufiger von sich aus ein.",
+    report2:
+      "Emma trägt sicher und mit fester Stimme vor der Klasse vor. Sie meldet sich im Deutschunterricht häufig und beteiligt sich mit eigenen Beiträgen am Gespräch.",
+    mail: {
+      subject: "Emma im Deutschunterricht",
+      lines: {
+        de: [
+          "Emma hat heute zum ersten Mal flüssig vor der Klasse vorgelesen.",
+          "Sie traut sich sichtbar mehr zu und beteiligt sich häufiger.",
+        ],
+        en: [
+          "Today Emma read aloud to the class fluently for the first time.",
+          "She is visibly gaining confidence and joins in more often.",
+        ],
+        tr: [
+          "Emma bugün ilk kez sınıfın önünde akıcı bir şekilde okudu.",
+          "Kendine güveni görünür şekilde artıyor ve derse daha sık katılıyor.",
+        ],
+        ar: [
+          "قرأت إيما اليوم أمام الصف بطلاقة لأول مرة.",
+          "تزداد ثقتها بنفسها بوضوح وتشارك في الدرس بشكل أكبر.",
+        ],
+      },
+    },
+    timeline: [
+      {
+        date: "12.05.",
+        title: "Liest im Lesekreis mit",
+        text: "Emma liest im Lesekreis einen Abschnitt vor und lässt sich dabei Zeit.",
+      },
+      {
+        date: "03.07.",
+        title: "Trägt vor der Klasse vor",
+        text: "Zum ersten Mal flüssig vor der ganzen Klasse – sie traut sich mehr zu.",
+      },
+      {
+        date: "18.09.",
+        title: "Meldet sich von sich aus",
+        text: "Bringt eigene Beiträge ins Unterrichtsgespräch ein, ohne Aufforderung.",
+      },
+    ],
   },
   {
     id: "yusuf",
@@ -391,6 +418,46 @@ export const DEMO_TOUR_OBSERVATIONS = [
     chips: ["Mathe · Zahlenraum", "Beobachtung"],
     report:
       "Yusuf bewegt sich sicher im Zahlenraum bis 100. Er kann seinen Rechenweg in eigenen Worten erklären und hilft damit auch anderen Kindern weiter.",
+    report2:
+      "Yusuf rechnet im Zahlenraum bis 100 zuverlässig und beschreibt seinen Lösungsweg verständlich. Damit unterstützt er seine Sitznachbarn im Unterricht.",
+    mail: {
+      subject: "Yusuf im Mathematikunterricht",
+      lines: {
+        de: [
+          "Yusuf rechnet sicher im Zahlenraum bis 100.",
+          "Er erklärt seinen Rechenweg und hilft damit anderen Kindern weiter.",
+        ],
+        en: [
+          "Yusuf works confidently with numbers up to 100.",
+          "He explains his approach and helps other children along the way.",
+        ],
+        tr: [
+          "Yusuf 100'e kadar olan sayılarla güvenle işlem yapıyor.",
+          "Çözüm yolunu anlatıyor ve böylece diğer çocuklara da yardımcı oluyor.",
+        ],
+        ar: [
+          "يتعامل يوسف بثقة مع الأعداد حتى ١٠٠.",
+          "يشرح طريقة حله ويساعد بذلك الأطفال الآخرين.",
+        ],
+      },
+    },
+    timeline: [
+      {
+        date: "22.04.",
+        title: "Zerlegt Zahlen sicher",
+        text: "Yusuf zerlegt zweistellige Zahlen und erklärt die Schritte laut mit.",
+      },
+      {
+        date: "09.06.",
+        title: "Hilft am Nachbartisch",
+        text: "Erklärt einem anderen Kind seinen Rechenweg, ohne die Lösung vorzusagen.",
+      },
+      {
+        date: "01.10.",
+        title: "Sicher bis 100",
+        text: "Rechnet im Zahlenraum bis 100 zuverlässig, auch bei Zehnerübergang.",
+      },
+    ],
   },
   {
     id: "lotta",
@@ -400,7 +467,159 @@ export const DEMO_TOUR_OBSERVATIONS = [
     chips: ["Sozialverhalten", "Beobachtung"],
     report:
       "Lotta übernimmt in Gruppenarbeiten von sich aus Verantwortung und verteilt Aufgaben umsichtig. Sie achtet dabei darauf, dass alle Kinder beteiligt sind.",
+    report2:
+      "Lotta organisiert Gruppenarbeiten eigenständig und behält dabei die ganze Gruppe im Blick. Sie sorgt dafür, dass jedes Kind eine Aufgabe bekommt.",
+    mail: {
+      subject: "Lotta in der Gruppenarbeit",
+      lines: {
+        de: [
+          "Lotta hat in der Gruppenarbeit die Aufgabenverteilung übernommen.",
+          "Sie achtet darauf, dass alle Kinder beteiligt sind.",
+        ],
+        en: [
+          "Lotta took charge of dividing up the tasks in group work.",
+          "She makes sure that every child is involved.",
+        ],
+        tr: [
+          "Lotta grup çalışmasında görev dağılımını üstlendi.",
+          "Bütün çocukların katılmasına özen gösteriyor.",
+        ],
+        ar: [
+          "تولّت لوتا توزيع المهام في العمل الجماعي.",
+          "وتحرص على مشاركة جميع الأطفال.",
+        ],
+      },
+    },
+    timeline: [
+      {
+        date: "05.05.",
+        title: "Teilt Aufgaben ein",
+        text: "Lotta verteilt in der Gruppe die Aufgaben und fragt jedes Kind vorher.",
+      },
+      {
+        date: "17.06.",
+        title: "Holt Stille dazu",
+        text: "Bezieht ein Kind ein, das sich sonst zurückhält, und gibt ihm eine Rolle.",
+      },
+      {
+        date: "24.09.",
+        title: "Führt Gruppe eigenständig",
+        text: "Organisiert eine Gruppenarbeit von Anfang bis Ende ohne Begleitung.",
+      },
+    ],
   },
 ] as const;
 
 export type DemoTourObservation = (typeof DEMO_TOUR_OBSERVATIONS)[number];
+
+/**
+ * Diktat. Produktstand: „Beobachtungen strukturieren — Live … Die
+ * Spracheingabe laeuft ueber Whisper."
+ *
+ * Der Text laeuft im Einblick Wort fuer Wort ein. Er steht hier fertig – es
+ * wird nichts aufgenommen und nichts gesendet; der Browser fragt auch nicht
+ * nach dem Mikrofon.
+ */
+export const DEMO_DICTATION =
+  "Frida hat im Sachunterricht ihren Versuch selbst aufgebaut und den Ablauf erklärt.";
+
+/**
+ * Sprachen des Umschalters in der Elternpost.
+ *
+ * Vier von neun – mehr passen nicht in eine Zeile, und die Zahl steht als
+ * Badge daneben. Arabisch laeuft von rechts nach links; die Anzeige setzt
+ * dafuer dir="rtl".
+ */
+export const DEMO_MAIL_LANGS = [
+  { key: "de", label: "DE", rtl: false },
+  { key: "en", label: "EN", rtl: false },
+  { key: "tr", label: "TR", rtl: false },
+  { key: "ar", label: "AR", rtl: true },
+] as const;
+
+export type DemoMailLang = (typeof DEMO_MAIL_LANGS)[number]["key"];
+
+/**
+ * Material. Produktstand: „Unterrichtsmaterial aus echtem Fachwissen — Live
+ * … Die Lehrkraft kann die Fundstellen auch selbst auswaehlen statt sie
+ * automatisch ziehen zu lassen. Jedes erzeugte Material weist seine Quellen
+ * aus."
+ *
+ * Genau diese beiden Saetze sind die zwei Interaktionen: Fundstellen
+ * anhaken, und die Marker im Ergebnis aendern sich mit.
+ */
+export const DEMO_MATERIAL_TOPICS = [
+  { id: "wortarten", label: "Wortarten bestimmen", subject: "Deutsch" },
+  { id: "zahlenraum", label: "Zahlenraum bis 100", subject: "Mathe" },
+  { id: "wasser", label: "Wasserkreislauf", subject: "Sachunterricht" },
+] as const;
+
+export const DEMO_MATERIAL_SOURCES = [
+  { id: "q1", label: "Übungsblatt Wortarten", note: "Klasse 3, Fachkorpus" },
+  { id: "q2", label: "Merkblatt Nomen und Verben", note: "Klasse 3, Fachkorpus" },
+  { id: "q3", label: "Wortarten-Kartei", note: "Klasse 4, Fachkorpus" },
+] as const;
+
+/** Der Ergebnis-Text. Die Marker verweisen auf die angehakten Fundstellen. */
+export const DEMO_MATERIAL_RESULT = [
+  "Aufgabe 1: Unterstreiche alle Nomen im Text blau.",
+  "Aufgabe 2: Schreibe zu jedem Verb die Grundform daneben.",
+  "Aufgabe 3: Finde drei Adjektive und steigere sie.",
+] as const;
+
+/**
+ * Stundenplan. Produktstand: „Klassenstundenplan ohne Pflegeaufwand — Live …
+ * eingetragen ueber einen Wochenplaner zum Anklicken und Ziehen. Wer bei
+ * seinem Fach Zeiten hinterlegt, steht im Plan."
+ *
+ * Im Einblick nur Anklicken, kein Ziehen: Ein Drag-and-drop braucht eine
+ * eigene Touch-Behandlung, und ein Klick funktioniert auf jedem Geraet gleich.
+ */
+export const DEMO_TIMETABLE_DAYS = ["Mo", "Di", "Mi", "Do", "Fr"] as const;
+export const DEMO_TIMETABLE_SLOTS = ["1. Std", "2. Std", "3. Std", "4. Std"] as const;
+
+/** Faecher, die die Lehrkraft im Einblick setzen kann. */
+export const DEMO_TIMETABLE_SUBJECTS = ["Deutsch", "Mathe", "Sachunterricht"] as const;
+
+/** Vorbelegung: Was schon im Plan steht, bevor jemand klickt. */
+export const DEMO_TIMETABLE_PRESET: Record<string, string> = {
+  "Mo-1. Std": "Deutsch",
+  "Di-2. Std": "Mathe",
+  "Mi-1. Std": "Sachunterricht",
+  "Do-3. Std": "Deutsch",
+};
+
+/**
+ * Chat ueber die eigenen Daten. Produktstand: „Freie Fragen an die eigenen
+ * Daten — Live … der Kontext wird serverseitig auf die eigenen Daten
+ * begrenzt."
+ *
+ * Drei vorbereitete Fragen mit je einer Antwort und den Beobachtungen, auf
+ * die sie sich stuetzt. Die Verweis-Chips sind der Punkt: Sie zeigen, DASS
+ * die Antwort auf Eintraegen beruht.
+ */
+export const DEMO_CHAT = {
+  questions: [
+    {
+      id: "lesen",
+      text: "Wie hat sich Emma im Lesen entwickelt?",
+      answer:
+        "Emma liest inzwischen flüssig und sicher vor der Klasse vor und traut sich dabei mehr zu. Seit Mai bringt sie sich im Deutschunterricht immer häufiger von sich aus ein.",
+      references: ["Beobachtung 12.05.", "Beobachtung 03.07."],
+    },
+    {
+      id: "mathe",
+      text: "Wer erklärt in Mathe gern anderen Kindern etwas?",
+      answer:
+        "Yusuf erklärt seinen Rechenweg regelmäßig weiter, zuletzt am Nachbartisch. Er gibt dabei Hinweise, statt die Lösung vorzusagen.",
+      references: ["Beobachtung 22.04.", "Beobachtung 09.06."],
+    },
+    {
+      id: "gruppen",
+      text: "Wer übernimmt in Gruppenarbeiten Verantwortung?",
+      answer:
+        "Lotta verteilt in Gruppenarbeiten von sich aus die Aufgaben und achtet darauf, dass alle beteiligt sind. Zuletzt hat sie eine Gruppe eigenständig geführt.",
+      references: ["Beobachtung 05.05.", "Beobachtung 24.09."],
+    },
+  ],
+} as const;

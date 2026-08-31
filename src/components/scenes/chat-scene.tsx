@@ -4,6 +4,13 @@ import { MessageSquare } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { DEMO_CHAT, DEMO_CLASS } from "@/config/demo-data";
+
+/**
+ * Die Szene zeigt EINE Frage – die erste der drei, die auch der Einblick
+ * anbietet. Beide ziehen aus derselben Quelle: Was hier animiert laeuft,
+ * kann man dort selbst anklicken.
+ */
+const FRAGE = DEMO_CHAT.questions[0];
 import { ChipPop } from "@/components/scenes/chip-pop";
 import { SceneTimeline, type SceneStep } from "@/components/scenes/scene-timeline";
 import { TypingText } from "@/components/scenes/typing-text";
@@ -47,7 +54,7 @@ export function ChatScene() {
       steps={STEPS}
       loopPauseMs={2400}
       kicker="16:45 · Vor dem Elterngespräch"
-      label={`Animierte Darstellung einer freien Frage an die eigene Dokumentation: In ein Eingabefeld wird „${DEMO_CHAT.question}" getippt. Darunter entsteht eine Antwort aus zwei Sätzen, die auf zwei zuvor erfasste Beobachtungen verweist. Ein Hinweis nennt, dass die Antwort ausschliesslich aus den eigenen Einträgen der Lehrkraft stammt. Alle Daten sind erfunden.`}
+      label={`Animierte Darstellung einer freien Frage an die eigene Dokumentation: In ein Eingabefeld wird „${FRAGE.text}" getippt. Darunter entsteht eine Antwort aus zwei Sätzen, die auf zwei zuvor erfasste Beobachtungen verweist. Ein Hinweis nennt, dass die Antwort ausschliesslich aus den eigenen Einträgen der Lehrkraft stammt. Alle Daten sind erfunden.`}
     >
       {(scene) => {
         const moving = !scene.isStatic;
@@ -73,7 +80,7 @@ export function ChatScene() {
               />
               <p className="min-w-0 text-[13px] leading-relaxed text-ink">
                 <TypingText
-                  text={DEMO_CHAT.question}
+                  text={FRAGE.text}
                   durationMs={1500}
                   animate={moving}
                   paused={paused}
@@ -90,7 +97,7 @@ export function ChatScene() {
                 <div>
                   <p className="text-[13px] leading-relaxed text-ink">
                     <TypingText
-                      text={DEMO_CHAT.answer}
+                      text={FRAGE.answer}
                       durationMs={1700}
                       animate={moving}
                       paused={paused}
@@ -100,7 +107,7 @@ export function ChatScene() {
                   {/* Verweis-Chips. Sie zeigen, DASS die Antwort auf Eintraege
                       zurueckgeht – der Beleg ist der Punkt, nicht der Inhalt. */}
                   <div className="mt-3 flex flex-wrap gap-1.5">
-                    {DEMO_CHAT.references.map((reference, position) => (
+                    {FRAGE.references.map((reference, position) => (
                       <ChipPop
                         key={reference}
                         animate={moving && showReferences}

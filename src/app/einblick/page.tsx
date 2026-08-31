@@ -4,7 +4,7 @@ import Link from "next/link";
 import { pageMetadata } from "@/config/seo";
 import { primaryCta } from "@/config/site";
 import { Button } from "@/components/ui/button";
-import { GuidedTour } from "@/components/einblick/guided-tour";
+import { Workspace } from "@/components/einblick/workspace";
 
 export const metadata: Metadata = pageMetadata("/einblick");
 
@@ -14,7 +14,7 @@ export const metadata: Metadata = pageMetadata("/einblick");
  * Sie ersetzt die frühere Sektion „So funktioniert's" auf der Startseite:
  * Erklären war der Umweg, klicken ist der kurze Weg.
  *
- * Drei von elf Bereichen sind offen. Die Sperren sind kein Mangel, sondern
+ * Sieben von elf Bereichen sind offen. Die Sperren sind kein Mangel, sondern
  * die Botschaft – wer alles sieht, hat keinen Grund mehr für ein Gespräch.
  *
  * KEIN Navigationspunkt: Die Kopfzeile bleibt bei fünf. Erreichbar über die
@@ -34,13 +34,12 @@ export default function EinblickPage() {
           </h1>
 
           <p className="mt-5 max-w-2xl text-lg text-gray-500">
-            Drei Bereiche sind offen: eine Beobachtung festhalten, daraus einen
-            Zeugnistext entstehen lassen, den Sitzplan umstellen. Länger als zwei Minuten
-            dauert das nicht.
+            Sieben Bereiche sind offen – klicken Sie in beliebiger Reihenfolge durch. Was
+            Sie auswählen, bleibt beim Wechsel erhalten.
           </p>
 
           <div className="mt-10">
-            <GuidedTour />
+            <Workspace />
           </div>
         </div>
       </section>
@@ -54,7 +53,7 @@ export default function EinblickPage() {
               id="einblick-abschluss"
               className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
             >
-              Das war ein Ausschnitt aus drei von elf Bereichen.
+              Das war ein Ausschnitt aus sieben von elf Bereichen.
             </h2>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
