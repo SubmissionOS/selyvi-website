@@ -12,7 +12,7 @@ import { SceneTimeline, type SceneStep } from "@/components/scenes/scene-timelin
  *
  * Von urspruenglich drei Mini-Szenen der frueheren Sektion ist sie die
  * einzige geblieben. Die Sektion selbst ist durch die Sektion
- * „Riskieren Sie einen Blick.“ ersetzt – erklaeren war der Umweg, der
+ * „Probieren Sie es selbst aus.“ ersetzt – erklaeren war der Umweg, der
  * gefuehrte Einblick ist der kurze Weg.
  *
  * Warum ausgerechnet diese ueberlebt: Sie zeigt, was die SCHULLEITUNG am

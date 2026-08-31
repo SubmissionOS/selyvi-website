@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { PRODUCT_NAME } from "@/config/brand";
 
 /**
@@ -32,6 +34,12 @@ export function CoCreateIntro() {
         <p className="mt-4 max-w-2xl text-lg text-gray-500">
           Wer früh dabei ist, prägt, was gebaut wird – so ehrlich, wie diese Website
           geschrieben ist.
+        </p>
+
+        <p className="mt-6 max-w-2xl text-lg">
+          <Link href="/einblick" className="text-brand-600 underline underline-offset-4">
+            Vorher selbst ausprobieren
+          </Link>
         </p>
       </div>
     </section>

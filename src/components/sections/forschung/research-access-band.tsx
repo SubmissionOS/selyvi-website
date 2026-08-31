@@ -38,7 +38,7 @@ export function ResearchAccessBand() {
             id="forschungszugang-titel"
             className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
           >
-            Datenzugänge nach klaren Regeln
+            So gehen wir mit Forschungsdaten um
           </h2>
 
           <p className="mt-6 text-lg text-gray-500">
@@ -48,16 +48,8 @@ export function ResearchAccessBand() {
           </p>
 
           <p className="mt-4 text-lg text-gray-500">
-            Eines davon steht. Das Erhebungsmodell ist dokumentiert, die Mindestfallzahlen
-            sind darin festgelegt, und die Wirkungszeile im Produkt arbeitet bereits
-            danach.
-          </p>
-
-          <p className="mt-4 text-lg text-gray-500">
-            Die beiden anderen nicht. Die Einwilligungstexte liegen zur juristischen
-            Prüfung. Und der Export, der Wirkungsindikatoren aggregiert herausgeben würde,
-            ist nicht gebaut – Forschungszwecke sind bis zur Freigabe zusätzlich technisch
-            gesperrt.
+            Das Erhebungsmodell ist dokumentiert, die Mindestfallzahlen sind darin
+            festgelegt, und die Wirkungszeile im Produkt arbeitet bereits danach.
           </p>
 
           <p className="mt-6 text-lg text-ink">

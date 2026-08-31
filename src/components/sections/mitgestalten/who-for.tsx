@@ -51,7 +51,7 @@ export function WhoFor() {
             >
               Dafür gibt es eine eigene Seite
             </Link>{" "}
-            – dort steht auch, warum es noch keinen Datenzugang gibt.
+            – mit unseren Fragen und dem Erhebungsmodell dahinter.
           </p>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FileDown } from "lucide-react";
 
 import { DATA_SEPARATION_NOTE, IMPACT_LINE_PRINCIPLE } from "@/config/product";
@@ -81,6 +82,19 @@ export function ReliefReport() {
                 gesagt, und zwar als Feststellung, nicht als Anreisser. */}
             <p className="mt-2 text-xs text-gray-500">
               Der Entlastungsbericht ist eine von mehreren Auswertungen im Leitungsmodus.
+            </p>
+
+            {/* Verweis in den gefuehrten Einblick. Bewusst ALLGEMEIN
+                formuliert: Dort gibt es heute die drei Lehrkraft-Bereiche,
+                keinen Leitungsmodus. Ein „Sehen Sie sich den Leitungsmodus
+                selbst an" waere eine Zusage, die die Tour nicht einloest. */}
+            <p className="mt-4 text-sm">
+              <Link
+                href="/einblick"
+                className="text-brand-600 underline underline-offset-4"
+              >
+                Die Anwendung selbst ausprobieren
+              </Link>
             </p>
           </div>
         </div>

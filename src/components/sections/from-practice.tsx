@@ -5,7 +5,7 @@ import { PRACTICE_CLAIM } from "@/config/brand";
 import { Button } from "@/components/ui/button";
 
 /**
- * Sektion „Aus der Praxis“ – zwischen „So funktioniert’s“ und „Was Ihnen abgenommen wird“.
+ * Sektion „Aus der Praxis“ – zwischen „Probieren Sie es selbst aus.“ und „Was Ihnen abgenommen wird“.
  *
  * Bewusst ohne Karten-Raster: Die Aussage traegt sich selbst, ein Raster wuerde
  * sie zu einem weiteren Feature-Block machen. Zwei Saetze, viel Weissraum, ein

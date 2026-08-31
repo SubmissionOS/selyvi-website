@@ -10,6 +10,7 @@ import {
   UserX,
 } from "lucide-react";
 
+import { cn } from "@/lib/utils";
 import { PRODUCT_NAME } from "@/config/brand";
 import {
   DATA_SEPARATION_NOTE,
@@ -131,13 +132,20 @@ export function PrinciplesGrid() {
         </h2>
 
         <ul className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {principles.map((principle) => {
+          {principles.map((principle, position) => {
             const Icon = principle.icon;
 
             return (
               <li
                 key={principle.title}
-                className="rounded-xl border border-gray-200 bg-surface p-6"
+                /* Neun Karten in ZWEI Spalten ergeben 2+2+2+2+1 – die letzte
+                 steht allein und liest sich wie vergessen. Sie nimmt dort
+                 deshalb beide Spalten ein. Bei drei Spalten (ab lg) geht die
+                 Rechnung ohnehin auf, da gilt wieder eine Spalte. */
+                className={cn(
+                  "rounded-xl border border-gray-200 bg-surface p-6",
+                  position === principles.length - 1 && "md:col-span-2 lg:col-span-1",
+                )}
               >
                 {/* Die Symbole sind sonst reine Dekoration und deshalb
                     aria-hidden. Genau eines traegt Bedeutung – das

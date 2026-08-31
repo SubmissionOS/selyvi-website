@@ -35,11 +35,6 @@ const faqItems: FaqItem[] = [
       "Von Pilotbegleitung über die Mitgestaltung der Erhebungsinstrumente bis zu gemeinsamen Auswertungen nach Freigabe – die Formen sind so unterschiedlich wie die Fragestellungen. Am schnellsten klärt das ein kurzes Kennenlernen. Was wir vorher nicht zusagen, weil es niemand vor dem ersten Gespräch entscheiden kann: Publikationen, Autorenschaften oder exklusive Zugänge.",
   },
   {
-    question: "Ab wann gibt es Datenzugänge?",
-    answer:
-      "Wir nennen dafür kein Datum, und das ist keine Ausweichung. Der Zugang hängt an der juristischen Prüfung der Einwilligungstexte – bis die abgeschlossen ist, sind Forschungszwecke technisch gesperrt, und der aggregierende Export ist ohnehin noch nicht gebaut. Ein genanntes Quartal wäre geraten. Wer uns schreibt, erfährt es, sobald es feststeht.",
-  },
-  {
     question: "Mit welchem Wirkungsmodell arbeitet ihr?",
     answer:
       "Mit einem Erhebungsmodell entlang der PHINEO-Wirkungstreppe: Input, Output, Outcome, Impact. Erhoben wird über drei Befragungswellen, die Einwilligung ist zweckgranular, die Auswertung folgt einem vorab festgelegten Codebuch, und Werte werden erst ab einer Mindestfallzahl ausgewiesen. Modellversion, Annahmeketten und offene Methodenlücken sind dokumentiert – auch die Lücken.",

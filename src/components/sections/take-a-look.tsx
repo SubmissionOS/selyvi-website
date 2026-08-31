@@ -6,15 +6,15 @@ import { SampleDataNote } from "@/components/scenes/sample-data-note";
 import { Button } from "@/components/ui/button";
 
 /**
- * Sektion – „Riskieren Sie einen Blick."
+ * Sektion – „Probieren Sie es selbst aus."
  *
  * Ersetzt „So funktioniert's". Dort erklärten drei Mini-Szenen den Kreislauf;
  * jetzt führt ein Knopf in den geführten Einblick, wo man ihn selbst anklickt.
  * Erklären war der Umweg.
  *
- * Sie trägt weiterhin die Sprungmarke `so-funktionierts`: Der Sekundär-Button
- * im Hero zeigt seit jeher dorthin, und ein ins Leere laufender Anker wäre ein
- * kaputter Link auf der eigenen Startseite.
+ * Die frühere Sprungmarke `so-funktionierts` ist entfallen: Der
+ * Sekundär-Button im Hero zeigt jetzt direkt auf /einblick statt auf einen
+ * Anker weiter unten. Ein Sprung innerhalb der Seite war der Umweg zum Umweg.
  *
  * ==========================================================================
  * WARUM EINE DER DREI MINI-SZENEN ÜBERLEBT
@@ -31,7 +31,6 @@ import { Button } from "@/components/ui/button";
 export function TakeALook() {
   return (
     <section
-      id="so-funktionierts"
       aria-labelledby="einen-blick-titel"
       className="border-y border-gray-200 bg-surface-alt"
     >
@@ -41,7 +40,7 @@ export function TakeALook() {
             id="einen-blick-titel"
             className="text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
           >
-            Riskieren Sie einen Blick.
+            Probieren Sie es selbst aus.
           </h2>
 
           <p className="mt-6 max-w-xl text-lg text-gray-500">

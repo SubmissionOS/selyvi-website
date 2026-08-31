@@ -18,7 +18,7 @@ export const metadata: Metadata = pageMetadata("/einblick");
  * die Botschaft – wer alles sieht, hat keinen Grund mehr für ein Gespräch.
  *
  * KEIN Navigationspunkt: Die Kopfzeile bleibt bei fünf. Erreichbar über die
- * Sektion „Riskieren Sie einen Blick." auf der Startseite und über die
+ * Sektion „Probieren Sie es selbst aus." auf der Startseite und über die
  * Fusszeile.
  */
 export default function EinblickPage() {

@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { PRODUCT_NAME } from "@/config/brand";
 
 /**
@@ -111,8 +112,9 @@ export function ResearchFields() {
             zugleich die Einladung. Ohne sie liest sich die Kartenliste wie ein
             Datenkatalog. */}
         <p className="mt-6 max-w-2xl text-lg text-gray-500">
-          Neun Fragen, die uns beschäftigen. Die Erhebungsinstrumente dafür entstehen
-          gerade – wer jetzt einsteigt, gestaltet sie mit.
+          Neun Fragen, die uns beschäftigen. Unser Wirkungsmodell läuft bereits in
+          Befragungswellen; die Instrumente für diese Fragen entwerfen wir gemeinsam mit
+          denen, die sie später nutzen.
         </p>
 
         <p className="mt-4 max-w-2xl text-lg text-gray-500">
@@ -121,10 +123,17 @@ export function ResearchFields() {
         </p>
 
         <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {fields.map((field) => (
+          {fields.map((field, position) => (
             <li
               key={field.title}
-              className="rounded-xl border border-gray-200 bg-surface p-6"
+              /* Neun Karten in ZWEI Spalten ergeben 2+2+2+2+1 – die letzte
+                 steht allein und liest sich wie vergessen. Sie nimmt dort
+                 deshalb beide Spalten ein. Bei drei Spalten (ab lg) geht die
+                 Rechnung ohnehin auf, da gilt wieder eine Spalte. */
+              className={cn(
+                "rounded-xl border border-gray-200 bg-surface p-6",
+                position === fields.length - 1 && "sm:col-span-2 lg:col-span-1",
+              )}
             >
               <h3 className="text-base font-semibold text-ink">{field.title}</h3>
               <p className="mt-3 text-sm text-gray-500">{field.description}</p>

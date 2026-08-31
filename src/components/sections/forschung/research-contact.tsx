@@ -47,6 +47,13 @@ export function ResearchContact() {
             >
               Oder ein Kennenlernen vereinbaren
             </Link>
+
+            <Link
+              href="/einblick"
+              className="text-base text-brand-600 underline underline-offset-4"
+            >
+              Selbst ausprobieren
+            </Link>
           </div>
         </div>
       </div>

@@ -23,7 +23,11 @@ export function ExcerptNote() {
       <div className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8">
         <p className="max-w-2xl text-xs text-gray-500">
           Die vier Bereiche hier sind der Kern – die Seitenleiste zeigt, was sonst noch
-          dazugehört. Den Rest zeigen wir Ihnen im{" "}
+          dazugehört. Drei davon können Sie{" "}
+          <Link href="/einblick" className="text-brand-600 underline underline-offset-4">
+            selbst ausprobieren
+          </Link>
+          , den Rest zeigen wir Ihnen im{" "}
           <Link href="/demo" className="text-brand-600 underline underline-offset-4">
             Kennenlernen
           </Link>

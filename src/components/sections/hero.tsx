@@ -103,10 +103,11 @@ export function Hero() {
               <Link href={primaryCta.href}>{primaryCta.label}</Link>
             </Button>
 
-            {/* Sprungmarke zu Sektion 4. Das weiche Scrollen kommt aus
-                globals.css und wird bei prefers-reduced-motion abgeschaltet. */}
+            {/* Fuehrt direkt in den gefuehrten Einblick. Vorher sprang der
+                Knopf zu einer Sektion weiter unten, die ihrerseits dorthin
+                verwies – ein Umweg ueber einen Anker. */}
             <Button asChild variant="ghost" size="lg">
-              <a href="#so-funktionierts">So funktioniert’s</a>
+              <Link href="/einblick">Selbst ausprobieren</Link>
             </Button>
           </div>
         </div>

@@ -23,13 +23,6 @@ export function SchoolIntro() {
           Zeugnistag und an den Elternabenden stapelt – und zeigt Ihnen am Monatsende, wie
           viele Stunden das war.
         </p>
-
-        <p className="mt-4 max-w-2xl text-lg text-gray-500">
-          Auf dieser Seite steht auch, was heute noch nicht geht: der Serverstandort, die
-          fehlende Schnittstelle zu Ihrer Schulverwaltungssoftware, der Startaufwand beim
-          Anlegen der Klassen. Diese Punkte gehören ins Angebot, nicht in die
-          Überraschung.
-        </p>
       </div>
     </section>
   );
