@@ -27,7 +27,7 @@ import { FaqAccordion, type FaqItem } from "@/components/faq-accordion";
 const faqItems: FaqItem[] = [
   {
     question: `Welchen Bezug hat ${PRODUCT_NAME} zu meiner Forschung?`,
-    answer: `${PRODUCT_NAME} wird im laufenden Schulalltag benutzt – nicht in einer Erhebungssituation. Wenn Sie zu Unterricht, Vorbereitungspraxis oder der Arbeitsbelastung von Lehrkräften forschen, ist das ein Feldzugang, den es sonst selten gibt. Was daraus tatsächlich erhoben werden kann, steht aber noch nicht fest – und genau darüber würden wir mit Ihnen sprechen wollen.`,
+    answer: `${PRODUCT_NAME} wird im laufenden Schulalltag benutzt – nicht in einer Erhebungssituation. Wenn Sie zu Unterricht, Vorbereitungspraxis oder der Arbeitsbelastung von Lehrkräften forschen, ist das ein Feldzugang, den es sonst selten gibt. Was sich daraus erheben lässt, legen wir gemeinsam fest – und genau darüber würden wir mit Ihnen sprechen wollen.`,
   },
   {
     question: "Wie kann eine Zusammenarbeit aussehen?",

@@ -35,7 +35,7 @@ const practices = [
     icon: Eye,
     title: "Ehrlich über den Stand",
     description:
-      "Was noch nicht feststeht, kennzeichnen wir sichtbar, statt es zu überspielen. Auch auf dieser Seite.",
+      "Was offen ist, kennzeichnen wir sichtbar, statt es zu überspielen. Auch auf dieser Seite.",
   },
 ];
 

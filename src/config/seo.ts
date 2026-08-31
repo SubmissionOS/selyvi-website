@@ -95,7 +95,9 @@ export const routes: RouteMeta[] = [
   {
     path: "/",
     title: "",
-    description: `${PRODUCT_NAME} ist die KI-Assistenz für Grundschullehrkräfte – nimmt Beobachtungen aus dem Unterricht auf und macht daraus Zeugnisbemerkungen, Elternmails und passendes Unterrichtsmaterial. In Ihrer Sprache, nicht in KI-Sprache.`,
+    // Beginnt wortgleich mit der H1: Wer den Teilen-Vorschau-Text liest und
+    // danach die Seite oeffnet, findet denselben Satz wieder.
+    description: `Der Papierkram hat jetzt eine Assistenz. ${PRODUCT_NAME} ist die mitlernende KI-Assistenz für Grundschullehrkräfte – aus Beobachtungen im Unterricht entstehen Zeugnisbemerkungen, Elternmails und passendes Material. In Ihrer Sprache, nicht in KI-Sprache.`,
     priority: 1,
   },
   {

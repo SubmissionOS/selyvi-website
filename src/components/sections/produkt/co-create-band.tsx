@@ -25,12 +25,12 @@ export function CoCreateBand() {
             id="mitgestalten-band-titel"
             className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
           >
-            Ihnen fehlt etwas auf dieser Seite?
+            Sagen Sie uns, was fehlt.
           </h2>
 
           <p className="mt-5 text-lg text-gray-500">
-            Dann ist das der interessanteste Satz, den wir heute hören können. Ein Teil
-            von dem, was oben steht, gibt es, weil eine Lehrkraft genau das gesagt hat.
+            Das ist der interessanteste Satz, den wir heute hören können. Ein Teil von
+            dem, was oben steht, gibt es, weil eine Lehrkraft genau das gesagt hat.
           </p>
 
           <div className="mt-8">

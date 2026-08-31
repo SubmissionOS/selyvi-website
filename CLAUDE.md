@@ -20,6 +20,23 @@ Zur Laufzeit KEINE Requests an Drittserver (Fonts lokal via next/font – nach j
 ## TON
 Jede Sektion beantwortet zuerst, welche Last sie nimmt oder was sie zurückgibt — dann erst, wie. Verkaufssprache ("Jetzt sichern", "Vorteile nutzen", "Tester") ist verboten. Wir sprechen mit Menschen in einem sozialen Beruf, nicht mit Käufern.
 
+### Regel A — Niemandem sagen, wer er ist
+Keine Formulierung, die dem Leser zuschreibt, wer er ist, was er tut oder warum. Verboten sind Muster wie "Sie sind X geworden, um…", "Sie wollen doch…", "Als Lehrkraft wissen Sie…", "Ihnen fehlt…", "Sie prüfen…?", "Sie forschen zu…?". Wir sagen, was WIR tun — gern frech, nie belehrend.
+
+ERLAUBT bleibt die Zusage an den Leser ("Selyvi schlägt vor. **Sie entscheiden.**", "Was Sie sehen wollen, bestimmen Sie") — sie räumt ihm Macht ein, statt ihn zu definieren. Erlaubt bleibt ebenso die Selbstauswahl in der ersten Person ("Ich unterrichte", "Ich leite eine Schule"): Dort wählt der Leser, wir schreiben ihm nichts zu.
+
+### Regel B — Kein Selbstzweifel
+Keine Formulierung, die klingt, als wüssten wir nicht, was unser Produkt kann oder bewirkt: "warum sich noch nichts sagen lässt", "das behaupten wir nicht", "können wir noch nicht sagen", "ob das ankommt, wissen wir nicht", "die Oberfläche fehlt noch", "steht noch nicht fest".
+
+Ehrlichkeit bleibt Pflicht — sie wird positiv formuliert:
+- Gemessenes heißt **Messwert**, Geschätztes heißt **Schätzwert**.
+- Offenes wird **gekennzeichnet** ("in Arbeit", "in Vorbereitung", "geplant", "offener Punkt", Badge "In Entwicklung") — nie mit "noch nicht" als Selbstauskunft.
+- Nichts wird behauptet, was `docs/produktstand-2026-08.md` nicht deckt. Weglassen ist erlaubt, Behaupten nicht.
+
+Eine definitive Aussage über eine bewusste Produktgrenze ist KEIN Selbstzweifel und bleibt: "Ein Elternportal gibt es nicht", "Eine Einzelansicht gibt es nicht – auch nicht für die Schulleitung", "Offene Punkte kennzeichnen wir, statt sie zu überspielen". Der Unterschied ist Haltung gegen Unwissen.
+
+Beide Regeln werden bei jedem Deployment gegen das ausgelieferte HTML geprüft: `npm run smoke <url>`, Abschnitt "Ton-Regeln A und B". Ein Treffer lässt den Smoke-Test fehlschlagen.
+
 ### Zukunfts-Szenen
 Funktionen mit Status "Rollout offen" oder "Teilweise" dürfen als Szene gezeigt werden — ausschließlich mit einem dauerhaft sichtbaren Badge "In Entwicklung" IM UiWindow-Fensterkopf, das in JEDEM Frame steht, auch im reduced-motion-Endbild (staticStepId entsprechend wählen). Status "Nicht gebaut" und "Prototyp" bleiben tabu. Eine Szene ohne Badge ist eine Verfügbarkeitszusage — auch wenn der Text daneben etwas anderes sagt.
 

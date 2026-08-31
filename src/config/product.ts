@@ -110,22 +110,36 @@ export const TRANSLATION_LANGUAGES_SENTENCE = `${TRANSLATION_LANGUAGES.slice(0, 
  * das klarstellt, nicht selbst Wirkung versprechen.
  *
  * ==========================================================================
- * UMFORMULIERT, WEIL DIE ALTE FASSUNG NICHT VERSTANDEN WURDE
+ * ZWEIMAL UMFORMULIERT – DIE ZWEITE FASSUNG WAR EHRLICH UND TROTZDEM SCHWACH
  * ==========================================================================
- * Sie endete auf „Diese Zeile verschwindet nie." – ein Satz, der nur trägt,
- * wenn man vorher weiss, wovon er handelt. Wer die Anwendung nicht kennt,
- * liest ihn als Behauptung ohne Gegenstand.
+ * Fassung 1 endete auf „Diese Zeile verschwindet nie." – ein Satz, der nur
+ * traegt, wenn man vorher weiss, wovon er handelt.
  *
- * Die neue Fassung liefert den Kontext mit: WO der Satz steht, WAS er sagt
- * und WER ihn nicht abschalten kann. Der Kern ist unveraendert – gemessene
- * Befragungswerte ODER Klartext, und nicht ausblendbar. „Auch wir nicht" ist
- * dabei kein Schmuck: Es beantwortet die Frage, die sich sofort stellt.
+ * Fassung 2 lieferte den Kontext mit, sagte aber „oder im Klartext, warum
+ * sich noch nichts sagen laesst". Das ist eine Selbstauskunft ueber
+ * Unwissen – ausgerechnet in dem Satz, der unsere Methodenstrenge belegen
+ * soll. Er las sich damit wie eine Entschuldigung. Verboten nach CLAUDE.md,
+ * Regel B unter TON.
+ *
+ * Fassung 3 sagt dieselbe Tatsache als Handwerk: Es gibt zwei Sorten Zahlen,
+ * beide sind benannt, und die Kennzeichnung ist nicht abschaltbar. Wer
+ * „Schaetzwert" liest, weiss ohne weiteres Zutun, dass keine Messung
+ * dahintersteht – das ist genau die Auskunft, die Fassung 2 umstaendlich
+ * herbeigeredet hat.
+ *
+ * Der Produktstand ist unveraendert gedeckt: Der Entlastungsbericht weist
+ * gewonnene Zeit als Schaetzwert aus (hinterlegte Minutenannahmen), die
+ * Wirkungszeile weist Befragungswerte als Messwerte aus, sobald sie
+ * vorliegen. Nichts davon behauptet ein Ergebnis.
+ *
+ * VERBOTEN in jeder kuenftigen Fassung: „warum sich noch nichts sagen
+ * laesst" und jede Variante davon.
  *
  * Wer den Wortlaut aendert, aendert ihn auf beiden Seiten gleichzeitig – und
  * sollte vorher im Produktstand nachlesen, was die Zeile wirklich anzeigt.
  */
 export const IMPACT_LINE_PRINCIPLE =
-  "Im Produkt steht direkt unter jedem Entlastungsbericht ein Satz, der die Zahlen einordnet: entweder tatsächlich gemessene Befragungswerte – oder im Klartext, warum sich noch nichts sagen lässt. Diesen Satz kann niemand ausblenden, auch wir nicht.";
+  "Jeder Entlastungsbericht trägt direkt unter den Zahlen eine Einordnung: Gemessenes steht als Messwert, Geschätztes als Schätzwert – und keine dieser Kennzeichnungen lässt sich ausblenden, auch von uns nicht.";
 
 /**
  * Versprechen 1 aus dem Manifest auf /ueber-uns – und zugleich die Ueberschrift

@@ -30,12 +30,12 @@ const steps = [
   {
     title: "Gemeinsame Ersteinrichtung der Klassen",
     description:
-      "Klassen und Kinder legen wir zusammen mit Ihnen an – angelegt, nicht importiert. Eine Schnittstelle zu Schulverwaltungssoftware gibt es noch nicht. Für eine große Schule ist das ein spürbarer Startaufwand, den wir von Anfang an einplanen statt ihn zu übergehen.",
+      "Klassen und Kinder legen wir zusammen mit Ihnen an – angelegt, nicht importiert. Eine Schnittstelle zu Schulverwaltungssoftware ist geplant; bis dahin ist das für eine große Schule ein spürbarer Startaufwand, den wir von Anfang an einplanen statt ihn zu übergehen.",
   },
   {
     title: "Persönliche Einweisung",
     description:
-      "Eine Einführungstour im Produkt gibt es nicht. Den Einstieg begleiten wir deshalb persönlich, gemeinsam mit den Lehrkräften, die anfangen.",
+      "Statt einer Einführungstour im Produkt begleiten wir den Einstieg persönlich, gemeinsam mit den Lehrkräften, die anfangen.",
   },
   {
     title: "Rollout im Kollegium",

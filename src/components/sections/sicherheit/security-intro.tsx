@@ -34,9 +34,9 @@ export function SecurityIntro() {
         </p>
 
         <p className="mt-4 max-w-2xl text-lg text-gray-500">
-          Diese Seite beschreibt den Stand der Umsetzung. Wo eine Angabe noch nicht
-          vertraglich oder technisch abgesichert ist, steht sie hier als offener Punkt und
-          nicht als Zusage.
+          Diese Seite beschreibt den Stand der Umsetzung. Was vertraglich und technisch
+          abgesichert ist, steht als Zusage; was in Vorbereitung ist, steht als offener
+          Punkt.
         </p>
       </div>
     </section>

@@ -52,12 +52,12 @@ const upcoming: UpcomingItem[] = [
     title: "Anbindung an Schulverwaltungssoftware",
     status: "Geplant",
     description:
-      "Klassen und Kinder werden heute angelegt, nicht importiert. Eine Schnittstelle zu vorhandener Schulverwaltungssoftware gibt es noch nicht – für große Schulen ist das ein spürbarer Startaufwand.",
+      "Klassen und Kinder werden heute angelegt, nicht importiert. Eine Schnittstelle zu vorhandener Schulverwaltungssoftware ist geplant – bis dahin ist das für große Schulen ein spürbarer Startaufwand.",
   },
   {
     title: "Originalarbeitsblätter übernehmen",
     // Der Produktstand nennt diesen Status woertlich „Rollout offen“ – anders
-    // als „geplant“ heisst das: gebaut, aber noch nicht ausgeliefert.
+    // als „geplant“ heisst das: gebaut, Auslieferung steht aus.
     status: "Rollout steht aus",
     description:
       "Passt ein vorhandenes Arbeitsblatt aus dem Fachkorpus zum Thema, soll es sich direkt übernehmen lassen – formatgetreu, mit einer vorangestellten Rahmungsseite.",
@@ -67,7 +67,7 @@ const upcoming: UpcomingItem[] = [
     title: "Stilprofil per Upload",
     status: "In Arbeit",
     description:
-      "Den Schreibstil lernt die Anwendung heute aus den Texten, die Sie in ihr schreiben. Eigene Texte hochzuladen ist vorbereitet, die Oberfläche dafür fehlt noch.",
+      "Den Schreibstil lernt die Anwendung heute aus den Texten, die Sie in ihr schreiben. Eigene Texte hochzuladen ist vorbereitet; die Oberfläche dafür entsteht gerade.",
     scene: <StyleProfileScene startDelayMs={300} />,
   },
 ];
@@ -84,8 +84,8 @@ export function Roadmap() {
         </h2>
 
         <p className="mt-6 max-w-2xl text-lg text-gray-500">
-          Diese Punkte sind noch nicht verfügbar. Wir führen sie hier auf, damit Sie
-          einschätzen können, was bereits geht und worauf Sie warten würden.
+          Diese Punkte sind in Arbeit, nicht ausgeliefert. Wir führen sie hier auf, damit
+          klar ist, was heute geht und was folgt.
         </p>
 
         <ul className="mt-14 grid items-start gap-6 md:grid-cols-2">

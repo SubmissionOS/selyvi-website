@@ -4,9 +4,8 @@ import { IMPACT_LINE_PRINCIPLE } from "@/config/product";
  * Sektion 3 – Der Grundsatz hinter der Wirkungszeile, als Zitat-Band.
  *
  * Die Wirkungszeile ist laut docs/produktstand-2026-08.md Live: Direkt unter
- * dem Entlastungsbericht steht ein Satz, der entweder gemessene
- * Befragungswerte nennt oder in Klartext sagt, warum sich noch nichts sagen
- * laesst – und er verschwindet nie.
+ * dem Entlastungsbericht steht eine Einordnung, die Gemessenes als Messwert
+ * und Geschaetztes als Schaetzwert ausweist – und sie verschwindet nie.
  *
  * Warum dieser Satz auf der FORSCHUNGSSEITE steht und nicht nur auf /schulen:
  * Er ist der einzige Beleg auf dieser Website dafuer, dass die

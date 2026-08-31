@@ -24,7 +24,7 @@ import { PRODUCT_NAME } from "@/config/brand";
 const points = [
   {
     title: "Ausprobieren im echten Alltag",
-    description: `Sie setzen ${PRODUCT_NAME} in Ihrer eigenen Klasse ein, im laufenden Schuljahr – nicht in einer Testumgebung, sondern dort, wo sich zeigt, ob es trägt.`,
+    description: `${PRODUCT_NAME} läuft in Ihrer eigenen Klasse, im laufenden Schuljahr – nicht in einer Testumgebung, sondern dort, wo sich zeigt, ob es trägt.`,
   },
   {
     title: "Gehört werden",

@@ -150,7 +150,7 @@ export function SteeringScene({ size = "default" }: { size?: SteeringSceneSize }
       steps={STEPS}
       loopPauseMs={2000}
       kicker={layout.kicker}
-      label={`Animierte Darstellung des Entlastungsberichts: Für ${DEMO_RELIEF_REPORT.month} zählt die Anzeige auf ${DEMO_RELIEF_REPORT.hours} Stunden gewonnene Zeit hoch, ausdrücklich als Schätzwert gekennzeichnet, daneben der Vergleich mit dem Vormonat. Darunter steht, dass die Befragung zur Wirkung noch läuft und sich dazu nichts Belastbares sagen lässt. Zuletzt wird der Bericht als PDF exportiert. Alle Daten sind erfunden.`}
+      label={`Animierte Darstellung des Entlastungsberichts: Für ${DEMO_RELIEF_REPORT.month} zählt die Anzeige auf ${DEMO_RELIEF_REPORT.hours} Stunden gewonnene Zeit hoch, ausdrücklich als Schätzwert gekennzeichnet, daneben der Vergleich mit dem Vormonat. Darunter steht, dass die Befragung zur Wirkung läuft und die Zahl darüber ein Schätzwert ist. Zuletzt wird der Bericht als PDF exportiert. Alle Daten sind erfunden.`}
     >
       {(scene) => {
         const moving = !scene.isStatic;

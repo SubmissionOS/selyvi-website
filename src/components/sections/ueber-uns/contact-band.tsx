@@ -23,7 +23,7 @@ export function ContactBand() {
             id="kontakt-titel"
             className="text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
           >
-            Sie wollen mit uns sprechen?
+            Wir nehmen uns Zeit für ein Gespräch.
           </h2>
 
           <div className="mt-10">

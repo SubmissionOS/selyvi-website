@@ -24,8 +24,9 @@ export function ForDpos() {
           </h2>
 
           <p className="mt-6 text-lg text-gray-500">
-            Sie prüfen {PRODUCT_NAME} für Ihre Schule? Ihre Fragen beantworten wir direkt.
-            Schreiben Sie uns über die Terminanfrage – wir melden uns.
+            Fragen aus einer Datenschutzprüfung zu {PRODUCT_NAME} beantworten wir direkt
+            und ohne Verkaufsgespräch. Schreiben Sie uns über die Terminanfrage – wir
+            melden uns.
           </p>
 
           <div className="mt-10">

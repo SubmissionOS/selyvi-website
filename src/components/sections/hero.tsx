@@ -21,26 +21,32 @@ export function Hero() {
     <section aria-labelledby="hero-titel" className="border-b border-gray-200">
       <div className="mx-auto grid w-full max-w-6xl gap-16 px-6 py-20 lg:grid-cols-2 lg:items-center lg:gap-20 lg:px-8 lg:py-28">
         <div>
-          {/* DREI block-Spans, nicht zwei – und das ist gemessen, nicht
-              Geschmack.
+          {/* ==================================================================
+              H1 – SAGT, WAS WIR TUN. NICHT, WER DER LESER IST.
+              ==================================================================
+              Die Vorgängerfassung („Sie sind Lehrkraft geworden, um zu
+              unterrichten. Nicht, um zu verwalten.") schrieb dem Leser sein
+              Berufsmotiv zu. Das ist der erste Satz der Website – und damit
+              die schlechteste denkbare Stelle, um jemandem zu erklären, warum
+              er tut, was er tut. Siehe CLAUDE.md, Regel A unter TON.
 
-              Mit zwei Spans (Umbruch nur an der Satzgrenze) verteilt
-              `text-wrap: balance` aus globals.css den ersten Satz selbst, und
-              auf 390 px endete die zweite Zeile dann mitten in der Wendung:
-              „Sie sind Lehrkraft / geworden, um / zu unterrichten." Ein
-              Zeilenende auf „um" liest sich wie ein Stolpern.
+              Jetzt steht dort eine Tatsache über UNS: Es gibt jetzt eine
+              Assistenz für den Papierkram. Frech, ohne den Leser zu
+              definieren.
 
-              Jetzt bricht die Zeile an den beiden natürlichen Grenzen des
-              Satzes – nach dem Komma und nach dem Punkt. Die Schriftgröße ist
-              so gewählt, dass jeder der drei Teile auf 390 px wie auf 1440 px
-              in EINE Zeile passt; damit hat `balance` nichts mehr zu tun. */}
+              KEINE block-Spans mehr. Der Satz ist ein Viertel so lang wie der
+              alte; `text-wrap: balance` aus globals.css teilt ihn auf 390 px
+              in zwei etwa gleich lange Zeilen, ohne dass eine davon auf einem
+              Funktionswort endet. Handumbrüche wären hier nur eine Fessel.
+
+              Der unbestimmte Artikel ist die Brücke zur Subline: „eine
+              Assistenz" oben, „die mitlernende Assistenz" darunter – erst die
+              Behauptung, dann ihr Name. */}
           <h1
             id="hero-titel"
-            className="text-2xl font-semibold tracking-tight text-ink sm:text-4xl"
+            className="text-3xl font-semibold tracking-tight text-ink sm:text-5xl"
           >
-            <span className="block">Sie sind Lehrkraft geworden,</span>
-            <span className="block">um zu unterrichten.</span>
-            <span className="block">Nicht, um zu verwalten.</span>
+            Der Papierkram hat jetzt eine Assistenz.
           </h1>
 
           {/* ==================================================================

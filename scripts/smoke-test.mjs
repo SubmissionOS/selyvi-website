@@ -11,6 +11,7 @@
  *   4. noindex ausschließlich auf /datenschutz
  *   5. Sitemap und robots.txt erreichbar und konsistent
  *   6. Kein alter Produktname, keine Secret-Muster in der Ausgabe
+ *   7. Ton-Regeln A und B aus CLAUDE.md im sichtbaren Text und in aria-labels
  *
  * Die vier Formular-Pfade lassen sich so nicht prüfen – Server Actions
  * brauchen einen Browser. Anleitung dazu im README, Abschnitt „Smoke-Test“.
@@ -144,6 +145,78 @@ console.log("\n=== Ausgabe-Hygiene ===");
   if (secrets > 0) fail(`Secret-Muster erscheint ${secrets}× im HTML`);
   console.log(`  Alter Produktname: ${stale}`);
   console.log(`  Secret-Muster:     ${secrets}`);
+}
+
+// --- 7: Ton-Regeln A und B (CLAUDE.md, Abschnitt TON) ---
+//
+// Geprüft wird der SICHTBARE TEXT plus alle aria-labels und der
+// Meta-Description – also genau das, was ein Mensch liest oder vorgelesen
+// bekommt. Skripte, Style-Blöcke und Klassennamen fallen vorher weg, sonst
+// meldet ein Tailwind-Utility wie „not-sr-only“ falschen Alarm.
+//
+// Die Muster sind bewusst eng. Eine definitive Aussage über eine gewollte
+// Produktgrenze („Ein Elternportal gibt es nicht") ist erlaubt und darf hier
+// nicht hängenbleiben; verboten ist die Selbstauskunft über Unwissen.
+console.log("\n=== Ton-Regeln A und B ===");
+{
+  const RULES = [
+    // A – dem Leser zuschreiben, wer er ist, was er tut oder warum
+    [/Sie sind [A-ZÄÖÜa-zäöüß]+ geworden/, "A", "„Sie sind … geworden“"],
+    [
+      /Als (Lehrkraft|Schulleitung|Lehrer|Lehrerin|Forschende)[nr]? (wissen|kennen)/,
+      "A",
+      "„Als Lehrkraft wissen Sie …“",
+    ],
+    [/Sie wollen doch/, "A", "„Sie wollen doch …“"],
+    [/Sie wollen [^.?!]{0,40}\?/, "A", "„Sie wollen …?“"],
+    [/Ihnen fehlt/, "A", "„Ihnen fehlt …“"],
+    [
+      /Sie (prüfen|forschen|suchen|brauchen|kennen) [^.?!]{0,60}\?/,
+      "A",
+      "Frage, die dem Leser sein Tun zuschreibt",
+    ],
+
+    // B – klingen, als wüssten wir nicht, was das Produkt kann
+    [/noch nicht/, "B", "„noch nicht“"],
+    [/noch nichts/, "B", "„noch nichts“"],
+    [/noch keine/, "B", "„noch keine“"],
+    [/behaupten wir nicht/, "B", "„behaupten wir nicht“"],
+    [/wissen wir nicht/, "B", "„wissen wir nicht“"],
+    [/können wir (noch )?nicht sagen/, "B", "„können wir nicht sagen“"],
+    [/sagen lässt/, "B", "„… sagen lässt“"],
+    [/steht (noch )?nicht fest/, "B", "„steht nicht fest“"],
+    [/fehlt noch/, "B", "„fehlt noch“"],
+  ];
+
+  // Der Datenschutztext ist Rechtstext nach Art. 13 DSGVO und wird nicht
+  // nach Marketing-Ton umgeschrieben.
+  const TON_PAGES = PAGES.filter((p) => p !== "/datenschutz" && p !== "/impressum");
+
+  let hits = 0;
+  for (const path of TON_PAGES) {
+    const { body } = await get(path);
+
+    const labels = [...body.matchAll(/aria-label="([^"]*)"/g)].map((m) => m[1]);
+    const description =
+      body.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? "";
+    const visible = body
+      .replace(/<script[\s\S]*?<\/script>/g, " ")
+      .replace(/<style[\s\S]*?<\/style>/g, " ")
+      .replace(/<[^>]+>/g, " ");
+
+    const text = [visible, ...labels, description]
+      .join(" ")
+      .replace(/&[a-z]+;|&#x?[0-9a-f]+;/gi, " ");
+
+    for (const [pattern, rule, name] of RULES) {
+      if (pattern.test(text)) {
+        hits++;
+        fail(`${path}: Regel ${rule} verletzt – ${name}`);
+      }
+    }
+  }
+  console.log(`  ${TON_PAGES.length} Seiten geprüft, ${RULES.length} Muster je Seite`);
+  console.log(`  Treffer: ${hits}`);
 }
 
 console.log(

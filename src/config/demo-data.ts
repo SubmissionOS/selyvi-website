@@ -244,9 +244,9 @@ export const DEMO_MATERIAL = {
  *
  * WORTWAHL: „gewonnene Zeit" und „Entlastung" sind zulässig. Das Wort
  * „Wirkung" kommt in der ganzen Szene NICHT als Behauptung vor – nur die
- * ehrliche Erhebungs-Zeile spricht über Befragungswerte, und die sagt
- * ausdrücklich, dass sich noch nichts sagen lässt. Eingesparte Stunden sind
- * eine Prozesskennzahl, kein Wirkungsnachweis (docs/produktstand-2026-08.md).
+ * Erhebungs-Zeile spricht über Befragungswerte, und sie weist die Zahl
+ * darüber ausdrücklich als Schätzwert aus. Eingesparte Stunden sind eine
+ * Prozesskennzahl, kein Wirkungsnachweis (docs/produktstand-2026-08.md).
  *
  * Kein Euro-Betrag: Die Grundlage sind hinterlegte Minutenannahmen, deshalb
  * steht `note` dauerhaft neben der Zahl.
@@ -258,7 +258,7 @@ export const DEMO_RELIEF_REPORT = {
   /** Automatisierungsquote in Prozent – laut Produktstand Teil des Berichts. */
   automationRate: 68,
   note: "Schätzwert",
-  surveyLine: "Befragungswerte: Erhebung läuft – noch keine belastbare Aussage.",
+  surveyLine: "Befragungswerte: Erhebung läuft. Die Zahl oben ist ein Schätzwert.",
   /** Balkenhöhen als Faktor für scaleY: laufender Monat und Vormonat. */
   currentBars: [0.68, 1, 0.44],
   previousBars: [0.5, 0.74, 0.3],

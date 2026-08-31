@@ -15,10 +15,12 @@ import { PRODUCT_NAME } from "@/config/brand";
  *   1. Kein „nachweislich" oder „messbar gestiegen". Gemessene
  *      Qualitaetssteigerungen gibt es NICHT. Der Produktstand fuehrt die
  *      Wirkungsmessung als Erhebungsmodell, nicht als Ergebnis – und die
- *      Wirkungszeile im Produkt sagt selbst, wenn sich noch nichts sagen
- *      laesst.
- *   2. Kein „die Schulqualität steigt" als Tatsachenbehauptung. Der Text sagt
- *      ausdruecklich, dass wir es NICHT behaupten, sondern erheben.
+ *      Wirkungszeile im Produkt weist jede Zahl als Messwert oder als
+ *      Schaetzwert aus.
+ *   2. Kein „die Schulqualität steigt" als Tatsachenbehauptung. Der Text sagt,
+ *      dass wir MESSEN – er nennt kein Ergebnis. Frueher stand hier „behaupten
+ *      wir nicht"; das war eine Selbstauskunft ueber Unwissen und faellt unter
+ *      CLAUDE.md, Regel B.
  *   3. Kein „greift auf Lehrpläne zu". Die Lehrplaene liegen erhoben vor,
  *      sind aus Lizenzgruenden aber bewusst nicht angebunden. „Orientiert
  *      sich an" ist das staerkste zulaessige Verb – dieselbe Sperre wie im
@@ -51,8 +53,8 @@ export function TeachingQuality() {
           </p>
 
           <p className="mt-4 text-lg text-ink">
-            Ob das im Unterricht ankommt, behaupten wir nicht. Wir erheben es – von Anfang
-            an, mit unserem Wirkungsmodell.
+            Ob das im Unterricht ankommt, messen wir – von Anfang an, mit unserem
+            Wirkungsmodell.
           </p>
 
           <p className="mt-6">

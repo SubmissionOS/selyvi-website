@@ -44,12 +44,12 @@ export function WhoFor() {
           </p>
 
           <p className="mt-4 text-lg text-gray-500">
-            Sie forschen zu Schule oder Unterricht?{" "}
+            Für Forschung zu Schule und Unterricht gibt es{" "}
             <Link
               href="/forschung"
               className="text-brand-600 underline underline-offset-4"
             >
-              Dafür gibt es eine eigene Seite
+              eine eigene Seite
             </Link>{" "}
             – mit unseren Fragen und dem Erhebungsmodell dahinter.
           </p>

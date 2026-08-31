@@ -52,7 +52,7 @@ export function OriginalSheetScene({ startDelayMs = 0 }: { startDelayMs?: number
       loopPauseMs={1500}
       startDelayMs={startDelayMs}
       staticStepId="ruhe"
-      label="Kleine Animation, durchgehend mit dem Hinweis „In Entwicklung“ beschriftet: Ein vorhandenes Arbeitsblatt erscheint formatgetreu als stilisierte Seite. Darum herum entsteht eine vorangestellte Rahmungsseite mit einer Aufgabenzeile. Die Funktion ist noch nicht verfügbar."
+      label="Kleine Animation, durchgehend mit dem Hinweis „In Entwicklung“ beschriftet: Ein vorhandenes Arbeitsblatt erscheint formatgetreu als stilisierte Seite. Darum herum entsteht eine vorangestellte Rahmungsseite mit einer Aufgabenzeile. Die Funktion ist in Entwicklung."
     >
       {(scene) => {
         const framed = scene.reached("rahmung");
@@ -123,7 +123,7 @@ export function StyleProfileScene({ startDelayMs = 0 }: { startDelayMs?: number 
       loopPauseMs={1500}
       startDelayMs={startDelayMs}
       staticStepId="ruhe"
-      label="Kleine Animation, durchgehend mit dem Hinweis „In Entwicklung“ beschriftet: Zwei eigene Textdateien erscheinen als Dateikärtchen, danach füllt sich ein Balken für das daraus gelernte Stilprofil. Die Oberfläche dafür ist noch nicht verfügbar."
+      label="Kleine Animation, durchgehend mit dem Hinweis „In Entwicklung“ beschriftet: Zwei eigene Textdateien erscheinen als Dateikärtchen, danach füllt sich ein Balken für das daraus gelernte Stilprofil. Die Oberfläche dafür ist in Entwicklung."
     >
       {(scene) => {
         const moving = !scene.isStatic;

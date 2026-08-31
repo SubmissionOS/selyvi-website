@@ -29,11 +29,12 @@ export function ResearchContact() {
             id="forschung-kontakt-titel"
             className="text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
           >
-            Sie forschen zu Schule, Unterricht oder der Arbeit von Lehrkräften?
+            Wir suchen Forschungspartner.
           </h2>
 
           <p className="mt-6 text-lg text-gray-500">
-            Schreiben Sie uns – wir antworten selbst.
+            Für Fragen zu Schule, Unterricht und der Arbeit von Lehrkräften. Schreiben Sie
+            uns – wir antworten selbst.
           </p>
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
