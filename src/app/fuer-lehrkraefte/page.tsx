@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/motion/reveal";
 import type { Metadata } from "next";
 
 import { pageMetadata } from "@/config/seo";
@@ -23,13 +24,27 @@ export default function ProduktPage() {
   return (
     <>
       <ProductIntro />
-      <LearnsWithYou />
-      <PrincipleBand />
-      <FunctionBlocks />
-      <ExcerptNote />
-      <EverydayExtras />
-      <Roadmap />
-      <CoCreateBand />
+      <Reveal>
+        <LearnsWithYou />
+      </Reveal>
+      <Reveal>
+        <PrincipleBand />
+      </Reveal>
+      <Reveal>
+        <FunctionBlocks />
+      </Reveal>
+      <Reveal>
+        <ExcerptNote />
+      </Reveal>
+      <Reveal>
+        <EverydayExtras />
+      </Reveal>
+      <Reveal>
+        <Roadmap />
+      </Reveal>
+      <Reveal>
+        <CoCreateBand />
+      </Reveal>
       <FinalCta />
     </>
   );

@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/motion/reveal";
 import type { Metadata } from "next";
 
 import { pageMetadata } from "@/config/seo";
@@ -21,11 +22,21 @@ export default function SchulenPage() {
   return (
     <>
       <SchoolIntro />
-      <ReliefReport />
-      <TeachingQuality />
-      <RolloutTimeline />
-      <DpaBand />
-      <LeadershipFaq />
+      <Reveal>
+        <ReliefReport />
+      </Reveal>
+      <Reveal>
+        <TeachingQuality />
+      </Reveal>
+      <Reveal>
+        <RolloutTimeline />
+      </Reveal>
+      <Reveal>
+        <DpaBand />
+      </Reveal>
+      <Reveal>
+        <LeadershipFaq />
+      </Reveal>
       <FinalCta />
     </>
   );

@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/motion/reveal";
 import { HomeJsonLd } from "@/components/seo/json-ld";
 import { Hero } from "@/components/sections/hero";
 import { TrustBar } from "@/components/sections/trust-bar";
@@ -30,9 +31,15 @@ export default function HomePage() {
     <>
       <HomeJsonLd />
       <Hero />
-      <TrustBar />
-      <AudienceSwitch />
-      <WhyWeExist />
+      <Reveal>
+        <TrustBar />
+      </Reveal>
+      <Reveal>
+        <AudienceSwitch />
+      </Reveal>
+      <Reveal>
+        <WhyWeExist />
+      </Reveal>
 
       <StoryLine>
         Wir kennen diese Abende nicht aus einem Marktreport. Wir kennen sie vom
@@ -40,21 +47,35 @@ export default function HomePage() {
         Zeit wirklich bleibt.
       </StoryLine>
 
-      <ProblemSolution />
+      <Reveal>
+        <ProblemSolution />
+      </Reveal>
 
-      <TakeALook />
-      <FromPractice />
-      <Features />
+      <Reveal>
+        <TakeALook />
+      </Reveal>
+      <Reveal>
+        <FromPractice />
+      </Reveal>
+      <Reveal>
+        <Features />
+      </Reveal>
 
       <StoryLine>
         Alles hier drin geht auf einen Hinweis aus einem echten Lehrerzimmer zurück.
         Manches haben wir gebaut, weil eine einzige Lehrkraft nicht lockergelassen hat.
       </StoryLine>
 
-      <ValueForAll />
-      <Privacy />
+      <Reveal>
+        <ValueForAll />
+      </Reveal>
+      <Reveal>
+        <Privacy />
+      </Reveal>
       <Testimonials />
-      <Faq />
+      <Reveal>
+        <Faq />
+      </Reveal>
 
       <StoryLine>
         Wir waren selbst lange genug Schüler. Jetzt bauen wir für die Menschen, die damals

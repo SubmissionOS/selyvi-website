@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/motion/reveal";
 import type { Metadata } from "next";
 
 import { pageMetadata } from "@/config/seo";
@@ -24,12 +25,24 @@ export default function UeberUnsPage() {
   return (
     <>
       <AboutIntro />
-      <WhyItExists />
-      <Mission />
-      <TeamGrid />
-      <HowWeWork />
-      <Promises />
-      <ContactBand />
+      <Reveal>
+        <WhyItExists />
+      </Reveal>
+      <Reveal>
+        <Mission />
+      </Reveal>
+      <Reveal>
+        <TeamGrid />
+      </Reveal>
+      <Reveal>
+        <HowWeWork />
+      </Reveal>
+      <Reveal>
+        <Promises />
+      </Reveal>
+      <Reveal>
+        <ContactBand />
+      </Reveal>
     </>
   );
 }

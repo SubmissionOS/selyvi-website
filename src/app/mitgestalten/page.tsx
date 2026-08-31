@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/motion/reveal";
 import type { Metadata } from "next";
 
 import { pageMetadata } from "@/config/seo";
@@ -35,9 +36,15 @@ export default function MitgestaltenPage() {
   return (
     <>
       <CoCreateIntro />
-      <WhatItMeans />
-      <WhoFor />
-      <CoCreateForm />
+      <Reveal>
+        <WhatItMeans />
+      </Reveal>
+      <Reveal>
+        <WhoFor />
+      </Reveal>
+      <Reveal>
+        <CoCreateForm />
+      </Reveal>
     </>
   );
 }

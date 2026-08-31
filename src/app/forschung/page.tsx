@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/motion/reveal";
 import type { Metadata } from "next";
 
 import { pageMetadata } from "@/config/seo";
@@ -36,12 +37,24 @@ export default function ForschungPage() {
   return (
     <>
       <ResearchIntro />
-      <ImpactModel />
-      <ImpactLineQuote />
-      <ResearchFields />
-      <ResearchAccessBand />
-      <ResearchFaq />
-      <ResearchContact />
+      <Reveal>
+        <ImpactModel />
+      </Reveal>
+      <Reveal>
+        <ImpactLineQuote />
+      </Reveal>
+      <Reveal>
+        <ResearchFields />
+      </Reveal>
+      <Reveal>
+        <ResearchAccessBand />
+      </Reveal>
+      <Reveal>
+        <ResearchFaq />
+      </Reveal>
+      <Reveal>
+        <ResearchContact />
+      </Reveal>
     </>
   );
 }

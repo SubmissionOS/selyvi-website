@@ -1,3 +1,11 @@
+"use client";
+
+import { useRef, useState } from "react";
+
+import { useIsomorphicLayoutEffect } from "@/lib/use-isomorphic-layout-effect";
+
+import { cn } from "@/lib/utils";
+
 /**
  * Sektion 2 – Das Erhebungsmodell.
  *
@@ -52,6 +60,39 @@ const stages = [
 ];
 
 export function ImpactModel() {
+  const hostRef = useRef<HTMLOListElement | null>(null);
+
+  /**
+   * Startwert `true`: Serverrender und der Fall ohne JavaScript zeigen die
+   * fertige Treppe. Erst der Effekt nimmt sie zurueck – und nur dann, wenn
+   * wirklich animiert werden soll.
+   */
+  const [gebaut, setGebaut] = useState(true);
+  const [animiert, setAnimiert] = useState(false);
+
+  useIsomorphicLayoutEffect(() => {
+    const host = hostRef.current;
+    if (!host) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    setGebaut(false);
+    setAnimiert(true);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          setGebaut(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -15% 0px" },
+    );
+
+    observer.observe(host);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section aria-labelledby="wirkungsmodell-titel" className="border-b border-gray-200">
       <div className="mx-auto w-full max-w-6xl px-6 py-24 lg:px-8 lg:py-32">
@@ -76,11 +117,21 @@ export function ImpactModel() {
           bleibt das Feld leer, statt eine Zahl zu zeigen, die niemanden trägt.
         </p>
 
-        <ol className="mt-14 grid gap-4 sm:grid-cols-4 sm:items-end">
+        <ol ref={hostRef} className="mt-14 grid gap-4 sm:grid-cols-4 sm:items-end">
           {stages.map((stage, index) => (
             <li
               key={stage.name}
-              className={`flex flex-col justify-end rounded-lg border border-gray-200 bg-surface-alt p-5 ${stage.height}`}
+              /* Die Stufe waechst von unten. `origin-bottom` ist der Grund,
+                 warum sie waechst statt zu rutschen – und scaleY beruehrt
+                 kein Layout, die Hoehe steht von Anfang an. CLS bleibt 0. */
+              style={animiert ? { transitionDelay: `${index * 110}ms` } : undefined}
+              className={cn(
+                "flex origin-bottom flex-col justify-end rounded-lg border border-gray-200 bg-surface-alt p-5",
+                stage.height,
+                animiert && "transition-[opacity,transform] duration-[420ms] ease-out",
+                animiert && !gebaut && "scale-y-75 opacity-0",
+                animiert && gebaut && "scale-y-100 opacity-100",
+              )}
             >
               <p className="text-xs font-medium tracking-wide text-brand-600 uppercase">
                 Stufe {index + 1}

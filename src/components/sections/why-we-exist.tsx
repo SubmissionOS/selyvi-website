@@ -1,3 +1,4 @@
+import { CountUpOnView } from "@/components/motion/count-up-on-view";
 import { PRODUCT_NAME } from "@/config/brand";
 
 /**
@@ -37,16 +38,23 @@ import { PRODUCT_NAME } from "@/config/brand";
 const findings = [
   {
     /** Die Saetze setzen die Zahl grammatisch fort – ein Screenreader liest
-        „83 % der Lehrkraefte ueben ihren Beruf gern aus." am Stueck vor. */
-    figure: "83 %",
+        „83 % der Lehrkraefte ueben ihren Beruf gern aus." am Stueck vor.
+
+        Praefix und Wert stehen getrennt, weil die ZAHL hochzaehlt und das
+        Wort davor stehen bleibt: „Über 75 %" soll nicht „Über 0 %" durch-
+        laufen. */
+    prefix: "",
+    value: 83,
     statement: "der Lehrkräfte üben ihren Beruf gern aus.",
   },
   {
-    figure: "Über 75 %",
+    prefix: "Über ",
+    value: 75,
     statement: "sagen: Wochenendarbeit ist die Regel, nicht die Ausnahme.",
   },
   {
-    figure: "84 %",
+    prefix: "",
+    value: 84,
     statement: "fühlen sich stark oder sehr stark belastet.",
   },
 ];
@@ -74,9 +82,10 @@ export function WhyWeExist() {
 
         <ul className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-8">
           {findings.map((finding) => (
-            <li key={finding.figure}>
+            <li key={finding.statement}>
               <p className="text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
-                {finding.figure}
+                {finding.prefix}
+                <CountUpOnView value={finding.value} suffix=" %" />
               </p>
               <p className="mt-3 text-base text-gray-500">{finding.statement}</p>
             </li>

@@ -1,3 +1,4 @@
+import { StoryStations } from "@/components/sections/ueber-uns/story-stations";
 import { PRODUCT_NAME } from "@/config/brand";
 
 /**
@@ -72,6 +73,14 @@ export function WhyItExists() {
             Klassenzimmern. Wir bauen das hier auch für die Lehrkräfte, die wir damals
             hatten.
           </p>
+        </div>
+
+        {/* Die Stationen stehen UNTER dem Text, nicht daneben: Der Erzaehltext
+            ist lang, und eine Linie neben einer Textwand konkurriert mit ihr,
+            statt sie zu ordnen. Gelesen wird erst die Geschichte, dann ihr
+            Ablauf. */}
+        <div className="mt-14">
+          <StoryStations />
         </div>
       </div>
     </section>

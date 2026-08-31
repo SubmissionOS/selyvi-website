@@ -1,7 +1,9 @@
+import { Reveal } from "@/components/motion/reveal";
 import type { Metadata } from "next";
 
 import { pageMetadata } from "@/config/seo";
 import { SecurityIntro } from "@/components/sections/sicherheit/security-intro";
+import { SeparationBand } from "@/components/sections/sicherheit/separation-band";
 import { PrinciplesGrid } from "@/components/sections/sicherheit/principles-grid";
 import { SubprocessorsTable } from "@/components/sections/sicherheit/subprocessors-table";
 import { DpaBand } from "@/components/sections/dpa-band";
@@ -19,18 +21,31 @@ export const metadata: Metadata = pageMetadata("/datenschutz-sicherheit");
  * mit Zeitpunkt. Was noch aussteht, steht im README unter NACH-LAUNCH-LISTE –
  * nicht auf der Seite.
  *
- * <DpaBand /> ist dieselbe Komponente wie auf /schulen – die AVV-Aussage
+ * <Reveal>   <DpaBand /> </Reveal> ist dieselbe Komponente wie auf /schulen – die AVV-Aussage
  * bleibt dadurch auf beiden Seiten zwingend wortgleich.
  */
 export default function DatenschutzSicherheitPage() {
   return (
     <>
       <SecurityIntro />
-      <PrinciplesGrid />
-      <SubprocessorsTable />
-      <DpaBand />
-      <ForDpos />
-      <SecurityFaq />
+      <Reveal>
+        <PrinciplesGrid />
+      </Reveal>
+      <Reveal>
+        <SeparationBand />
+      </Reveal>
+      <Reveal>
+        <SubprocessorsTable />
+      </Reveal>
+      <Reveal>
+        <DpaBand />
+      </Reveal>
+      <Reveal>
+        <ForDpos />
+      </Reveal>
+      <Reveal>
+        <SecurityFaq />
+      </Reveal>
       <FinalCta />
     </>
   );
