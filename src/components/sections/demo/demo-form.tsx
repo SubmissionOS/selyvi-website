@@ -18,6 +18,7 @@ import { imprint } from "@/config/legal";
 import { INITIAL_DEMO_STATE, type DemoFormState } from "@/lib/demo/state";
 import { submitDemoRequest } from "@/app/demo/actions";
 import { Button } from "@/components/ui/button";
+import { OriginFields } from "@/components/sections/demo/origin-fields";
 
 /**
  * Demo-Formular.
@@ -152,6 +153,13 @@ export function DemoForm({ source = "demo" }: { source?: SourceValue }) {
               serverseitig gegen SOURCE_VALUES geprueft und faellt sonst auf
               „demo" zurueck. */}
           <input type="hidden" name={SOURCE_FIELD} value={source} />
+
+          {/* Herkunft der Anfrage: UTM-Parameter, verweisende Seite, eigener
+              Pfad. Wird beim Anzeigen aus der bereits geladenen Seite
+              abgelesen – kein Cookie, kein Tracking ueber diese Anfrage
+              hinaus. Der Server prueft jedes Feld einzeln und verwirft, was
+              nicht passt (src/lib/demo/origin.ts). */}
+          <OriginFields />
 
           {state.status === "error" && state.message ? (
             <div
@@ -337,7 +345,8 @@ export function DemoForm({ source = "demo" }: { source?: SourceValue }) {
             <p className="mt-4 text-sm text-gray-500">
               <span aria-hidden="true">*</span> Pflichtfeld. Ihre Angaben verwenden wir
               ausschließlich zur Bearbeitung dieser Anfrage – kein Newsletter, keine
-              Werbung.
+              Werbung. Ihre Anfrage speichern wir in unserem eigenen Kundensystem (Server
+              in der EU) zur Bearbeitung.
             </p>
           </div>
         </form>

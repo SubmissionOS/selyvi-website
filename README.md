@@ -786,7 +786,7 @@ streicht die Zeile aus dieser Liste.
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------- | --------------- |
 | 11  | Verschlüsselung ruhender Daten (Umfang bestätigen)                                                                                                                                                                                                                                                                                               | `principles-grid.tsx`, Karte „Verschlüsselung"                              | Technik         |
 | 12  | KI-Verarbeitung: Modell-Anbieter, Verarbeitungsort, Zusicherung zur Nicht-Nutzung für Training                                                                                                                                                                                                                                                   | `principles-grid.tsx`, `security-faq.tsx`                                   | Vertrag + Recht |
-| 13  | Aufbewahrungs- und Löschfristen                                                                                                                                                                                                                                                                                                                  | `principles-grid.tsx`, `security-faq.tsx`, `/datenschutz`                   | Recht           |
+| 13  | Aufbewahrungs- und Löschfristen – **einschließlich der Frist für Formular-Anfragen im CRM.** Die Datenschutzerklärung nennt heute den Zweck (Bearbeitung) und den Ort (eigenes Kundensystem, Server in der EU), aber keine Frist                                                                                                                 | `principles-grid.tsx`, `security-faq.tsx`, `/datenschutz` Abschnitt 4       | Recht           |
 | 14  | Vollständige Subprozessoren-Liste (mind. Hosting, E-Mail-Versand, KI-Anbieter)                                                                                                                                                                                                                                                                   | `subprocessors-table.tsx`, Tabelle wieder aufbauen                          | Vertrag + Recht |
 | 15  | AVV-Entwurf zum Bereitstellen                                                                                                                                                                                                                                                                                                                    | `dpa-band.tsx`, Satz konkreter fassen                                       | Recht           |
 | 16  | Betreiberangabe: nach Gründung auf die Selyvi-Betreibergesellschaft umstellen und anwaltlich prüfen                                                                                                                                                                                                                                              | `legal.ts` (dort als `OPERATOR_NOTE` im Quelltext)                          | Recht           |
@@ -798,15 +798,16 @@ streicht die Zeile aus dieser Liste.
 
 ### Technisch
 
-| #   | Punkt                                                                                                                                   | Wo                                                 | Zuständigkeit   |
-| --- | --------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | --------------- |
-| 20  | Domain kaufen, danach `SITE_URL` und `DEMO_MAIL_FROM` setzen                                                                            | siehe „Launch-Restschritte"                        | Betrieb         |
-| 21  | Content-Security-Policy                                                                                                                 | `next.config.ts`                                   | Technik         |
-| 22  | Fehler-Monitoring statt Konsolen-Log                                                                                                    | `error.tsx`                                        | Technik         |
-| 23  | Routenweise Code-Aufteilung (173 kB auf jeder Route)                                                                                    | siehe [AUDIT.md](AUDIT.md)                         | Technik         |
-| 24  | Kontaktadresse auf `kontakt@selyvi.de` umstellen (Gmail ist Übergang)                                                                   | `email` in [legal.ts](src/config/legal.ts)         | Betrieb         |
-| 25  | Serverumzug nach Deutschland und AVV abschließen, danach `PRODUCT_HOSTING_NOTE` neu formulieren und die Roadmap-Karte entfernen         | [product.ts](src/config/product.ts), `roadmap.tsx` | Technik + Recht |
-| 26  | Produkt-Umbenennung Mira → Selyvi (Oberfläche, Login, PDF-Export des Entlastungsberichts, Domains, CSV-Dateiname der CRM-Schnittstelle) | Produkt, nicht diese Website                       | Produkt         |
+| #   | Punkt                                                                                                                                                                                                                                                                                                                                    | Wo                                                 | Zuständigkeit   |
+| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | --------------- |
+| 20  | Domain kaufen, danach `SITE_URL` und `DEMO_MAIL_FROM` setzen                                                                                                                                                                                                                                                                             | siehe „Launch-Restschritte"                        | Betrieb         |
+| 21  | Content-Security-Policy                                                                                                                                                                                                                                                                                                                  | `next.config.ts`                                   | Technik         |
+| 22  | Fehler-Monitoring statt Konsolen-Log                                                                                                                                                                                                                                                                                                     | `error.tsx`                                        | Technik         |
+| 23  | Routenweise Code-Aufteilung (173 kB auf jeder Route)                                                                                                                                                                                                                                                                                     | siehe [AUDIT.md](AUDIT.md)                         | Technik         |
+| 24  | Kontaktadresse auf `kontakt@selyvi.de` umstellen (Gmail ist Übergang)                                                                                                                                                                                                                                                                    | `email` in [legal.ts](src/config/legal.ts)         | Betrieb         |
+| 25  | Serverumzug nach Deutschland und AVV abschließen, danach `PRODUCT_HOSTING_NOTE` neu formulieren und die Roadmap-Karte entfernen                                                                                                                                                                                                          | [product.ts](src/config/product.ts), `roadmap.tsx` | Technik + Recht |
+| 26  | Produkt-Umbenennung Mira → Selyvi (Oberfläche, Login, PDF-Export des Entlastungsberichts, Domains, CSV-Dateiname der CRM-Schnittstelle)                                                                                                                                                                                                  | Produkt, nicht diese Website                       | Produkt         |
+| 27  | **CRM-Übergabe scharf schalten:** `CRM_INBOUND_URL` = `https://www.mira-crm.de/api/inbound/website-lead` und `WEBSITE_INBOUND_KEY` in der Vercel-Oberfläche setzen (beide ohne `NEXT_PUBLIC_`, nur Production + Preview nach Bedarf). Solange eine der beiden fehlt, wird der Weg still übersprungen – die Brevo-Mail geht trotzdem raus | Vercel-Projekteinstellungen                        | Betrieb         |
 
 Zu Punkt 25: Bis der Umzug durch ist, ist der Serverstandort die erste Angabe,
 nach der eine Datenschutzbeauftragte fragt. Die Website sagt dazu heute an vier
@@ -909,6 +910,26 @@ npm run smoke <url>
 ```
 
 Alle ehemals markierten Punkte stehen in der [NACH-LAUNCH-LISTE](#nach-launch-liste).
+
+## Formular-Pfad testen
+
+`npm run smoke <url>` prüft ein Deployment ohne Browser und kann deshalb die
+Server Actions der Formulare nicht auslösen. Dafür gibt es einen zweiten Test:
+
+```
+npm run build
+npm run test:formular
+```
+
+Er startet einen eigenen `next start` (Port 3311), einen Schein-CRM-Endpunkt
+(Port 3312) und einen kopflosen Browser und schickt beide Formulare ab –
+einmal mit erreichbarem und einmal mit totem CRM. **Beide Male muss dieselbe
+Bestätigung erscheinen.** Der zweite Fall ist der eigentliche Punkt: Die
+Brevo-Mail ist der Verlass, die CRM-Übergabe die Zugabe.
+
+Der Test setzt `DEMO_DRY_RUN=true` und verschickt deshalb keine echte Mail.
+Belegte Ports brechen ihn ab, statt einen fremden Prozess zu messen. Ein
+anderer Browser lässt sich über `EDGE_PATH` angeben.
 
 ## Screenshots erzeugen
 

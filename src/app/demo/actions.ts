@@ -13,6 +13,8 @@ import {
 import type { DemoFormState } from "@/lib/demo/state";
 import { checkRateLimit } from "@/lib/demo/rate-limit";
 import { sendDemoRequest } from "@/lib/demo/brevo";
+import { sendLeadToCrm } from "@/lib/demo/crm";
+import { ORIGIN_FIELDS, sanitizeOrigin } from "@/lib/demo/origin";
 
 /**
  * Server Action für das Demo-Formular.
@@ -100,13 +102,53 @@ export async function submitDemoRequest(
     };
   }
 
-  // 5. Versand. Die Herkunft wird erst hier ausgewertet und nie aus dem
-  //    Formular uebernommen – normalizeSource() laesst nur bekannte Werte
-  //    durch und faellt sonst still auf „demo" zurueck.
-  const sent = await sendDemoRequest(
-    result.values,
-    normalizeSource(readString(formData, SOURCE_FIELD)),
-  );
+  // 5. Herkunft der Anfrage. Alles hier ist Client-Eingabe aus versteckten
+  //    Feldern: normalizeSource() laesst nur bekannte Werte durch und faellt
+  //    sonst still auf „demo" zurueck, sanitizeOrigin() prueft Laengen und
+  //    Zeichen jedes Feldes einzeln und verwirft, was nicht passt.
+  const source = normalizeSource(readString(formData, SOURCE_FIELD));
+  const origin = sanitizeOrigin({
+    utm_source: readString(formData, ORIGIN_FIELDS.utmSource),
+    utm_medium: readString(formData, ORIGIN_FIELDS.utmMedium),
+    utm_campaign: readString(formData, ORIGIN_FIELDS.utmCampaign),
+    referrer: readString(formData, ORIGIN_FIELDS.referrer),
+    page_path: readString(formData, ORIGIN_FIELDS.pagePath),
+  });
+
+  // 6. Zwei Wege, gleichzeitig.
+  //
+  //    ==================================================================
+  //    DIE MAIL ENTSCHEIDET, DAS CRM NICHT
+  //    ==================================================================
+  //    Nur das Ergebnis von Brevo bestimmt, was die anfragende Person zu
+  //    sehen bekommt. Ein Fehler bei der CRM-Uebergabe wird geloggt und
+  //    sonst nichts – die Mail liegt dann bereits im Postfach, die Anfrage
+  //    ist also angekommen. Sie deswegen als gescheitert zu melden waere
+  //    schlicht falsch, und die Person wuerde ein zweites Mal absenden.
+  //
+  //    `allSettled` statt `all`: `all` bricht beim ERSTEN abgelehnten
+  //    Versprechen ab und liesse den anderen Weg unbeachtet weiterlaufen.
+  //    sendLeadToCrm() faengt zwar selbst alles ab – aber diese Zusage darf
+  //    nicht die einzige Absicherung sein.
+  const [mailErgebnis, crmErgebnis] = await Promise.allSettled([
+    sendDemoRequest(result.values, source),
+    sendLeadToCrm({ values: result.values, source, origin }),
+  ]);
+
+  if (crmErgebnis.status === "rejected") {
+    // Sollte unerreichbar sein – sendLeadToCrm() wirft nicht. Wenn diese
+    // Zeile doch einmal laeuft, ist die Zusage dort gebrochen.
+    console.error("[crm] Übergabe warf unerwartet.");
+  }
+
+  const sent =
+    mailErgebnis.status === "fulfilled"
+      ? mailErgebnis.value
+      : ({ ok: false, reason: "send-failed" } as const);
+
+  if (mailErgebnis.status === "rejected") {
+    console.error("[demo] Versand warf unerwartet.");
+  }
 
   if (!sent.ok) {
     return {

@@ -13,8 +13,10 @@
  *   6. Kein alter Produktname, keine Secret-Muster in der Ausgabe
  *   7. Ton-Regeln A, B und C aus CLAUDE.md im sichtbaren Text und in aria-labels
  *
- * Die vier Formular-Pfade lassen sich so nicht prüfen – Server Actions
- * brauchen einen Browser. Anleitung dazu im README, Abschnitt „Smoke-Test“.
+ * Die Formular-Pfade lassen sich so nicht prüfen – Server Actions brauchen
+ * einen Browser. Dafür gibt es scripts/formular-test.mjs (npm run
+ * test:formular), das die Formulare mit erreichbarem und mit totem CRM
+ * abschickt. Siehe README, Abschnitt „Formular-Pfad testen“.
  */
 
 const base = (process.argv[2] || "").replace(/\/$/, "");
@@ -245,6 +247,6 @@ console.log(
   "\n" + (problems === 0 ? "SMOKE-TEST BESTANDEN" : problems + " PROBLEM(E) GEFUNDEN"),
 );
 console.log(
-  "Nicht abgedeckt: die vier Formular-Pfade – siehe README, Abschnitt „Smoke-Test“.",
+  "Nicht abgedeckt: die Formular-Pfade – dafür `npm run test:formular` (Browser).",
 );
 process.exit(problems === 0 ? 0 : 1);

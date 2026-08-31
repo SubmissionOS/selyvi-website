@@ -22,3 +22,6 @@ docs/produktstand-2026-08.md
 # uebergeben wurde. Prettier wuerde Absaetze umbrechen und damit den Eindruck
 # erwecken, jemand haette den Text redigiert.
 docs/selyvi-kompakt.md
+
+# Kommentierte Vorlage – Prettier kennt kein dotenv-Format.
+.env.example

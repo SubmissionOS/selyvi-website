@@ -132,7 +132,20 @@ export default function DatenschutzPage() {
               <li>Rolle (freiwillige Angabe)</li>
               <li>Nachricht (freiwillige Angabe)</li>
               <li>Ihre Einwilligung zur Verarbeitung dieser Angaben</li>
+              <li>
+                Herkunftsangaben der Anfrage: die von Ihnen aufgerufene Seite, die
+                verweisende Seite und – sofern in der Adresszeile vorhanden –
+                Kampagnenparameter (utm_source, utm_medium, utm_campaign)
+              </li>
             </ul>
+            <p className="mt-4 text-gray-500">
+              Die Herkunftsangaben lesen wir einmalig beim Anzeigen des Formulars aus der
+              bereits geladenen Seite ab. Sie werden nur zusammen mit einer abgeschickten
+              Anfrage übertragen. Es wird dafür kein Cookie gesetzt, keine Kennung
+              vergeben und nichts über diese eine Anfrage hinaus gespeichert; von der
+              verweisenden Seite bewahren wir ausschließlich Adresse und Pfad auf, nicht
+              deren Suchparameter.
+            </p>
             <p className="mt-4 text-gray-500">
               Der Versand der Formularnachricht an uns erfolgt über die Sendinblue GmbH
               (Marke Brevo), Köpenicker Straße 126, 10179 Berlin, Deutschland, als
@@ -144,6 +157,13 @@ export default function DatenschutzPage() {
               Abschluss oder die Durchführung eines Vertrags gerichtet ist, im Übrigen
               Art. 6 Abs. 1 lit. f DSGVO aufgrund unseres berechtigten Interesses an der
               Beantwortung von Anfragen.
+            </p>
+            <p className="mt-4 text-gray-500">
+              Ihre Anfrage speichern wir zusätzlich in unserem eigenen Kundensystem, um
+              sie zu bearbeiten und den weiteren Verlauf nachvollziehen zu können. Die
+              dafür genutzten Server stehen in der Europäischen Union. Eine Nutzung zu
+              Werbezwecken findet nicht statt, und ein Newsletter ist damit nicht
+              verbunden.
             </p>
             <p className="mt-4 text-gray-500">
               Wir speichern Ihre Anfrage, solange es für die Bearbeitung erforderlich ist,
@@ -165,6 +185,12 @@ export default function DatenschutzPage() {
               Die verwendeten Schriften werden mit der Website ausgeliefert und lokal
               geladen. Beim Aufruf der Seite entsteht dadurch keine Verbindung zu
               Google-Servern oder anderen Schriftanbietern.
+            </p>
+            <p className="mt-4 text-gray-500">
+              Die Herkunftsangaben, die einer abgeschickten Formular-Anfrage beiliegen
+              (Abschnitt 4), sind davon nicht berührt: Sie entstehen ausschließlich beim
+              Absenden, ohne Cookie und ohne Kennung, und erlauben keine Wiedererkennung
+              bei einem späteren Besuch.
             </p>
             <p className="mt-4 text-gray-500">
               Deshalb erscheint auf dieser Website auch kein Cookie-Banner: Es gibt
