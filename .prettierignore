@@ -25,3 +25,7 @@ docs/selyvi-kompakt.md
 
 # Kommentierte Vorlage – Prettier kennt kein dotenv-Format.
 .env.example
+
+# Referenz-Dokumentation: Tabellen sind auf Lesbarkeit gesetzt, nicht auf
+# Prettier-Spaltenbreite.
+docs/app-referenz/ABWEICHUNGEN.md

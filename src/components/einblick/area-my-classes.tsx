@@ -101,6 +101,11 @@ export function AreaMyClasses({ state, actions }: Props) {
         Meine Klassen
       </h2>
 
+      {/* Kartenueberschrift ueber den Reitern. Im Original sitzt der ganze
+          Block (Ueberschrift, Reiter, Inhalt) in einer Karte – genau wie auf
+          der Material-Seite, wo ueber den Reitern „Material" steht. */}
+      <p className="mb-3 text-base font-bold text-[var(--app-text)]">Klassen</p>
+
       {/* ---------- Obere Tab-Ebene: gefüllter Reiter im Rahmen ---------- */}
       <div className="flex items-center gap-1 rounded-[var(--app-radius-control)] border border-[var(--app-border)] bg-[var(--app-surface)] p-1">
         <span className="rounded-[var(--app-radius-control)] bg-[var(--app-blue)] px-3 py-1.5 text-[11px] font-semibold text-white">

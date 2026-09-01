@@ -168,8 +168,19 @@ export function Workspace() {
             />
           }
         >
-          {/* Seitentitel wie im Original: gross, fett, dunkel. */}
-          <p className="mb-3 text-lg font-bold text-[var(--app-text)]">Klassen</p>
+          {/* ==================================================================
+              SEITENTITEL – KORRIGIERT
+              ==================================================================
+              Hier stand „Klassen". Falsch: Stundenplan.png ist gegenueber dem
+              Vollbild um GEMESSENE 101 px nach unten versetzt (der aktive
+              Navigationseintrag sitzt dort bei y=80 statt y=181). Der
+              Seitentitel faellt in diesem Ausschnitt oben heraus – sichtbar
+              blieb die Kartenueberschrift eine Zeile tiefer, und die habe ich
+              fuer den Titel gehalten.
+
+              Der Seitentitel lautet „Meine Klassen", die Kartenueberschrift
+              „Klassen". Beides steht jetzt da, wo es hingehoert. */}
+          <p className="mb-3 text-lg font-bold text-[var(--app-text)]">Meine Klassen</p>
 
           {/* Der Modus-Umschalter. Er sieht aus wie im Produkt und ist auch
               dort einer – hier fuehrt er zum Schloss-Hinweis. Der
