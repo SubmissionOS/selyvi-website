@@ -3,9 +3,10 @@ import Link from "next/link";
 /**
  * Hinweis unter der Vier-Block-Serie auf /fuer-lehrkraefte.
  *
- * Die Seitenleiste in den Szenen zeigt seit dem Abgleich mit dem echten
- * Produkt elf Bereiche – erklärt werden auf dieser Seite vier. Diese Zeile
- * beantwortet die Frage, die dadurch entsteht, statt sie offenzulassen.
+ * Die Seitenleiste in den Szenen zeigt seit dem Abgleich mit
+ * docs/app-referenz/ die echte Navigation der Anwendung: acht Bereiche –
+ * erklärt werden auf dieser Seite vier. Diese Zeile beantwortet die Frage,
+ * die dadurch entsteht, statt sie offenzulassen.
  *
  * TON: Einladung, kein Anreissen. „Es gibt noch so viel mehr!" wäre genau die
  * Verkaufssprache, die CLAUDE.md untersagt – und sie würde die vier Bereiche
@@ -23,7 +24,7 @@ export function ExcerptNote() {
       <div className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8">
         <p className="max-w-2xl text-xs text-gray-500">
           Die vier Bereiche hier sind der Kern – die Seitenleiste zeigt, was sonst noch
-          dazugehört. Drei davon können Sie{" "}
+          dazugehört. Vieles davon können Sie{" "}
           <Link href="/einblick" className="text-brand-600 underline underline-offset-4">
             selbst ausprobieren
           </Link>

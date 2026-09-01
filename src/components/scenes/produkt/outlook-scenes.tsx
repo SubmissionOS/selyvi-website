@@ -59,41 +59,46 @@ export function OriginalSheetScene({ startDelayMs = 0 }: { startDelayMs?: number
         const task = scene.reached("aufgabe");
 
         return (
-          <UiWindow variant="app" active="bibliothek" inDevelopment className="h-[16rem]">
+          <UiWindow variant="app" active="material" inDevelopment className="h-[16rem]">
             <SceneLabel>Aus dem Fachkorpus</SceneLabel>
 
             <div className="mt-3 flex items-start gap-3">
               {/* Rahmungsseite – erscheint UM das Original herum. */}
               <div
                 className={cn(
-                  "flex h-[7.5rem] w-[5.5rem] shrink-0 flex-col gap-1.5 rounded-md border p-2 transition-opacity",
+                  "flex h-[7.5rem] w-[5.5rem] shrink-0 flex-col gap-1.5 rounded-[var(--app-radius-control)] border p-2 transition-opacity",
                   framed
-                    ? "border-brand-600 bg-surface-alt opacity-100"
+                    ? "border-[var(--app-blue)] bg-[var(--app-surface-muted)] opacity-100"
                     : "border-transparent opacity-0",
                 )}
               >
-                <span className="text-[9px] font-medium text-brand-800">Rahmung</span>
+                <span className="text-[9px] font-medium text-[var(--app-blue-on-soft)]">
+                  Rahmung
+                </span>
                 <span
                   className={cn(
-                    "h-1.5 origin-left rounded-full bg-brand-600 transition-transform duration-500",
+                    "h-1.5 origin-left rounded-full bg-[var(--app-blue)] transition-transform duration-500",
                     task ? "scale-x-100" : "scale-x-0",
                   )}
                 />
-                <span className="h-1.5 w-3/4 rounded-full bg-brand-100" />
+                <span className="h-1.5 w-3/4 rounded-full bg-[var(--app-blue-soft)]" />
               </div>
 
               {/* Das Original – stilisierte Flaechen. Es veraendert sich
                   NICHT: genau das ist die Aussage der Funktion. */}
-              <div className="flex h-[7.5rem] w-[5.5rem] shrink-0 flex-col gap-1.5 rounded-md border border-gray-200 bg-surface p-2">
-                <FileText aria-hidden="true" className="size-3 text-gray-500" />
-                <span className="h-1.5 rounded-full bg-gray-200" />
-                <span className="h-1.5 w-4/5 rounded-full bg-gray-200" />
-                <span className="mt-1 h-6 rounded-sm bg-gray-200" />
-                <span className="h-1.5 w-2/3 rounded-full bg-gray-200" />
+              <div className="flex h-[7.5rem] w-[5.5rem] shrink-0 flex-col gap-1.5 rounded-[var(--app-radius-control)] border border-[var(--app-border)] bg-[var(--app-surface)] p-2">
+                <FileText
+                  aria-hidden="true"
+                  className="size-3 text-[var(--app-text-muted)]"
+                />
+                <span className="h-1.5 rounded-full bg-[var(--app-border)]" />
+                <span className="h-1.5 w-4/5 rounded-full bg-[var(--app-border)]" />
+                <span className="mt-1 h-6 rounded-sm bg-[var(--app-border)]" />
+                <span className="h-1.5 w-2/3 rounded-full bg-[var(--app-border)]" />
               </div>
             </div>
 
-            <p className="mt-3 text-[11px] text-gray-500">
+            <p className="mt-3 text-[11px] text-[var(--app-text-muted)]">
               Das Original bleibt, wie es ist.
             </p>
           </UiWindow>
@@ -131,7 +136,12 @@ export function StyleProfileScene({ startDelayMs = 0 }: { startDelayMs?: number 
         const profile = scene.reached("profil");
 
         return (
-          <UiWindow variant="app" active="zeugnisse" inDevelopment className="h-[16rem]">
+          <UiWindow
+            variant="app"
+            active="meine-klassen"
+            inDevelopment
+            className="h-[16rem]"
+          >
             <SceneLabel>Eigene Texte</SceneLabel>
 
             <div className="mt-3 flex flex-col gap-1.5">
@@ -141,13 +151,13 @@ export function StyleProfileScene({ startDelayMs = 0 }: { startDelayMs?: number 
                   animate={moving && shown[position]}
                   delayMs={position * 120}
                   className={cn(
-                    "flex items-center gap-2 rounded-md border border-gray-200 bg-surface px-2 py-1.5 text-[11px] text-ink",
+                    "flex items-center gap-2 rounded-[var(--app-radius-control)] border border-[var(--app-border)] bg-[var(--app-surface)] px-2 py-1.5 text-[11px] text-[var(--app-text)]",
                     shown[position] ? "opacity-100" : "opacity-0",
                   )}
                 >
                   <UploadCloud
                     aria-hidden="true"
-                    className="size-3 shrink-0 text-brand-600"
+                    className="size-3 shrink-0 text-[var(--app-blue)]"
                   />
                   <span className="truncate">{file}</span>
                 </ChipPop>
@@ -156,20 +166,20 @@ export function StyleProfileScene({ startDelayMs = 0 }: { startDelayMs?: number 
 
             {/* Balken ueber scaleX statt Breite: Eine Breitenaenderung waere
                 ein Layout-Durchgang je Frame. */}
-            <p className="mt-4 text-[10px] tracking-wide text-gray-500 uppercase">
+            <p className="mt-4 text-[10px] tracking-wide text-[var(--app-text-muted)] uppercase">
               Stilprofil
             </p>
-            <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-gray-200">
+            <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-[var(--app-border)]">
               <div
                 className={cn(
-                  "h-full origin-left rounded-full bg-brand-600",
+                  "h-full origin-left rounded-full bg-[var(--app-blue)]",
                   moving ? "transition-transform duration-1000 ease-out" : "",
                   profile ? "scale-x-100" : "scale-x-0",
                 )}
               />
             </div>
 
-            <p className="mt-3 text-[11px] text-gray-500">
+            <p className="mt-3 text-[11px] text-[var(--app-text-muted)]">
               Heute lernt der Stil aus dem, was Sie in der Anwendung schreiben.
             </p>
           </UiWindow>

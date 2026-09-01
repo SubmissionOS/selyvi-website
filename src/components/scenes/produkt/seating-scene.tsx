@@ -62,7 +62,7 @@ export function SeatingScene() {
         return (
           <UiWindow
             variant="app"
-            active="klassen"
+            active="meine-klassen"
             chips={[`Klasse ${DEMO_CLASS}`]}
             className="h-[19rem] sm:h-[17rem]"
           >
@@ -70,7 +70,7 @@ export function SeatingScene() {
 
             {/* Tafel-Kante: gibt dem Raster oben eine Richtung, damit es als
                 Klassenzimmer lesbar ist und nicht als Tabelle. */}
-            <p className="mt-3 rounded-md bg-surface-alt py-1 text-center text-[10px] tracking-wide text-gray-500 uppercase">
+            <p className="mt-3 rounded-[var(--app-radius-control)] bg-[var(--app-surface-muted)] py-1 text-center text-[10px] tracking-wide text-[var(--app-text-muted)] uppercase">
               Tafel
             </p>
 
@@ -92,18 +92,18 @@ export function SeatingScene() {
                   <div
                     key={seat.id}
                     className={cn(
-                      "flex h-14 items-center justify-center rounded-lg border text-[11px] font-medium transition-colors sm:h-12",
+                      "flex h-14 items-center justify-center rounded-[var(--app-radius-card)] border text-[11px] font-medium transition-colors sm:h-12",
                       seat.locked
-                        ? "border-gray-200 bg-surface-alt text-gray-500"
+                        ? "border-[var(--app-border)] bg-[var(--app-surface-muted)] text-[var(--app-text-muted)]"
                         : isTarget && dragging && !landed
-                          ? "border-brand-600 bg-brand-100 text-brand-800"
-                          : "border-gray-200 bg-surface text-ink",
+                          ? "border-[var(--app-blue)] bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]"
+                          : "border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)]",
                     )}
                   >
                     {seat.locked ? (
                       <Lock aria-hidden="true" className="size-3.5" />
                     ) : showsChild ? (
-                      <span className="flex size-7 items-center justify-center rounded-full bg-brand-100 text-brand-800">
+                      <span className="flex size-7 items-center justify-center rounded-full bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]">
                         {initials}
                       </span>
                     ) : null}
@@ -112,7 +112,7 @@ export function SeatingScene() {
               })}
             </div>
 
-            <p className="mt-3 text-[11px] text-gray-500">
+            <p className="mt-3 text-[11px] text-[var(--app-text-muted)]">
               Plätze lassen sich sperren – gesperrt bleibt gesperrt.
             </p>
 

@@ -61,13 +61,13 @@ export type TourState = {
   openEntries: string[];
 };
 
-type Actions = {
+export type TourActions = {
   set: Dispatch<SetStateAction<TourState>>;
   notify: (text: string) => void;
   reduced: boolean;
 };
 
-const LABEL = "text-xs font-medium tracking-wide text-gray-500 uppercase";
+const LABEL = "text-xs font-medium tracking-wide text-[var(--app-text-muted)] uppercase";
 
 /* ==========================================================================
  * 1) Beobachtungen
@@ -81,7 +81,7 @@ export function AreaObservations({
   actions,
 }: {
   state: TourState;
-  actions: Actions;
+  actions: TourActions;
 }) {
   const { set, notify } = actions;
   const sichtbar = state.filter
@@ -98,7 +98,7 @@ export function AreaObservations({
           Erfassung je Kind – die Liste danach einzugrenzen ist die
           Bedienung dieser Struktur, keine eigene Zusage. */}
       <div className="mt-3 flex flex-wrap items-center gap-1.5">
-        <span className="text-[11px] text-gray-500">Filtern:</span>
+        <span className="text-[11px] text-[var(--app-text-muted)]">Filtern:</span>
         {DEMO_TOUR_OBSERVATIONS.map((e) => (
           <button
             key={e.initials}
@@ -110,8 +110,8 @@ export function AreaObservations({
             className={cn(
               "rounded-full border px-2 py-0.5 text-[11px]",
               state.filter === e.initials
-                ? "border-brand-600 bg-brand-100 text-brand-800"
-                : "border-gray-200 bg-surface text-ink hover:border-brand-600",
+                ? "border-[var(--app-blue)] bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]"
+                : "border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)] hover:border-[var(--app-blue)]",
             )}
           >
             {e.child}
@@ -138,17 +138,17 @@ export function AreaObservations({
                   notify("Beobachtung ausgewählt");
                 }}
                 className={cn(
-                  "w-full rounded-lg border p-3 text-left",
+                  "w-full rounded-[var(--app-radius-card)] border p-3 text-left",
                   gewaehlt
-                    ? "border-brand-600 bg-surface-alt"
-                    : "border-gray-200 bg-surface hover:border-brand-600",
+                    ? "border-[var(--app-blue)] bg-[var(--app-surface-muted)]"
+                    : "border-[var(--app-border)] bg-[var(--app-surface)] hover:border-[var(--app-blue)]",
                 )}
               >
                 <span className="flex items-center gap-2">
-                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-brand-100 text-[10px] font-semibold text-brand-800">
+                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-[var(--app-blue-soft)] text-[10px] font-semibold text-[var(--app-blue-on-soft)]">
                     {entry.initials}
                   </span>
-                  <span className="text-[13px] text-ink">{entry.note}</span>
+                  <span className="text-[13px] text-[var(--app-text)]">{entry.note}</span>
                 </span>
 
                 {gewaehlt ? (
@@ -157,7 +157,7 @@ export function AreaObservations({
                       <span
                         key={chip}
                         className={cn(
-                          "rounded-full border border-brand-600 bg-brand-100 px-2 py-0.5 text-[10px] text-brand-800",
+                          "rounded-full border border-[var(--app-blue)] bg-[var(--app-blue-soft)] px-2 py-0.5 text-[10px] text-[var(--app-blue-on-soft)]",
                           actions.reduced ? "" : "animate-chip-pop",
                         )}
                       >
@@ -175,12 +175,14 @@ export function AreaObservations({
             erklaert sich der Zaehler in der Seitenleiste. */}
         {state.dictated ? (
           <li>
-            <div className="rounded-lg border border-brand-600 bg-surface-alt p-3">
+            <div className="rounded-[var(--app-radius-card)] border border-[var(--app-blue)] bg-[var(--app-surface-muted)] p-3">
               <span className="flex items-center gap-2">
-                <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-brand-100 text-[10px] font-semibold text-brand-800">
+                <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-[var(--app-blue-soft)] text-[10px] font-semibold text-[var(--app-blue-on-soft)]">
                   FS
                 </span>
-                <span className="text-[13px] text-ink">{state.dictated}</span>
+                <span className="text-[13px] text-[var(--app-text)]">
+                  {state.dictated}
+                </span>
               </span>
             </div>
           </li>
@@ -192,7 +194,7 @@ export function AreaObservations({
       </div>
 
       {/* Chat ueber die eigenen Daten. */}
-      <div className="mt-6 border-t border-gray-200 pt-4">
+      <div className="mt-6 border-t border-[var(--app-border)] pt-4">
         <p className={LABEL}>Frage an die eigenen Daten</p>
 
         <ul className="mt-3 flex flex-col gap-1.5">
@@ -207,19 +209,21 @@ export function AreaObservations({
                     chatOpen: s.chatOpen === frage.id ? null : frage.id,
                   }))
                 }
-                className="w-full rounded-md border border-gray-200 bg-surface px-3 py-2 text-left text-[12px] text-ink hover:border-brand-600"
+                className="w-full rounded-[var(--app-radius-control)] border border-[var(--app-border)] bg-[var(--app-surface)] px-3 py-2 text-left text-[12px] text-[var(--app-text)] hover:border-[var(--app-blue)]"
               >
                 {frage.text}
               </button>
 
               {state.chatOpen === frage.id ? (
-                <div className="mt-2 rounded-md bg-surface-alt p-3">
-                  <p className="text-[12px] leading-relaxed text-ink">{frage.answer}</p>
+                <div className="mt-2 rounded-[var(--app-radius-control)] bg-[var(--app-surface-muted)] p-3">
+                  <p className="text-[12px] leading-relaxed text-[var(--app-text)]">
+                    {frage.answer}
+                  </p>
                   <p className="mt-2 flex flex-wrap gap-1.5">
                     {frage.references.map((r) => (
                       <span
                         key={r}
-                        className="rounded-full border border-gray-200 bg-surface px-2 py-0.5 text-[10px] text-gray-500"
+                        className="rounded-full border border-[var(--app-border)] bg-[var(--app-surface)] px-2 py-0.5 text-[10px] text-[var(--app-text-muted)]"
                       >
                         {r}
                       </span>
@@ -231,7 +235,7 @@ export function AreaObservations({
           ))}
         </ul>
 
-        <p className="mt-3 text-[11px] text-gray-500">
+        <p className="mt-3 text-[11px] text-[var(--app-text-muted)]">
           Antworten nur aus Ihren eigenen Einträgen
         </p>
       </div>
@@ -245,7 +249,7 @@ export function AreaObservations({
  * nicht in Frames, und im Ruhezustand darf die Seite keine Schleife halten.
  * Nach dem letzten Wort ist Schluss.
  */
-function DictationButton({ state, actions }: { state: TourState; actions: Actions }) {
+function DictationButton({ state, actions }: { state: TourState; actions: TourActions }) {
   const { set, notify, reduced } = actions;
   const laeuft = state.dictated !== null && !state.dictated.endsWith(".");
 
@@ -278,15 +282,15 @@ function DictationButton({ state, actions }: { state: TourState; actions: Action
         schritt();
       }}
       className={cn(
-        "inline-flex items-center gap-2 rounded-md border border-gray-200 bg-surface px-3 py-2 text-[12px] text-ink",
-        state.dictated === null && "hover:border-brand-600",
-        state.dictated !== null && "text-gray-500",
+        "inline-flex items-center gap-2 rounded-[var(--app-radius-control)] border border-[var(--app-border)] bg-[var(--app-surface)] px-3 py-2 text-[12px] text-[var(--app-text)]",
+        state.dictated === null && "hover:border-[var(--app-blue)]",
+        state.dictated !== null && "text-[var(--app-text-muted)]",
       )}
     >
       <Mic
         aria-hidden="true"
         className={cn(
-          "size-3.5 text-brand-600",
+          "size-3.5 text-[var(--app-blue)]",
           laeuft && !reduced && "animate-soft-pulse",
         )}
       />
@@ -301,7 +305,13 @@ function DictationButton({ state, actions }: { state: TourState; actions: Action
  * Lehrkraft." Editierbar laut „Fachverlauf und Stundenprotokoll — Live":
  * „der Text bleibt danach frei editierbar."
  * ========================================================================== */
-export function AreaReports({ state, actions }: { state: TourState; actions: Actions }) {
+export function AreaReports({
+  state,
+  actions,
+}: {
+  state: TourState;
+  actions: TourActions;
+}) {
   const { set, notify } = actions;
   const beobachtung = DEMO_TOUR_OBSERVATIONS.find((e) => e.id === state.chosen);
 
@@ -311,7 +321,7 @@ export function AreaReports({ state, actions }: { state: TourState; actions: Act
         <h2 id="bereich-zeugnisse" className={LABEL}>
           Zeugnisse
         </h2>
-        <p className="mt-3 text-sm text-ink">
+        <p className="mt-3 text-sm text-[var(--app-text)]">
           Wählen Sie zuerst unter „Beobachtungen“ einen Eintrag aus.
         </p>
       </section>
@@ -324,11 +334,11 @@ export function AreaReports({ state, actions }: { state: TourState; actions: Act
         Zeugnisse
       </h2>
 
-      <p className="mt-3 text-sm text-ink">
+      <p className="mt-3 text-sm text-[var(--app-text)]">
         Grundlage: Ihre Beobachtung zu {beobachtung.child}
       </p>
 
-      <div className="mt-3 rounded-lg border border-gray-200 bg-surface-alt p-3 text-[13px] text-gray-500">
+      <div className="mt-3 rounded-[var(--app-radius-card)] border border-[var(--app-border)] bg-[var(--app-surface-muted)] p-3 text-[13px] text-[var(--app-text-muted)]">
         {beobachtung.note}
       </div>
 
@@ -347,7 +357,7 @@ export function AreaReports({ state, actions }: { state: TourState; actions: Act
         </div>
       ) : (
         <div className="mt-4">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-100 px-2.5 py-1 text-[11px] font-medium text-brand-800">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--app-blue-soft)] px-2.5 py-1 text-[11px] font-medium text-[var(--app-blue-on-soft)]">
             <Sparkles aria-hidden="true" className="size-3" />
             In Ihrem Schreibstil
           </span>
@@ -357,7 +367,7 @@ export function AreaReports({ state, actions }: { state: TourState; actions: Act
               tastaturbedienbar und traegt ein Label. */}
           <label
             htmlFor="einblick-entwurf"
-            className="mt-3 block text-[11px] text-gray-500"
+            className="mt-3 block text-[11px] text-[var(--app-text-muted)]"
           >
             Entwurf – Sie können ihn hier ändern
           </label>
@@ -366,7 +376,7 @@ export function AreaReports({ state, actions }: { state: TourState; actions: Act
             value={state.reportText}
             onChange={(e) => set((s) => ({ ...s, reportText: e.target.value }))}
             rows={4}
-            className="mt-1.5 w-full rounded-md border border-gray-200 bg-surface p-3 text-[13px] leading-relaxed text-ink"
+            className="mt-1.5 w-full rounded-[var(--app-radius-control)] border border-[var(--app-border)] bg-[var(--app-surface)] p-3 text-[13px] leading-relaxed text-[var(--app-text)]"
           />
 
           <div className="mt-3 flex flex-wrap gap-3">
@@ -387,7 +397,9 @@ export function AreaReports({ state, actions }: { state: TourState; actions: Act
             </Button>
           </div>
 
-          <p className="mt-3 text-[11px] text-gray-500">Vorbereitetes Beispiel</p>
+          <p className="mt-3 text-[11px] text-[var(--app-text-muted)]">
+            Vorbereitetes Beispiel
+          </p>
         </div>
       )}
     </section>
@@ -400,7 +412,7 @@ export function AreaReports({ state, actions }: { state: TourState; actions: Act
  * entsteht auf Deutsch und wird in einem zweiten Schritt uebersetzt …
  * Namen und Signatur bleiben unangetastet."
  * ========================================================================== */
-export function AreaMail({ state, actions }: { state: TourState; actions: Actions }) {
+export function AreaMail({ state, actions }: { state: TourState; actions: TourActions }) {
   const { set, notify } = actions;
   const beobachtung = DEMO_TOUR_OBSERVATIONS.find((e) => e.id === state.chosen);
 
@@ -410,7 +422,7 @@ export function AreaMail({ state, actions }: { state: TourState; actions: Action
         <h2 id="bereich-elternpost" className={LABEL}>
           Elternpost
         </h2>
-        <p className="mt-3 text-sm text-ink">
+        <p className="mt-3 text-sm text-[var(--app-text)]">
           Wählen Sie zuerst unter „Beobachtungen“ einen Eintrag aus.
         </p>
       </section>
@@ -428,7 +440,7 @@ export function AreaMail({ state, actions }: { state: TourState; actions: Action
 
       {!state.mailCreated ? (
         <>
-          <p className="mt-3 text-sm text-ink">
+          <p className="mt-3 text-sm text-[var(--app-text)]">
             Aus Ihrer Beobachtung zu {beobachtung.child} entsteht eine Elternmail.
           </p>
           <div className="mt-5">
@@ -459,46 +471,49 @@ export function AreaMail({ state, actions }: { state: TourState; actions: Action
                 className={cn(
                   "rounded-full border px-2.5 py-0.5 text-[11px]",
                   state.mailLang === l.key
-                    ? "border-brand-600 bg-brand-100 text-brand-800"
-                    : "border-gray-200 bg-surface text-ink hover:border-brand-600",
+                    ? "border-[var(--app-blue)] bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]"
+                    : "border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)] hover:border-[var(--app-blue)]",
                 )}
               >
                 {l.label}
               </button>
             ))}
-            <span className="ml-1 rounded-full bg-brand-100 px-2 py-0.5 text-[10px] text-brand-800">
+            <span className="ml-1 rounded-full bg-[var(--app-blue-soft)] px-2 py-0.5 text-[10px] text-[var(--app-blue-on-soft)]">
               9 Sprachen
             </span>
           </div>
 
-          <div className="mt-4 rounded-lg border border-gray-200 bg-surface p-4">
+          <div className="mt-4 rounded-[var(--app-radius-card)] border border-[var(--app-border)] bg-[var(--app-surface)] p-4">
             {/* Anrede und Signatur bleiben stehen – das ist die Zusage aus
                 dem Produktstand, und sie ist hier sichtbar: Nur die beiden
                 Inhaltszeilen wechseln die Sprache. */}
-            <p className="text-[12px] text-gray-500">
+            <p className="text-[12px] text-[var(--app-text-muted)]">
               Betreff: {beobachtung.mail.subject}
             </p>
-            <p className="mt-3 text-[13px] text-ink">Guten Tag,</p>
+            <p className="mt-3 text-[13px] text-[var(--app-text)]">Guten Tag,</p>
 
             <div
               dir={sprache?.rtl ? "rtl" : "ltr"}
               className="mt-2 flex flex-col gap-1.5"
             >
               {zeilen.map((zeile) => (
-                <p key={zeile} className="text-[13px] leading-relaxed text-ink">
+                <p
+                  key={zeile}
+                  className="text-[13px] leading-relaxed text-[var(--app-text)]"
+                >
                   {zeile}
                 </p>
               ))}
             </div>
 
-            <p className="mt-3 text-[13px] text-ink">
+            <p className="mt-3 text-[13px] text-[var(--app-text)]">
               Mit freundlichen Grüßen
               <br />
               {DEMO_TEACHER}
             </p>
           </div>
 
-          <p className="mt-3 text-[11px] text-gray-500">
+          <p className="mt-3 text-[11px] text-[var(--app-text-muted)]">
             Anrede und Signatur bleiben unangetastet · Vorbereitetes Beispiel
           </p>
         </>
@@ -513,7 +528,13 @@ export function AreaMail({ state, actions }: { state: TourState; actions: Action
  * Lehrkraft kann die Fundstellen auch selbst auswaehlen … Jedes erzeugte
  * Material weist seine Quellen aus."
  * ========================================================================== */
-export function AreaMaterial({ state, actions }: { state: TourState; actions: Actions }) {
+export function AreaMaterial({
+  state,
+  actions,
+}: {
+  state: TourState;
+  actions: TourActions;
+}) {
   const { set, notify } = actions;
 
   return (
@@ -522,7 +543,7 @@ export function AreaMaterial({ state, actions }: { state: TourState; actions: Ac
         Material
       </h2>
 
-      <p className="mt-3 text-sm text-ink">Thema wählen:</p>
+      <p className="mt-3 text-sm text-[var(--app-text)]">Thema wählen:</p>
       <div className="mt-2 flex flex-wrap gap-1.5">
         {DEMO_MATERIAL_TOPICS.map((t) => (
           <button
@@ -533,8 +554,8 @@ export function AreaMaterial({ state, actions }: { state: TourState; actions: Ac
             className={cn(
               "rounded-full border px-2.5 py-1 text-[11px]",
               state.topic === t.id
-                ? "border-brand-600 bg-brand-100 text-brand-800"
-                : "border-gray-200 bg-surface text-ink hover:border-brand-600",
+                ? "border-[var(--app-blue)] bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]"
+                : "border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)] hover:border-[var(--app-blue)]",
             )}
           >
             {t.label}
@@ -542,7 +563,9 @@ export function AreaMaterial({ state, actions }: { state: TourState; actions: Ac
         ))}
       </div>
 
-      <p className="mt-5 text-sm text-ink">Fundstellen aus dem Fachkorpus:</p>
+      <p className="mt-5 text-sm text-[var(--app-text)]">
+        Fundstellen aus dem Fachkorpus:
+      </p>
       <ul className="mt-2 flex flex-col gap-1.5">
         {DEMO_MATERIAL_SOURCES.map((q, i) => {
           const an = state.sources.includes(q.id);
@@ -560,24 +583,30 @@ export function AreaMaterial({ state, actions }: { state: TourState; actions: Ac
                   }))
                 }
                 className={cn(
-                  "flex w-full items-center gap-2 rounded-md border px-3 py-2 text-left",
-                  an ? "border-brand-600 bg-surface-alt" : "border-gray-200 bg-surface",
+                  "flex w-full items-center gap-2 rounded-[var(--app-radius-control)] border px-3 py-2 text-left",
+                  an
+                    ? "border-[var(--app-blue)] bg-[var(--app-surface-muted)]"
+                    : "border-[var(--app-border)] bg-[var(--app-surface)]",
                 )}
               >
                 <span
                   className={cn(
                     "flex size-4 shrink-0 items-center justify-center rounded border",
-                    an ? "border-brand-600 bg-brand-600" : "border-gray-200",
+                    an
+                      ? "border-[var(--app-blue)] bg-[var(--app-blue)]"
+                      : "border-[var(--app-border)]",
                   )}
                 >
                   {an ? (
                     <Check aria-hidden="true" className="size-3 text-surface" />
                   ) : null}
                 </span>
-                <span className="text-[12px] text-ink">
+                <span className="text-[12px] text-[var(--app-text)]">
                   [{i + 1}] {q.label}
                 </span>
-                <span className="ml-auto text-[10px] text-gray-500">{q.note}</span>
+                <span className="ml-auto text-[10px] text-[var(--app-text-muted)]">
+                  {q.note}
+                </span>
               </button>
             </li>
           );
@@ -599,18 +628,18 @@ export function AreaMaterial({ state, actions }: { state: TourState; actions: Ac
       </div>
 
       {state.materialCreated ? (
-        <div className="mt-4 rounded-lg border border-gray-200 bg-surface p-4">
-          <p className="text-[11px] text-gray-500">
+        <div className="mt-4 rounded-[var(--app-radius-card)] border border-[var(--app-border)] bg-[var(--app-surface)] p-4">
+          <p className="text-[11px] text-[var(--app-text-muted)]">
             {DEMO_MATERIAL_TOPICS.find((t) => t.id === state.topic)?.label}
           </p>
           <ul className="mt-2 flex flex-col gap-1.5">
             {DEMO_MATERIAL_RESULT.map((zeile, i) => (
-              <li key={zeile} className="text-[13px] text-ink">
+              <li key={zeile} className="text-[13px] text-[var(--app-text)]">
                 {zeile}{" "}
                 {/* Ein Marker je Aufgabe, reihum aus den angehakten
                     Fundstellen. Wer eine abwaehlt, sieht die Marker sofort
                     wechseln – genau das meint „weist seine Quellen aus". */}
-                <span className="text-[11px] text-brand-600">
+                <span className="text-[11px] text-[var(--app-blue)]">
                   [
                   {DEMO_MATERIAL_SOURCES.findIndex(
                     (q) => q.id === state.sources[i % state.sources.length],
@@ -620,7 +649,7 @@ export function AreaMaterial({ state, actions }: { state: TourState; actions: Ac
               </li>
             ))}
           </ul>
-          <p className="mt-3 text-[11px] text-gray-500">
+          <p className="mt-3 text-[11px] text-[var(--app-text-muted)]">
             Quellen:{" "}
             {state.sources
               .map((id) => DEMO_MATERIAL_SOURCES.find((q) => q.id === id)?.label)
@@ -640,7 +669,13 @@ export function AreaMaterial({ state, actions }: { state: TourState; actions: Ac
  * KEIN KI-Vorschlag: Derselbe Absatz nennt ihn ausdruecklich als Prototyp,
  * und Prototyp ist laut CLAUDE.md tabu.
  * ========================================================================== */
-export function AreaSeating({ state, actions }: { state: TourState; actions: Actions }) {
+export function AreaSeating({
+  state,
+  actions,
+}: {
+  state: TourState;
+  actions: TourActions;
+}) {
   const { set, notify, reduced } = actions;
 
   function waehle(id: string) {
@@ -688,12 +723,12 @@ export function AreaSeating({ state, actions }: { state: TourState; actions: Act
         Sitzplan
       </h2>
 
-      <p className="mt-3 text-sm text-ink">
+      <p className="mt-3 text-sm text-[var(--app-text)]">
         Ein Kind antippen, dann den neuen Platz – die beiden tauschen. Das Schloss sperrt
         einen Platz.
       </p>
 
-      <p className="mt-3 rounded-md bg-surface-alt py-1 text-center text-[10px] tracking-wide text-gray-500 uppercase">
+      <p className="mt-3 rounded-[var(--app-radius-control)] bg-[var(--app-surface-muted)] py-1 text-center text-[10px] tracking-wide text-[var(--app-text-muted)] uppercase">
         Tafel
       </p>
 
@@ -715,20 +750,20 @@ export function AreaSeating({ state, actions }: { state: TourState; actions: Act
                 aria-label={name}
                 onClick={() => waehle(platz.id)}
                 className={cn(
-                  "flex h-16 w-full items-center justify-center rounded-lg border text-[11px] font-medium",
+                  "flex h-16 w-full items-center justify-center rounded-[var(--app-radius-card)] border text-[11px] font-medium",
                   !reduced && "transition-transform",
                   platz.locked
-                    ? "border-gray-200 bg-surface-alt text-gray-500"
+                    ? "border-[var(--app-border)] bg-[var(--app-surface-muted)] text-[var(--app-text-muted)]"
                     : aufgenommen
-                      ? "border-brand-600 bg-brand-100 text-brand-800"
-                      : "border-gray-200 bg-surface text-ink hover:border-brand-600",
+                      ? "border-[var(--app-blue)] bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]"
+                      : "border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)] hover:border-[var(--app-blue)]",
                   abgelehnt && !reduced && "animate-seat-refuse",
                 )}
               >
                 {platz.locked ? (
                   <Lock aria-hidden="true" className="size-3.5" />
                 ) : platz.initials ? (
-                  <span className="flex size-7 items-center justify-center rounded-full bg-brand-100 text-brand-800">
+                  <span className="flex size-7 items-center justify-center rounded-full bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]">
                     {platz.initials}
                   </span>
                 ) : null}
@@ -751,7 +786,7 @@ export function AreaSeating({ state, actions }: { state: TourState; actions: Act
                   }));
                   notify(platz.locked ? "Platz freigegeben" : "Platz gesperrt");
                 }}
-                className="absolute top-1 right-1 rounded p-0.5 text-gray-500 hover:text-brand-600"
+                className="absolute top-1 right-1 rounded p-0.5 text-[var(--app-text-muted)] hover:text-[var(--app-blue)]"
               >
                 <Lock aria-hidden="true" className="size-3" />
               </button>
@@ -774,7 +809,7 @@ export function AreaTimetable({
   actions,
 }: {
   state: TourState;
-  actions: Actions;
+  actions: TourActions;
 }) {
   const { set, notify } = actions;
   const [fach, setzeFach] = [
@@ -788,7 +823,7 @@ export function AreaTimetable({
         Stundenplan
       </h2>
 
-      <p className="mt-3 text-sm text-ink">
+      <p className="mt-3 text-sm text-[var(--app-text)]">
         Ihr Fach wählen, dann eine freie Stunde antippen. Nochmal antippen entfernt sie
         wieder.
       </p>
@@ -803,8 +838,8 @@ export function AreaTimetable({
             className={cn(
               "rounded-full border px-2.5 py-0.5 text-[11px]",
               fach === f
-                ? "border-brand-600 bg-brand-100 text-brand-800"
-                : "border-gray-200 bg-surface text-ink hover:border-brand-600",
+                ? "border-[var(--app-blue)] bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]"
+                : "border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)] hover:border-[var(--app-blue)]",
             )}
           >
             {f}
@@ -815,7 +850,9 @@ export function AreaTimetable({
       {/* Auf schmalen Displays scrollt die Tabelle waagerecht. Der Hinweis
           steht sichtbar darueber – eine Scrollflaeche ohne Ansage ist auf
           dem Handy unsichtbar. */}
-      <p className="mt-4 text-[11px] text-gray-500 sm:hidden">Seitwärts wischbar →</p>
+      <p className="mt-4 text-[11px] text-[var(--app-text-muted)] sm:hidden">
+        Seitwärts wischbar →
+      </p>
       <div className="mt-2 overflow-x-auto">
         <table className="w-full min-w-[22rem] border-collapse text-[11px]">
           <caption className="sr-only">
@@ -823,11 +860,18 @@ export function AreaTimetable({
           </caption>
           <thead>
             <tr>
-              <th scope="col" className="p-1 text-left font-medium text-gray-500">
+              <th
+                scope="col"
+                className="p-1 text-left font-medium text-[var(--app-text-muted)]"
+              >
                 Zeit
               </th>
               {DEMO_TIMETABLE_DAYS.map((t) => (
-                <th key={t} scope="col" className="p-1 font-medium text-gray-500">
+                <th
+                  key={t}
+                  scope="col"
+                  className="p-1 font-medium text-[var(--app-text-muted)]"
+                >
                   {t}
                 </th>
               ))}
@@ -836,7 +880,10 @@ export function AreaTimetable({
           <tbody>
             {DEMO_TIMETABLE_SLOTS.map((slot) => (
               <tr key={slot}>
-                <th scope="row" className="p-1 text-left font-normal text-gray-500">
+                <th
+                  scope="row"
+                  className="p-1 text-left font-normal text-[var(--app-text-muted)]"
+                >
                   {slot}
                 </th>
                 {DEMO_TIMETABLE_DAYS.map((tag) => {
@@ -863,8 +910,8 @@ export function AreaTimetable({
                         className={cn(
                           "h-9 w-full rounded border text-[10px]",
                           belegt
-                            ? "border-brand-600 bg-brand-100 text-brand-800"
-                            : "border-gray-200 bg-surface text-gray-500 hover:border-brand-600",
+                            ? "border-[var(--app-blue)] bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]"
+                            : "border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text-muted)] hover:border-[var(--app-blue)]",
                         )}
                       >
                         {belegt ?? "+"}
@@ -878,7 +925,7 @@ export function AreaTimetable({
         </table>
       </div>
 
-      <p className="mt-3 text-[11px] text-gray-500">
+      <p className="mt-3 text-[11px] text-[var(--app-text-muted)]">
         Kein Redaktionsschritt, keine Freigabe – wer Zeiten hinterlegt, steht im Plan.
       </p>
     </section>
@@ -895,7 +942,7 @@ export function AreaDevelopment({
   actions,
 }: {
   state: TourState;
-  actions: Actions;
+  actions: TourActions;
 }) {
   const { set } = actions;
   const kind =
@@ -918,8 +965,8 @@ export function AreaDevelopment({
             className={cn(
               "rounded-full border px-2.5 py-0.5 text-[11px]",
               kind.id === e.id
-                ? "border-brand-600 bg-brand-100 text-brand-800"
-                : "border-gray-200 bg-surface text-ink hover:border-brand-600",
+                ? "border-[var(--app-blue)] bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]"
+                : "border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)] hover:border-[var(--app-blue)]",
             )}
           >
             {e.child}
@@ -933,7 +980,10 @@ export function AreaDevelopment({
           const offen = state.openEntries.includes(id);
 
           return (
-            <li key={id} className="rounded-lg border border-gray-200 bg-surface">
+            <li
+              key={id}
+              className="rounded-[var(--app-radius-card)] border border-[var(--app-border)] bg-[var(--app-surface)]"
+            >
               <button
                 type="button"
                 aria-expanded={offen}
@@ -947,15 +997,22 @@ export function AreaDevelopment({
                 }
                 className="flex w-full items-center gap-3 p-3 text-left"
               >
-                <span className="shrink-0 text-[11px] text-gray-500">{eintrag.date}</span>
-                <span className="text-[13px] text-ink">{eintrag.title}</span>
-                <span aria-hidden="true" className="ml-auto text-[11px] text-gray-500">
+                <span className="shrink-0 text-[11px] text-[var(--app-text-muted)]">
+                  {eintrag.date}
+                </span>
+                <span className="text-[13px] text-[var(--app-text)]">
+                  {eintrag.title}
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="ml-auto text-[11px] text-[var(--app-text-muted)]"
+                >
                   {offen ? "−" : "+"}
                 </span>
               </button>
 
               {offen ? (
-                <p className="border-t border-gray-200 p-3 text-[12px] leading-relaxed text-gray-500">
+                <p className="border-t border-[var(--app-border)] p-3 text-[12px] leading-relaxed text-[var(--app-text-muted)]">
                   {eintrag.text}
                 </p>
               ) : null}
@@ -964,7 +1021,7 @@ export function AreaDevelopment({
         })}
       </ol>
 
-      <p className="mt-3 text-[11px] text-gray-500">
+      <p className="mt-3 text-[11px] text-[var(--app-text-muted)]">
         Chronologische Timeline je Kind · Vorbereitetes Beispiel
       </p>
     </section>

@@ -14,8 +14,10 @@ export const metadata: Metadata = pageMetadata("/einblick");
  * Sie ersetzt die frühere Sektion „So funktioniert's" auf der Startseite:
  * Erklären war der Umweg, klicken ist der kurze Weg.
  *
- * Sieben von elf Bereichen sind offen. Die Sperren sind kein Mangel, sondern
- * die Botschaft – wer alles sieht, hat keinen Grund mehr für ein Gespräch.
+ * Vier von acht Bereichen sind offen. Die Zahl acht ist keine Auswahl, sondern
+ * die echte Navigation der Anwendung (docs/app-referenz/). Die Sperren sind
+ * kein Mangel, sondern die Botschaft – wer alles sieht, hat keinen Grund mehr
+ * für ein Gespräch.
  *
  * KEIN Navigationspunkt: Die Kopfzeile bleibt bei fünf. Erreichbar über die
  * Sektion „Probieren Sie es selbst aus." auf der Startseite und über die
@@ -34,7 +36,7 @@ export default function EinblickPage() {
           </h1>
 
           <p className="mt-5 max-w-2xl text-lg text-gray-500">
-            Sieben Bereiche sind offen – klicken Sie in beliebiger Reihenfolge durch. Was
+            Vier Bereiche sind offen – klicken Sie in beliebiger Reihenfolge durch. Was
             Sie auswählen, bleibt beim Wechsel erhalten.
           </p>
 
@@ -53,7 +55,7 @@ export default function EinblickPage() {
               id="einblick-abschluss"
               className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
             >
-              Das war ein Ausschnitt aus sieben von elf Bereichen.
+              Das war ein Ausschnitt aus vier von acht Bereichen.
             </h2>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">

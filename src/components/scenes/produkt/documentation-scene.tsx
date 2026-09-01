@@ -106,7 +106,7 @@ export function DocumentationScene() {
         return (
           <UiWindow
             variant="app"
-            active="beobachtungen"
+            active="live-unterricht"
             chips={[`Klasse ${DEMO_CLASS}`]}
             highlightChip={filtered ? 0 : -1}
             className="h-[27rem] sm:h-[22rem]"
@@ -119,7 +119,7 @@ export function DocumentationScene() {
               <span
                 key={`zaehler-${scene.cycle}-${counted}`}
                 className={cn(
-                  "inline-flex items-center rounded-full border border-gray-200 bg-surface-alt px-2.5 py-1 text-[10px] font-medium text-brand-800",
+                  "inline-flex items-center rounded-full border border-[var(--app-border)] bg-[var(--app-surface-muted)] px-2.5 py-1 text-[10px] font-medium text-[var(--app-blue-on-soft)]",
                   moving && "animate-chip-pop",
                 )}
               >
@@ -149,15 +149,19 @@ export function DocumentationScene() {
                   <div
                     key={child.name}
                     className={cn(
-                      "rounded-lg border bg-surface p-2",
-                      isActive || isDone ? "border-brand-600" : "border-gray-200",
+                      "rounded-[var(--app-radius-card)] border bg-[var(--app-surface)] p-2",
+                      isActive || isDone
+                        ? "border-[var(--app-blue)]"
+                        : "border-[var(--app-border)]",
                     )}
                   >
                     <div className="flex items-center gap-1.5">
-                      <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-brand-100 text-[9px] font-semibold text-brand-800">
+                      <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-[var(--app-blue-soft)] text-[9px] font-semibold text-[var(--app-blue-on-soft)]">
                         {child.initials}
                       </span>
-                      <span className="truncate text-[11px] text-ink">{child.name}</span>
+                      <span className="truncate text-[11px] text-[var(--app-text)]">
+                        {child.name}
+                      </span>
                     </div>
 
                     {/* Feste Mindesthöhe, damit ein erscheinender Chip die
@@ -178,7 +182,7 @@ export function DocumentationScene() {
               })}
             </div>
 
-            <div className="mt-4 rounded-lg border border-gray-200 bg-surface-alt p-3">
+            <div className="mt-4 rounded-[var(--app-radius-card)] border border-[var(--app-border)] bg-[var(--app-surface-muted)] p-3">
               <div className="flex items-center justify-between gap-3">
                 <SceneLabel>
                   {active >= 0 ? DEMO_LIVE_NOTES[active].child : "Kind antippen"}
@@ -194,7 +198,7 @@ export function DocumentationScene() {
                 </ProgressPulse>
               </div>
 
-              <div className="mt-1.5 min-h-6 text-sm leading-relaxed text-ink">
+              <div className="mt-1.5 min-h-6 text-sm leading-relaxed text-[var(--app-text)]">
                 {typing >= 0 ? (
                   <TypingText
                     key={`notiz-${scene.cycle}-${typing}`}

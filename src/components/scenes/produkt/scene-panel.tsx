@@ -27,7 +27,7 @@ export function ScenePanel({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-xl border border-gray-200 bg-surface p-5 sm:p-6",
+        "relative overflow-hidden rounded-[var(--app-radius-card)] border border-[var(--app-border)] bg-[var(--app-surface)] p-5 sm:p-6",
         className,
       )}
       /*
@@ -51,7 +51,7 @@ export function ScenePanel({
 /** Kleine Überschrift innerhalb einer Bühne. */
 export function SceneLabel({ children }: { children: ReactNode }) {
   return (
-    <span className="text-[10px] font-medium tracking-wide text-gray-500 uppercase">
+    <span className="text-[10px] font-medium tracking-wide text-[var(--app-text-muted)] uppercase">
       {children}
     </span>
   );

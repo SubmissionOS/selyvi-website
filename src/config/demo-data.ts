@@ -42,6 +42,15 @@ export const DEMO_CLASS = "3b";
 export const DEMO_TEACHER = "A. Weber";
 
 /**
+ * Das Fach, das die Beispiel-Lehrkraft in dieser Klasse unterrichtet.
+ *
+ * Steht in der Klassenansicht unter „Meine Fächer" und als Fach-Tab – die
+ * Referenz zeigt dort „Mathe", unser Cast arbeitet durchgehend mit Deutsch
+ * (Beobachtung, Zeugnistext, Elternmail beziehen sich darauf).
+ */
+export const DEMO_SUBJECT = "Deutsch";
+
+/**
  * KEINE NEGATIVEN INHALTE ÜBER KINDER – auch nicht über erfundene.
  *
  * Alle Beobachtungen unten beschreiben etwas, das gelingt. Keine schlechten
@@ -68,52 +77,50 @@ export const DEMO_TEACHER = "A. Weber";
  * wäre hier ungedeckt.
  */
 /* ==========================================================================
- * SEITENLEISTEN – AM ECHTEN PRODUKT ORIENTIERT
- * ==========================================================================
- * Die Liste war bis hierher auf fuenf Eintraege gekuerzt. Sie ist jetzt so
- * lang, wie der Funktionsumfang tatsaechlich ist – DAS IST DIE AUSSAGE: Wer
- * eine Szene sieht, soll erkennen, dass die erklaerte Funktion ein Ausschnitt
- * ist und nicht das Ganze.
- *
- * JEDER EINTRAG IST EINE ALS LIVE GEFUEHRTE FUNKTION aus
- * docs/produktstand-2026-08.md. Die Zuordnung im Einzelnen:
- *
- *   Beobachtungen  <- „Beobachtungen strukturieren — Live"
- *   Klassen        <- „Kompetenzen statt Notendurchschnitt — Live" und
- *                     „Förderempfehlungen, Timeline, Klassenanalyse — Live"
- *   Zeugnisse      <- „Zeugnisbemerkungen — Live"
- *   Elternpost     <- „Elternmails, auf Wunsch übersetzt — Live"
- *   Material       <- „Unterrichtsmaterial aus echtem Fachwissen — Live"
- *   Entwürfe       <- „Unterrichtsentwürfe und Varianten — Live"
- *   Sitzplan       <- „Sitzpläne — Live" (der KI-Vorschlag darin ist Prototyp
- *                     und wird nirgends gezeigt – der Sitzplan selbst nicht)
- *   Stundenplan    <- „Klassenstundenplan ohne Pflegeaufwand — Live"
- *   Dokumente      <- „Dokumentenablage für Schülerarbeiten — Live"
- *   Entwicklung    <- „Fachverlauf und Stundenprotokoll — Live"
- *                     (Klassenentwicklung ueber Monate)
- *   Bibliothek     <- „Bibliothek — Live"
- *
- * NICHT aufgenommen, obwohl Live: „Freie Fragen an die eigenen Daten" und
- * „Daten aus Scans auslesen". Beides sind Funktionen INNERHALB eines
- * Bereichs – ein Chat und ein Haekchen –, keine eigenen Navigationspunkte.
- * Eine Seitenleiste, die Schalter auffuehrt, waere kein Abbild mehr.
- * ========================================================================== */
+   NAVIGATION DER LEHRKRAFT – ABGESCHRIEBEN, NICHT HERGELEITET
+   --------------------------------------------------------------------------
+   Quelle ist docs/app-referenz/Material-generator.png und Stundenplan.png:
+   die echte Seitenleiste, in dieser Reihenfolge, mit diesen Beschriftungen.
+
+   VORHER STAND HIER ETWAS ANDERES, und das war der Fehler: eine elfstellige
+   Liste, die aus den als „Live" gefuehrten Funktionen des Produktstands
+   ABGELEITET war (Beobachtungen, Klassen, Zeugnisse, Elternpost, Material,
+   Entwuerfe, Sitzplan, Stundenplan, Dokumente, Entwicklung, Bibliothek) –
+   plus eine Zeile „+ weitere". Die Herleitung war sauber begruendet und
+   trotzdem falsch: Die echte Anwendung ordnet ihre Funktionen anders. Ein
+   Funktionsverzeichnis ist keine Navigation.
+
+   Damit entfaellt auch „+ weitere": Diese acht Punkte SIND die Navigation,
+   nicht ein Ausschnitt davon. Eine Andeutung von mehr waere jetzt eine
+   Behauptung ueber ein Produkt, von dem ein Bild vorliegt.
+
+   Was aus der alten Liste nicht mehr auftaucht, ist damit nicht verschwunden
+   – es liegt eine Ebene tiefer. Zeugnisse und Elternpost etwa sind im
+   Screenshot nirgends als Navigationspunkt zu sehen; wo sie genau sitzen,
+   ist unbekannt, bis ein Screenshot davon vorliegt.
+   ========================================================================== */
 export const DEMO_NAV_TEACHER = [
-  { key: "beobachtungen", label: "Beobachtungen" },
-  { key: "klassen", label: "Klassen" },
-  { key: "zeugnisse", label: "Zeugnisse" },
-  { key: "elternpost", label: "Elternpost" },
+  { key: "heute", label: "Heute" },
+  { key: "meine-klassen", label: "Meine Klassen" },
+  { key: "live-unterricht", label: "Live-Unterricht" },
+  { key: "timeline", label: "Timeline" },
+  { key: "ueberpruefung", label: "Überprüfung" },
+  { key: "foerderplaene", label: "Förderpläne" },
   { key: "material", label: "Material" },
-  { key: "entwuerfe", label: "Entwürfe" },
-  { key: "sitzplan", label: "Sitzplan" },
-  { key: "stundenplan", label: "Stundenplan" },
-  { key: "dokumente", label: "Dokumente" },
-  { key: "entwicklung", label: "Entwicklung" },
-  { key: "bibliothek", label: "Bibliothek" },
+  { key: "klassenanalyse", label: "Klassenanalyse" },
 ] as const;
 
 /**
- * Leitungsmodus. Der Produktstand fuehrt unter „Bereich 2 – Für die
+ * Leitungsmodus – UNVERAENDERT, ABSICHTLICH.
+ *
+ * Von dieser Ansicht liegt KEIN Screenshot vor. Die Liste bleibt deshalb
+ * genau so, wie sie aus dem Produktstand hergeleitet wurde – auch wenn die
+ * Lehrkraft-Navigation daneben inzwischen abgeschrieben ist. Sie jetzt „im
+ * gleichen Stil" umzubauen hiesse, eine Vermutung wie eine Ablesung
+ * aussehen zu lassen. Sobald ein Leitungsmodus-Screenshot vorliegt, gehoert
+ * sie ersetzt.
+ *
+ * Der Produktstand fuehrt unter „Bereich 2 – Für die
  * Schulleitung" genau diese fuenf Bereiche als Live:
  * Entlastungsbericht, Lehrer & Klassen, Nutzung im Kollegium,
  * Schulentwicklung, Aufmerksamkeit.

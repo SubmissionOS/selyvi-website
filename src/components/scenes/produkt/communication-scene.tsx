@@ -47,7 +47,7 @@ function StableFrame({ show, animate }: { show: boolean; animate: boolean }) {
   return (
     <span
       aria-hidden="true"
-      className="pointer-events-none absolute -inset-1 rounded border border-brand-600 animate-frame-pulse"
+      className="pointer-events-none absolute -inset-1 rounded border border-[var(--app-blue)] animate-frame-pulse"
     />
   );
 }
@@ -70,7 +70,11 @@ export function CommunicationScene() {
         return (
           <UiWindow
             variant="app"
-            active="elternpost"
+            // ORT IM ORIGINAL UNBESTAETIGT: In der Referenz gibt es keinen
+            // Navigationspunkt „Elternpost". Die Mail entsteht zu einem Kind,
+            // und Kinder haengen unter „Meine Klassen" – deshalb vorlaeufig
+            // hier. Mapping folgt nach Screenshot.
+            active="meine-klassen"
             chips={[`Klasse ${DEMO_CLASS}`]}
             className="h-[23rem] sm:h-[19rem]"
           >
@@ -80,10 +84,10 @@ export function CommunicationScene() {
               <div className="relative shrink-0">
                 <span
                   className={cn(
-                    "inline-flex items-center rounded-md border px-2 py-1 text-[10px] font-medium",
+                    "inline-flex items-center rounded-[var(--app-radius-control)] border px-2 py-1 text-[10px] font-medium",
                     translated
-                      ? "border-brand-600 bg-brand-600 text-surface"
-                      : "border-gray-200 text-gray-500",
+                      ? "border-[var(--app-blue)] bg-[var(--app-blue)] text-surface"
+                      : "border-[var(--app-border)] text-[var(--app-text-muted)]",
                   )}
                 >
                   DE → TR
@@ -94,15 +98,15 @@ export function CommunicationScene() {
                     Restliste ist bewusst angeschnitten – sie deutet an, dass
                     es mehr sind, ohne alle aufzuzählen. */}
                 {dropdownOpen && moving ? (
-                  <div className="absolute top-full right-0 z-10 mt-1 max-h-20 w-36 overflow-hidden rounded-md border border-gray-200 bg-surface p-1 animate-panel-rise">
+                  <div className="absolute top-full right-0 z-10 mt-1 max-h-20 w-36 overflow-hidden rounded-[var(--app-radius-control)] border border-[var(--app-border)] bg-[var(--app-surface)] p-1 animate-panel-rise">
                     {DEMO_PARENT_MAIL.dropdown.map((language, position) => (
                       <div
                         key={language}
                         className={cn(
                           "flex items-center justify-between rounded px-1.5 py-1 text-[10px]",
                           position === 1
-                            ? "bg-brand-100 text-brand-800"
-                            : "text-gray-500",
+                            ? "bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]"
+                            : "text-[var(--app-text-muted)]",
                         )}
                       >
                         {language}
@@ -118,13 +122,15 @@ export function CommunicationScene() {
             <div
               key={`mail-${scene.cycle}`}
               className={cn(
-                "mt-3 rounded-lg border border-gray-200 bg-surface-alt p-4",
+                "mt-3 rounded-[var(--app-radius-card)] border border-[var(--app-border)] bg-[var(--app-surface-muted)] p-4",
                 moving && built && "animate-panel-rise",
                 !built && "opacity-0",
               )}
             >
               <span className="relative inline-block">
-                <span className="text-sm text-ink">{DEMO_PARENT_MAIL.greeting}</span>
+                <span className="text-sm text-[var(--app-text)]">
+                  {DEMO_PARENT_MAIL.greeting}
+                </span>
                 <StableFrame show={translated} animate={moving} />
               </span>
 
@@ -145,9 +151,11 @@ export function CommunicationScene() {
               </div>
 
               <div className="mt-4">
-                <div className="text-sm text-gray-500">{DEMO_PARENT_MAIL.closing}</div>
+                <div className="text-sm text-[var(--app-text-muted)]">
+                  {DEMO_PARENT_MAIL.closing}
+                </div>
                 <span className="relative mt-1.5 inline-block">
-                  <span className="text-sm font-medium text-ink">
+                  <span className="text-sm font-medium text-[var(--app-text)]">
                     {DEMO_PARENT_MAIL.signature}
                   </span>
                   <StableFrame show={translated} animate={moving} />
@@ -156,7 +164,7 @@ export function CommunicationScene() {
             </div>
 
             <div className="mt-4">
-              <span className="inline-flex items-center rounded-full bg-brand-100 px-2.5 py-1 text-[10px] font-medium text-brand-800">
+              <span className="inline-flex items-center rounded-full bg-[var(--app-blue-soft)] px-2.5 py-1 text-[10px] font-medium text-[var(--app-blue-on-soft)]">
                 {DEMO_PARENT_MAIL.stableNote}
               </span>
             </div>

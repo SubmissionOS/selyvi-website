@@ -14,6 +14,17 @@ Marketing-Website für eine B2B-SaaS-Plattform für Schulen (Zielgruppen: Lehrkr
 brand-100 #c7ecff · brand-400 #1e9cd7 (NIE für Text <24px, Kontrast nur 3,0:1) · brand-600 #0074bd · brand-800 #015b97 · ink #0e1b26 (Fließtext) · surface #ffffff · surface-alt #f6fafd · --cta (Variante A #2c40ff / B #0074bd via Config).
 REGELN: --cta ausschließlich für den primären CTA-Button. Keine Farben außerhalb der Tokens. Alle Kontraste WCAG 2.1 AA.
 
+### Nachgebaute Anwendungsoberflächen
+INNERHALB der UiWindow-Szenen und auf /einblick gelten stattdessen die Werte aus `src/config/app-reference.ts` — mit der Pipette aus `docs/app-referenz/*.png` gemessen, jeder Wert mit Herkunft im Kommentar. Sie liegen als CSS-Variablen auf dem Fenster und existieren außerhalb davon nicht; die Website behält ihre eigenen Tokens.
+
+Das ist keine Aufweichung, sondern die Bedingung: Was das Produkt zeigt, soll aussehen wie das Produkt. Das Fenster-Chrome (Punkte, Kontext-Chips) bleibt Website — es ist der Rahmen, nicht die Anwendung.
+
+Die Schrift im Fenster ist der system-ui-Stack (lokal vorhanden, keine Lizenzfrage), Website-Text bleibt IBM Plex. Der Unterschied trennt sichtbar, was wir SAGEN, von dem, was wir ZEIGEN.
+
+**WCAG 2.1 AA gilt auch dort.** Zwei Referenz-Werte sind deshalb abgedunkelt (Schrift des aktiven Navigationseintrags, Donut-Bogen); beide Abweichungen stehen in app-reference.ts mit Messwert. Geprüft wird mit `app-kontrast.js` — axe erreicht die Szenen nicht, weil ihr Inhalt unter aria-hidden liegt.
+
+**Die Navigation ist abgeschrieben, nicht hergeleitet.** Acht Einträge in der Reihenfolge des Screenshots. Wer sie ändert, hat einen neuen Screenshot — oder lässt es. Der Leitungsmodus bleibt hergeleitet, bis ein Bild davon vorliegt.
+
 ## DSGVO (nicht verhandelbar)
 Zur Laufzeit KEINE Requests an Drittserver (Fonts lokal via next/font – nach jedem Font-Change im Network-Log verifizieren). Kein Google Analytics, keine externen Embeds ohne Zwei-Klick-Lösung. Formulare nur über EU-Dienste (Brevo).
 

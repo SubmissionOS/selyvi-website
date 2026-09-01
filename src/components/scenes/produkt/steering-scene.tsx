@@ -125,7 +125,7 @@ function BarGroup({
             className={cn(
               "h-full origin-bottom rounded-t",
               barClass,
-              muted ? "bg-gray-200" : "bg-brand-100",
+              muted ? "bg-[var(--app-border)]" : "bg-[var(--app-blue-soft)]",
               animate && "transition-transform duration-700 ease-out",
             )}
             style={{
@@ -137,7 +137,7 @@ function BarGroup({
           />
         ))}
       </div>
-      <span className="text-[9px] text-gray-500">{label}</span>
+      <span className="text-[9px] text-[var(--app-text-muted)]">{label}</span>
     </div>
   );
 }
@@ -172,14 +172,19 @@ export function SteeringScene({ size = "default" }: { size?: SteeringSceneSize }
           >
             <div className="flex items-center justify-between gap-3">
               <SceneLabel>Entlastungsbericht</SceneLabel>
-              <span className="text-[10px] text-gray-500">
+              <span className="text-[10px] text-[var(--app-text-muted)]">
                 {DEMO_RELIEF_REPORT.month}
               </span>
             </div>
 
             <div className="mt-4 flex items-end justify-between gap-4">
               <div className="min-w-0">
-                <div className={cn("leading-none font-semibold text-ink", layout.number)}>
+                <div
+                  className={cn(
+                    "leading-none font-semibold text-[var(--app-text)]",
+                    layout.number,
+                  )}
+                >
                   {counting ? (
                     <CountUp
                       key={`stunden-${scene.cycle}`}
@@ -194,7 +199,7 @@ export function SteeringScene({ size = "default" }: { size?: SteeringSceneSize }
                   )}
                 </div>
 
-                <div className="mt-1.5 text-[10px] text-gray-500">
+                <div className="mt-1.5 text-[10px] text-[var(--app-text-muted)]">
                   gewonnene Zeit · {DEMO_RELIEF_REPORT.note}
                 </div>
               </div>
@@ -224,7 +229,7 @@ export function SteeringScene({ size = "default" }: { size?: SteeringSceneSize }
                 damit der Export-Knopf darunter beim Tippen nicht wandert. */}
             <p
               className={cn(
-                "border-l-2 border-gray-200 pl-3 leading-relaxed text-gray-500",
+                "border-l-2 border-[var(--app-border)] pl-3 leading-relaxed text-[var(--app-text-muted)]",
                 layout.survey,
               )}
             >
@@ -240,7 +245,7 @@ export function SteeringScene({ size = "default" }: { size?: SteeringSceneSize }
             </p>
 
             <div className="mt-4 flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 px-2.5 py-1.5 text-[10px] font-medium text-ink">
+              <span className="inline-flex items-center gap-1.5 rounded-[var(--app-radius-control)] border border-[var(--app-border)] px-2.5 py-1.5 text-[10px] font-medium text-[var(--app-text)]">
                 <FileDown className="size-3" />
                 Als PDF exportieren
               </span>
@@ -250,7 +255,10 @@ export function SteeringScene({ size = "default" }: { size?: SteeringSceneSize }
                 {exported ? (
                   <Check
                     key={`haken-${scene.cycle}`}
-                    className={cn("size-4 text-brand-600", moving && "animate-chip-pop")}
+                    className={cn(
+                      "size-4 text-[var(--app-blue)]",
+                      moving && "animate-chip-pop",
+                    )}
                   />
                 ) : null}
               </span>

@@ -10,16 +10,14 @@ import { DEMO_CLASS, DEMO_TIMETABLE_PRESET } from "@/config/demo-data";
 import { UiWindow } from "@/components/scenes/ui-window";
 import {
   AreaDevelopment,
-  AreaMail,
   AreaMaterial,
   AreaObservations,
-  AreaReports,
-  AreaSeating,
-  AreaTimetable,
   type Seat,
   type TourState,
 } from "@/components/einblick/areas";
+import { AreaMyClasses } from "@/components/einblick/area-my-classes";
 import {
+  LOCKED_COUNT,
   LOCKED_HINT,
   TourSidebar,
   type TourArea,
@@ -89,20 +87,30 @@ const START: TourState = {
 };
 
 /** Der sanfte Vorschlag: Was liegt als Nächstes nahe? */
+/**
+ * Ein VORSCHLAG, kein Pfad: Der naechste Bereich leuchtet in der Leiste auf,
+ * sobald im aktuellen etwas passiert ist. Erzwungen wird nichts – wer lieber
+ * woanders hinklickt, klickt woanders hin.
+ *
+ * Die Kette folgt jetzt der echten Navigation: Wer im Live-Unterricht eine
+ * Beobachtung gewaehlt hat, findet ihre Fortsetzung unter „Meine Klassen"
+ * (Zeugnistext und Elternmail haengen dort am Kind); danach Material, danach
+ * die Timeline.
+ */
 function naechsterBereich(area: TourArea, state: TourState): TourArea | null {
-  if (area === "beobachtungen") return state.chosen ? "zeugnisse" : null;
-  if (area === "zeugnisse") return state.reportVariant !== null ? "elternpost" : null;
-  if (area === "elternpost") return state.mailCreated ? "material" : null;
-  if (area === "material") return state.materialCreated ? "sitzplan" : null;
-  if (area === "sitzplan") return "stundenplan";
-  if (area === "stundenplan") return "entwicklung";
+  if (area === "live-unterricht") return state.chosen ? "meine-klassen" : null;
+  if (area === "meine-klassen") return state.reportVariant !== null ? "material" : null;
+  if (area === "material") return state.materialCreated ? "timeline" : null;
   return null;
 }
 
 export function Workspace() {
   const reduced = useReducedMotion();
 
-  const [area, setArea] = useState<TourArea>("beobachtungen");
+  // „Meine Klassen" ist im Original der Bereich, in dem eine Lehrkraft
+  // ankommt – und die einzige Ansicht, von der ein vollstaendiger Screenshot
+  // vorliegt. Deshalb steht der Einblick dort auf.
+  const [area, setArea] = useState<TourArea>("meine-klassen");
   const [openLock, setOpenLock] = useState<string | null>(null);
   const [modeHint, setModeHint] = useState(false);
   const [state, set] = useState<TourState>(START);
@@ -131,7 +139,7 @@ export function Workspace() {
           type="button"
           onClick={() => {
             set(START);
-            setArea("beobachtungen");
+            setArea("meine-klassen");
             notify("Zurückgesetzt");
           }}
           className="text-sm text-brand-600 underline underline-offset-4"
@@ -160,6 +168,9 @@ export function Workspace() {
             />
           }
         >
+          {/* Seitentitel wie im Original: gross, fett, dunkel. */}
+          <p className="mb-3 text-lg font-bold text-[var(--app-text)]">Klassen</p>
+
           {/* Der Modus-Umschalter. Er sieht aus wie im Produkt und ist auch
               dort einer – hier fuehrt er zum Schloss-Hinweis. Der
               Leitungsmodus bleibt dem Gespraech vorbehalten. */}
@@ -200,17 +211,22 @@ export function Workspace() {
             ) : null}
           </div>
 
-          {area === "beobachtungen" ? (
+          {/* Vier offene Bereiche. Die Stationen aus der vorigen Fassung
+              sind alle erhalten – sie haben nur den Ort gewechselt:
+                Beobachtungen, Diktat, Chat   -> Live-Unterricht
+                Stundenplan                   -> Meine Klassen, Tab Stundenplan
+                Sitzplan                      -> Meine Klassen, Unterricht planen
+                Zeugnisse, Elternpost         -> Meine Klassen, Schueler-Detail
+                Entwicklung                   -> Timeline
+                Material                      -> Material */}
+          {area === "meine-klassen" ? (
+            <AreaMyClasses state={state} actions={actions} />
+          ) : null}
+          {area === "live-unterricht" ? (
             <AreaObservations state={state} actions={actions} />
           ) : null}
-          {area === "zeugnisse" ? <AreaReports state={state} actions={actions} /> : null}
-          {area === "elternpost" ? <AreaMail state={state} actions={actions} /> : null}
           {area === "material" ? <AreaMaterial state={state} actions={actions} /> : null}
-          {area === "sitzplan" ? <AreaSeating state={state} actions={actions} /> : null}
-          {area === "stundenplan" ? (
-            <AreaTimetable state={state} actions={actions} />
-          ) : null}
-          {area === "entwicklung" ? (
+          {area === "timeline" ? (
             <AreaDevelopment state={state} actions={actions} />
           ) : null}
         </UiWindow>
@@ -236,7 +252,7 @@ export function Workspace() {
       </div>
 
       <p className="mt-3 text-xs text-gray-500">
-        Vier Bereiche und der Leitungsmodus sind gesperrt. {LOCKED_HINT}
+        {LOCKED_COUNT} Bereiche und der Leitungsmodus sind gesperrt. {LOCKED_HINT}
       </p>
     </div>
   );

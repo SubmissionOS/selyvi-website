@@ -91,7 +91,7 @@ export function TeachingScene() {
                 <div className="flex min-w-0 flex-col">
                   <SceneLabel>Thema</SceneLabel>
 
-                  <div className="mt-1.5 min-h-9 rounded-md border border-gray-200 bg-surface-alt px-2.5 py-2 text-[11px] leading-relaxed text-ink">
+                  <div className="mt-1.5 min-h-9 rounded-[var(--app-radius-control)] border border-[var(--app-border)] bg-[var(--app-surface-muted)] px-2.5 py-2 text-[11px] leading-relaxed text-[var(--app-text)]">
                     <TypingText
                       key={`thema-${scene.cycle}`}
                       text={DEMO_MATERIAL.topic}
@@ -112,8 +112,8 @@ export function TeachingScene() {
                           className={cn(
                             "rounded-full border px-2 py-0.5 text-[9px] font-medium",
                             chosen && position === 0
-                              ? "border-brand-600 bg-brand-100 text-brand-800"
-                              : "border-gray-200 text-gray-500",
+                              ? "border-[var(--app-blue)] bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]"
+                              : "border-[var(--app-border)] text-[var(--app-text-muted)]",
                           )}
                         >
                           {subject}
@@ -131,8 +131,10 @@ export function TeachingScene() {
                       <li
                         key={source}
                         className={cn(
-                          "flex items-start gap-2 rounded-md border bg-surface p-1.5",
-                          checked[position] ? "border-brand-600" : "border-gray-200",
+                          "flex items-start gap-2 rounded-[var(--app-radius-control)] border bg-[var(--app-surface)] p-1.5",
+                          checked[position]
+                            ? "border-[var(--app-blue)]"
+                            : "border-[var(--app-border)]",
                           moving && listed && "animate-panel-rise",
                           !listed && "opacity-0",
                         )}
@@ -146,14 +148,14 @@ export function TeachingScene() {
                           className={cn(
                             "mt-px flex size-3.5 shrink-0 items-center justify-center rounded-sm border",
                             checked[position]
-                              ? "border-brand-600 bg-brand-600 text-surface"
-                              : "border-gray-200",
+                              ? "border-[var(--app-blue)] bg-[var(--app-blue)] text-surface"
+                              : "border-[var(--app-border)]",
                           )}
                         >
                           {checked[position] ? <Check className="size-2.5" /> : null}
                         </span>
 
-                        <span className="min-w-0 text-[10px] leading-snug text-gray-500">
+                        <span className="min-w-0 text-[10px] leading-snug text-[var(--app-text-muted)]">
                           {source}
                         </span>
                       </li>
@@ -173,8 +175,8 @@ export function TeachingScene() {
                     Der Titel steht bei VOLLER Deckkraft. Abgedunkelte Schrift
                     ist im Szenen-Fundament gesperrt: gray-500 und ink haben auf
                     hellem Grund keinen Kontrast-Spielraum nach unten. */}
-                <div className="flex min-w-0 flex-col rounded-lg border border-gray-200 bg-surface-alt p-2.5">
-                  <span className="truncate text-[10px] font-medium text-ink">
+                <div className="flex min-w-0 flex-col rounded-[var(--app-radius-card)] border border-[var(--app-border)] bg-[var(--app-surface-muted)] p-2.5">
+                  <span className="truncate text-[10px] font-medium text-[var(--app-text)]">
                     {DEMO_MATERIAL.documentTitle}
                   </span>
 
@@ -186,10 +188,10 @@ export function TeachingScene() {
                       !building && "opacity-0",
                     )}
                   >
-                    <div className="h-1.5 w-full rounded bg-gray-200" />
+                    <div className="h-1.5 w-full rounded bg-[var(--app-border)]" />
 
                     <div className="flex items-center gap-1.5">
-                      <div className="h-1.5 flex-1 rounded bg-gray-200" />
+                      <div className="h-1.5 flex-1 rounded bg-[var(--app-border)]" />
                       {building ? (
                         <ChipPop
                           key={`marker-1-${scene.cycle}`}
@@ -202,10 +204,10 @@ export function TeachingScene() {
                       ) : null}
                     </div>
 
-                    <div className="h-1.5 w-5/6 rounded bg-gray-200" />
+                    <div className="h-1.5 w-5/6 rounded bg-[var(--app-border)]" />
 
                     <div className="flex items-center gap-1.5">
-                      <div className="h-1.5 flex-1 rounded bg-gray-200" />
+                      <div className="h-1.5 flex-1 rounded bg-[var(--app-border)]" />
                       {building ? (
                         <ChipPop
                           key={`marker-2-${scene.cycle}`}
@@ -218,7 +220,7 @@ export function TeachingScene() {
                       ) : null}
                     </div>
 
-                    <div className="h-1.5 w-2/3 rounded bg-gray-200" />
+                    <div className="h-1.5 w-2/3 rounded bg-[var(--app-border)]" />
                   </div>
 
                   {/* Die Quellenzeile gehört zum Inhalt und erscheint mit ihm.
@@ -226,7 +228,7 @@ export function TeachingScene() {
                       eine abgedunkelte Schrift, die den Kontrast verletzt. */}
                   <div
                     className={cn(
-                      "mt-auto border-t border-gray-200 pt-2 text-[9px] text-gray-500",
+                      "mt-auto border-t border-[var(--app-border)] pt-2 text-[9px] text-[var(--app-text-muted)]",
                       !building && "opacity-0",
                     )}
                   >
@@ -236,7 +238,7 @@ export function TeachingScene() {
               </div>
 
               <div className="mt-3 shrink-0">
-                <span className="inline-flex items-center rounded-full bg-brand-100 px-2.5 py-1 text-[10px] font-medium text-brand-800">
+                <span className="inline-flex items-center rounded-full bg-[var(--app-blue-soft)] px-2.5 py-1 text-[10px] font-medium text-[var(--app-blue-on-soft)]">
                   Quellen ausgewiesen
                 </span>
               </div>

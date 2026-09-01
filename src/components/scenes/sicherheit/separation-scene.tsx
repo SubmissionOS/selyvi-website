@@ -64,8 +64,8 @@ export function SeparationScene() {
           <UiWindow variant="app" navSlot={<></>} className="h-[22rem] sm:h-[19rem]">
             <div className="grid h-full grid-cols-2 gap-3">
               {/* ---------- Links: die Lehrkraft ---------- */}
-              <div className="flex flex-col rounded-lg border border-gray-200 bg-surface p-3">
-                <p className="text-[10px] font-medium tracking-wide text-gray-500 uppercase">
+              <div className="flex flex-col rounded-[var(--app-radius-card)] border border-[var(--app-border)] bg-[var(--app-surface)] p-3">
+                <p className="text-[10px] font-medium tracking-wide text-[var(--app-text-muted)] uppercase">
                   Lehrkraft {DEMO_TEACHER}
                 </p>
 
@@ -73,7 +73,7 @@ export function SeparationScene() {
                   {links.map((eintrag) => (
                     <li
                       key={eintrag.id}
-                      className="rounded-md bg-surface-alt px-2 py-1.5 text-[11px] text-ink"
+                      className="rounded-[var(--app-radius-control)] bg-[var(--app-surface-muted)] px-2 py-1.5 text-[11px] text-[var(--app-text)]"
                     >
                       <span className="font-medium">{eintrag.initials}</span>{" "}
                       {eintrag.chips[0]}
@@ -81,31 +81,39 @@ export function SeparationScene() {
                   ))}
                 </ul>
 
-                <p className="mt-auto text-[10px] text-gray-500">
+                <p className="mt-auto text-[10px] text-[var(--app-text-muted)]">
                   Eigene Beobachtungen, mit Namen
                 </p>
               </div>
 
               {/* ---------- Rechts: der Leitungsmodus ---------- */}
-              <div className="flex flex-col rounded-lg border border-gray-200 bg-surface p-3">
-                <p className="text-[10px] font-medium tracking-wide text-gray-500 uppercase">
+              <div className="flex flex-col rounded-[var(--app-radius-card)] border border-[var(--app-border)] bg-[var(--app-surface)] p-3">
+                <p className="text-[10px] font-medium tracking-wide text-[var(--app-text-muted)] uppercase">
                   Leitungsmodus
                 </p>
 
                 <div className="mt-3 flex flex-col gap-2">
-                  <div className="rounded-md bg-surface-alt px-2 py-1.5">
-                    <p className="text-[15px] font-semibold text-ink">138 Std.</p>
-                    <p className="text-[10px] text-gray-500">
+                  <div className="rounded-[var(--app-radius-control)] bg-[var(--app-surface-muted)] px-2 py-1.5">
+                    <p className="text-[15px] font-semibold text-[var(--app-text)]">
+                      138 Std.
+                    </p>
+                    <p className="text-[10px] text-[var(--app-text-muted)]">
                       gewonnene Zeit · Schätzwert
                     </p>
                   </div>
-                  <div className="rounded-md bg-surface-alt px-2 py-1.5">
-                    <p className="text-[15px] font-semibold text-ink">68 %</p>
-                    <p className="text-[10px] text-gray-500">Automatisierungsquote</p>
+                  <div className="rounded-[var(--app-radius-control)] bg-[var(--app-surface-muted)] px-2 py-1.5">
+                    <p className="text-[15px] font-semibold text-[var(--app-text)]">
+                      68 %
+                    </p>
+                    <p className="text-[10px] text-[var(--app-text-muted)]">
+                      Automatisierungsquote
+                    </p>
                   </div>
                 </div>
 
-                <p className="mt-auto text-[10px] text-gray-500">Ausschließlich Summen</p>
+                <p className="mt-auto text-[10px] text-[var(--app-text-muted)]">
+                  Ausschließlich Summen
+                </p>
               </div>
             </div>
 
@@ -113,7 +121,7 @@ export function SeparationScene() {
                 liegt ueber der Buehne und verschiebt deshalb nichts. */}
             <p
               className={cn(
-                "pointer-events-none absolute inset-x-4 bottom-4 rounded-md border border-brand-600 bg-surface px-3 py-2 text-center text-[11px] text-ink transition-opacity",
+                "pointer-events-none absolute inset-x-4 bottom-4 rounded-[var(--app-radius-control)] border border-[var(--app-blue)] bg-[var(--app-surface)] px-3 py-2 text-center text-[11px] text-[var(--app-text)] transition-opacity",
                 hinweis ? "opacity-100" : "opacity-0",
               )}
             >

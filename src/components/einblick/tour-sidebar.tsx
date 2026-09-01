@@ -1,109 +1,82 @@
 "use client";
 
 import {
-  BookMarked,
-  CalendarDays,
-  ClipboardList,
-  Files,
-  FolderOpen,
-  LayoutGrid,
+  BookOpen,
+  Clipboard,
+  Clock,
+  Heart,
+  Home,
   Lock,
-  Mail,
-  NotebookPen,
-  ScrollText,
+  Mic,
   TrendingUp,
   Users,
   type LucideIcon,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { PRODUCT_NAME } from "@/config/brand";
 
 /**
- * Die BEDIENBARE Seitenleiste des Einblicks – und der Hauptweg durch ihn.
- *
- * Sie sieht aus wie die Leiste in den Szenen, ist aber das Gegenteil: dort
- * tote Dekoration (aria-hidden, keine Schalter), hier echte Buttons. Deshalb
- * eine eigene Komponente und kein Umbau der Szenen-Leiste – siehe `navSlot`
- * in ui-window.tsx.
+ * Die Seitenleiste des Einblicks – bedienbar, im Gegensatz zu der in den
+ * Szenen.
  *
  * ==========================================================================
- * SIEBEN OFFEN, VIER GESPERRT
+ * DIE EINTRÄGE SIND ABGESCHRIEBEN, NICHT HERGELEITET
  * ==========================================================================
- * Offen sind die Bereiche, in denen es etwas zu TUN gibt. Gesperrt bleiben
- * Klassen, Entwürfe, Dokumente und Bibliothek – und der Leitungsmodus im
- * Fensterkopf. Eine Umgebung, die alles zeigt, hätte keinen Grund mehr für
- * ein Gespräch; eine, die die Sperren versteckt, wäre unehrlich.
+ * Acht Punkte, in dieser Reihenfolge, mit diesen Beschriftungen – so steht
+ * die Navigation in docs/app-referenz/Material-generator.png und
+ * Stundenplan.png. Vorher standen hier elf Punkte, die aus den als „Live"
+ * geführten Funktionen des Produktstands abgeleitet waren. Die Herleitung war
+ * sauber begründet und trotzdem falsch: Ein Funktionsverzeichnis ist keine
+ * Navigation.
  *
- * Die gesperrten Einträge sind trotzdem BUTTONS und keine toten <span>: Sie
- * tun etwas (sie erklären sich), und damit gehören sie in die Tab-Reihenfolge.
- * Ein Hinweis, den nur die Maus erreicht, ist kein Hinweis.
+ * VIER SIND OFFEN, VIER TRAGEN EIN SCHLOSS. Offen ist, wofür wir eine
+ * Vorstellung haben, die dem Original entspricht. Geschlossen sind Heute,
+ * Überprüfung, Förderpläne und Klassenanalyse – von diesen Ansichten liegt
+ * kein Screenshot vor, und etwas zu erfinden wäre genau das, was diese Seite
+ * nicht tut.
  *
- * ==========================================================================
- * DER ZÄHLER
- * ==========================================================================
- * Neben „Beobachtungen" steht, wie viele Einträge die Klasse hat. Er tickt
- * mit, sobald der Besucher eine per Diktat ergänzt. Das ist der stillste
- * Entdeckungsmoment der Seite – und der Grund, warum sich das Ganze nach
- * Werkzeug anfühlt und nicht nach Prospekt.
+ * Das Aktiv-Bild folgt dem Original: hellblaue Fläche, blauer Balken links,
+ * blaue Schrift. Die Schriftfarbe ist um eine Stufe dunkler als im Original –
+ * siehe app-reference.ts, es geht um Kontrast.
  */
-export type TourArea =
-  | "beobachtungen"
-  | "zeugnisse"
-  | "elternpost"
-  | "material"
-  | "sitzplan"
-  | "stundenplan"
-  | "entwicklung";
+export type TourArea = "meine-klassen" | "live-unterricht" | "timeline" | "material";
 
 type Entry = {
   key: string;
   label: string;
   icon: LucideIcon;
-  /** Offen? Sonst gesperrt mit Schloss und Hinweis. */
   area?: TourArea;
 };
 
 const ENTRIES: Entry[] = [
+  { key: "heute", label: "Heute", icon: Home },
+  { key: "meine-klassen", label: "Meine Klassen", icon: Users, area: "meine-klassen" },
   {
-    key: "beobachtungen",
-    label: "Beobachtungen",
-    icon: ClipboardList,
-    area: "beobachtungen",
+    key: "live-unterricht",
+    label: "Live-Unterricht",
+    icon: Mic,
+    area: "live-unterricht",
   },
-  { key: "klassen", label: "Klassen", icon: Users },
-  { key: "zeugnisse", label: "Zeugnisse", icon: ScrollText, area: "zeugnisse" },
-  { key: "elternpost", label: "Elternpost", icon: Mail, area: "elternpost" },
-  { key: "material", label: "Material", icon: FolderOpen, area: "material" },
-  { key: "entwuerfe", label: "Entwürfe", icon: NotebookPen },
-  { key: "sitzplan", label: "Sitzplan", icon: LayoutGrid, area: "sitzplan" },
-  {
-    key: "stundenplan",
-    label: "Stundenplan",
-    icon: CalendarDays,
-    area: "stundenplan",
-  },
-  { key: "dokumente", label: "Dokumente", icon: Files },
-  {
-    key: "entwicklung",
-    label: "Entwicklung",
-    icon: TrendingUp,
-    area: "entwicklung",
-  },
-  { key: "bibliothek", label: "Bibliothek", icon: BookMarked },
+  { key: "timeline", label: "Timeline", icon: Clock, area: "timeline" },
+  { key: "ueberpruefung", label: "Überprüfung", icon: Clipboard },
+  { key: "foerderplaene", label: "Förderpläne", icon: Heart },
+  { key: "material", label: "Material", icon: BookOpen, area: "material" },
+  { key: "klassenanalyse", label: "Klassenanalyse", icon: TrendingUp },
 ];
 
 export const LOCKED_HINT =
   "Diesen Bereich zeigen wir Ihnen persönlich – im Kennenlernen.";
 
+/** Wie viele Einträge tragen ein Schloss? Für den Satz unter dem Fenster. */
+export const LOCKED_COUNT = ENTRIES.filter((entry) => !entry.area).length;
+
 type Props = {
   current: TourArea;
   onSelect: (area: TourArea) => void;
-  /** Welcher gesperrte Eintrag erklärt sich gerade? */
   openLock: string | null;
   onLock: (key: string | null) => void;
-  /** Zahl neben „Beobachtungen". */
   observationCount: number;
-  /** Der Bereich, der als nächster vorgeschlagen wird – leuchtet kurz auf. */
   suggested: TourArea | null;
 };
 
@@ -116,7 +89,11 @@ export function TourSidebar({
   suggested,
 }: Props) {
   return (
-    <div className="flex w-14 shrink-0 flex-col border-r border-gray-200 bg-surface-alt p-1.5 sm:w-44 sm:p-2">
+    <div className="flex w-14 shrink-0 flex-col border-r border-[var(--app-border)] bg-[var(--app-surface)] p-1.5 sm:w-44 sm:p-2">
+      <span className="mb-2 hidden shrink-0 px-2 text-base font-bold text-[var(--app-blue)] sm:block">
+        {PRODUCT_NAME}
+      </span>
+
       <ul className="flex flex-col gap-0.5">
         {ENTRIES.map((entry) => {
           const Icon = entry.icon;
@@ -134,28 +111,44 @@ export function TourSidebar({
                 onBlur={() => isLocked && onLock(null)}
                 aria-current={isActive ? "true" : undefined}
                 aria-describedby={isLocked ? hintId : undefined}
-                /* Der Name steht IMMER hier und nicht nur im sichtbaren
+                /* Der Name steht im aria-label, nicht nur im sichtbaren
                    <span>: Unter 640 px ist der ausgeblendet, und das Symbol
                    ist aria-hidden – ohne dieses Attribut waere der Schalter
                    dort namenlos. Gemessen, nicht vermutet: Lighthouse prueft
                    in Mobilbreite und hat genau das gemeldet. */
                 aria-label={isLocked ? `${entry.label}, gesperrt` : entry.label}
                 className={cn(
-                  "flex w-full items-center justify-center gap-2 rounded-md px-2 py-1.5 text-left sm:justify-start",
-                  isActive && "bg-brand-100 text-brand-800",
-                  !isActive && !isLocked && "text-ink hover:bg-brand-100",
-                  isLocked && "text-gray-500",
+                  "relative flex w-full items-center justify-center gap-2 rounded-[var(--app-radius-nav)] px-2 py-1.5 text-left sm:justify-start",
+                  isActive &&
+                    "bg-[var(--app-blue-soft)] font-semibold text-[var(--app-blue-on-soft)]",
+                  !isActive &&
+                    !isLocked &&
+                    "text-[var(--app-text)] hover:bg-[var(--app-blue-soft)]",
+                  isLocked && "text-[var(--app-text-muted)]",
                   // Der Vorschlag leuchtet nur auf – er erzwingt nichts.
-                  isSuggested && "ring-1 ring-brand-600 ring-inset",
+                  isSuggested && "ring-1 ring-[var(--app-blue)] ring-inset",
                 )}
               >
-                <Icon aria-hidden="true" className="size-3.5 shrink-0" />
+                {isActive ? (
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-y-0 left-0 w-[3px] rounded-r bg-[var(--app-blue)]"
+                  />
+                ) : null}
+
+                <Icon
+                  aria-hidden="true"
+                  className={cn(
+                    "size-3.5 shrink-0",
+                    isActive && "text-[var(--app-blue)]",
+                  )}
+                />
                 <span className="hidden truncate text-[11px] sm:inline">
                   {entry.label}
                 </span>
 
-                {entry.key === "beobachtungen" ? (
-                  <span className="ml-auto hidden rounded-full bg-surface px-1.5 text-[10px] text-gray-500 sm:inline">
+                {entry.key === "live-unterricht" ? (
+                  <span className="ml-auto hidden rounded-full bg-[var(--app-surface-muted)] px-1.5 text-[10px] text-[var(--app-text-muted)] sm:inline">
                     {observationCount}
                   </span>
                 ) : null}
@@ -175,7 +168,7 @@ export function TourSidebar({
                 <p
                   id={hintId}
                   role="status"
-                  className="absolute top-full left-0 z-10 mt-1 w-52 rounded-md border border-gray-200 bg-surface p-2.5 text-[11px] text-ink shadow-sm"
+                  className="absolute top-full left-0 z-10 mt-1 w-52 rounded-[var(--app-radius-card)] border border-[var(--app-border)] bg-[var(--app-surface)] p-2.5 text-[11px] text-[var(--app-text)] shadow-sm"
                 >
                   {LOCKED_HINT}
                 </p>

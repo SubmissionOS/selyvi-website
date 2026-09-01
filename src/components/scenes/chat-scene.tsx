@@ -66,19 +66,22 @@ export function ChatScene() {
         return (
           <UiWindow
             variant="app"
-            active="beobachtungen"
+            // Freie Fragen an die eigenen Daten laufen im Original unter
+            // „Live-Unterricht" – dort entstehen die Eintraege, auf die der
+            // Chat sich beruft.
+            active="live-unterricht"
             chips={[`Klasse ${DEMO_CLASS}`]}
             className="h-[24rem] sm:h-[21rem]"
           >
             <SceneLabel>Frage an die eigenen Daten</SceneLabel>
 
             {/* ---------- Eingabezeile ---------- */}
-            <div className="mt-3 flex items-start gap-2 rounded-lg border border-gray-200 bg-surface-alt px-3 py-2.5">
+            <div className="mt-3 flex items-start gap-2 rounded-[var(--app-radius-card)] border border-[var(--app-border)] bg-[var(--app-surface-muted)] px-3 py-2.5">
               <MessageSquare
                 aria-hidden="true"
-                className="mt-0.5 size-3.5 shrink-0 text-brand-600"
+                className="mt-0.5 size-3.5 shrink-0 text-[var(--app-blue)]"
               />
-              <p className="min-w-0 text-[13px] leading-relaxed text-ink">
+              <p className="min-w-0 text-[13px] leading-relaxed text-[var(--app-text)]">
                 <TypingText
                   text={FRAGE.text}
                   durationMs={1500}
@@ -95,7 +98,7 @@ export function ChatScene() {
             <div className="mt-4 h-[11.5rem] sm:h-[9.5rem]">
               {answering ? (
                 <div>
-                  <p className="text-[13px] leading-relaxed text-ink">
+                  <p className="text-[13px] leading-relaxed text-[var(--app-text)]">
                     <TypingText
                       text={FRAGE.answer}
                       durationMs={1700}
@@ -113,7 +116,7 @@ export function ChatScene() {
                         animate={moving && showReferences}
                         delayMs={position * 140}
                         className={cn(
-                          "rounded-full border border-gray-200 bg-surface px-2 py-0.5 text-[10px] text-gray-500",
+                          "rounded-full border border-[var(--app-border)] bg-[var(--app-surface)] px-2 py-0.5 text-[10px] text-[var(--app-text-muted)]",
                           showReferences ? "opacity-100" : "opacity-0",
                         )}
                       >
@@ -128,7 +131,7 @@ export function ChatScene() {
             {/* ---------- Die Zusage, die diese Szene braucht ---------- */}
             <p
               className={cn(
-                "mt-1 border-t border-gray-200 pt-3 text-[11px] text-gray-500 transition-opacity",
+                "mt-1 border-t border-[var(--app-border)] pt-3 text-[11px] text-[var(--app-text-muted)] transition-opacity",
                 answering ? "opacity-100" : "opacity-0",
               )}
             >

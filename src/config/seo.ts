@@ -137,7 +137,7 @@ export const routes: RouteMeta[] = [
     path: "/einblick",
     title: "Einblick",
     description:
-      "Ein geführter Einblick mit Beispieldaten: eine Beobachtung festhalten, daraus einen Zeugnistext entstehen lassen, den Sitzplan umstellen. Drei von elf Bereichen sind offen.",
+      "Ein geführter Einblick mit Beispieldaten: eine Beobachtung festhalten, daraus einen Zeugnistext entstehen lassen, den Sitzplan umstellen. Vier von acht Bereichen sind offen.",
     priority: 0.8,
   },
   {

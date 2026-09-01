@@ -93,14 +93,14 @@ export function HeroScene() {
         return (
           <UiWindow
             variant="app"
-            active="beobachtungen"
+            active="live-unterricht"
             chips={[`Klasse ${DEMO_CLASS}`, "Deutsch"]}
           >
             <div className="space-y-4">
               {/* ---------- Bereich 1: Beobachtung ---------- */}
               <div>
                 <div className="flex items-center justify-between gap-3">
-                  <span className="text-xs font-medium tracking-wide text-gray-500 uppercase">
+                  <span className="text-xs font-medium tracking-wide text-[var(--app-text-muted)] uppercase">
                     Beobachtung
                   </span>
 
@@ -114,7 +114,7 @@ export function HeroScene() {
                   </ProgressPulse>
                 </div>
 
-                <div className="mt-2 min-h-24 rounded-lg border border-gray-200 bg-surface-alt p-3 text-sm leading-relaxed text-ink sm:min-h-20">
+                <div className="mt-2 min-h-24 rounded-[var(--app-radius-card)] border border-[var(--app-border)] bg-[var(--app-surface-muted)] p-3 text-sm leading-relaxed text-[var(--app-text)] sm:min-h-20">
                   <TypingText
                     key={`beobachtung-${scene.cycle}`}
                     text={DEMO_READING.input}
@@ -125,11 +125,13 @@ export function HeroScene() {
                 </div>
 
                 <div className="mt-3 flex items-center justify-between gap-3">
-                  <span className="text-xs text-gray-500">Getippt oder diktiert</span>
+                  <span className="text-xs text-[var(--app-text-muted)]">
+                    Getippt oder diktiert
+                  </span>
 
                   {/* Klickziel des Zeigers. Kein echter Button und deshalb
                       auch kein <button>: Die Szene ist als Ganzes ein Bild. */}
-                  <span className="rounded-md bg-brand-600 px-3 py-1.5 text-xs font-medium text-surface">
+                  <span className="rounded-[var(--app-radius-control)] bg-[var(--app-blue)] px-3 py-1.5 text-xs font-medium text-surface">
                     Speichern
                   </span>
                 </div>
@@ -175,9 +177,9 @@ export function HeroScene() {
 
                   `min-h-7` hält die Kopfzeile auf konstanter Höhe, damit das
                   auftauchende Badge den Text darunter nicht verschiebt. */}
-              <div className="border-t border-gray-200 pt-5">
+              <div className="border-t border-[var(--app-border)] pt-5">
                 <div className="flex min-h-7 flex-wrap items-center justify-between gap-2">
-                  <span className="text-xs font-medium tracking-wide text-gray-500 uppercase">
+                  <span className="text-xs font-medium tracking-wide text-[var(--app-text-muted)] uppercase">
                     Zeugnisbemerkung (Entwurf)
                   </span>
 
@@ -185,7 +187,7 @@ export function HeroScene() {
                     <span
                       key={`stil-${scene.cycle}`}
                       className={cn(
-                        "inline-flex items-center gap-1.5 rounded-full bg-brand-100 px-2.5 py-1 text-xs font-medium text-brand-800",
+                        "inline-flex items-center gap-1.5 rounded-full bg-[var(--app-blue-soft)] px-2.5 py-1 text-xs font-medium text-[var(--app-blue-on-soft)]",
                         moving && "animate-chip-pop",
                       )}
                     >
@@ -195,7 +197,7 @@ export function HeroScene() {
                   ) : null}
                 </div>
 
-                <p className="mt-3 min-h-28 text-sm leading-relaxed text-ink sm:min-h-20">
+                <p className="mt-3 min-h-28 text-sm leading-relaxed text-[var(--app-text)] sm:min-h-20">
                   {drafting ? (
                     <TypingText
                       key={`entwurf-${scene.cycle}`}

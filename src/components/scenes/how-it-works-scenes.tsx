@@ -31,7 +31,7 @@ import { SceneTimeline, type SceneStep } from "@/components/scenes/scene-timelin
 /** Gemeinsame Bühne. `relative` ist Voraussetzung für <FakeCursor />. */
 function MiniStage({ children }: { children: ReactNode }) {
   return (
-    <div className="relative h-28 overflow-hidden rounded-lg border border-gray-200 bg-surface-alt p-3">
+    <div className="relative h-28 overflow-hidden rounded-[var(--app-radius-card)] border border-[var(--app-border)] bg-[var(--app-surface-muted)] p-3">
       {children}
     </div>
   );
@@ -62,13 +62,13 @@ export function ReportScene({ startDelayMs = 0 }: { startDelayMs?: number }) {
         return (
           <MiniStage>
             <div className="flex h-full flex-col justify-between">
-              <span className="text-[9px] font-medium tracking-wide text-gray-500 uppercase">
+              <span className="text-[9px] font-medium tracking-wide text-[var(--app-text-muted)] uppercase">
                 Entlastungsbericht
               </span>
 
               <div className="flex items-end justify-between gap-3">
                 <div className="min-w-0">
-                  <div className="text-xl leading-none font-semibold text-ink">
+                  <div className="text-xl leading-none font-semibold text-[var(--app-text)]">
                     <CountUp
                       key={`stunden-${scene.cycle}`}
                       value={DEMO_RELIEF_MONTH.hours}
@@ -83,7 +83,7 @@ export function ReportScene({ startDelayMs = 0 }: { startDelayMs?: number }) {
                   {/* „Gewonnene Zeit", nicht „Wirkung" – und der Schätzwert
                       steht dauerhaft dabei, nicht als Fussnote. Beides folgt
                       docs/produktstand-2026-08.md. */}
-                  <div className="mt-1 truncate text-[9px] text-gray-500">
+                  <div className="mt-1 truncate text-[9px] text-[var(--app-text-muted)]">
                     gewonnene Zeit · {DEMO_RELIEF_MONTH.note}
                   </div>
                 </div>
@@ -97,8 +97,8 @@ export function ReportScene({ startDelayMs = 0 }: { startDelayMs?: number }) {
                       className={cn(
                         "h-full w-3.5 origin-bottom rounded-t",
                         position === BAR_HEIGHTS.length - 1
-                          ? "bg-brand-100"
-                          : "bg-gray-200",
+                          ? "bg-[var(--app-blue-soft)]"
+                          : "bg-[var(--app-border)]",
                         moving && "transition-transform duration-700 ease-out",
                       )}
                       style={{

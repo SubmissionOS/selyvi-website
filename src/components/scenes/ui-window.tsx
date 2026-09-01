@@ -1,16 +1,13 @@
 import type { ReactNode } from "react";
 import {
   Bell,
-  BookMarked,
-  CalendarDays,
-  ClipboardList,
+  BookOpen,
+  Clipboard,
+  Clock,
   FileBarChart,
-  Files,
-  FolderOpen,
-  LayoutGrid,
-  Mail,
-  NotebookPen,
-  ScrollText,
+  Heart,
+  Home,
+  Mic,
   TrendingUp,
   Users,
   type LucideIcon,
@@ -22,6 +19,8 @@ import {
   DEMO_NAV_TEACHER,
   type DemoNavKey,
 } from "@/config/demo-data";
+import { PRODUCT_NAME } from "@/config/brand";
+import { APP_CSS_VARS } from "@/config/app-reference";
 import { Wordmark } from "@/components/layout/wordmark";
 
 /**
@@ -47,6 +46,19 @@ import { Wordmark } from "@/components/layout/wordmark";
  * tabIndex. Was aussieht wie Navigation, aber auf einer Marketingseite nicht
  * navigiert, ist für Tastatur- und Screenreader-Nutzende eine Falle. Der
  * einzige, der hier „klickt", ist der gezeichnete Szenen-Zeiger.
+ * ==========================================================================
+ *
+ * ==========================================================================
+ * DIE OPTIK FOLGT DER ECHTEN ANWENDUNG
+ * --------------------------------------------------------------------------
+ * Farben, Navigation und Aufbau kommen aus docs/app-referenz/*.png. Die
+ * Werte stehen gemessen in src/config/app-reference.ts und werden hier als
+ * CSS-Variablen auf das Fenster gelegt – ausserhalb des Fensters gibt es sie
+ * nicht, die Website behaelt ihre eigenen Tokens.
+ *
+ * Das Fenster-Chrome (Punkte, Pfadleiste) bleibt bewusst das der Website: Es
+ * sagt „hier wird etwas GEZEIGT". Darin steht dann die Anwendung, so nah am
+ * Original wie moeglich.
  * ==========================================================================
  *
  * `relative` liegt auf dem ÄUSSEREN Kasten, nicht auf dem Inhaltsbereich:
@@ -94,10 +106,13 @@ type Props = {
    * Welche Seitenleiste? „lehrkraft" ist der Arbeitsbereich einer Lehrkraft,
    * „leitung" der Leitungsmodus.
    *
-   * Die Lehrkraft-Liste ist bewusst LANG und traegt am Ende eine
-   * ausgegraute „+ weitere"-Zeile: Wer eine Szene sieht, soll erkennen, dass
-   * die erklaerte Funktion ein Ausschnitt ist. Die Leitungs-Liste ist
-   * vollstaendig und traegt die Zeile deshalb NICHT.
+   * Die Lehrkraft-Liste ist seit dem Abgleich mit docs/app-referenz/ die
+   * ECHTE Navigation der Anwendung – acht Punkte, in ihrer Reihenfolge. Die
+   * frueher angehaengte Zeile „+ weitere" ist damit entfallen: Diese acht
+   * sind die Navigation und nicht ihr Ausschnitt.
+   *
+   * Die Leitungs-Liste ist weiterhin aus dem Produktstand hergeleitet – von
+   * dieser Ansicht liegt kein Screenshot vor.
    */
   navSet?: "lehrkraft" | "leitung";
   /**
@@ -113,19 +128,24 @@ type Props = {
   className?: string;
 };
 
-/** Icons der Navigation. Gehören zur Darstellung, nicht zu den Demo-Daten. */
+/**
+ * Symbole der Navigation.
+ *
+ * Abgelesen aus docs/app-referenz/Material-generator.png – dort steht neben
+ * jedem Eintrag eines. Die lucide-Entsprechungen sind die naechstliegenden;
+ * exakt dieselbe Zeichnung ist es nicht, weil das Original einen anderen Satz
+ * benutzt. Fuer den Wiedererkennungswert zaehlt die Form: Haus, Personen,
+ * Mikrofon, Uhr, Klemmbrett, Herz, aufgeschlagenes Buch, steigende Linie.
+ */
 const NAV_ICONS: Record<DemoNavKey, LucideIcon> = {
-  beobachtungen: ClipboardList,
-  klassen: Users,
-  zeugnisse: ScrollText,
-  elternpost: Mail,
-  material: FolderOpen,
-  entwuerfe: NotebookPen,
-  sitzplan: LayoutGrid,
-  stundenplan: CalendarDays,
-  dokumente: Files,
-  entwicklung: TrendingUp,
-  bibliothek: BookMarked,
+  heute: Home,
+  "meine-klassen": Users,
+  "live-unterricht": Mic,
+  timeline: Clock,
+  ueberpruefung: Clipboard,
+  foerderplaene: Heart,
+  material: BookOpen,
+  klassenanalyse: TrendingUp,
   entlastungsbericht: FileBarChart,
   "lehrer-klassen": Users,
   nutzung: TrendingUp,
@@ -150,14 +170,22 @@ export function UiWindow({
 
     return (
       <div
+        style={APP_CSS_VARS}
         className={cn(
-          "relative flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-surface",
+          "relative flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-[var(--app-canvas)]",
           className,
         )}
       >
-        {/* ---------- Kopfzeile: Wortmarke und Kontext ---------- */}
+        {/* ---------- Fenster-Chrome der WEBSITE ----------
+            Punkte und Pfadleiste sind kein Teil der Anwendung – sie sind der
+            Rahmen, in dem wir sie zeigen. Deshalb tragen sie weiter die
+            Website-Tokens und nicht die Referenz-Werte. */}
         <div className="flex shrink-0 items-center gap-2 border-b border-gray-200 bg-surface-alt px-3 py-2 sm:gap-3 sm:px-4">
-          <Wordmark className="shrink-0 text-sm" />
+          <span className="flex shrink-0 gap-1" aria-hidden="true">
+            <span className="size-2 rounded-full bg-gray-200" />
+            <span className="size-2 rounded-full bg-gray-200" />
+            <span className="size-2 rounded-full bg-gray-200" />
+          </span>
 
           {chips && chips.length > 0 ? (
             <div className="flex min-w-0 items-center gap-1.5 overflow-hidden">
@@ -192,59 +220,66 @@ export function UiWindow({
         </div>
 
         <div className="flex min-h-0 flex-1">
-          {/* ---------- Seitenleiste ----------
-              Unter 640 px schrumpft sie auf eine reine Icon-Spalte: Die
-              Beschriftungen verschwinden, die Struktur bleibt. Genau das ist
-              der Grund, warum die lange Liste auf 390 px kein Problem wird.
+          {/* ---------- Seitenleiste, nach dem Original ----------
+              Wortmarke oben, darunter die acht Eintraege. Aktiv heisst im
+              Original: hellblaue Flaeche, 4 px blauer Balken links, blaue
+              Schrift.
 
-              Die Liste laeuft in einem `overflow-hidden`-Bereich: In hohen
-              Fenstern steht sie vollstaendig, in niedrigen bricht sie unten ab
-              – wie eine echte Seitenleiste, die weitergeht. Die „+ weitere"-
-              Zeile ist deshalb am Fuss ANGEHEFTET und nicht das letzte
-              Listenelement: Sie muss auch dann sichtbar sein, wenn abgeschnitten
-              wird, denn sie traegt die Aussage. */}
+              ZWEI ABWEICHUNGEN, BEIDE GEMESSEN UND BEIDE GEWOLLT:
+
+              1. BREITE. Im Original sind es 270 von 1897 px, also 14,2 %.
+                 Unsere Szenenfenster sind rund 600 px breit – 14,2 % waeren
+                 85 px, und darin steht „Live-Unterricht" nicht mehr. Die
+                 Leiste ist deshalb absolut bemessen (144 px ab sm) und
+                 unterhalb von sm eine reine Symbolspalte. APP_SIDEBAR_RATIO
+                 haelt den Originalwert fest, damit die Abweichung sichtbar
+                 bleibt und nicht vergessen wird.
+
+              2. SCHRIFTFARBE des aktiven Eintrags. Siehe app-reference.ts:
+                 das Blau des Originals erreicht auf dem hellblauen Grund nur
+                 3,99:1. */}
           {navSlot ?? (
             <div
               aria-hidden="true"
               className={cn(
-                "flex w-11 shrink-0 flex-col border-r border-gray-200 bg-surface-alt p-1.5 sm:p-2",
-                // Der Leitungsmodus braucht 16 px mehr: „Nutzung im Kollegium"
-                // wird bei w-40 abgeschnitten, und ein halber Bereichsname sieht
-                // aus wie ein Fehler statt wie eine lange Liste.
-                navSet === "leitung" ? "sm:w-44" : "sm:w-40",
+                "flex w-11 shrink-0 flex-col gap-0.5 overflow-hidden border-r bg-[var(--app-surface)] p-1.5 sm:p-2",
+                "border-[var(--app-border)]",
+                navSet === "leitung" ? "sm:w-44" : "sm:w-36",
               )}
             >
-              <div className="flex min-h-0 flex-1 flex-col gap-0.5 overflow-hidden">
-                {entries.map((entry) => {
-                  const Icon = NAV_ICONS[entry.key];
-                  const isActive = entry.key === active;
+              <span className="mb-1 hidden shrink-0 px-2 text-sm font-bold text-[var(--app-blue)] sm:block">
+                {PRODUCT_NAME}
+              </span>
 
-                  return (
-                    <span
-                      key={entry.key}
+              {entries.map((entry) => {
+                const Icon = NAV_ICONS[entry.key];
+                const isActive = entry.key === active;
+
+                return (
+                  <span
+                    key={entry.key}
+                    className={cn(
+                      "relative flex shrink-0 items-center justify-center gap-2 rounded-[var(--app-radius-nav)] px-2 py-1.5 sm:justify-start",
+                      isActive
+                        ? "bg-[var(--app-blue-soft)] font-semibold text-[var(--app-blue-on-soft)]"
+                        : "text-[var(--app-text-muted)]",
+                    )}
+                  >
+                    {isActive ? (
+                      <span className="absolute inset-y-0 left-0 w-[3px] rounded-r bg-[var(--app-blue)]" />
+                    ) : null}
+                    <Icon
                       className={cn(
-                        "flex shrink-0 items-center justify-center gap-2 rounded-md px-2 py-1.5 sm:justify-start",
-                        isActive ? "bg-brand-100 text-brand-800" : "text-gray-500",
+                        "size-3.5 shrink-0",
+                        isActive && "text-[var(--app-blue)]",
                       )}
-                    >
-                      <Icon className="size-3.5 shrink-0" />
-                      <span className="hidden truncate text-[11px] sm:inline">
-                        {entry.label}
-                      </span>
+                    />
+                    <span className="hidden truncate text-[11px] sm:inline">
+                      {entry.label}
                     </span>
-                  );
-                })}
-              </div>
-
-              {/* Ausgegraut und ohne Symbol – sie ist kein Bereich, sondern der
-                  Hinweis, dass die Liste weitergeht. Auf der Icon-Spalte steht
-                  dafuer nur ein Auslassungszeichen. */}
-              {navSet === "lehrkraft" ? (
-                <span className="mt-1 flex shrink-0 items-center justify-center px-2 py-1 text-[11px] text-gray-500 sm:justify-start">
-                  <span className="sm:hidden">…</span>
-                  <span className="hidden sm:inline">+ weitere</span>
-                </span>
-              ) : null}
+                  </span>
+                );
+              })}
             </div>
           )}
 
@@ -253,7 +288,9 @@ export function UiWindow({
               Kind hier drin, spannt sich aber über den ganzen Rahmen – er
               muss auch die Kontext-Chips in der Kopfzeile erreichen können.
               Abgeschnitten wird ohnehin, nämlich vom äusseren Kasten. */}
-          <div className="min-w-0 flex-1 p-3 sm:p-4">{children}</div>
+          <div className="min-w-0 flex-1 p-3 text-[var(--app-text)] sm:p-4">
+            {children}
+          </div>
         </div>
       </div>
     );
