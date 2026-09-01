@@ -29,8 +29,7 @@ const steps = [
   },
   {
     title: "Gemeinsame Ersteinrichtung der Klassen",
-    description:
-      "Klassen und Kinder legen wir zusammen mit Ihnen an – angelegt, nicht importiert. Eine Schnittstelle zu Schulverwaltungssoftware ist geplant; bis dahin ist das für eine große Schule ein spürbarer Startaufwand, den wir von Anfang an einplanen statt ihn zu übergehen.",
+    description: "Klassen und Kinder richten wir gemeinsam mit Ihnen ein.",
   },
   {
     title: "Persönliche Einweisung",
@@ -38,9 +37,8 @@ const steps = [
       "Statt einer Einführungstour im Produkt begleiten wir den Einstieg persönlich, gemeinsam mit den Lehrkräften, die anfangen.",
   },
   {
-    title: "Rollout im Kollegium",
-    description:
-      "Die Einführung im gesamten Kollegium folgt, wenn die Pilotphase abgeschlossen ist.",
+    title: "Einführung im Kollegium",
+    description: "Nach der Pilotphase führen wir Selyvi im gesamten Kollegium ein.",
   },
 ];
 

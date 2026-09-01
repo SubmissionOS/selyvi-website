@@ -46,9 +46,14 @@ export default function DatenschutzPage() {
         </h1>
 
         <p className="mt-6 max-w-2xl text-lg text-gray-500">
+          {/* Der Halbsatz „die sich in Entwicklung befindet" ist entfallen
+              (CLAUDE.md, Regel D). Der Geltungsbereich steht damit unveraendert
+              da: Diese Erklaerung gilt fuer die Website und nicht fuer die
+              Anwendung. Die Reifeangabe war fuer diese Abgrenzung nie noetig.
+              Rechtstexte sind von Regel D ausgenommen – dieser Satz ist aber
+              kein Vorlagentext, sondern selbst geschrieben. */}
           Diese Erklärung beschreibt, welche Daten beim Besuch dieser Website verarbeitet
-          werden. Sie gilt für die Website – nicht für die Anwendung {PRODUCT_NAME}, die
-          sich in Entwicklung befindet.
+          werden. Sie gilt für die Website – nicht für die Anwendung {PRODUCT_NAME}.
         </p>
 
         {!PRIVACY_APPROVED ? (

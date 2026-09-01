@@ -34,7 +34,10 @@ Drei Regeln, die für jede Textänderung gelten:
 1. Nur als **Live** markierte Funktionen dürfen als verfügbar beschrieben
    werden.
 2. **Rollout offen**, **Teilweise** und **Nicht gebaut** dürfen nicht als
-   verfügbar erscheinen – auch nicht abgeschwächt. Ihr Platz ist `roadmap.tsx`.
+   verfügbar erscheinen – auch nicht abgeschwächt. Sie haben auf der Website
+   **gar keinen Platz mehr**: Was es nicht gibt, wird nicht angekündigt,
+   sondern weggelassen (CLAUDE.md, Regel D). Die frühere Sektion „In Arbeit"
+   und die beiden Ausblick-Szenen sind entfallen.
 3. Nichts aus dem Abschnitt „Was du im Gespräch nicht versprechen darfst" darf
    als Zusage auf der Website stehen.
 
@@ -394,8 +397,7 @@ dieselbe Komponente wie auf der Startseite.
 | 1   | Intro (einzige H1, kein CTA)     | `product-intro.tsx`                              |
 | 2   | Prinzip-Band                     | `principle-band.tsx`                             |
 | 3   | Vier Funktionsblöcke (wechselnd) | `function-blocks.tsx` + `function-skeletons.tsx` |
-| 4   | Ausblick „In Arbeit“             | `roadmap.tsx`                                    |
-| 5   | Abschluss-CTA (wiederverwendet)  | `../final-cta.tsx`                               |
+| 4   | Abschluss-CTA (wiederverwendet)  | `../final-cta.tsx`                               |
 
 ## Für Schulen (/schulen)
 
@@ -767,18 +769,18 @@ streicht die Zeile aus dieser Liste.
 
 ### Blockiert nichts, aber sollte kommen
 
-| #   | Punkt                                                                                                                   | Wo einzutragen                                                                                   | Zuständigkeit     |
-| --- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ----------------- |
-| 1   | Beschreibungssatz je Person (3×)                                                                                        | `description` in [team.ts](src/config/team.ts)                                                   | die Person selbst |
-| 2   | Fotos statt Initialen-Avatare                                                                                           | `team-grid.tsx`, Hinweistext dort mit anpassen                                                   | Team              |
-| 3   | Konkrete Zahlen zur Praxis-Aussage (X Lehrkräfte, Schularten)                                                           | `PRACTICE_CLAIM` in [brand.ts](src/config/brand.ts) **und** der Nebensatz in `why-it-exists.tsx` | Team              |
-| 4   | Praxis-Beispiele je Funktionsblock (welcher Lehrkraft-Hinweis prägte die Funktion?)                                     | `function-blocks.tsx`, als neue Mikrozeile                                                       | Team              |
-| 5   | Dauer und Umfang der Pilotphase, Schulungsformat                                                                        | `rollout-timeline.tsx`                                                                           | Produkt           |
-| 6   | Einführungsaufwand als FAQ-Frage aufnehmen (der Ablauf selbst steht seit 21.08.2026 in `rollout-timeline.tsx`)          | `leadership-faq.tsx`                                                                             | Produkt           |
-| 7   | Unterlagen-Paket für Personalrat und Datenschutzbeauftragte                                                             | `leadership-faq.tsx`, Antwort ergänzen                                                           | Produkt + Recht   |
-| 8   | Dediziertes Postfach für Datenschutzanfragen                                                                            | `for-dpos.tsx`, danach `legal.ts`                                                                | Betrieb           |
-| 9   | Roadmap-Punkte nach Fertigstellung nach oben verschieben: Stilprofil per Upload, Übernahme von Original-Arbeitsblättern | aus `roadmap.tsx` in `function-blocks.tsx`                                                       | Produkt           |
-| 10  | Mehrkanalige, spielerischere Aufgabenformate (Rückmeldung einer Testerin: Material wirkt „zu trocken“)                  | erst Produkt, dann `function-blocks.tsx`                                                         | Produkt           |
+| #   | Punkt                                                                                                                                                                                      | Wo einzutragen                                                                                   | Zuständigkeit     |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ----------------- |
+| 1   | Beschreibungssatz je Person (3×)                                                                                                                                                           | `description` in [team.ts](src/config/team.ts)                                                   | die Person selbst |
+| 2   | Fotos statt Initialen-Avatare                                                                                                                                                              | `team-grid.tsx`, Hinweistext dort mit anpassen                                                   | Team              |
+| 3   | Konkrete Zahlen zur Praxis-Aussage (X Lehrkräfte, Schularten)                                                                                                                              | `PRACTICE_CLAIM` in [brand.ts](src/config/brand.ts) **und** der Nebensatz in `why-it-exists.tsx` | Team              |
+| 4   | Praxis-Beispiele je Funktionsblock (welcher Lehrkraft-Hinweis prägte die Funktion?)                                                                                                        | `function-blocks.tsx`, als neue Mikrozeile                                                       | Team              |
+| 5   | Dauer und Umfang der Pilotphase, Schulungsformat                                                                                                                                           | `rollout-timeline.tsx`                                                                           | Produkt           |
+| 6   | Einführungsaufwand als FAQ-Frage aufnehmen (der Ablauf selbst steht seit 21.08.2026 in `rollout-timeline.tsx`)                                                                             | `leadership-faq.tsx`                                                                             | Produkt           |
+| 7   | Unterlagen-Paket für Personalrat und Datenschutzbeauftragte                                                                                                                                | `leadership-faq.tsx`, Antwort ergänzen                                                           | Produkt + Recht   |
+| 8   | Dediziertes Postfach für Datenschutzanfragen                                                                                                                                               | `for-dpos.tsx`, danach `legal.ts`                                                                | Betrieb           |
+| 9   | Stilprofil per Upload und Übernahme von Original-Arbeitsblättern: sobald sie **ausgeliefert** sind, gehören sie in die Funktionsblöcke. Vorher steht dazu nichts auf der Website – Regel D | `function-blocks.tsx`                                                                            | Produkt           |
+| 10  | Mehrkanalige, spielerischere Aufgabenformate (Rückmeldung einer Testerin: Material wirkt „zu trocken“)                                                                                     | erst Produkt, dann `function-blocks.tsx`                                                         | Produkt           |
 
 ### Rechtlich / vertraglich
 
@@ -798,16 +800,16 @@ streicht die Zeile aus dieser Liste.
 
 ### Technisch
 
-| #   | Punkt                                                                                                                                                                                                                                                                                                                                    | Wo                                                 | Zuständigkeit   |
-| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | --------------- |
-| 20  | Domain kaufen, danach `SITE_URL` und `DEMO_MAIL_FROM` setzen                                                                                                                                                                                                                                                                             | siehe „Launch-Restschritte"                        | Betrieb         |
-| 21  | Content-Security-Policy                                                                                                                                                                                                                                                                                                                  | `next.config.ts`                                   | Technik         |
-| 22  | Fehler-Monitoring statt Konsolen-Log                                                                                                                                                                                                                                                                                                     | `error.tsx`                                        | Technik         |
-| 23  | Routenweise Code-Aufteilung (173 kB auf jeder Route)                                                                                                                                                                                                                                                                                     | siehe [AUDIT.md](AUDIT.md)                         | Technik         |
-| 24  | Kontaktadresse auf `kontakt@selyvi.de` umstellen (Gmail ist Übergang)                                                                                                                                                                                                                                                                    | `email` in [legal.ts](src/config/legal.ts)         | Betrieb         |
-| 25  | Serverumzug nach Deutschland und AVV abschließen, danach `PRODUCT_HOSTING_NOTE` neu formulieren und die Roadmap-Karte entfernen                                                                                                                                                                                                          | [product.ts](src/config/product.ts), `roadmap.tsx` | Technik + Recht |
-| 26  | Produkt-Umbenennung Mira → Selyvi (Oberfläche, Login, PDF-Export des Entlastungsberichts, Domains, CSV-Dateiname der CRM-Schnittstelle)                                                                                                                                                                                                  | Produkt, nicht diese Website                       | Produkt         |
-| 27  | **CRM-Übergabe scharf schalten:** `CRM_INBOUND_URL` = `https://www.mira-crm.de/api/inbound/website-lead` und `WEBSITE_INBOUND_KEY` in der Vercel-Oberfläche setzen (beide ohne `NEXT_PUBLIC_`, nur Production + Preview nach Bedarf). Solange eine der beiden fehlt, wird der Weg still übersprungen – die Brevo-Mail geht trotzdem raus | Vercel-Projekteinstellungen                        | Betrieb         |
+| #   | Punkt                                                                                                                                                                                                                                                                                                                                    | Wo                                         | Zuständigkeit   |
+| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ | --------------- |
+| 20  | Domain kaufen, danach `SITE_URL` und `DEMO_MAIL_FROM` setzen                                                                                                                                                                                                                                                                             | siehe „Launch-Restschritte"                | Betrieb         |
+| 21  | Content-Security-Policy                                                                                                                                                                                                                                                                                                                  | `next.config.ts`                           | Technik         |
+| 22  | Fehler-Monitoring statt Konsolen-Log                                                                                                                                                                                                                                                                                                     | `error.tsx`                                | Technik         |
+| 23  | Routenweise Code-Aufteilung (173 kB auf jeder Route)                                                                                                                                                                                                                                                                                     | siehe [AUDIT.md](AUDIT.md)                 | Technik         |
+| 24  | Kontaktadresse auf `kontakt@selyvi.de` umstellen (Gmail ist Übergang)                                                                                                                                                                                                                                                                    | `email` in [legal.ts](src/config/legal.ts) | Betrieb         |
+| 25  | Serverumzug nach Deutschland und AVV abschließen, danach `PRODUCT_HOSTING_NOTE` neu formulieren – es ist die letzte Einschränkung auf der ganzen Website                                                                                                                                                                                 | [product.ts](src/config/product.ts)        | Technik + Recht |
+| 26  | Produkt-Umbenennung Mira → Selyvi (Oberfläche, Login, PDF-Export des Entlastungsberichts, Domains, CSV-Dateiname der CRM-Schnittstelle)                                                                                                                                                                                                  | Produkt, nicht diese Website               | Produkt         |
+| 27  | **CRM-Übergabe scharf schalten:** `CRM_INBOUND_URL` = `https://www.mira-crm.de/api/inbound/website-lead` und `WEBSITE_INBOUND_KEY` in der Vercel-Oberfläche setzen (beide ohne `NEXT_PUBLIC_`, nur Production + Preview nach Bedarf). Solange eine der beiden fehlt, wird der Weg still übersprungen – die Brevo-Mail geht trotzdem raus | Vercel-Projekteinstellungen                | Betrieb         |
 
 Zu Punkt 25: Bis der Umzug durch ist, ist der Serverstandort die erste Angabe,
 nach der eine Datenschutzbeauftragte fragt. Die Website sagt dazu heute an vier
@@ -825,18 +827,23 @@ Footer und die Fallback-Zeile des Demo-Formulars gemeinsam.
 
 ### Was bewusst auf der Seite bleibt
 
-Diese Formulierungen sind **Ankündigungen, keine Platzhalter** – sie sagen wahr,
-dass etwas noch nicht entschieden ist, und gehören genau so auf die Seite:
+Seit Regel D (CLAUDE.md) ist diese Liste kurz geworden. **Ankündigungen gibt
+es nicht mehr** – was es nicht gibt, steht nicht auf der Seite. Übrig bleiben:
 
-- „In Arbeit"-Karten auf /produkt: Serverumzug („In Vorbereitung"), Anbindung an
-  Schulverwaltungssoftware („Geplant"), Stilprofil per Upload („In Arbeit")
-- Prinzipien-Karte „Hosting der Anwendung": nennt den Umzug als Vorhaben, nicht
-  als erledigt
-- Prinzipien-Karten „KI-Verarbeitung" und „Löschkonzept"
-- Einführungs-Schritte auf /schulen, die eine Grenze benennen: keine
-  Selbstregistrierung, Anlage statt Import, keine Einführungstour im Produkt
+- **`PRODUCT_HOSTING_NOTE`** – der Serverstandort. Die einzige erlaubte
+  Einschränkung der ganzen Website, unverändert im Wortlaut, an vier Stellen
+  aus derselben Konstante.
+- **`SCHOOL_TYPE_ANSWER`** – „Weitere Schulformen folgen." Ausbau, keine
+  Reife; von CEO und CMO so gewollt.
+- Einführungs-Schritte auf /schulen, die eine **Grenze** benennen statt eines
+  Vorhabens: keine Selbstregistrierung, Anlage statt Import, keine
+  Einführungstour im Produkt. Alle im Präsens.
 - Die Zeile „Diese Erklärung befindet sich in laufender juristischer Prüfung."
-  auf /datenschutz
+  auf /datenschutz – Rechtstext, von Regel D ausgenommen.
+
+Entfallen sind: die Sektion „In Arbeit" auf /fuer-lehrkraefte samt beider
+Ausblick-Szenen, alle Sätze über eine geplante Schulverwaltungs-Schnittstelle,
+„vor dem Produktstart" in drei Fassungen und „Fotos folgen." auf /ueber-uns.
 
 Der Rollen-Block auf /schulen und die Prinzipien-Karte „Rollen & Rechte" standen
 hier bis zum 21.08.2026 ebenfalls als Ankündigung. Beide sind jetzt beantwortet:

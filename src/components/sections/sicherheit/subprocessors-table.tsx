@@ -30,7 +30,7 @@ export function SubprocessorsTable() {
         <p className="mt-6 max-w-2xl text-lg text-gray-500">
           Wir setzen Dienstleister ein, die in unserem Auftrag personenbezogene Daten
           verarbeiten. Die vollständige Liste unserer Auftragsverarbeiter veröffentlichen
-          wir hier vor dem Produktstart.
+          wir hier.
         </p>
       </div>
     </section>

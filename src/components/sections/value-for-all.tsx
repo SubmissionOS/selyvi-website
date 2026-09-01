@@ -105,7 +105,7 @@ const columns: ValueColumn[] = [
     points: [
       "Die Schulleitung kann den Entlastungsbericht als PDF vorlegen",
       "Geschätzte Zahlen sind als Schätzwerte gekennzeichnet, nicht als Messwerte",
-      "Die Wirkungsmessung ist im Aufbau – der Stand steht im Klartext dabei",
+      "Die Wirkungszeile ordnet jede Zahl ein: Messwert oder Schätzwert",
     ],
   },
 ];

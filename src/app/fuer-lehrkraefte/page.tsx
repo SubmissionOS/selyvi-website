@@ -8,7 +8,6 @@ import { PrincipleBand } from "@/components/sections/produkt/principle-band";
 import { FunctionBlocks } from "@/components/sections/produkt/function-blocks";
 import { ExcerptNote } from "@/components/sections/produkt/excerpt-note";
 import { EverydayExtras } from "@/components/sections/produkt/everyday-extras";
-import { Roadmap } from "@/components/sections/produkt/roadmap";
 import { CoCreateBand } from "@/components/sections/produkt/co-create-band";
 import { FinalCta } from "@/components/sections/final-cta";
 
@@ -38,9 +37,6 @@ export default function ProduktPage() {
       </Reveal>
       <Reveal>
         <EverydayExtras />
-      </Reveal>
-      <Reveal>
-        <Roadmap />
       </Reveal>
       <Reveal>
         <CoCreateBand />

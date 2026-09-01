@@ -11,7 +11,8 @@ import { PRODUCT_NAME, SCHOOL_TYPE_ANSWER } from "@/config/brand";
  *
  * Der zweite Absatz sagt ausdruecklich, dass hier nur Vorhandenes steht. Das
  * ist keine Floskel, sondern die Zusage, an der die Seite gemessen werden
- * darf – und der Grund, warum <Roadmap /> darunter ueberhaupt noetig ist.
+ * darf. Sie gilt inzwischen fuer die GANZE Seite: Die Sektion „In Arbeit"
+ * darunter gibt es nicht mehr (CLAUDE.md, Regel D).
  */
 export function ProductIntro() {
   return (
@@ -27,11 +28,8 @@ export function ProductIntro() {
         {/* ZWEI SAETZE, mehr nicht. Die Ueberschrift traegt die Aussage; der
             Text darunter soll sie nicht verduennen.
 
-            Entfallen ist der Hinweis „Was noch nicht fertig ist, finden Sie
-            weiter unten unter In Arbeit". Er ging nicht verloren: Die Sektion
-            „In Arbeit" fuehrt ihn selbst („Diese Punkte sind noch nicht
-            verfügbar. Wir führen sie hier auf, damit Sie einschätzen können,
-            was bereits geht und worauf Sie warten würden."). */}
+            Die Sektion „In Arbeit", auf die hier frueher verwiesen wurde, gibt
+            es nicht mehr – siehe CLAUDE.md, Regel D. */}
         <p className="mt-6 max-w-2xl text-lg text-gray-500">
           Zeugniszeit heißt Wochenenden am Schreibtisch, Elternpost heißt Abende. Genau
           diese Arbeit nimmt {PRODUCT_NAME} Ihnen ab – nicht die Entscheidungen.

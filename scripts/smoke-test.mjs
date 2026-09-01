@@ -11,7 +11,7 @@
  *   4. noindex ausschließlich auf /datenschutz
  *   5. Sitemap und robots.txt erreichbar und konsistent
  *   6. Kein alter Produktname, keine Secret-Muster in der Ausgabe
- *   7. Ton-Regeln A, B und C aus CLAUDE.md im sichtbaren Text und in aria-labels
+ *   7. Ton-Regeln A bis D aus CLAUDE.md im sichtbaren Text und in aria-labels
  *
  * Die Formular-Pfade lassen sich so nicht prüfen – Server Actions brauchen
  * einen Browser. Dafür gibt es scripts/formular-test.mjs (npm run
@@ -149,7 +149,7 @@ console.log("\n=== Ausgabe-Hygiene ===");
   console.log(`  Secret-Muster:     ${secrets}`);
 }
 
-// --- 7: Ton-Regeln A, B und C (CLAUDE.md, Abschnitt TON) ---
+// --- 7: Ton-Regeln A bis D (CLAUDE.md, Abschnitt TON) ---
 //
 // Geprüft wird der SICHTBARE TEXT plus alle aria-labels und der
 // Meta-Description – also genau das, was ein Mensch liest oder vorgelesen
@@ -159,7 +159,7 @@ console.log("\n=== Ausgabe-Hygiene ===");
 // Die Muster sind bewusst eng. Eine definitive Aussage über eine gewollte
 // Produktgrenze („Ein Elternportal gibt es nicht") ist erlaubt und darf hier
 // nicht hängenbleiben; verboten ist die Selbstauskunft über Unwissen.
-console.log("\n=== Ton-Regeln A, B und C ===");
+console.log("\n=== Ton-Regeln A bis D ===");
 {
   const RULES = [
     // A – dem Leser zuschreiben, wer er ist, was er tut oder warum
@@ -210,6 +210,54 @@ console.log("\n=== Ton-Regeln A, B und C ===");
     [/(nicht|ohne|kein[e]?)\s[^.!?]{0,30}zertifiz/i, "C", "Zertifikats-Geständnis"],
     [/mit Pilotschulen festgelegt/i, "C", "„Preise werden mit Pilotschulen festgelegt“"],
     [/mehr Schulen, als/i, "C", "Anzahl der Schulen als Mangel"],
+
+    // D – Zukunftsform ueber die Produktreife
+    //
+    // Zwei Muster sind bewusst ENG gefasst, weil das Wort auch harmlos
+    // vorkommt:
+    //   „folgt"  – temporal verboten, logisch erlaubt („aus einer Deutschnote
+    //              folgt nicht, ob ein Kind fluessig liest", „die Auswertung
+    //              folgt einem Codebuch"). Gefangen wird nur das temporale
+    //              „folgt/folgen" am Satzende oder vor einem Zeitbezug.
+    //   „noch"   – kommt in „noch nicht" (Regel B) schon vor; hier faengt es
+    //              die Ankuendigungsform „gibt es noch"/„steht noch aus".
+    [/\b(ist|sind|war|waren) geplant\b/i, "D", "„ist geplant“"],
+    [
+      /\bgeplant(e|er|es)? (Funktion|Schnittstelle|Anbindung|Ausbau)/i,
+      "D",
+      "„geplante …“",
+    ],
+    [/\bin Arbeit\b/i, "D", "„in Arbeit“"],
+    [/\bin Entwicklung\b/i, "D", "„in Entwicklung“"],
+    [/\bentsteht gerade\b|\bentstehen gerade\b/i, "D", "„entsteht gerade“"],
+    [/\bim Aufbau\b/i, "D", "„im Aufbau“"],
+    [/\b(bald|demn(ä|ae)chst|in K(ü|ue)rze)\b/i, "D", "„bald / demnächst“"],
+    [/\bin Vorbereitung\b/i, "D", "„in Vorbereitung“"],
+    [/\b(vor dem|zum) Produktstart\b/i, "D", "„vor dem Produktstart“"],
+    [/\bvor dem Start\b/i, "D", "„vor dem Start“"],
+    [/\bRollout (steht aus|offen)\b/i, "D", "„Rollout steht aus“"],
+    [/\bPrototyp\b/i, "D", "„Prototyp“"],
+    [
+      /\bfolg(t|en) (bald|sp(ä|ae)ter|danach|noch|zu einem sp)/i,
+      "D",
+      "temporales „folgt“",
+    ],
+    [/\b(steht|stehen) noch aus\b/i, "D", "„steht noch aus“"],
+    [/\bgibt es (bald|demn)/i, "D", "„gibt es bald“"],
+  ];
+
+  /**
+   * Ausnahmen von Regel D, abschliessend (CLAUDE.md):
+   *   - PRODUCT_HOSTING_NOTE: der Serverstandort, die einzige erlaubte
+   *     Einschraenkung. Enthaelt „in Vorbereitung".
+   *   - SCHOOL_TYPE_ANSWER: „Weitere Schulformen folgen." Ausbau, keine
+   *     Reife – von CEO und CMO so gewollt.
+   * Beide werden vor der Pruefung aus dem Text geschnitten. Wer den Wortlaut
+   * in product.ts bzw. brand.ts aendert, aendert ihn hier mit.
+   */
+  const AUSNAHMEN = [
+    "Vor dem Betrieb mit echten Schülerdaten ziehen die Produktserver nach Deutschland um und jeder Schule liegt ein Auftragsverarbeitungsvertrag vor – beides ist in Vorbereitung.",
+    "Weitere Schulformen folgen.",
   ];
 
   // Der Datenschutztext ist Rechtstext nach Art. 13 DSGVO und wird nicht
@@ -228,9 +276,12 @@ console.log("\n=== Ton-Regeln A, B und C ===");
       .replace(/<style[\s\S]*?<\/style>/g, " ")
       .replace(/<[^>]+>/g, " ");
 
-    const text = [visible, ...labels, description]
+    let text = [visible, ...labels, description]
       .join(" ")
       .replace(/&[a-z]+;|&#x?[0-9a-f]+;/gi, " ");
+
+    // Die beiden erlaubten Saetze herausschneiden, bevor die Muster laufen.
+    for (const satz of AUSNAHMEN) text = text.split(satz).join(" ");
 
     for (const [pattern, rule, name] of RULES) {
       if (pattern.test(text)) {

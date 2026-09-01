@@ -49,8 +49,9 @@ type FunctionBlock = {
  *
  * Konkret nicht auf dieser Seite, obwohl es naheliegend waere:
  *   - Uebernahme von Original-Arbeitsblaettern aus dem Korpus („Rollout offen“)
- *   - Stilprofil per Upload eigener Texte („Teilweise“ – Backend steht, die
- *     Oberflaeche fehlt). Es steht stattdessen in <Roadmap />.
+ *   - Stilprofil per Upload eigener Texte („Teilweise“). Es steht nirgends
+ *     mehr auf der Website: Was es nicht gibt, wird nicht angekuendigt,
+ *     sondern weggelassen (CLAUDE.md, Regel D).
  *   - Der KI-Vorschlag zum Sitzplan – der Sitzplan selbst ist live, der
  *     Vorschlag ist Prototyp. Der Stichpunkt nennt deshalb nur den Sitzplan.
  *

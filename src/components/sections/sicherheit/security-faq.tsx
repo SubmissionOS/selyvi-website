@@ -32,7 +32,7 @@ const faqItems: FaqItem[] = [
   {
     question: "Was passiert bei Vertragsende mit den Daten?",
     answer:
-      "Die Daten Ihrer Schule gehören Ihrer Schule. Aufbewahrungs- und Löschfristen – einschließlich der Frist nach Vertragsende – veröffentlichen wir vor dem Produktstart an dieser Stelle.",
+      "Die Daten Ihrer Schule gehören Ihrer Schule. Aufbewahrungs- und Löschfristen – einschließlich der Frist nach Vertragsende – veröffentlichen wir an dieser Stelle.",
   },
 ];
 

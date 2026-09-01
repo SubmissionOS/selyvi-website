@@ -37,6 +37,15 @@ export function ResearchContact() {
             uns – wir antworten selbst.
           </p>
 
+          {/* Gegenwart, und produktstand-gedeckt: Konten legt die Schulleitung
+              an, eine Selbstregistrierung gibt es bewusst nicht. „Richten wir
+              ein" sagt genau das – WIR tun es, nach einem Gespräch. Der Satz
+              verspricht keinen Datenexport; der ist nicht gebaut und steht
+              deshalb nirgends. */}
+          <p className="mt-4 text-lg text-ink">
+            Zugang für Ihre Forschung richten wir nach einem Kennenlernen ein.
+          </p>
+
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
             <Button asChild variant="outline" size="lg">
               <a href={`mailto:${imprint.email}`}>{imprint.email}</a>

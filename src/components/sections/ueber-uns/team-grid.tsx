@@ -25,7 +25,7 @@ export function TeamGrid() {
         </h2>
 
         <p className="mt-6 max-w-2xl text-lg text-gray-500">
-          Fotos folgen. Bis dahin stehen hier Initialen statt Stockfotos.
+          Hier stehen Initialen, keine Stockfotos.
         </p>
 
         <ul className="mt-14 grid gap-6 md:grid-cols-3">

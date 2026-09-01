@@ -70,10 +70,21 @@ MOBIL GILT DAS NICHT: Dort bleibt die Reihenfolge Text, dann Bild. Ein Grid ohne
 
 Gemessen wird mit `leerraum.js`: Es geht die Seite in 900-px-Schritten durch und meldet jeden Ausschnitt ohne bildliches Element.
 
-Alle drei Ton-Regeln werden bei jedem Deployment gegen das ausgelieferte HTML geprüft: `npm run smoke <url>`, Abschnitt "Ton-Regeln A, B und C". Ein Treffer lässt den Smoke-Test fehlschlagen.
+### Regel D — Keine Zukunftsform über die Produktreife
+Kein "geplant", "in Arbeit", "in Entwicklung", "entsteht gerade", "folgt", "vor dem Produktstart", "Rollout steht aus", "im Aufbau", "bald", "demnächst", "in Vorbereitung". **Was es nicht gibt, wird nicht angekündigt, sondern weggelassen.** Jede Produktaussage steht im Präsens und beschreibt Vorhandenes.
 
-### Zukunfts-Szenen
-Funktionen mit Status "Rollout offen" oder "Teilweise" dürfen als Szene gezeigt werden — ausschließlich mit einem dauerhaft sichtbaren Badge "In Entwicklung" IM UiWindow-Fensterkopf, das in JEDEM Frame steht, auch im reduced-motion-Endbild (staticStepId entsprechend wählen). Status "Nicht gebaut" und "Prototyp" bleiben tabu. Eine Szene ohne Badge ist eine Verfügbarkeitszusage — auch wenn der Text daneben etwas anderes sagt.
+DREI AUSNAHMEN, abschließend:
+- `PRODUCT_HOSTING_NOTE` — der Serverstandort. Die einzige erlaubte Einschränkung, unverändert im Wortlaut.
+- `SCHOOL_TYPE_ANSWER` — "Weitere Schulformen folgen." Das ist Ausbau, keine Reife; von CEO und CMO so gewollt.
+- Rechtstexte (/impressum, /datenschutz). Wortlaut nach Vorlage, nicht nach Marketing-Ton.
+
+"Pilot" und "Pilotkreis" bleiben: Sie beschreiben den Einstieg, nicht die Reife. Ein temporales "folgt" ist verboten, ein logisches nicht ("aus einer Deutschnote folgt nicht, ob ein Kind flüssig liest").
+
+DIESE REGEL HAT DIE FRÜHERE LEITPLANKE "Zukunfts-Szenen" ERSETZT. Jene erlaubte Szenen zu Funktionen mit Status "Rollout offen" oder "Teilweise", sofern sie dauerhaft ein Badge "In Entwicklung" trugen. Beide Szenen (Originalarbeitsblätter, Stilprofil-Upload), die Sektion "In Arbeit" und der Badge-Code im UiWindow sind entfallen. Eine Szene zu einer Funktion, die es nicht gibt, ist jetzt schlicht keine Option mehr.
+
+Die Wahrheitsquelle bleibt unberührt: Nichts behaupten, was `docs/produktstand-2026-08.md` nicht deckt. Regel D verschärft nur die Richtung — weglassen statt ankündigen.
+
+Alle Ton-Regeln werden bei jedem Deployment gegen das ausgelieferte HTML geprüft: `npm run smoke <url>`, Abschnitt "Ton-Regeln A bis D". Ein Treffer lässt den Smoke-Test fehlschlagen.
 
 ## STIL (Anti-KI-Slop)
 Deutsch, präzise, keine Emojis im UI, keine Gradients, keine Superlative im Copy, viel Weißraum. Messlatte: behördentauglich. Icons: lucide-react (Brand-Icons: lokale SVGs in brand-icons.tsx).

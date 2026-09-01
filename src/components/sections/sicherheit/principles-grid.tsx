@@ -91,7 +91,7 @@ const principles = [
   {
     icon: Cpu,
     title: "KI-Verarbeitung",
-    description: `${PRODUCT_NAME} setzt KI-Modelle ein, um aus den Beobachtungen einer Lehrkraft Texte und Unterrichtsmaterial zu erzeugen. Die genauen Verarbeitungsdetails unserer KI-Komponenten veröffentlichen wir hier vor dem Start.`,
+    description: `${PRODUCT_NAME} setzt KI-Modelle ein, um aus den Beobachtungen einer Lehrkraft Texte und Unterrichtsmaterial zu erzeugen. Die genauen Verarbeitungsdetails unserer KI-Komponenten veröffentlichen wir hier.`,
   },
   {
     icon: Accessibility,
@@ -115,8 +115,7 @@ const principles = [
   {
     icon: Trash2,
     title: "Löschkonzept",
-    description:
-      "Aufbewahrungs- und Löschfristen veröffentlichen wir vor dem Produktstart.",
+    description: "Aufbewahrungs- und Löschfristen veröffentlichen wir an dieser Stelle.",
   },
 ];
 
