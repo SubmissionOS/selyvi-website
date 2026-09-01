@@ -1,5 +1,4 @@
 import { imprint } from "@/config/legal";
-import { t } from "@/content";
 
 /**
  * Navigations- und Footer-Struktur.
@@ -15,11 +14,11 @@ export type NavItem = {
 
 /** Hauptnavigation im Header (Desktop und Burger-Menue nutzen dieselbe Liste). */
 export const mainNav: NavItem[] = [
-  { label: t.nav.items["/fuer-lehrkraefte"], href: "/fuer-lehrkraefte" },
-  { label: t.nav.items["/schulen"], href: "/schulen" },
-  { label: t.nav.items["/forschung"], href: "/forschung" },
-  { label: t.nav.items["/datenschutz-sicherheit"], href: "/datenschutz-sicherheit" },
-  { label: t.nav.items["/ueber-uns"], href: "/ueber-uns" },
+  { label: "Für Lehrkräfte", href: "/fuer-lehrkraefte" },
+  { label: "Für Schulleitungen", href: "/schulen" },
+  { label: "Forschung", href: "/forschung" },
+  { label: "Sicherheit", href: "/datenschutz-sicherheit" },
+  { label: "Unsere Geschichte", href: "/ueber-uns" },
 ];
 
 /** Primaerer Call-to-Action – die einzige Stelle, an der --cta zum Einsatz kommt. */
@@ -36,7 +35,7 @@ export const primaryCta: NavItem = {
    * Der Knopf bleibt an allen bisherigen Stellen stehen – die staendige
    * Erreichbarkeit oben rechts ist Absicht, nicht Zufall.
    */
-  label: t.nav.primaryCta,
+  label: "Selyvi kennenlernen",
   href: "/demo",
 };
 
@@ -48,21 +47,18 @@ export type FooterColumn = {
 /** Vier Footer-Spalten mit Platzhalter-Links. */
 export const footerColumns: FooterColumn[] = [
   {
-    title: t.nav.footer.product,
+    title: "Selyvi",
     items: [
-      { label: t.nav.footer.links["/einblick"], href: "/einblick" },
-      { label: t.nav.footer.links["/fuer-lehrkraefte"], href: "/fuer-lehrkraefte" },
-      { label: t.nav.footer.links["/schulen"], href: "/schulen" },
-      { label: t.nav.footer.links["/forschung"], href: "/forschung" },
-      {
-        label: t.nav.footer.links["/datenschutz-sicherheit"],
-        href: "/datenschutz-sicherheit",
-      },
-      { label: t.nav.footer.links["/demo"], href: "/demo" },
+      { label: "Einblick", href: "/einblick" },
+      { label: "Für Lehrkräfte", href: "/fuer-lehrkraefte" },
+      { label: "Für Schulleitungen", href: "/schulen" },
+      { label: "Forschung & Wirkung", href: "/forschung" },
+      { label: "Datenschutz & Sicherheit", href: "/datenschutz-sicherheit" },
+      { label: "Selyvi kennenlernen", href: "/demo" },
     ],
   },
   {
-    title: t.nav.footer.company,
+    title: "Unternehmen",
     /**
      * „Karriere", „Presse" und „Blog" standen hier als Platzhalter und zeigten
      * alle auf /ueber-uns. Ein Link, der etwas anderes verspricht als das Ziel
@@ -73,18 +69,18 @@ export const footerColumns: FooterColumn[] = [
      * Eintrag mit eigener Route ergänzen.
      */
     items: [
-      { label: t.nav.footer.links["/ueber-uns"], href: "/ueber-uns" },
-      { label: t.nav.footer.links["/mitgestalten"], href: "/mitgestalten" },
+      { label: "Unsere Geschichte", href: "/ueber-uns" },
+      { label: "Mitgestalten", href: "/mitgestalten" },
       // Als gewöhnlicher Link, nicht als Button: Der primäre CTA steht bereits
       // in der Kopfzeile, und --cta bleibt genau ihm vorbehalten.
-      { label: t.nav.footer.links["/demo"], href: "/demo" },
+      { label: "Selyvi kennenlernen", href: "/demo" },
     ],
   },
   {
-    title: t.nav.footer.legal,
+    title: "Rechtliches",
     items: [
-      { label: t.nav.footer.links["/impressum"], href: "/impressum" },
-      { label: t.nav.footer.links["/datenschutz"], href: "/datenschutz" },
+      { label: "Impressum", href: "/impressum" },
+      { label: "Datenschutzerklärung", href: "/datenschutz" },
       // "AGB" und "Barrierefreiheit" standen hier als Platzhalter und zeigten
       // beide auf /impressum. Ein Link, der etwas anderes verspricht als das
       // Ziel liefert, ist auf einer Seite mit Rechtsbezug besonders unguenstig
@@ -108,7 +104,7 @@ export const footerColumns: FooterColumn[] = [
      */
     items: [
       { label: imprint.email, href: `mailto:${imprint.email}` },
-      { label: t.nav.footer.links["/demo"], href: "/demo" },
+      { label: "Selyvi kennenlernen", href: "/demo" },
     ],
   },
 ];

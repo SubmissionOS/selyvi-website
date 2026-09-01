@@ -40,24 +40,6 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
 
-  /**
-   * Sprache und Adresse dieses Builds – zur BAUZEIT eingesetzt.
-   *
-   * Der `env`-Block schreibt beide Werte als Literale in den Server- UND in
-   * den Browser-Code. Ohne ihn waere `process.env.SITE_LOCALE` in jeder
-   * Client-Komponente `undefined`, und alle Szenen und der Einblick blieben
-   * deutsch – Next.js setzt dort sonst nur `NEXT_PUBLIC_`-Variablen ein.
-   *
-   * KEIN WIDERSPRUCH ZUR SICHERHEITSREGEL: Verboten ist `NEXT_PUBLIC_` fuer
-   * GEHEIMNISSE. Die Sprache steht in jedem ausgelieferten Satz und die
-   * Adresse in jedem Canonical-Link. Der Brevo-Schluessel und der
-   * CRM-Schluessel stehen hier NICHT und bleiben serverseitig.
-   */
-  env: {
-    SITE_LOCALE: process.env.SITE_LOCALE === "en" ? "en" : "de",
-    SITE_URL: process.env.SITE_URL ?? "",
-  },
-
   async headers() {
     return [
       {

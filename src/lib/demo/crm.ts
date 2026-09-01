@@ -1,6 +1,5 @@
 import { SOURCE_LABELS, type DemoFormValues, type SourceValue } from "@/lib/demo/schema";
 import type { OriginValues } from "@/lib/demo/origin";
-import { LOCALE } from "@/config/locale";
 
 /**
  * Übergabe einer Formular-Anfrage an das eigene CRM.
@@ -75,11 +74,6 @@ export async function sendLeadToCrm({
   // „school": Das Formular fragt nach der Schule, das CRM kennt auch andere
   // Träger – die Umbenennung gehört an genau diese eine Stelle.
   const body = {
-    // Sprache des Deployments, aus dem die Anfrage kommt. Im CRM ist das ein
-    // Feld in raw – kein Schema-Bruch. Die HERKUNFT bleibt page_path und
-    // source; locale sagt nur, in welcher Sprache jemand geschrieben hat,
-    // damit die Antwort in derselben kommt.
-    locale: LOCALE,
     source,
     source_label: SOURCE_LABELS[source],
     name: values.name,

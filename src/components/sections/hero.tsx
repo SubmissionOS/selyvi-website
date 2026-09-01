@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { t } from "@/content";
+import { PRODUCT_NAME } from "@/config/brand";
 import { primaryCta } from "@/config/site";
 import { Button } from "@/components/ui/button";
 import { HeroScene } from "@/components/scenes/hero-scene";
@@ -46,7 +46,7 @@ export function Hero() {
             id="hero-titel"
             className="text-3xl font-semibold tracking-tight text-ink sm:text-5xl"
           >
-            {t.home.hero.headline}
+            Der Papierkram hat jetzt eine Assistenz.
           </h1>
 
           {/* ==================================================================
@@ -78,21 +78,28 @@ export function Hero() {
               das Kompetenzmodell gebaut ist – und behauptet keine Anbindung.
               Wer diesen Satz umformuliert, liest vorher den Abschnitt „Der
               Fachkorpus ist noch duenn" im Produktstand. */}
-          <p className="mt-6 max-w-xl text-lg text-gray-500">{t.home.hero.subline}</p>
+          <p className="mt-6 max-w-xl text-lg text-gray-500">
+            {PRODUCT_NAME} ist die mitlernende Assistenz für Grundschullehrkräfte: Sie
+            lernt Ihren Stil, wächst mit Ihrer Klasse mit und orientiert sich an aktuellen
+            Bildungsvorgaben – von der Beobachtung im Unterricht bis zur Zeugnisbemerkung.
+          </p>
 
           {/* Der Satz bleibt: Er ist das Unterscheidungsmerkmal, an dem
               generische KI im Zeugnis scheitert. */}
-          <p className="mt-4 max-w-xl text-lg text-gray-500">{t.home.hero.language}</p>
+          <p className="mt-4 max-w-xl text-lg text-gray-500">
+            In Ihrer Sprache, nicht in KI-Sprache.
+          </p>
 
           {/* Herkunftszeile. Nennt bewusst keinen Namen – die Person bleibt
               anonym, so wie im Erzaehltext auf /ueber-uns. */}
           <p className="mt-6 max-w-xl text-sm text-gray-500">
-            {t.home.hero.origin} <span aria-hidden="true">→</span>{" "}
+            Entstanden am Küchentisch einer angehenden Grundschullehrerin{" "}
+            <span aria-hidden="true">→</span>{" "}
             <Link
               href="/ueber-uns#warum"
               className="text-brand-600 underline underline-offset-4"
             >
-              {t.home.hero.originLink}
+              Unsere Geschichte
             </Link>
           </p>
 
@@ -106,7 +113,7 @@ export function Hero() {
                 Knopf zu einer Sektion weiter unten, die ihrerseits dorthin
                 verwies – ein Umweg ueber einen Anker. */}
             <Button asChild variant="ghost" size="lg">
-              <Link href="/einblick">{t.home.hero.secondaryCta}</Link>
+              <Link href="/einblick">Selbst ausprobieren</Link>
             </Button>
           </div>
         </div>

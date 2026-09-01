@@ -793,7 +793,6 @@ streicht die Zeile aus dieser Liste.
 | 15  | AVV-Entwurf zum Bereitstellen                                                                                                                                                                                                                                                                                                                    | `dpa-band.tsx`, Satz konkreter fassen                                       | Recht           |
 | 16  | Betreiberangabe: nach Gründung auf die Selyvi-Betreibergesellschaft umstellen und anwaltlich prüfen                                                                                                                                                                                                                                              | `legal.ts` (dort als `OPERATOR_NOTE` im Quelltext)                          | Recht           |
 | 17  | Datenschutzerklärung anwaltlich prüfen, danach `PRIVACY_APPROVED = true`                                                                                                                                                                                                                                                                         | [legal.ts](src/config/legal.ts)                                             | Anwalt          |
-| 17a | **EN-Rechtstexte prüfen lassen.** „Legal notice" und „Privacy policy" für selyvi.com: Pflichtangaben nach § 5 DDG und § 18 MStV gelten unverändert, nur die Beschriftungen sind englisch. Ohne diese Prüfung geht selyvi.com nicht live                                                                                                          | neue EN-Fassungen von `/impressum` und `/datenschutz`                       | Anwalt          |
 | 18  | AGB- und Barrierefreiheitsseite: klären, ob nötig. Die Karte „Barrierefreiheit als Praxis" auf /datenschutz-sicherheit beschreibt bewusst nur die Bauweise und behauptet kein Prüfsiegel – eine förmliche Erklärung nach BFSG/BITV ist genau dieser Punkt                                                                                        | neue Routen, danach Footer                                                  | Recht           |
 | 19  | Lizenzlage der Lehrpläne klären. Die Lehrpläne aller 16 Bundesländer liegen erhoben vor, sind aber aus Lizenzgründen **nicht angebunden** – bis das geklärt ist, darf die Abdeckung nirgends beworben werden                                                                                                                                     | Fachkorpus, danach `function-blocks.tsx`                                    | Produkt + Recht |
 | 19a | ~~Schulbarometer-Zahlen belegen.~~ **Erledigt:** Die Werte sind zugeordnet – 83 % aus der Befragung 2026, 84 % und die Wochenendarbeit aus der 4. Befragung 2022. Die Quellenzeile nennt jetzt beide Jahre. Rest-Hinweis: vor dem Livegang einmal gegen die Original-Reports lesen, die Übersichtsseite der Stiftung führt die Einzelwerte nicht | [why-we-exist.tsx](src/components/sections/why-we-exist.tsx)                | Inhalt          |
@@ -918,69 +917,6 @@ npm run smoke <url>
 ```
 
 Alle ehemals markierten Punkte stehen in der [NACH-LAUNCH-LISTE](#nach-launch-liste).
-
-## Zwei Sprachen, zwei Projekte
-
-Ein Repository, zwei Vercel-Projekte, zwei Domains. **Die Sprache ist eine
-Bau-Entscheidung** — es gibt keinen Umschalter, keine Aushandlung über
-Accept-Language und kein `/en`-Präfix. Jede Domain ist eine Sprache, die
-Pfade sind in beiden identisch.
-
-|                                          | Projekt 1        | Projekt 2   |
-| ---------------------------------------- | ---------------- | ----------- |
-| Domain                                   | selyvi.de        | selyvi.com  |
-| `SITE_LOCALE`                            | `de` (oder leer) | `en`        |
-| `SITE_URL`                               | leer lassen      | leer lassen |
-| `BREVO_API_KEY`                          | identisch        | identisch   |
-| `DEMO_MAIL_TO`, `DEMO_MAIL_FROM`         | identisch        | identisch   |
-| `CRM_INBOUND_URL`, `WEBSITE_INBOUND_KEY` | identisch        | identisch   |
-| `DEMO_DRY_RUN`                           | `false`          | `false`     |
-
-`SITE_URL` braucht keinen Wert: `src/config/locale.ts` kennt beide Domains
-und wählt anhand von `SITE_LOCALE`. Setzen muss man es nur für ein
-Vorschau-Deployment, dessen Adresse Vercel erst beim Bauen vergibt.
-
-**Warum `SITE_LOCALE` in `next.config.ts` unter `env` steht:** Ohne diesen
-Eintrag wäre `process.env.SITE_LOCALE` in Client-Komponenten `undefined` —
-die Szenen und der Einblick blieben deutsch. Der `env`-Block setzt den Wert
-zur Bauzeit in Server- **und** Browser-Code ein. Das ist kein Verstoß gegen
-die `NEXT_PUBLIC_`-Regel: Verboten sind dort **Geheimnisse**; die Sprache
-steht in jedem ausgelieferten Satz.
-
-**Der ungenutzte Katalog fällt heraus.** `LOCALE` ist zur Bauzeit ein
-Literal, der Ausdruck in `src/content/index.ts` damit konstant, und das
-Tree-Shaking entfernt die andere Sprache. Gegenprüfen:
-
-```
-grep -rl "Paperwork just got" .next/static     # im DE-Build: keine Ausgabe
-grep -rl "Der Papierkram hat jetzt" .next/static  # im EN-Build: keine Ausgabe
-```
-
-**Lokal in der anderen Sprache bauen:**
-
-```
-SITE_LOCALE=en npm run build
-SITE_LOCALE=en npx next start -p 3211
-```
-
-**Der Smoke-Test läuft je Deployment in seiner Sprache.** Er liest
-`<html lang>` der Startseite und wählt danach die deutschen oder die
-englischen Ton-Muster — nicht anhand einer Umgebungsvariablen, sondern
-anhand dessen, was tatsächlich ausgeliefert wird:
-
-```
-npm run smoke https://selyvi.de
-npm run smoke https://selyvi.com
-```
-
-**Wie viel Text noch fest im Code steckt**, misst
-`node scripts/sprach-check.mjs` (mit `--details` je Fundstelle). Solange die
-Zahl über 0 liegt, zeigt der englische Build an diesen Stellen Deutsch.
-**selyvi.com bekommt seine Domain erst, wenn die Zahl 0 ist und
-`docs/en-review.md` abgehakt ist.**
-
-Terminologie: `docs/glossar-en.md`. Offene inhaltliche Entscheidungen:
-`docs/en-review.md`.
 
 ## Formular-Pfad testen
 

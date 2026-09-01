@@ -1,5 +1,3 @@
-import { LOCALE, OG_LOCALE, SITE_URL, SITE_URLS } from "@/config/locale";
-import { t } from "@/content";
 import type { Metadata } from "next";
 
 import { PRODUCT_NAME } from "@/config/brand";
@@ -27,15 +25,9 @@ import { IMPRINT_READY, PRIVACY_APPROVED } from "@/config/legal";
  *
  * Nach dem Domainkauf hier eintragen – siehe README, „Nach Domainkauf“.
  */
-/**
- * Die Adresse dieses Deployments. Kommt aus der Sprachschicht: selyvi.de baut
- * mit SITE_LOCALE=de, selyvi.com mit SITE_LOCALE=en – und jedes Deployment
- * kennt dank locale.ts auch die Adresse der jeweils anderen Sprache, weil
- * hreflang sie braucht.
- */
-export { SITE_URL, ALTERNATE_URL, ALTERNATE_LOCALE } from "@/config/locale";
+export const SITE_URL = "https://selyvi.example";
 
-export const SITE_LOCALE = OG_LOCALE[LOCALE];
+export const SITE_LOCALE = "de_DE";
 
 /**
  * Absolute URL zu einem Pfad.
@@ -77,7 +69,7 @@ export const OG_IMAGE = {
 };
 
 /** Titel der Startseite. Alle anderen Seiten: "Seitentitel – <Produktname>". */
-export const HOME_TITLE = t.meta.homeTitle;
+export const HOME_TITLE = `${PRODUCT_NAME} – Die KI-Assistenz für Grundschullehrkräfte`;
 
 export type RouteMeta = {
   path: string;
@@ -99,83 +91,86 @@ export type RouteMeta = {
   priority: number;
 };
 
-/**
- * Reihenfolge, Prioritaet und Freigabeschalter stehen HIER – Titel und
- * Beschreibung in der Sprachschicht. Eine neue Route ist eine
- * Struktur-Entscheidung und gilt fuer beide Sprachen; ihr Wortlaut nicht.
- *
- * Die frueheren Kommentare zu einzelnen Beschreibungen (etwa: die Startseite
- * beginnt wortgleich mit der H1, „Selyvi kennenlernen – Selyvi" nennt den
- * Namen zweimal) stehen jetzt bei den Texten selbst, in src/content/de.ts.
- */
 export const routes: RouteMeta[] = [
   {
     path: "/",
-    title: t.meta.routes["/"].title,
-    description: t.meta.routes["/"].description,
+    title: "",
+    // Beginnt wortgleich mit der H1: Wer den Teilen-Vorschau-Text liest und
+    // danach die Seite oeffnet, findet denselben Satz wieder.
+    description: `Der Papierkram hat jetzt eine Assistenz. ${PRODUCT_NAME} ist die mitlernende KI-Assistenz für Grundschullehrkräfte – aus Beobachtungen im Unterricht entstehen Zeugnisbemerkungen, Elternmails und passendes Material. In Ihrer Sprache, nicht in KI-Sprache.`,
     priority: 1,
   },
   {
     path: "/fuer-lehrkraefte",
-    title: t.meta.routes["/fuer-lehrkraefte"].title,
-    description: t.meta.routes["/fuer-lehrkraefte"].description,
+    title: "Für Lehrkräfte",
+    description:
+      "Vier Bereiche: Dokumentation, Kommunikation, Unterricht und Steuerung. Was Sie nebenbei im Unterricht erfassen, wird am Zeugnistag zur Grundlage des Textes – und bestimmt, welches Material zur Klasse passt.",
     priority: 0.9,
   },
   {
     path: "/schulen",
-    title: t.meta.routes["/schulen"].title,
-    description: t.meta.routes["/schulen"].description,
+    title: "Für Schulleitungen",
+    description: `${PRODUCT_NAME} nimmt Ihrem Kollegium die Schreibarbeit am Zeugnistag und an den Elternabenden ab. Der Entlastungsbericht weist eingesparte Stunden je Monat aus – als PDF für Ihren Schulträger.`,
     priority: 0.9,
   },
   {
     path: "/forschung",
-    title: t.meta.routes["/forschung"].title,
-    description: t.meta.routes["/forschung"].description,
+    title: "Forschung & Wirkung",
+    description:
+      "Wirkung wollen wir belegen, nicht behaupten: Erhebungsmodell entlang der PHINEO-Wirkungstreppe, drei Befragungswellen, zweckgranulare Einwilligung. Wir suchen Forschungspartner, die genauer hinschauen wollen.",
     priority: 0.7,
   },
   {
     path: "/datenschutz-sicherheit",
-    title: t.meta.routes["/datenschutz-sicherheit"].title,
-    description: t.meta.routes["/datenschutz-sicherheit"].description,
+    title: "Datenschutz & Sicherheit",
+    description:
+      "Strikte Datentrennung im Kollegium, kein Eltern- oder Schülerportal, keine Weitergabe von Schülerdaten. Grundsätze, Auftragsverarbeitung und offene Punkte im Überblick.",
     priority: 0.8,
   },
   {
     path: "/ueber-uns",
-    title: t.meta.routes["/ueber-uns"].title,
-    description: t.meta.routes["/ueber-uns"].description,
+    title: "Unsere Geschichte",
+    description: `Angefangen am Küchentisch einer angehenden Grundschullehrerin: Hinter ${PRODUCT_NAME} steht ein Team aus Produkt, Technik und Bildungspraxis. Wir wollen Lehrkräften Verwaltungsarbeit abnehmen – nicht die Verantwortung.`,
     priority: 0.6,
   },
   {
     path: "/einblick",
-    title: t.meta.routes["/einblick"].title,
-    description: t.meta.routes["/einblick"].description,
+    title: "Einblick",
+    description:
+      "Ein geführter Einblick mit Beispieldaten: eine Beobachtung festhalten, daraus einen Zeugnistext entstehen lassen, den Sitzplan umstellen. Vier von acht Bereichen sind offen.",
     priority: 0.8,
   },
   {
     path: "/mitgestalten",
-    title: t.meta.routes["/mitgestalten"].title,
-    description: t.meta.routes["/mitgestalten"].description,
+    // Nicht „Selyvi mitgestalten": fullTitle() haengt den Produktnamen an,
+    // und „Selyvi mitgestalten – Selyvi" nennt ihn zweimal.
+    title: "Mitgestalten",
+    description:
+      "Selyvi ist mit Lehrkräften entstanden und wächst nur so weiter. Wer früh dabei ist, prägt, was gebaut wird – ohne Vertrag, ohne Kaufdruck.",
     priority: 0.7,
   },
   {
     path: "/demo",
-    title: t.meta.routes["/demo"].title,
-    description: t.meta.routes["/demo"].description,
+    // Nicht „Selyvi kennenlernen": fullTitle() haengt den Produktnamen an,
+    // und „Selyvi kennenlernen – Selyvi" nennt ihn zweimal.
+    title: "Kennenlernen",
+    description:
+      "In 20 Minuten zeigen wir Ihnen die echte Oberfläche – kein Video, keine Folien. Ihre Fragen kommen zuerst.",
     priority: 0.9,
   },
   {
     path: "/impressum",
-    title: t.meta.routes["/impressum"].title,
-    description: t.meta.routes["/impressum"].description,
+    title: "Impressum",
+    description: `Angaben gemäß § 5 DDG zu ${PRODUCT_NAME}.`,
     legalGate: "imprint",
-    priority: 0.3,
+    priority: 0.1,
   },
   {
     path: "/datenschutz",
-    title: t.meta.routes["/datenschutz"].title,
-    description: t.meta.routes["/datenschutz"].description,
+    title: "Datenschutzerklärung",
+    description: `Datenschutzerklärung zu ${PRODUCT_NAME} nach Art. 13 DSGVO.`,
     legalGate: "privacy",
-    priority: 0.3,
+    priority: 0.1,
   },
 ];
 
@@ -228,24 +223,7 @@ export function pageMetadata(path: string): Metadata {
     // Namenszusatz nicht doppelt erscheint.
     title: { absolute: title },
     description: route.description,
-    /**
-     * Canonical UND hreflang.
-     *
-     * Jede Seite existiert zweimal – einmal je Domain, unter demselben Pfad.
-     * Ohne hreflang halten Suchmaschinen die beiden fuer konkurrierende
-     * Fassungen derselben Seite; mit hreflang sind sie zwei Sprachen einer
-     * Sache. „x-default" zeigt auf die deutsche Fassung: Das Produkt ist fuer
-     * deutsche Schulen gebaut, und wer keine Sprachpraeferenz mitbringt,
-     * gehoert dorthin.
-     */
-    alternates: {
-      canonical: absoluteUrl(route.path),
-      languages: {
-        de: new URL(route.path, SITE_URLS.de).toString(),
-        en: new URL(route.path, SITE_URLS.en).toString(),
-        "x-default": new URL(route.path, SITE_URLS.de).toString(),
-      },
-    },
+    alternates: { canonical: absoluteUrl(route.path) },
     openGraph: {
       type: "website",
       locale: SITE_LOCALE,

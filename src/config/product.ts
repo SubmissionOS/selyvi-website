@@ -1,5 +1,3 @@
-import { t } from "@/content";
-
 /**
  * Produktaussagen, die an mehreren Stellen wortgleich stehen müssen.
  *
@@ -30,7 +28,7 @@ import { t } from "@/content";
  * ("fuer Lehrkraefte") waren vor dem Abgleich mit dem Produktstand im Umlauf
  * und sind bewusst verschwunden.
  */
-export const AUDIENCE_SHORT = t.shared.audienceShort;
+export const AUDIENCE_SHORT = "Für Grundschullehrkräfte, Klassen 1–4";
 
 /**
  * Serverstandort und Auftragsverarbeitung – DIE heikelste Aussage der Website.
@@ -48,10 +46,12 @@ export const AUDIENCE_SHORT = t.shared.audienceShort;
  * belegt (Region fra1 in vercel.json) und darf so stehen – aber nur als
  * Aussage ueber die Website, nie als Aussage ueber das Produkt.
  */
-export const PRODUCT_HOSTING_NOTE = t.shared.productHostingNote;
+export const PRODUCT_HOSTING_NOTE =
+  "Vor dem Betrieb mit echten Schülerdaten ziehen die Produktserver nach Deutschland um und jeder Schule liegt ein Auftragsverarbeitungsvertrag vor – beides ist in Vorbereitung.";
 
 /** Hosting DIESER WEBSITE. Belegt durch die Serverregion fra1 in vercel.json. */
-export const WEBSITE_HOSTING_NOTE = t.shared.websiteHostingNote;
+export const WEBSITE_HOSTING_NOTE =
+  "Diese Website wird in Frankfurt am Main gehostet, auf Servern innerhalb der EU.";
 
 /**
  * Datentrennung – eine Positiv-Aussage aus dem echten Produkt.
@@ -65,7 +65,8 @@ export const WEBSITE_HOSTING_NOTE = t.shared.websiteHostingNote;
  * steht er hier. Das ist keine Beschoenigung: Der Satz behauptet nichts, was
  * das Produkt nicht taete – er beschreibt exakt dieselbe Tatsache.
  */
-export const DATA_SEPARATION_NOTE = t.shared.dataSeparationNote;
+export const DATA_SEPARATION_NOTE =
+  "Jede Lehrkraft sieht ausschließlich ihre eigenen Beobachtungen und Bewertungen.";
 
 /**
  * Zielsprachen der Elternmail-Uebersetzung.
@@ -74,7 +75,17 @@ export const DATA_SEPARATION_NOTE = t.shared.dataSeparationNote;
  * `TRANSLATION_LANGUAGES.length` – so kann sie nicht von der Liste abweichen,
  * wenn eine Sprache dazukommt.
  */
-export const TRANSLATION_LANGUAGES = t.shared.translationLanguages;
+export const TRANSLATION_LANGUAGES = [
+  "Englisch",
+  "Türkisch",
+  "Arabisch",
+  "Ukrainisch",
+  "Russisch",
+  "Französisch",
+  "Polnisch",
+  "Italienisch",
+  "Spanisch",
+] as const;
 
 export const TRANSLATION_LANGUAGE_COUNT = TRANSLATION_LANGUAGES.length;
 
@@ -127,7 +138,8 @@ export const TRANSLATION_LANGUAGES_SENTENCE = `${TRANSLATION_LANGUAGES.slice(0, 
  * Wer den Wortlaut aendert, aendert ihn auf beiden Seiten gleichzeitig – und
  * sollte vorher im Produktstand nachlesen, was die Zeile wirklich anzeigt.
  */
-export const IMPACT_LINE_PRINCIPLE = t.shared.impactLinePrinciple;
+export const IMPACT_LINE_PRINCIPLE =
+  "Jeder Entlastungsbericht trägt direkt unter den Zahlen eine Einordnung: Gemessenes steht als Messwert, Geschätztes als Schätzwert – und keine dieser Kennzeichnungen lässt sich ausblenden, auch von uns nicht.";
 
 /**
  * Versprechen 1 aus dem Manifest auf /ueber-uns – und zugleich die Ueberschrift
@@ -147,7 +159,7 @@ export const IMPACT_LINE_PRINCIPLE = t.shared.impactLinePrinciple;
  * den Funktionsbloecken ist er eine Ueberschrift. Deshalb steht die Konstante
  * ohne das Wort, und das Manifest haengt es an.
  */
-export const DECISION_PROMISE = t.shared.decisionPromise;
+export const DECISION_PROMISE = "Selyvi schlägt vor. Sie entscheiden.";
 
 /**
  * Der Satz aus „Warum wir das bauen" auf /ueber-uns – steht zusaetzlich ueber
@@ -158,4 +170,5 @@ export const DECISION_PROMISE = t.shared.decisionPromise;
  * Fassungen desselben Satzes waeren an genau der Stelle unglaubwuerdig, an
  * der es um Vertrauen geht.
  */
-export const MISSION_PROMISE = t.shared.missionPromise;
+export const MISSION_PROMISE =
+  "Wir bauen die Assistenz, die Routinearbeit übernimmt. Die pädagogische Entscheidung bleibt beim Menschen.";

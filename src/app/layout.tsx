@@ -11,7 +11,6 @@ import {
   absoluteUrl,
   routeFor,
 } from "@/config/seo";
-import { HTML_LANG, LOCALE, SITE_URLS } from "@/config/locale";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 
@@ -52,14 +51,7 @@ export const metadata: Metadata = {
     template: `%s – ${PRODUCT_NAME}`,
   },
   description: routeFor("/").description,
-  alternates: {
-    canonical: absoluteUrl("/"),
-    languages: {
-      de: new URL("/", SITE_URLS.de).toString(),
-      en: new URL("/", SITE_URLS.en).toString(),
-      "x-default": new URL("/", SITE_URLS.de).toString(),
-    },
-  },
+  alternates: { canonical: absoluteUrl("/") },
   openGraph: {
     type: "website",
     locale: SITE_LOCALE,
@@ -77,11 +69,7 @@ export default function RootLayout({
   return (
     // data-cta steuert, welche der beiden CTA-Farben an --cta gebunden wird.
     // Der Wert kommt aus der Konstante CTA_VARIANT in src/config/brand.ts.
-    <html
-      lang={HTML_LANG[LOCALE]}
-      data-cta={CTA_VARIANT}
-      className={ibmPlexSans.variable}
-    >
+    <html lang="de" data-cta={CTA_VARIANT} className={ibmPlexSans.variable}>
       <body className="flex min-h-dvh flex-col bg-surface text-ink">
         <a href="#hauptinhalt" className="skip-link">
           Zum Hauptinhalt springen
