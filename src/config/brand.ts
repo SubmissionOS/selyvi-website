@@ -1,3 +1,5 @@
+import { t } from "@/content";
+
 /**
  * Zentrale Marken-Konfiguration.
  *
@@ -39,8 +41,7 @@ export const PRODUCT_NAME = "Selyvi";
  * Klassen 1–4. Der Zusatz steht deshalb nur noch dort, wo er die Entstehung
  * erzaehlt: im Fliesstext auf /ueber-uns.
  */
-export const PRACTICE_CLAIM =
-  "Entwickelt in Zusammenarbeit mit Lehrkräften aus ganz Deutschland.";
+export const PRACTICE_CLAIM = t.shared.practiceClaim;
 
 /**
  * Kurzform fuer die Trust-Zeile, wo nur eine Zeile Platz ist.
@@ -49,7 +50,7 @@ export const PRACTICE_CLAIM =
  * gekuerzten Fassung an eine Datei gebunden. Wer PRACTICE_CLAIM anpasst, sieht
  * die Kurzform direkt daneben und vergisst sie nicht.
  */
-export const PRACTICE_CLAIM_SHORT = "Mit Lehrkräften aus ganz Deutschland entwickelt";
+export const PRACTICE_CLAIM_SHORT = t.shared.practiceClaimShort;
 
 /**
  * Antwort auf die Schulform-Frage – EINE Formulierung für die ganze Website.
@@ -74,8 +75,7 @@ export const PRACTICE_CLAIM_SHORT = "Mit Lehrkräften aus ganz Deutschland entwi
  *      Sobald eine zweite Schulform ausgeliefert ist, gehört hier eine
  *      Tatsache hin – kein Ausblick mehr.
  */
-export const SCHOOL_TYPE_ANSWER =
-  "Selyvi ist heute für die Grundschule gebaut, Klassen 1 bis 4 – entwickelt gemeinsam mit Lehrkräften von der Grundschule bis zum Abitur. Weitere Schulformen folgen.";
+export const SCHOOL_TYPE_ANSWER = t.shared.schoolTypeAnswer;
 
 /**
  * CTA-Farbvariante.

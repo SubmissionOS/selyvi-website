@@ -161,7 +161,83 @@ console.log("\n=== Ausgabe-Hygiene ===");
 // nicht hängenbleiben; verboten ist die Selbstauskunft über Unwissen.
 console.log("\n=== Ton-Regeln A bis D ===");
 {
-  const RULES = [
+  /**
+   * Welche Sprache liefert dieses Deployment aus?
+   *
+   * Gelesen aus <html lang> der Startseite und nicht aus process.env: Der
+   * Smoke-Test laeuft gegen eine URL, nicht im Build. Wenn die Seite Englisch
+   * ausliefert, muessen die englischen Muster greifen – auch dann, wenn
+   * jemand die Umgebungsvariable lokal anders gesetzt hat.
+   */
+  const { body: startseite } = await get("/");
+  const seitenSprache =
+    startseite.match(/<html[^>]*lang="([a-z-]+)"/)?.[1]?.slice(0, 2) ?? "de";
+  console.log("  Sprache des Deployments: " + seitenSprache);
+
+  /**
+   * Dieselben vier Regeln, englische Muster.
+   *
+   * Sie sind KEINE Uebersetzung der deutschen Muster, sondern ihre
+   * Entsprechung: „noch nicht" heisst im Englischen je nach Satz „not yet",
+   * „still" oder „yet to be", und ein Muster fuer „noch" waere hier sinnlos.
+   */
+  const RULES_EN = [
+    // A – dem Leser zuschreiben, wer er ist
+    [/you became a teacher/i, "A", "„you became a teacher …“"],
+    [/as a teacher,? you (know|understand)/i, "A", "„as a teacher you know …“"],
+    [/you (want|need) to,? don't you/i, "A", "„you want to, don't you“"],
+    [/you('re| are) missing/i, "A", "„you're missing …“"],
+    [
+      /are you (reviewing|researching|looking for) [^.?!]{0,60}\?/i,
+      "A",
+      "Frage, die dem Leser sein Tun zuschreibt",
+    ],
+
+    // B – Selbstzweifel
+    [/\bnot yet\b/i, "B", "„not yet“"],
+    [/\bwe can'?t say\b|\bwe cannot say\b/i, "B", "„we can't say“"],
+    [/\bwe don'?t know\b/i, "B", "„we don't know“"],
+    // „is missing" allein faengt auch die Einladung „Tell us what is
+    // missing from this page." – gefunden in der Gegenprobe, nicht auf der
+    // Seite. Das Muster verlangt jetzt ein Produkt-Subjekt.
+    [/\bstill missing\b/i, "B", "„still missing“"],
+    [
+      /\b(interface|feature|function|option|view|screen|integration)\b[^.!?]{0,24}\bis missing\b/i,
+      "B",
+      "„the … is missing“",
+    ],
+    [/\bnothing can be said\b/i, "B", "„nothing can be said“"],
+    [/\bwe (make|are making) no claim\b/i, "B", "„we make no claim“"],
+    [/\bremains open\b|\bis undecided\b/i, "B", "„remains open“"],
+
+    // C – Reifegrad-Gestaendnis
+    [/\bno (pilot|reference) schools?\b/i, "C", "„no reference schools“"],
+    [/\bsmall team\b/i, "C", "„small team“"],
+    [/\b(young|new) (company|start-?up)\b/i, "C", "„young company“"],
+    [/\bwe('| a)re only\b/i, "C", "„we're only …“"],
+    [/\bso far,? no\b/i, "C", "„so far, no …“"],
+    [/\bnot (yet )?certified\b/i, "C", "Zertifikats-Gestaendnis"],
+
+    // D – Zukunftsform ueber die Produktreife
+    [/\bcoming soon\b/i, "D", "„coming soon“"],
+    [/\bis planned\b|\bare planned\b|\bplanned feature\b/i, "D", "„is planned“"],
+    [/\bin development\b/i, "D", "„in development“"],
+    [/\bunder construction\b/i, "D", "„under construction“"],
+    [/\bwill be available\b|\bwill follow\b/i, "D", "„will be available“"],
+    [/\bbefore (the )?launch\b|\bat launch\b/i, "D", "„before launch“"],
+    [/\bprototype\b/i, "D", "„prototype“"],
+    [/\broadmap\b/i, "D", "„roadmap“"],
+    [/\bwe('| a)re working on\b/i, "D", "„we're working on“"],
+
+    // Verkaufssprache (CLAUDE.md, STIL – englische Liste)
+    [
+      /\b(unlock|supercharge|game-?changer|revolutionis[ez]e?|seamless|effortless|cutting-?edge|best-in-class|free trial|sign up now|boost your|empower)\b/i,
+      "STIL",
+      "Verkaufssprache",
+    ],
+  ];
+
+  const RULES_DE = [
     // A – dem Leser zuschreiben, wer er ist, was er tut oder warum
     [/Sie sind [A-ZÄÖÜa-zäöüß]+ geworden/, "A", "„Sie sind … geworden“"],
     [
@@ -246,6 +322,8 @@ console.log("\n=== Ton-Regeln A bis D ===");
     [/\bgibt es (bald|demn)/i, "D", "„gibt es bald“"],
   ];
 
+  const RULES = seitenSprache === "en" ? RULES_EN : RULES_DE;
+
   /**
    * Ausnahmen von Regel D, abschliessend (CLAUDE.md):
    *   - PRODUCT_HOSTING_NOTE: der Serverstandort, die einzige erlaubte
@@ -255,10 +333,18 @@ console.log("\n=== Ton-Regeln A bis D ===");
    * Beide werden vor der Pruefung aus dem Text geschnitten. Wer den Wortlaut
    * in product.ts bzw. brand.ts aendert, aendert ihn hier mit.
    */
-  const AUSNAHMEN = [
+  const AUSNAHMEN_DE = [
     "Vor dem Betrieb mit echten Schülerdaten ziehen die Produktserver nach Deutschland um und jeder Schule liegt ein Auftragsverarbeitungsvertrag vor – beides ist in Vorbereitung.",
     "Weitere Schulformen folgen.",
   ];
+
+  /** Dieselben zwei Ausnahmen, englischer Wortlaut. */
+  const AUSNAHMEN_EN = [
+    "Before we work with real pupil data, the product servers move to Germany and every school has a data processing agreement in place — both are in preparation.",
+    "More school types follow.",
+  ];
+
+  const AUSNAHMEN = seitenSprache === "en" ? AUSNAHMEN_EN : AUSNAHMEN_DE;
 
   // Der Datenschutztext ist Rechtstext nach Art. 13 DSGVO und wird nicht
   // nach Marketing-Ton umgeschrieben.
