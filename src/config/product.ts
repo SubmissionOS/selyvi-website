@@ -23,12 +23,14 @@
 /**
  * Zielgruppe in Kurzform, fuer die Trust-Zeile.
  *
- * Selyvi ist fuer die Grundschule gebaut – Kompetenzen, Faecher und
- * Zeugnistexte sind darauf zugeschnitten. Weiter gefasste Formulierungen
- * ("fuer Lehrkraefte") waren vor dem Abgleich mit dem Produktstand im Umlauf
- * und sind bewusst verschwunden.
+ * AKTUALISIERT 02.09.2026: Hier stand „Fuer Grundschullehrkraefte, Klassen
+ * 1–4", und der Kommentar begruendete ausdruecklich, warum die weiter
+ * gefasste Fassung „fuer Lehrkraefte" damals verschwunden war. Der
+ * Produktstand fuehrt die Zielgruppe jetzt als alle Schularten und
+ * Schulformen von Klasse 1 bis Abitur – die enge Fassung ist damit die
+ * ungedeckte geworden.
  */
-export const AUDIENCE_SHORT = "Für Grundschullehrkräfte, Klassen 1–4";
+export const AUDIENCE_SHORT = "Für Lehrkräfte, Klasse 1 bis Abitur";
 
 /**
  * Serverstandort und Auftragsverarbeitung – DIE heikelste Aussage der Website.
@@ -152,7 +154,7 @@ export const IMPACT_LINE_PRINCIPLE =
  *
  * „Die KI" ist hier bewusst zu „Selyvi" geworden: Als handelnder Akteur in
  * einer Vertrauensformel loest „die KI" Misstrauen aus, der Produktname nicht.
- * Die Technologie-Kategorie („KI-Assistenz fuer Grundschullehrkraefte") bleibt
+ * Die Technologie-Kategorie („KI-Assistenz fuer Lehrkraefte") bleibt
  * davon unberuehrt – sie sagt, WAS das Produkt ist, und nicht, wer entscheidet.
  *
  * Das „Immer." gehoert NUR ins Manifest: Dort ist der Satz ein Schwur, ueber

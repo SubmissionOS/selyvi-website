@@ -32,12 +32,12 @@ export const PRODUCT_NAME = "Selyvi";
  * Satzbau zu zerstoeren – dieser Absatz muss bei einer Aenderung von Hand
  * nachgezogen werden.
  *
- * KEIN SCHULARTEN-ZUSATZ MEHR: Bis zum Abgleich mit dem Produktstand endete
- * dieser Satz auf „von der Grundschule bis zum Abitur". Das stimmt fuer die
- * ENTSTEHUNG – so ist das Produkt gewachsen – liest sich an dieser Stelle aber
- * als Aussage ueber die Eignung, und Selyvi ist fuer die Grundschule gebaut,
- * Klassen 1–4. Der Zusatz steht deshalb nur noch dort, wo er die Entstehung
- * erzaehlt: im Fliesstext auf /ueber-uns.
+ * KEIN SCHULARTEN-ZUSATZ: Dieser Satz endete einmal auf „von der Grundschule
+ * bis zum Abitur". Er ist ohne den Zusatz geblieben, und das bleibt richtig –
+ * jetzt aus dem umgekehrten Grund: Seit dem 02.09.2026 ist Selyvi fuer alle
+ * Schularten gebaut, und die Aufzaehlung waere eine Einschraenkung, wo keine
+ * mehr ist. Wer sie erzaehlt haben will, findet sie im Fliesstext auf
+ * /ueber-uns – dort als Entstehung.
  */
 export const PRACTICE_CLAIM =
   "Entwickelt in Zusammenarbeit mit Lehrkräften aus ganz Deutschland.";
@@ -60,22 +60,30 @@ export const PRACTICE_CLAIM_SHORT = "Mit Lehrkräften aus ganz Deutschland entwi
  * verschiedene Antworten darauf wären genau die Art Widerspruch, die im
  * Erstgespräch auffällt.
  *
- * DREI TEILE, DREI VERSCHIEDENE GELTUNGSBEREICHE – bitte nicht vermischen:
+ * ==========================================================================
+ * AKTUALISIERT 02.09.2026 – ALLE SCHULARTEN
+ * ==========================================================================
+ * Der Satz nannte bis dahin „die Grundschule, Klassen 1 bis 4" und endete auf
+ * „Weitere Schulformen folgen." Beides ist weg, und zwar aus demselben Grund:
+ * Es folgt nichts mehr – es ist da. Der Produktstand fuehrt die Zielgruppe
+ * seit dem 02.09.2026 als „alle Schularten und Schulformen, Klasse 1 bis
+ * Abitur" (siehe den Kopf von docs/produktstand-2026-08.md, dort mit dem
+ * Vermerk, dass die Ursprungsfassung Grundschule 1–4 nannte).
  *
- *   1. „heute für die Grundschule gebaut, Klassen 1 bis 4" ist eine
- *      Tatsachenaussage und durch docs/produktstand-2026-08.md gedeckt.
- *   2. „entwickelt gemeinsam mit Lehrkräften von der Grundschule bis zum
- *      Abitur" beschreibt die ENTSTEHUNG, nicht die Eignung. Gedeckt durch
- *      PRACTICE_CLAIM. Deshalb steht der Zusatz hier und nur hier – im
- *      Trust-Band und auf /schulen bleibt PRACTICE_CLAIM ohne ihn.
- *   3. „Weitere Schulformen folgen." ist AUSBLICK, keine Funktionszusage. Der
- *      Produktstand sagt dazu nichts; das Wort „folgen" macht die Aussage als
- *      Zukunft erkennbar und nennt bewusst weder Schulform noch Zeitpunkt.
- *      Sobald eine zweite Schulform ausgeliefert ist, gehört hier eine
- *      Tatsache hin – kein Ausblick mehr.
+ * Damit entfaellt auch die letzte Ausnahme von Regel D auf dieser Seite,
+ * die nicht der Serverstandort ist: „Weitere Schulformen folgen." war eine
+ * Ankuendigung. Ohne sie steht der Satz vollstaendig im Praesens.
+ *
+ * ZWEITER TEIL, ANDERER GELTUNGSBEREICH: „Wir orientieren uns an den
+ * Bildungs- und Rahmenplaenen der Laender" sagt, WONACH gebaut ist – nicht,
+ * dass etwas angebunden waere. Die Wortlaut-Sperre gilt unveraendert und
+ * strenger denn je: NIEMALS „greift auf … zu", „nutzt", „liest aus". Die
+ * Lehrplaene aller 16 Bundeslaender liegen erhoben vor, sind aus
+ * Lizenzgruenden aber BEWUSST NICHT ANGEBUNDEN. „Orientiert sich an" ist das
+ * staerkste zulaessige Verb – siehe auch hero.tsx und teaching-quality.tsx.
  */
 export const SCHOOL_TYPE_ANSWER =
-  "Selyvi ist heute für die Grundschule gebaut, Klassen 1 bis 4 – entwickelt gemeinsam mit Lehrkräften von der Grundschule bis zum Abitur. Weitere Schulformen folgen.";
+  "Selyvi ist für alle Schularten und Schulformen gebaut – von Klasse 1 bis zum Abitur. Wir orientieren uns an den Bildungs- und Rahmenplänen der Länder.";
 
 /**
  * CTA-Farbvariante.

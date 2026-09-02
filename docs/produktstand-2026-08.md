@@ -13,7 +13,13 @@
 > Planungsdokumenten. Jede als „Live" markierte Funktion ist im ausgelieferten Code
 > vorhanden.
 
-Selyvi ist die KI-Assistenz für Grundschullehrkräfte, Klassen 1–4. Selyvi strukturiert
+**Zielgruppe: alle Schularten und Schulformen, Klasse 1 bis Abitur** (aktualisiert
+02.09.2026 per CMO-Ansage; Ursprungsfassung nannte Grundschule 1–4). Die
+Funktions-Detailangaben in diesem Dokument bleiben davon unberührt – geändert hat
+sich, für wen das Produkt gebaut ist, nicht was es tut.
+
+Selyvi ist die KI-Assistenz für Lehrkräfte aller Schularten und Schulformen, von
+Klasse 1 bis zum Abitur. Selyvi strukturiert
 Beobachtungen, schreibt Zeugnisbemerkungen und Elternmails im Schreibstil der Lehrkraft,
 erzeugt Unterrichtsmaterial aus einem Fachkorpus und zeigt der Schulleitung, wie viel Zeit
 das der Schule zurückgibt.

@@ -5,15 +5,15 @@ import { PRACTICE_CLAIM, PRODUCT_NAME } from "@/config/brand";
 /**
  * Sektion 3 – Für wen.
  *
- * Die Reihenfolge ist die Wahrheit aus docs/produktstand-2026-08.md: gebaut
- * fuer die Grundschule, Klassen 1–4. Andere Schulformen sind ausdruecklich
- * willkommen – aber fuer die WEITERENTWICKLUNG, nicht als heutige Zielgruppe.
- * Genau diese Unterscheidung ist der Grund, warum die Sektion existiert; ohne
- * sie liest eine Gymnasiallehrkraft die Einladung als Zusage.
+ * AKTUALISIERT 02.09.2026. Diese Sektion existierte, um eine Unterscheidung
+ * zu treffen: gebaut fuer die Grundschule, andere Schulformen willkommen –
+ * aber nur fuer die Weiterentwicklung. Ohne sie haette eine Gymnasiallehrkraft
+ * die Einladung als Zusage gelesen.
  *
- * Der zweite Absatz ist durch PRACTICE_CLAIM gedeckt: An der Entwicklung
- * waren Lehrkraefte von der Grundschule bis zum Abitur beteiligt. Das ist
- * belegte Vergangenheit, keine Ankuendigung.
+ * Diese Unterscheidung gibt es nicht mehr. Der Produktstand fuehrt seit dem
+ * 02.09.2026 alle Schularten von Klasse 1 bis Abitur, und damit ist die
+ * Einladung fuer alle dieselbe. Die Sektion bleibt – die Frage „fuer wen?"
+ * stellt sich weiterhin –, aber sie beantwortet sie jetzt in einem Satz.
  *
  * Forschende bekommen keinen eigenen Absatz, sondern einen Verweis: Fuer sie
  * gibt es eine eigene Seite, und die sagt deutlich mehr, als hier hinpasst.
@@ -30,17 +30,14 @@ export function WhoFor() {
             Für wen das gedacht ist
           </h2>
 
+          {/* AKTUALISIERT 02.09.2026. Hier standen zwei Absaetze: einer, der
+              die Grundschule als Zielgruppe nannte, und einer, der Lehrkraefte
+              anderer Schulformen „fuer die Weiterentwicklung" willkommen hiess
+              – eine Einladung zweiter Klasse. Beides ist mit der neuen
+              Zielgruppe hinfaellig. */}
           <p className="mt-6 text-lg text-gray-500">
-            Zuerst für Grundschullehrkräfte, Klassen 1 bis 4 – dafür ist {PRODUCT_NAME}{" "}
-            heute gebaut. Wer dort unterrichtet, arbeitet mit dem Werkzeug in genau der
-            Form, in der es gedacht ist.
-          </p>
-
-          <p className="mt-4 text-lg text-gray-500">
-            Lehrkräfte anderer Schulformen sind ausdrücklich willkommen – für die
-            Weiterentwicklung. {PRACTICE_CLAIM} Was die Anwendung heute kann, ist
-            allerdings auf die Grundschule zugeschnitten; das gehört vorher gesagt und
-            nicht nachher.
+            {PRODUCT_NAME} ist für Lehrkräfte aller Schularten und Schulformen gebaut, von
+            Klasse 1 bis zum Abitur. {PRACTICE_CLAIM}
           </p>
 
           <p className="mt-4 text-lg text-gray-500">

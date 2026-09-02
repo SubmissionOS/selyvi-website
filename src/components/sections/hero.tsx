@@ -79,9 +79,9 @@ export function Hero() {
               Wer diesen Satz umformuliert, liest vorher den Abschnitt „Der
               Fachkorpus ist noch duenn" im Produktstand. */}
           <p className="mt-6 max-w-xl text-lg text-gray-500">
-            {PRODUCT_NAME} ist die mitlernende Assistenz für Grundschullehrkräfte: Sie
-            lernt Ihren Stil, wächst mit Ihrer Klasse mit und orientiert sich an aktuellen
-            Bildungsvorgaben – von der Beobachtung im Unterricht bis zur Zeugnisbemerkung.
+            {PRODUCT_NAME} ist die mitlernende Assistenz für Lehrkräfte – sie lernt Ihren
+            Stil, wächst mit Ihren Klassen mit und orientiert sich an den Bildungs- und
+            Rahmenplänen der Länder.
           </p>
 
           {/* Der Satz bleibt: Er ist das Unterscheidungsmerkmal, an dem

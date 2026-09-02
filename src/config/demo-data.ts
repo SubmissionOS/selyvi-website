@@ -29,7 +29,12 @@
  * ==========================================================================
  *
  * Die Inhalte müssen zum Produktstand passen (docs/produktstand-2026-08.md):
- * Grundschule, Klassen 1–4, Kompetenzen statt Notendurchschnitt.
+ * Kompetenzen statt Notendurchschnitt.
+ *
+ * Die Klasse 3b bleibt, obwohl die Zielgruppe seit dem 02.09.2026 alle
+ * Schularten umfasst: Eine Szene braucht EIN Beispiel, und ein Beispiel ist
+ * keine Einschraenkung. Sechs Kinder einer dritten Klasse zeigen dieselbe
+ * Funktion wie ein Oberstufenkurs – nur mit kuerzeren Namen im Bild.
  */
 
 /** Fiktive Klasse, auf die sich alle Szenen beziehen. */

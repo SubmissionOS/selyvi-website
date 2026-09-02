@@ -59,17 +59,17 @@ export const OG_IMAGE = {
   // Vorschaubilder lange. Nach einem Austausch des Motivs die Zahl erhoehen,
   // dann holen die Plattformen es neu. Die Startseite traegt zusaetzlich Next
   // eigenen Hash, weil dort die Dateikonvention direkt greift.
-  // v=3 seit der Neuausrichtung auf die Grundschule: Der Untertitel im Motiv
-  // hat sich geaendert, und soziale Netzwerke wuerden sonst das alte Bild
-  // weiterzeigen.
-  url: "/opengraph-image?v=3",
+  // v=4 seit der Zielgruppen-Aktualisierung vom 02.09.2026: Der Untertitel im
+  // Motiv nennt jetzt alle Schularten, und soziale Netzwerke wuerden sonst das
+  // alte Bild weiterzeigen.
+  url: "/opengraph-image?v=4",
   width: 1200,
   height: 630,
-  alt: `${PRODUCT_NAME} – Die KI-Assistenz für Grundschullehrkräfte`,
+  alt: `${PRODUCT_NAME} – Die KI-Assistenz für Lehrkräfte`,
 };
 
 /** Titel der Startseite. Alle anderen Seiten: "Seitentitel – <Produktname>". */
-export const HOME_TITLE = `${PRODUCT_NAME} – Die KI-Assistenz für Grundschullehrkräfte`;
+export const HOME_TITLE = `${PRODUCT_NAME} – Die KI-Assistenz für Lehrkräfte`;
 
 export type RouteMeta = {
   path: string;
@@ -97,7 +97,7 @@ export const routes: RouteMeta[] = [
     title: "",
     // Beginnt wortgleich mit der H1: Wer den Teilen-Vorschau-Text liest und
     // danach die Seite oeffnet, findet denselben Satz wieder.
-    description: `Der Papierkram hat jetzt eine Assistenz. ${PRODUCT_NAME} ist die mitlernende KI-Assistenz für Grundschullehrkräfte – aus Beobachtungen im Unterricht entstehen Zeugnisbemerkungen, Elternmails und passendes Material. In Ihrer Sprache, nicht in KI-Sprache.`,
+    description: `Der Papierkram hat jetzt eine Assistenz. ${PRODUCT_NAME} ist die mitlernende KI-Assistenz für Lehrkräfte, Klasse 1 bis Abitur – aus Beobachtungen im Unterricht entstehen Zeugnisbemerkungen, Elternmails und passendes Material. In Ihrer Sprache, nicht in KI-Sprache.`,
     priority: 1,
   },
   {

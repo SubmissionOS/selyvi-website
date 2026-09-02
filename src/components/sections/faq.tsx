@@ -12,11 +12,12 @@ import { FaqAccordion, type FaqItem } from "@/components/faq-accordion";
 const faqItems: FaqItem[] = [
   {
     question: `Was ist ${PRODUCT_NAME}?`,
-    answer: `${PRODUCT_NAME} ist die KI-Assistenz für Grundschullehrkräfte. Sie nimmt Beobachtungen aus dem Unterricht auf – getippt oder diktiert – und macht daraus Zeugnisbemerkungen, Elternmails und Unterrichtsmaterial.`,
+    answer: `${PRODUCT_NAME} ist die KI-Assistenz für Lehrkräfte. Sie nimmt Beobachtungen aus dem Unterricht auf – getippt oder diktiert – und macht daraus Zeugnisbemerkungen, Elternmails und Unterrichtsmaterial.`,
   },
   {
     // Diese Frage war eine Zeit lang entfernt, weil die Antwort nicht
-    // feststand. Sie steht fest: Grundschule, Klassen 1–4.
+    // feststand. Sie steht fest – und seit dem 02.09.2026 weiter als vorher:
+    // alle Schularten, Klasse 1 bis Abitur.
     question: "Für welche Schulformen ist es gedacht?",
     // Geteilte Formulierung – Quelle ist src/config/brand.ts.
     answer: SCHOOL_TYPE_ANSWER,

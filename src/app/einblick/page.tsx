@@ -36,8 +36,8 @@ export default function EinblickPage() {
           </h1>
 
           <p className="mt-5 max-w-2xl text-lg text-gray-500">
-            Vier Bereiche sind offen – klicken Sie in beliebiger Reihenfolge durch. Was
-            Sie auswählen, bleibt beim Wechsel erhalten.
+            Vier von acht Bereichen sind offen – klicken Sie in beliebiger Reihenfolge
+            durch. Was Sie auswählen, bleibt beim Wechsel erhalten.
           </p>
 
           <div className="mt-10">

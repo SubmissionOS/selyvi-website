@@ -247,17 +247,20 @@ console.log("\n=== Ton-Regeln A bis D ===");
   ];
 
   /**
-   * Ausnahmen von Regel D, abschliessend (CLAUDE.md):
-   *   - PRODUCT_HOSTING_NOTE: der Serverstandort, die einzige erlaubte
-   *     Einschraenkung. Enthaelt „in Vorbereitung".
-   *   - SCHOOL_TYPE_ANSWER: „Weitere Schulformen folgen." Ausbau, keine
-   *     Reife – von CEO und CMO so gewollt.
-   * Beide werden vor der Pruefung aus dem Text geschnitten. Wer den Wortlaut
-   * in product.ts bzw. brand.ts aendert, aendert ihn hier mit.
+   * Ausnahme von Regel D – nur noch EINE, seit dem 02.09.2026.
+   *
+   * PRODUCT_HOSTING_NOTE, der Serverstandort. Sie wird vor der Pruefung aus
+   * dem Text geschnitten; wer den Wortlaut in product.ts aendert, aendert ihn
+   * hier mit.
+   *
+   * Die zweite Ausnahme war SCHOOL_TYPE_ANSWER mit „Weitere Schulformen
+   * folgen." Der Satz ist ersatzlos weg: Selyvi ist fuer alle Schularten von
+   * Klasse 1 bis Abitur gebaut, es folgt nichts mehr. Damit ist Regel D um
+   * eine Ausnahme strenger – und diese Zeile beweist es, weil ein
+   * Wiederauftauchen des Satzes den Smoke-Test jetzt fehlschlagen liesse.
    */
   const AUSNAHMEN = [
     "Vor dem Betrieb mit echten Schülerdaten ziehen die Produktserver nach Deutschland um und jeder Schule liegt ein Auftragsverarbeitungsvertrag vor – beides ist in Vorbereitung.",
-    "Weitere Schulformen folgen.",
   ];
 
   // Der Datenschutztext ist Rechtstext nach Art. 13 DSGVO und wird nicht
