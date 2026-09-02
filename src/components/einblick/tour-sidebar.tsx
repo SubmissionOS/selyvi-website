@@ -117,8 +117,13 @@ export function TourSidebar({
                    dort namenlos. Gemessen, nicht vermutet: Lighthouse prueft
                    in Mobilbreite und hat genau das gemeldet. */
                 aria-label={isLocked ? `${entry.label}, gesperrt` : entry.label}
+                /* min-h-11 nur unterhalb von sm: Auf dem Telefon ist die
+                   Leiste eine Symbolspalte, und ein 26 px hohes Symbol trifft
+                   man mit dem Daumen nicht zuverlaessig (WCAG 2.5.8). Ab sm
+                   zeigt ein Zeiger, dort reicht die kompakte Hoehe. */
                 className={cn(
                   "relative flex w-full items-center justify-center gap-2 rounded-[var(--app-radius-nav)] px-2 py-1.5 text-left sm:justify-start",
+                  "min-h-11 sm:min-h-0",
                   isActive &&
                     "bg-[var(--app-blue-soft)] font-semibold text-[var(--app-blue-on-soft)]",
                   !isActive &&

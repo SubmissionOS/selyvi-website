@@ -65,7 +65,7 @@ export default function EinblickPage() {
 
               <Link
                 href="/mitgestalten"
-                className="text-base text-brand-600 underline underline-offset-4"
+                className="inline-flex min-h-11 items-center text-base text-brand-600 underline underline-offset-4 sm:min-h-0"
               >
                 Oder gleich mitgestalten
               </Link>

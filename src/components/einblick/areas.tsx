@@ -1,15 +1,20 @@
 "use client";
 
-import type { Dispatch, SetStateAction } from "react";
-import { Check, Lock, Mic, Sparkles } from "lucide-react";
+import { useEffect, useRef, type Dispatch, type SetStateAction } from "react";
+import { Check, Lock, Mic, Send, Sparkles } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import {
+  CHAT_FALLBACK,
   DEMO_CHAT,
+  DEMO_CHAT_KEYWORDS,
   DEMO_MAIL_LANGS,
   DEMO_MATERIAL_RESULT,
   DEMO_MATERIAL_SOURCES,
   DEMO_MATERIAL_TOPICS,
+  DEMO_PARENTS,
+  DEMO_SUBJECT_COLORS,
+  DEMO_SUBJECT_KEYWORDS,
   DEMO_TEACHER,
   DEMO_TIMETABLE_DAYS,
   DEMO_TIMETABLE_SLOTS,
@@ -41,11 +46,47 @@ import { Button } from "@/components/ui/button";
 
 export type Seat = { id: string; initials: string | null; locked: boolean };
 
+/**
+ * Eine selbst getippte Beobachtung.
+ *
+ * Sie lebt ausschliesslich hier im React-Zustand. Nichts davon verlaesst den
+ * Browser: kein fetch, kein localStorage, keine Server Action. Der Banner
+ * ueber dem Fenster sagt genau das („nichts wird gespeichert"), und diese
+ * Zeile ist der Grund, warum er stimmt.
+ */
+export type OwnNote = {
+  text: string;
+  chips: string[];
+  /** Erkanntes Kind (Beobachtungs-Id) – oder null, wenn keiner passte. */
+  child: string | null;
+};
+
 export type TourState = {
   chosen: string | null;
   filter: string | null;
   dictated: string | null;
+  /** Laeuft das Diktat gerade? Steuert den Timer ueber einen Effekt. */
+  dictating: boolean;
   chatOpen: string | null;
+  /** Frei getippte Frage an die eigenen Daten. */
+  chatInput: string;
+  /**
+   * Antwort auf die frei getippte Frage.
+   *   { question: "lesen" }  -> vorbereitete Antwort mit Verweis-Chips
+   *   { question: null }     -> die ehrliche Rueckfall-Antwort
+   */
+  chatFree: { question: string | null } | null;
+  /** Eigene Beobachtung, waehrend des Tippens. */
+  ownDraft: string;
+  /** Eigene Beobachtung, nachdem sie uebernommen wurde. */
+  ownNote: OwnNote | null;
+  /** Empfaenger-Kind der Elternmail. */
+  mailChild: string;
+  /** Frei eingetipptes Materialthema. */
+  topicInput: string;
+  topicFree: string | null;
+  /** Platz, an dem gerade der „sitzt"-Haken steht. */
+  seated: string | null;
   reportVariant: 0 | 1 | null;
   reportText: string;
   mailCreated: boolean;
@@ -68,6 +109,82 @@ export type TourActions = {
 };
 
 const LABEL = "text-xs font-medium tracking-wide text-[var(--app-text-muted)] uppercase";
+
+/**
+ * Klassen fuer Bedienelemente, die getroffen werden muessen.
+ *
+ * Zwei Masse, nicht eines:
+ *   - 24 px ist das PFLICHTMASS (WCAG 2.5.8 Target Size, Minimum, AA).
+ *     Es gilt fuer jeden Zeiger, also auch fuer die Maus am Schreibtisch.
+ *   - 44 px ist das EMPFOHLENE Mass (2.5.5, Enhanced). Es gilt hier auf dem
+ *     Telefon, wo mit dem Daumen gezielt wird.
+ *
+ * Die Chips im Einblick waren mit `py-0.5` rund 20 px hoch – auf dem
+ * Bildschirm huebsch, mit dem Daumen ein Gluecksspiel. Die erste Fassung
+ * dieser Konstante liess ab sm die Mindesthoehe ganz weg (`sm:min-h-0`);
+ * damit standen die Chips auf dem Desktop bei 23,5 px und rissen das
+ * Pflichtmass knapp. Der Zustands-Crawl hat das gemessen. Jetzt bleiben
+ * ab sm 24 px stehen.
+ */
+const TIPPZIEL = "min-h-11 sm:min-h-6";
+
+/**
+ * Eingabefelder: 16 px auf dem Telefon, kleiner erst ab sm.
+ *
+ * Safari auf iOS zoomt in ein Feld hinein, sobald dessen Schrift kleiner als
+ * 16 px ist – und zoomt danach NICHT von selbst zurueck. Die Seite steht dann
+ * schief, und niemand weiss warum. Der einzige Weg dagegen ist die
+ * Schriftgroesse selbst.
+ */
+const EINGABE_SCHRIFT = "text-[16px] sm:text-[13px]";
+
+/** Klein geschrieben, ohne Satzzeichen – fuer den Vergleich mit Wortlisten. */
+function normalisiere(text: string): string {
+  return text.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, " ");
+}
+
+/**
+ * Welche vorbereitete Antwort passt zu dieser Frage?
+ *
+ * Ein Vergleich mit Wortlisten, mehr nicht – siehe DEMO_CHAT_KEYWORDS. Kein
+ * Treffer ist ein gueltiges Ergebnis und fuehrt zur ehrlichen
+ * Rueckfall-Antwort, nicht zu einer erfundenen.
+ */
+function findeAntwort(frage: string): string | null {
+  const text = normalisiere(frage);
+  if (text.trim().length === 0) return null;
+  for (const [id, worte] of Object.entries(DEMO_CHAT_KEYWORDS)) {
+    if (worte.some((w) => text.includes(w))) return id;
+  }
+  return null;
+}
+
+/**
+ * Chips fuer eine selbst getippte Beobachtung: Kind, Fach, sonst „Beobachtung".
+ *
+ * Das Produkt macht daraus laut Produktstand Fach, Kategorie, Prioritaet und
+ * Foerderhinweis. Der Einblick zeigt davon, was sichtbar ist – und erfindet
+ * die Kategorie nicht dazu.
+ */
+function erkenneChips(text: string): OwnNote {
+  const norm = normalisiere(text);
+  const chips: string[] = [];
+
+  const kind =
+    DEMO_TOUR_OBSERVATIONS.find((e) =>
+      norm.includes(e.child.split(" ")[0].toLowerCase()),
+    ) ?? null;
+  if (kind) chips.push(kind.child);
+
+  const fach = Object.entries(DEMO_SUBJECT_KEYWORDS).find(([, worte]) =>
+    worte.some((w) => norm.includes(w)),
+  );
+  if (fach) chips.push(fach[0]);
+
+  if (chips.length === 0) chips.push("Beobachtung");
+
+  return { text: text.trim(), chips, child: kind?.id ?? null };
+}
 
 /* ==========================================================================
  * 1) Beobachtungen
@@ -108,7 +225,8 @@ export function AreaObservations({
               set((s) => ({ ...s, filter: s.filter === e.initials ? null : e.initials }))
             }
             className={cn(
-              "rounded-full border px-2 py-0.5 text-[11px]",
+              "inline-flex items-center rounded-full border px-2 py-0.5 text-[11px]",
+              TIPPZIEL,
               state.filter === e.initials
                 ? "border-[var(--app-blue)] bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]"
                 : "border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)] hover:border-[var(--app-blue)]",
@@ -171,6 +289,65 @@ export function AreaObservations({
           );
         })}
 
+        {/* Die selbst getippte Beobachtung steht in derselben Liste wie die
+            Beispiele, ist waehlbar und filterbar. Genau das ist der Punkt:
+            Wer den eigenen Satz gleich darauf in der Timeline des Kindes
+            wiederfindet, hat verstanden, was „Teil der Akte" heisst. */}
+        {state.ownNote &&
+        (!state.filter ||
+          state.filter ===
+            DEMO_TOUR_OBSERVATIONS.find((e) => e.id === state.ownNote?.child)
+              ?.initials) ? (
+          <li>
+            <button
+              type="button"
+              aria-pressed={state.chosen === "eigen"}
+              onClick={() => {
+                set((s) => ({
+                  ...s,
+                  chosen: "eigen",
+                  reportVariant: null,
+                  reportText: "",
+                  mailCreated: false,
+                }));
+                notify("Beobachtung ausgewählt");
+              }}
+              className={cn(
+                "w-full rounded-[var(--app-radius-card)] border p-3 text-left",
+                state.chosen === "eigen"
+                  ? "border-[var(--app-blue)] bg-[var(--app-surface-muted)]"
+                  : "border-[var(--app-border)] bg-[var(--app-surface)] hover:border-[var(--app-blue)]",
+              )}
+            >
+              <span className="flex items-center gap-2">
+                <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-[var(--app-blue-soft)] text-[10px] font-semibold text-[var(--app-blue-on-soft)]">
+                  ✎
+                </span>
+                {/* Als Text-Knoten, nicht als HTML: Was hier steht, hat
+                    jemand getippt. React setzt es als Text ein, und
+                    dangerouslySetInnerHTML kommt in dieser Datei nicht vor. */}
+                <span className="text-[13px] text-[var(--app-text)]">
+                  {state.ownNote.text}
+                </span>
+              </span>
+
+              <span className="mt-2 flex flex-wrap gap-1.5">
+                {state.ownNote.chips.map((chip) => (
+                  <span
+                    key={chip}
+                    className={cn(
+                      "rounded-full border border-[var(--app-blue)] bg-[var(--app-blue-soft)] px-2 py-0.5 text-[10px] text-[var(--app-blue-on-soft)]",
+                      actions.reduced ? "" : "animate-chip-pop",
+                    )}
+                  >
+                    {chip}
+                  </span>
+                ))}
+              </span>
+            </button>
+          </li>
+        ) : null}
+
         {/* Die diktierte Beobachtung landet in derselben Liste – nur so
             erklaert sich der Zaehler in der Seitenleiste. */}
         {state.dictated ? (
@@ -189,9 +366,11 @@ export function AreaObservations({
         ) : null}
       </ul>
 
-      <div className="mt-4">
+      <div className="mt-4 flex flex-wrap gap-3">
         <DictationButton state={state} actions={actions} />
       </div>
+
+      <OwnNoteField state={state} actions={actions} />
 
       {/* Chat ueber die eigenen Daten. */}
       <div className="mt-6 border-t border-[var(--app-border)] pt-4">
@@ -207,9 +386,15 @@ export function AreaObservations({
                   set((s) => ({
                     ...s,
                     chatOpen: s.chatOpen === frage.id ? null : frage.id,
+                    // Die freie Antwort schliesst mit: zwei Antworten
+                    // untereinander waeren zwei Antworten auf zwei Fragen.
+                    chatFree: null,
                   }))
                 }
-                className="w-full rounded-[var(--app-radius-control)] border border-[var(--app-border)] bg-[var(--app-surface)] px-3 py-2 text-left text-[12px] text-[var(--app-text)] hover:border-[var(--app-blue)]"
+                className={cn(
+                  "flex w-full items-center rounded-[var(--app-radius-control)] border border-[var(--app-border)] bg-[var(--app-surface)] px-3 py-2 text-left text-[12px] text-[var(--app-text)] hover:border-[var(--app-blue)]",
+                  TIPPZIEL,
+                )}
               >
                 {frage.text}
               </button>
@@ -235,11 +420,155 @@ export function AreaObservations({
           ))}
         </ul>
 
+        <ChatField state={state} actions={actions} />
+
         <p className="mt-3 text-[11px] text-[var(--app-text-muted)]">
           Antworten nur aus Ihren eigenen Einträgen
         </p>
       </div>
     </section>
+  );
+}
+
+/* ==========================================================================
+ * Eigene Beobachtung tippen
+ * ========================================================================== */
+function OwnNoteField({ state, actions }: { state: TourState; actions: TourActions }) {
+  const { set, notify } = actions;
+  const feld = useRef<HTMLTextAreaElement | null>(null);
+  const leer = state.ownDraft.trim().length === 0;
+
+  function uebernehmen() {
+    // Doppelklick-Schutz: Ist der Entwurf leer, passiert nichts. Nach dem
+    // Uebernehmen ist er leer – der zweite Klick laeuft also ins Leere statt
+    // in einen zweiten Eintrag.
+    if (leer) return;
+    const notiz = erkenneChips(state.ownDraft);
+    set((s) => ({ ...s, ownNote: notiz, ownDraft: "" }));
+    notify("Übernommen · bleibt in Ihrem Browser");
+    // Der Fokus bleibt im Feld: Wer eine zweite Beobachtung tippen will, kann
+    // sofort weiterschreiben, ohne erneut zu zielen.
+    feld.current?.focus();
+  }
+
+  return (
+    <div className="mt-4 rounded-[var(--app-radius-card)] border border-[var(--app-border)] bg-[var(--app-surface)] p-3">
+      <label
+        htmlFor="einblick-eigene-beobachtung"
+        className="block text-[11px] text-[var(--app-text-muted)]"
+      >
+        Eigene Beobachtung schreiben
+      </label>
+
+      <textarea
+        id="einblick-eigene-beobachtung"
+        ref={feld}
+        value={state.ownDraft}
+        maxLength={280}
+        rows={2}
+        onChange={(e) => set((s) => ({ ...s, ownDraft: e.target.value }))}
+        placeholder="Zum Beispiel: Lotta hat heute die Gruppenarbeit geleitet."
+        className={cn(
+          "mt-1.5 w-full rounded-[var(--app-radius-control)] border border-[var(--app-border)] bg-[var(--app-surface)] p-2.5 leading-relaxed text-[var(--app-text)] placeholder:text-[var(--app-text-muted)]",
+          EINGABE_SCHRIFT,
+        )}
+      />
+
+      <div className="mt-2 flex flex-wrap items-center gap-3">
+        <Button variant="outline" size="md" disabled={leer} onClick={uebernehmen}>
+          Übernehmen
+        </Button>
+        <span className="text-[11px] text-[var(--app-text-muted)]">
+          {state.ownDraft.length}/280 · bleibt in Ihrem Browser
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/* ==========================================================================
+ * Freie Frage an die eigenen Daten
+ * ========================================================================== */
+function ChatField({ state, actions }: { state: TourState; actions: TourActions }) {
+  const { set } = actions;
+  const leer = state.chatInput.trim().length === 0;
+  const treffer = state.chatFree?.question
+    ? DEMO_CHAT.questions.find((f) => f.id === state.chatFree?.question)
+    : null;
+
+  function senden() {
+    if (leer) return;
+    const id = findeAntwort(state.chatInput);
+    // Die vorbereitete Liste wird zugeklappt: Zwei offene Antworten
+    // untereinander waeren zwei Antworten auf zwei Fragen – verwirrend.
+    set((s) => ({ ...s, chatFree: { question: id }, chatOpen: null, chatInput: "" }));
+  }
+
+  return (
+    <div className="mt-3">
+      <label htmlFor="einblick-frage" className="sr-only">
+        Eigene Frage an die Beispieldaten
+      </label>
+
+      <div className="flex items-center gap-2 rounded-[var(--app-radius-control)] border border-[var(--app-border)] bg-[var(--app-surface)] px-3 focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-brand-600">
+        <input
+          id="einblick-frage"
+          value={state.chatInput}
+          maxLength={160}
+          onChange={(e) => set((s) => ({ ...s, chatInput: e.target.value }))}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              senden();
+            }
+          }}
+          placeholder="Eigene Frage stellen …"
+          className={cn(
+            "w-full bg-transparent py-2.5 text-[var(--app-text)] outline-none placeholder:text-[var(--app-text-muted)]",
+            EINGABE_SCHRIFT,
+          )}
+        />
+        <button
+          type="button"
+          onClick={senden}
+          disabled={leer}
+          aria-label="Frage senden"
+          className={cn(
+            "flex shrink-0 items-center justify-center rounded-[var(--app-radius-control)] px-2 text-[var(--app-blue)] disabled:text-[var(--app-text-muted)]",
+            TIPPZIEL,
+          )}
+        >
+          <Send aria-hidden="true" className="size-4" />
+        </button>
+      </div>
+
+      {/* Die Antwort erscheint hier. role="status" statt eines eigenen
+          aria-live-Bereichs: Der Kasten steht nur da, wenn es etwas zu sagen
+          gibt, und role="status" meldet ihn beim Erscheinen. */}
+      {state.chatFree ? (
+        <div
+          role="status"
+          className="mt-2 rounded-[var(--app-radius-control)] bg-[var(--app-surface-muted)] p-3"
+        >
+          <p className="text-[12px] leading-relaxed text-[var(--app-text)]">
+            {treffer ? treffer.answer : CHAT_FALLBACK}
+          </p>
+
+          {treffer ? (
+            <p className="mt-2 flex flex-wrap gap-1.5">
+              {treffer.references.map((r) => (
+                <span
+                  key={r}
+                  className="rounded-full border border-[var(--app-border)] bg-[var(--app-surface)] px-2 py-0.5 text-[10px] text-[var(--app-text-muted)]"
+                >
+                  {r}
+                </span>
+              ))}
+            </p>
+          ) : null}
+        </div>
+      ) : null}
+    </div>
   );
 }
 
@@ -249,40 +578,63 @@ export function AreaObservations({
  * nicht in Frames, und im Ruhezustand darf die Seite keine Schleife halten.
  * Nach dem letzten Wort ist Schluss.
  */
+const DIKTAT_WORTE =
+  "Frida hat im Sachunterricht ihren Versuch selbst aufgebaut und den Ablauf erklärt.".split(
+    " ",
+  );
+
 function DictationButton({ state, actions }: { state: TourState; actions: TourActions }) {
   const { set, notify, reduced } = actions;
-  const laeuft = state.dictated !== null && !state.dictated.endsWith(".");
+
+  /* ==========================================================================
+   * DER TIMER HAENGT AN EINEM EFFEKT, NICHT AN EINER KETTE
+   * ==========================================================================
+   * Vorher rief der Klick eine Funktion, die sich per setTimeout selbst
+   * wieder aufrief. Diese Kette liess sich nicht anhalten: Wer waehrend des
+   * Diktats den Bereich wechselte oder auf „Zurücksetzen" drueckte, sah den
+   * Text danach Wort fuer Wort ZURUECKKOMMEN – die Kette schrieb weiter in
+   * einen Zustand, den es so nicht mehr gab. Gefunden bei der Jank-Jagd,
+   * nicht im Betrieb.
+   *
+   * Jetzt steuert `dictating` den Effekt. Wird der Zustand zurueckgesetzt,
+   * ist `dictating` false, der Effekt raeumt seinen Timer ab, und es passiert
+   * nichts mehr. Beim Ausbau der Komponente ebenso.
+   *
+   * Das setState steht IM setTimeout, nicht synchron im Effekt – sonst
+   * beanstandet die React-Compiler-Regel `set-state-in-effect`.
+   */
+  useEffect(() => {
+    if (!state.dictating) return;
+
+    const gesagt = state.dictated ?? "";
+    const i = gesagt.length === 0 ? 0 : gesagt.split(" ").length;
+
+    const timer = window.setTimeout(() => {
+      const naechste = DIKTAT_WORTE.slice(0, i + 1).join(" ");
+      const fertig = i + 1 >= DIKTAT_WORTE.length;
+      set((s) => (s.dictating ? { ...s, dictated: naechste, dictating: !fertig } : s));
+      if (fertig) notify("Übernommen · Beispiel");
+    }, 130);
+
+    return () => window.clearTimeout(timer);
+  }, [state.dictating, state.dictated, set, notify]);
 
   return (
     <button
       type="button"
       disabled={state.dictated !== null}
       onClick={() => {
-        const worte =
-          "Frida hat im Sachunterricht ihren Versuch selbst aufgebaut und den Ablauf erklärt.".split(
-            " ",
-          );
-
         if (reduced) {
-          set((s) => ({ ...s, dictated: worte.join(" ") }));
+          set((s) => ({ ...s, dictated: DIKTAT_WORTE.join(" "), dictating: false }));
           notify("Übernommen · Beispiel");
           return;
         }
-
-        let i = 0;
-        const schritt = () => {
-          i += 1;
-          set((s) => ({ ...s, dictated: worte.slice(0, i).join(" ") }));
-          if (i < worte.length) {
-            window.setTimeout(schritt, 130);
-          } else {
-            notify("Übernommen · Beispiel");
-          }
-        };
-        schritt();
+        // Nur den Startschuss geben. Das Weiterlaufen macht der Effekt.
+        set((s) => (s.dictated === null ? { ...s, dictated: "", dictating: true } : s));
       }}
       className={cn(
         "inline-flex items-center gap-2 rounded-[var(--app-radius-control)] border border-[var(--app-border)] bg-[var(--app-surface)] px-3 py-2 text-[12px] text-[var(--app-text)]",
+        TIPPZIEL,
         state.dictated === null && "hover:border-[var(--app-blue)]",
         state.dictated !== null && "text-[var(--app-text-muted)]",
       )}
@@ -291,7 +643,7 @@ function DictationButton({ state, actions }: { state: TourState; actions: TourAc
         aria-hidden="true"
         className={cn(
           "size-3.5 text-[var(--app-blue)]",
-          laeuft && !reduced && "animate-soft-pulse",
+          state.dictating && !reduced && "animate-soft-pulse",
         )}
       />
       {state.dictated === null ? "Beobachtung diktieren" : "Diktat übernommen"}
@@ -314,6 +666,43 @@ export function AreaReports({
 }) {
   const { set, notify } = actions;
   const beobachtung = DEMO_TOUR_OBSERVATIONS.find((e) => e.id === state.chosen);
+
+  /* ==========================================================================
+   * KEIN ERFUNDENER ENTWURF AUS EINER EIGENEN BEOBACHTUNG
+   * ==========================================================================
+   * Naheliegend waere eine Schablone: Name einsetzen, Satz drumherum, fertig.
+   * Sie waere die teuerste Zeile der ganzen Seite. Das Versprechen lautet
+   * „im gelernten Schreibstil der Lehrkraft" – ein Baukastensatz aus dem
+   * Browser klingt garantiert nicht danach und wuerde genau dieses
+   * Versprechen im selben Moment widerlegen, in dem es gegeben wird.
+   *
+   * Die ehrliche Zeile ist staerker: Sie sagt, was das Produkt tut, und
+   * warum der Einblick es nicht kann. Danach steht der Weg zum vollen
+   * Erlebnis daneben.
+   */
+  if (state.chosen === "eigen" && state.ownNote) {
+    return (
+      <section aria-labelledby="bereich-zeugnisse">
+        <h2 id="bereich-zeugnisse" className={LABEL}>
+          Zeugnisse
+        </h2>
+
+        <p className="mt-3 text-sm text-[var(--app-text)]">
+          Grundlage: Ihre eigene Beobachtung
+        </p>
+
+        <div className="mt-3 rounded-[var(--app-radius-card)] border border-[var(--app-border)] bg-[var(--app-surface-muted)] p-3 text-[13px] text-[var(--app-text-muted)]">
+          {state.ownNote.text}
+        </div>
+
+        <p className="mt-4 rounded-[var(--app-radius-control)] border border-[var(--app-blue)] bg-[var(--app-surface)] p-3 text-[13px] leading-relaxed text-[var(--app-text)]">
+          Aus Ihrer eigenen Beobachtung würde Selyvi jetzt einen Entwurf in Ihrem
+          Schreibstil bauen. Im Einblick entstehen Entwürfe aus den drei Beispielen –
+          wählen Sie eines, um es zu sehen.
+        </p>
+      </section>
+    );
+  }
 
   if (!beobachtung) {
     return (
@@ -414,20 +803,21 @@ export function AreaReports({
  * ========================================================================== */
 export function AreaMail({ state, actions }: { state: TourState; actions: TourActions }) {
   const { set, notify } = actions;
-  const beobachtung = DEMO_TOUR_OBSERVATIONS.find((e) => e.id === state.chosen);
 
-  if (!beobachtung) {
-    return (
-      <section aria-labelledby="bereich-elternpost">
-        <h2 id="bereich-elternpost" className={LABEL}>
-          Elternpost
-        </h2>
-        <p className="mt-3 text-sm text-[var(--app-text)]">
-          Wählen Sie zuerst unter „Beobachtungen“ einen Eintrag aus.
-        </p>
-      </section>
-    );
-  }
+  /* ==========================================================================
+   * DER EMPFAENGER IST JETZT HIER WAEHLBAR
+   * ==========================================================================
+   * Vorher haing die Mail an der Beobachtung, die im anderen Bereich
+   * ausgewaehlt war – wer direkt hierher kam, sah nur „Wählen Sie zuerst …".
+   * Ein Bereich, der ohne einen anderen nichts zeigt, ist eine Sackgasse.
+   *
+   * Die Anrede wechselt mit dem Kind (DEMO_PARENTS). Sie bleibt beim
+   * Sprachwechsel danach stehen – das ist der Punkt, den der Produktstand
+   * macht: „Namen und Signatur bleiben unangetastet."
+   */
+  const beobachtung =
+    DEMO_TOUR_OBSERVATIONS.find((e) => e.id === state.mailChild) ??
+    DEMO_TOUR_OBSERVATIONS[0];
 
   const sprache = DEMO_MAIL_LANGS.find((l) => l.key === state.mailLang);
   const zeilen = beobachtung.mail.lines[state.mailLang];
@@ -437,6 +827,30 @@ export function AreaMail({ state, actions }: { state: TourState; actions: TourAc
       <h2 id="bereich-elternpost" className={LABEL}>
         Elternpost
       </h2>
+
+      <div className="mt-3 flex flex-wrap items-center gap-1.5">
+        <span className="text-[11px] text-[var(--app-text-muted)]">Empfänger:</span>
+        {DEMO_TOUR_OBSERVATIONS.map((e) => (
+          <button
+            key={e.id}
+            type="button"
+            aria-pressed={state.mailChild === e.id}
+            onClick={() => {
+              set((s) => ({ ...s, mailChild: e.id, mailLang: "de" }));
+              notify("Empfänger gewechselt");
+            }}
+            className={cn(
+              "inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px]",
+              TIPPZIEL,
+              state.mailChild === e.id
+                ? "border-[var(--app-blue)] bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]"
+                : "border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)] hover:border-[var(--app-blue)]",
+            )}
+          >
+            {e.child}
+          </button>
+        ))}
+      </div>
 
       {!state.mailCreated ? (
         <>
@@ -469,7 +883,8 @@ export function AreaMail({ state, actions }: { state: TourState; actions: TourAc
                   notify("Übersetzt · Beispiel");
                 }}
                 className={cn(
-                  "rounded-full border px-2.5 py-0.5 text-[11px]",
+                  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px]",
+                  TIPPZIEL,
                   state.mailLang === l.key
                     ? "border-[var(--app-blue)] bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]"
                     : "border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)] hover:border-[var(--app-blue)]",
@@ -490,7 +905,9 @@ export function AreaMail({ state, actions }: { state: TourState; actions: TourAc
             <p className="text-[12px] text-[var(--app-text-muted)]">
               Betreff: {beobachtung.mail.subject}
             </p>
-            <p className="mt-3 text-[13px] text-[var(--app-text)]">Guten Tag,</p>
+            <p className="mt-3 text-[13px] text-[var(--app-text)]">
+              Guten Tag, {DEMO_PARENTS[beobachtung.id]},
+            </p>
 
             <div
               dir={sprache?.rtl ? "rtl" : "ltr"}
@@ -550,9 +967,17 @@ export function AreaMaterial({
             key={t.id}
             type="button"
             aria-pressed={state.topic === t.id}
-            onClick={() => set((s) => ({ ...s, topic: t.id, materialCreated: false }))}
+            onClick={() =>
+              set((s) => ({
+                ...s,
+                topic: t.id,
+                topicFree: null,
+                materialCreated: false,
+              }))
+            }
             className={cn(
-              "rounded-full border px-2.5 py-1 text-[11px]",
+              "inline-flex items-center rounded-full border px-2.5 py-1 text-[11px]",
+              TIPPZIEL,
               state.topic === t.id
                 ? "border-[var(--app-blue)] bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]"
                 : "border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)] hover:border-[var(--app-blue)]",
@@ -562,6 +987,70 @@ export function AreaMaterial({
           </button>
         ))}
       </div>
+
+      {/* Freies Thema. Es fuehrt bewusst NICHT zu einem erfundenen
+          Arbeitsblatt: Der Einblick hat drei vorbereitete Themen, und was
+          daraus entsteht, ist das volle Erlebnis mit Quellen. Ein frei
+          getipptes Thema bekommt die ehrliche Auskunft – und daneben bleibt
+          der Weg zum vollen Erlebnis stehen. */}
+      <div className="mt-3 flex items-center gap-2 rounded-[var(--app-radius-control)] border border-[var(--app-border)] bg-[var(--app-surface)] px-3 focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-brand-600">
+        <label htmlFor="einblick-thema" className="sr-only">
+          Eigenes Thema eintippen
+        </label>
+        <input
+          id="einblick-thema"
+          value={state.topicInput}
+          maxLength={80}
+          onChange={(e) => set((s) => ({ ...s, topicInput: e.target.value }))}
+          onKeyDown={(e) => {
+            if (e.key !== "Enter") return;
+            e.preventDefault();
+            if (state.topicInput.trim().length === 0) return;
+            set((s) => ({
+              ...s,
+              topicFree: s.topicInput.trim(),
+              topic: null,
+              materialCreated: false,
+              topicInput: "",
+            }));
+          }}
+          placeholder="… oder eigenes Thema eintippen"
+          className={cn(
+            "w-full bg-transparent py-2.5 text-[var(--app-text)] outline-none placeholder:text-[var(--app-text-muted)]",
+            EINGABE_SCHRIFT,
+          )}
+        />
+        <button
+          type="button"
+          aria-label="Thema übernehmen"
+          disabled={state.topicInput.trim().length === 0}
+          onClick={() =>
+            set((s) => ({
+              ...s,
+              topicFree: s.topicInput.trim(),
+              topic: null,
+              materialCreated: false,
+              topicInput: "",
+            }))
+          }
+          className={cn(
+            "flex shrink-0 items-center justify-center rounded-[var(--app-radius-control)] px-2 text-[var(--app-blue)] disabled:text-[var(--app-text-muted)]",
+            TIPPZIEL,
+          )}
+        >
+          <Send aria-hidden="true" className="size-4" />
+        </button>
+      </div>
+
+      {state.topicFree ? (
+        <p
+          role="status"
+          className="mt-3 rounded-[var(--app-radius-control)] border border-[var(--app-blue)] bg-[var(--app-surface)] p-3 text-[13px] leading-relaxed text-[var(--app-text)]"
+        >
+          Im Einblick liegen Materialien zu den drei Beispielthemen bereit — in Selyvi
+          entsteht Ihres aus dem Fachkorpus, mit Quellen.
+        </p>
+      ) : null}
 
       <p className="mt-5 text-sm text-[var(--app-text)]">
         Fundstellen aus dem Fachkorpus:
@@ -714,8 +1203,18 @@ export function AreaSeating({
         ),
       };
     });
+    // Kurzer Haken am Zielplatz: die Rueckmeldung, dass der Tausch wirklich
+    // passiert ist. Der Timer haengt am Effekt unten, damit er beim
+    // Bereichswechsel und beim Zuruecksetzen mit abgeraeumt wird.
+    set((s) => ({ ...s, seated: id }));
     notify("Übernommen · Beispiel");
   }
+
+  useEffect(() => {
+    if (!state.seated) return;
+    const timer = window.setTimeout(() => set((s) => ({ ...s, seated: null })), 1400);
+    return () => window.clearTimeout(timer);
+  }, [state.seated, set]);
 
   return (
     <section aria-labelledby="bereich-sitzplan">
@@ -763,8 +1262,19 @@ export function AreaSeating({
                 {platz.locked ? (
                   <Lock aria-hidden="true" className="size-3.5" />
                 ) : platz.initials ? (
-                  <span className="flex size-7 items-center justify-center rounded-full bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]">
+                  <span className="relative flex size-7 items-center justify-center rounded-full bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]">
                     {platz.initials}
+                    {state.seated === platz.id ? (
+                      <span
+                        aria-hidden="true"
+                        className={cn(
+                          "absolute -right-1.5 -bottom-1.5 flex size-4 items-center justify-center rounded-full bg-[var(--app-blue)]",
+                          !reduced && "animate-chip-pop",
+                        )}
+                      >
+                        <Check className="size-2.5 text-white" />
+                      </span>
+                    ) : null}
                   </span>
                 ) : null}
               </button>
@@ -786,7 +1296,13 @@ export function AreaSeating({
                   }));
                   notify(platz.locked ? "Platz freigegeben" : "Platz gesperrt");
                 }}
-                className="absolute top-1 right-1 rounded p-0.5 text-[var(--app-text-muted)] hover:text-[var(--app-blue)]"
+                /* Das Schloss war 16 x 16 px gross – unter dem Mindestmass
+                   von 24 px (WCAG 2.5.8). Das Zeichen bleibt klein, die
+                   Flaeche darum waechst auf 28 px. Nicht auf 44: Der Schalter
+                   liegt IN der Sitzplatz-Kachel, und 44 px wuerden dort den
+                   Tausch verdecken – ein groesseres Ziel, das ein wichtigeres
+                   frisst, ist keine Verbesserung. */
+                className="absolute top-0.5 right-0.5 flex items-center justify-center rounded p-2 text-[var(--app-text-muted)] hover:text-[var(--app-blue)]"
               >
                 <Lock aria-hidden="true" className="size-3" />
               </button>
@@ -836,7 +1352,10 @@ export function AreaTimetable({
             aria-pressed={fach === f}
             onClick={() => setzeFach(f)}
             className={cn(
-              "rounded-full border px-2.5 py-0.5 text-[11px]",
+              "inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px]",
+              /* Die Fach-Chips massen 23,5 px – knapp unter dem Mindestmass.
+                 Knapp daneben ist auch daneben. */
+              TIPPZIEL,
               fach === f
                 ? "border-[var(--app-blue)] bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]"
                 : "border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)] hover:border-[var(--app-blue)]",
@@ -853,8 +1372,15 @@ export function AreaTimetable({
       <p className="mt-4 text-[11px] text-[var(--app-text-muted)] sm:hidden">
         Seitwärts wischbar →
       </p>
+      {/* table-fixed, nicht Auto-Layout: Bei Auto-Layout richtet sich die
+          Spaltenbreite nach dem Inhalt. Ein Freitag ohne Eintraege schrumpfte
+          dadurch auf 16 px Breite – ein Schalter, den auf dem Handy niemand
+          trifft. Gefunden vom Zustands-Crawl, nicht im Betrieb. Mit fester
+          Tabelle sind alle fuenf Tage gleich breit, und die Mindestbreite
+          sorgt dafuer, dass sie nicht unter ~70 px fallen; darunter scrollt
+          die Flaeche waagerecht, was der Hinweis darueber ansagt. */}
       <div className="mt-2 overflow-x-auto">
-        <table className="w-full min-w-[22rem] border-collapse text-[11px]">
+        <table className="w-full min-w-[26rem] table-fixed border-collapse text-[11px]">
           <caption className="sr-only">
             Wochenstundenplan der Klasse. Jede Zelle ist ein Schalter.
           </caption>
@@ -862,7 +1388,7 @@ export function AreaTimetable({
             <tr>
               <th
                 scope="col"
-                className="p-1 text-left font-medium text-[var(--app-text-muted)]"
+                className="w-12 p-1 text-left font-medium text-[var(--app-text-muted)]"
               >
                 Zeit
               </th>
@@ -907,11 +1433,23 @@ export function AreaTimetable({
                           }));
                           notify(belegt ? "Stunde entfernt" : "Übernommen · Beispiel");
                         }}
+                        /* Eine Farbe je Fach. Die Werte stehen in
+                           demo-data.ts und halten alle AA – geprueft mit
+                           app-kontrast.js. Ohne sie sieht eine volle Woche
+                           aus wie eine leere. */
+                        style={
+                          belegt && DEMO_SUBJECT_COLORS[belegt]
+                            ? {
+                                backgroundColor: DEMO_SUBJECT_COLORS[belegt].bg,
+                                color: DEMO_SUBJECT_COLORS[belegt].text,
+                                borderColor: DEMO_SUBJECT_COLORS[belegt].text,
+                              }
+                            : undefined
+                        }
                         className={cn(
-                          "h-9 w-full rounded border text-[10px]",
-                          belegt
-                            ? "border-[var(--app-blue)] bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]"
-                            : "border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text-muted)] hover:border-[var(--app-blue)]",
+                          "h-11 w-full rounded border text-[10px] sm:h-9",
+                          !belegt &&
+                            "border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text-muted)] hover:border-[var(--app-blue)]",
                         )}
                       >
                         {belegt ?? "+"}
@@ -963,7 +1501,8 @@ export function AreaDevelopment({
             aria-pressed={kind.id === e.id}
             onClick={() => set((s) => ({ ...s, timelineChild: e.id, openEntries: [] }))}
             className={cn(
-              "rounded-full border px-2.5 py-0.5 text-[11px]",
+              "inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px]",
+              TIPPZIEL,
               kind.id === e.id
                 ? "border-[var(--app-blue)] bg-[var(--app-blue-soft)] text-[var(--app-blue-on-soft)]"
                 : "border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)] hover:border-[var(--app-blue)]",
@@ -974,15 +1513,35 @@ export function AreaDevelopment({
         ))}
       </div>
 
+      {/* Die eigene Beobachtung haengt hinten an – als neuester Eintrag,
+          weil die Timeline aufsteigend laeuft. Das ist der Moment, um den es
+          geht: Der eben getippte Satz steht jetzt in der Akte des Kindes. */}
       <ol className="mt-4 flex flex-col gap-2">
-        {kind.timeline.map((eintrag) => {
+        {[
+          ...kind.timeline,
+          ...(state.ownNote && state.ownNote.child === kind.id
+            ? [
+                {
+                  date: "heute",
+                  title: "Ihre Beobachtung",
+                  text: state.ownNote.text,
+                  eigen: true,
+                },
+              ]
+            : []),
+        ].map((eintrag) => {
           const id = `${kind.id}-${eintrag.date}`;
           const offen = state.openEntries.includes(id);
 
           return (
             <li
               key={id}
-              className="rounded-[var(--app-radius-card)] border border-[var(--app-border)] bg-[var(--app-surface)]"
+              className={cn(
+                "rounded-[var(--app-radius-card)] border bg-[var(--app-surface)]",
+                "eigen" in eintrag
+                  ? "border-[var(--app-blue)]"
+                  : "border-[var(--app-border)]",
+              )}
             >
               <button
                 type="button"

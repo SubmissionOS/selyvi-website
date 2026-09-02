@@ -73,10 +73,11 @@ Gemessen wird mit `leerraum.js`: Es geht die Seite in 900-px-Schritten durch und
 ### Regel D — Keine Zukunftsform über die Produktreife
 Kein "geplant", "in Arbeit", "in Entwicklung", "entsteht gerade", "folgt", "vor dem Produktstart", "Rollout steht aus", "im Aufbau", "bald", "demnächst", "in Vorbereitung". **Was es nicht gibt, wird nicht angekündigt, sondern weggelassen.** Jede Produktaussage steht im Präsens und beschreibt Vorhandenes.
 
-DREI AUSNAHMEN, abschließend:
+ZWEI AUSNAHMEN, abschließend:
 - `PRODUCT_HOSTING_NOTE` — der Serverstandort. Die einzige erlaubte Einschränkung, unverändert im Wortlaut.
-- `SCHOOL_TYPE_ANSWER` — "Weitere Schulformen folgen." Das ist Ausbau, keine Reife; von CEO und CMO so gewollt.
 - Rechtstexte (/impressum, /datenschutz). Wortlaut nach Vorlage, nicht nach Marketing-Ton.
+
+Die frühere dritte Ausnahme `SCHOOL_TYPE_ANSWER` ("Weitere Schulformen folgen.") ist entfallen: Seit der Ansage vom 02.09.2026 gilt Selyvi für alle Schularten von Klasse 1 bis zum Abitur, die Konstante enthält keine Zukunftsform mehr. Eine Ausnahme, die nichts mehr ausnimmt, ist eine offene Tür.
 
 "Pilot" und "Pilotkreis" bleiben: Sie beschreiben den Einstieg, nicht die Reife. Ein temporales "folgt" ist verboten, ein logisches nicht ("aus einer Deutschnote folgt nicht, ob ein Kind flüssig liest").
 

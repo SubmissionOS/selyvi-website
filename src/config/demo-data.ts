@@ -542,6 +542,23 @@ export const DEMO_DICTATION =
  * Badge daneben. Arabisch laeuft von rechts nach links; die Anzeige setzt
  * dafuer dir="rtl".
  */
+/**
+ * Anrede der Eltern je Kind.
+ *
+ * Nachnamen bleiben abgekuerzt – dieselbe Regel wie beim Cast selbst. „Familie
+ * K." ist eine Anrede und kein Datensatz; wer den Einblick sieht, soll den
+ * Aufbau der Mail erkennen, nicht eine Familie.
+ *
+ * Der Produktstand sagt: „Namen und Signatur bleiben unangetastet." Genau das
+ * zeigt der Wechsel: Waehlt man ein anderes Kind, wechselt die Anrede – und
+ * bleibt beim Sprachwechsel danach stehen.
+ */
+export const DEMO_PARENTS: Record<string, string> = {
+  emma: "Familie K.",
+  yusuf: "Familie A.",
+  lotta: "Familie B.",
+};
+
 export const DEMO_MAIL_LANGS = [
   { key: "de", label: "DE", rtl: false },
   { key: "en", label: "EN", rtl: false },
@@ -593,6 +610,24 @@ export const DEMO_TIMETABLE_SLOTS = ["1. Std", "2. Std", "3. Std", "4. Std"] as 
 /** Faecher, die die Lehrkraft im Einblick setzen kann. */
 export const DEMO_TIMETABLE_SUBJECTS = ["Deutsch", "Mathe", "Sachunterricht"] as const;
 
+/**
+ * Eine Farbe je Fach.
+ *
+ * Die Werte kommen aus src/config/app-reference.ts – dieselbe Familie wie der
+ * Rest des Fensters, nur drei Abstufungen. KEINE neuen Marken-Farben: Was hier
+ * steht, ist entweder ein Referenzwert oder eine Ableitung davon, und jede
+ * Kombination haelt WCAG AA (geprueft mit app-kontrast.js).
+ *
+ * Warum ueberhaupt Farben: Eine Woche in einer einzigen Blauabstufung sieht
+ * leer aus, obwohl sie voll ist. Drei Faecher, drei Toene – dieselbe
+ * Information, nur schneller erfassbar.
+ */
+export const DEMO_SUBJECT_COLORS: Record<string, { bg: string; text: string }> = {
+  Deutsch: { bg: "#c7ecff", text: "#015b97" },
+  Mathe: { bg: "#e7f2e7", text: "#107c10" },
+  Sachunterricht: { bg: "#f3e8d6", text: "#7a4d05" },
+};
+
 /** Vorbelegung: Was schon im Plan steht, bevor jemand klickt. */
 export const DEMO_TIMETABLE_PRESET: Record<string, string> = {
   "Mo-1. Std": "Deutsch",
@@ -610,6 +645,100 @@ export const DEMO_TIMETABLE_PRESET: Record<string, string> = {
  * die sie sich stuetzt. Die Verweis-Chips sind der Punkt: Sie zeigen, DASS
  * die Antwort auf Eintraegen beruht.
  */
+/**
+ * Schlagworte je vorbereiteter Antwort.
+ *
+ * ==========================================================================
+ * WAS DAS IST – UND WAS NICHT
+ * ==========================================================================
+ * Eine Wortliste, gegen die eine frei getippte Frage geprueft wird. Trifft
+ * eines der Worte, zeigt der Einblick die dazu vorbereitete Antwort. Das ist
+ * KEINE Suche und kein Sprachmodell: Es ist ein Vergleich mit einer Liste,
+ * damit eine eigene Frage nicht ins Leere laeuft.
+ *
+ * Trifft nichts, sagt der Einblick genau das (siehe CHAT_FALLBACK). Eine
+ * erfundene Antwort waere hier der teuerste Fehler: Wer im Einblick eine
+ * Antwort bekommt, die es im Produkt so nicht gaebe, glaubt danach keiner
+ * anderen mehr.
+ *
+ * Die Worte stehen klein geschrieben; der Vergleich normalisiert die Eingabe.
+ */
+export const DEMO_CHAT_KEYWORDS: Record<string, string[]> = {
+  lesen: ["lesen", "liest", "las", "vorlesen", "lesekreis", "deutsch", "emma", "vortrag"],
+  mathe: [
+    "mathe",
+    "rechnen",
+    "rechnet",
+    "zahlenraum",
+    "erklärt",
+    "erklaert",
+    "erklären",
+    "yusuf",
+    "nachbar",
+  ],
+  gruppen: [
+    "gruppe",
+    "gruppen",
+    "gruppenarbeit",
+    "verantwortung",
+    "lotta",
+    "team",
+    "aufgaben",
+    "leitet",
+  ],
+};
+
+/**
+ * Die ehrliche Rueckfall-Antwort.
+ *
+ * Sie sagt zwei Dinge in zwei Saetzen: was der Einblick kennt, und was das
+ * Produkt an dieser Stelle tut. Kein Fehlerton, keine Entschuldigung – der
+ * zweite Satz steht im Praesens und ist durch „Freie Fragen an die eigenen
+ * Daten — Live" gedeckt.
+ */
+export const CHAT_FALLBACK =
+  "Im Einblick kenne ich nur die Beispieldaten der 3b. In Selyvi durchsucht diese Frage Ihre eigenen Einträge.";
+
+/**
+ * Schlagworte fuer die Chip-Erkennung einer selbst getippten Beobachtung.
+ *
+ * Dieselbe Bauweise, derselbe Vorbehalt: eine Wortliste, kein Modell. Was das
+ * Produkt daraus macht – Fach, Kategorie, Prioritaet, Foerderhinweis – steht
+ * im Produktstand unter „Beobachtungen strukturieren — Live". Der Einblick
+ * zeigt davon den sichtbaren Teil: den Chip.
+ */
+export const DEMO_SUBJECT_KEYWORDS: Record<string, string[]> = {
+  Deutsch: [
+    "lesen",
+    "liest",
+    "vorlesen",
+    "schreibt",
+    "schreiben",
+    "text",
+    "deutsch",
+    "buch",
+  ],
+  Mathe: [
+    "rechnet",
+    "rechnen",
+    "mathe",
+    "zahlen",
+    "zahlenraum",
+    "plus",
+    "minus",
+    "aufgabe",
+  ],
+  Sachunterricht: [
+    "versuch",
+    "experiment",
+    "sachunterricht",
+    "natur",
+    "pflanze",
+    "tier",
+    "forscht",
+  ],
+};
+
 export const DEMO_CHAT = {
   questions: [
     {
