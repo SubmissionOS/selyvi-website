@@ -4,6 +4,7 @@ import { useEffect, useRef, type Dispatch, type SetStateAction } from "react";
 import { Check, Lock, Mic, Send, Sparkles } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { findeSchluessel, inWorte, trifft } from "@/lib/einblick/schlagworte";
 import {
   CHAT_FALLBACK,
   DEMO_CHAT,
@@ -138,25 +139,18 @@ const TIPPZIEL = "min-h-11 sm:min-h-6";
  */
 const EINGABE_SCHRIFT = "text-[16px] sm:text-[13px]";
 
-/** Klein geschrieben, ohne Satzzeichen – fuer den Vergleich mit Wortlisten. */
-function normalisiere(text: string): string {
-  return text.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, " ");
-}
-
 /**
  * Welche vorbereitete Antwort passt zu dieser Frage?
  *
  * Ein Vergleich mit Wortlisten, mehr nicht – siehe DEMO_CHAT_KEYWORDS. Kein
  * Treffer ist ein gueltiges Ergebnis und fuehrt zur ehrlichen
  * Rueckfall-Antwort, nicht zu einer erfundenen.
+ *
+ * Verglichen wird an WORTGRENZEN (schlagworte.ts). Die frueherer Fassung
+ * verglich mit `includes()`, und damit traf „las" in „Klasse" – siehe dort.
  */
 function findeAntwort(frage: string): string | null {
-  const text = normalisiere(frage);
-  if (text.trim().length === 0) return null;
-  for (const [id, worte] of Object.entries(DEMO_CHAT_KEYWORDS)) {
-    if (worte.some((w) => text.includes(w))) return id;
-  }
-  return null;
+  return findeSchluessel(frage, DEMO_CHAT_KEYWORDS);
 }
 
 /**
@@ -165,21 +159,21 @@ function findeAntwort(frage: string): string | null {
  * Das Produkt macht daraus laut Produktstand Fach, Kategorie, Prioritaet und
  * Foerderhinweis. Der Einblick zeigt davon, was sichtbar ist – und erfindet
  * die Kategorie nicht dazu.
+ *
+ * Der Kind-Name wird als GANZES Wort gesucht. „Emmas" trifft ebenfalls, weil
+ * das Muster den Wortanfang zulaesst; „Emmentaler" nicht.
  */
 function erkenneChips(text: string): OwnNote {
-  const norm = normalisiere(text);
+  const worte = inWorte(text);
   const chips: string[] = [];
 
   const kind =
-    DEMO_TOUR_OBSERVATIONS.find((e) =>
-      norm.includes(e.child.split(" ")[0].toLowerCase()),
-    ) ?? null;
+    DEMO_TOUR_OBSERVATIONS.find((e) => trifft(worte, `${e.child.split(" ")[0]}*`)) ??
+    null;
   if (kind) chips.push(kind.child);
 
-  const fach = Object.entries(DEMO_SUBJECT_KEYWORDS).find(([, worte]) =>
-    worte.some((w) => norm.includes(w)),
-  );
-  if (fach) chips.push(fach[0]);
+  const fach = findeSchluessel(text, DEMO_SUBJECT_KEYWORDS);
+  if (fach) chips.push(fach);
 
   if (chips.length === 0) chips.push("Beobachtung");
 

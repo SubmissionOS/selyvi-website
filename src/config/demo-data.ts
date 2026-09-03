@@ -662,29 +662,43 @@ export const DEMO_TIMETABLE_PRESET: Record<string, string> = {
  * anderen mehr.
  *
  * Die Worte stehen klein geschrieben; der Vergleich normalisiert die Eingabe.
+ *
+ * ==========================================================================
+ * SCHREIBWEISE DER MUSTER – WORTGRENZEN, KEINE TEILSTRINGS
+ * ==========================================================================
+ * Verglichen wird mit `src/lib/einblick/schlagworte.ts`, an Wortgrenzen:
+ *
+ *   "lotta"   ganzes Wort  – trifft „Lotta", nicht „Lottaspiel"
+ *   "lese*"   Wortanfang   – trifft „lesen", „Leseübung", „Lesekreis"
+ *
+ * Der Stern steht NUR dort, wo ein deutsches Kompositum ihn braucht. Ohne
+ * ihn galt früher `includes()`, und „las" traf in „K-las-se" und „las-sen".
+ * Wer hier ein Muster ergänzt, prüft es mit `npm run test:chat` – die 13
+ * Pflicht-Fälle stehen in scripts/chat-test.mjs.
+ *
+ * „deutsch" bleibt bewusst OHNE Stern: „Deutschlandkarte" ist kein Lesen.
+ * Die Reihenfolge der drei Einträge entscheidet bei mehrdeutigen Fragen.
  */
 export const DEMO_CHAT_KEYWORDS: Record<string, string[]> = {
-  lesen: ["lesen", "liest", "las", "vorlesen", "lesekreis", "deutsch", "emma", "vortrag"],
-  mathe: [
-    "mathe",
-    "rechnen",
-    "rechnet",
-    "zahlenraum",
-    "erklärt",
-    "erklaert",
-    "erklären",
-    "yusuf",
-    "nachbar",
+  lesen: [
+    "lese*",
+    "liest",
+    "las",
+    "vorles*",
+    "deutsch",
+    "deutschunterricht",
+    "emma*",
+    "vortrag*",
   ],
+  mathe: ["mathe*", "rechn*", "rechen*", "zahlen*", "erklär*", "yusuf*", "nachbar*"],
   gruppen: [
-    "gruppe",
-    "gruppen",
-    "gruppenarbeit",
-    "verantwortung",
-    "lotta",
-    "team",
-    "aufgaben",
-    "leitet",
+    "gruppe*",
+    "verantwortung*",
+    "lotta*",
+    "team*",
+    "aufgabe*",
+    "leit*",
+    "geleitet",
   ],
 };
 
@@ -706,36 +720,31 @@ export const CHAT_FALLBACK =
  * Produkt daraus macht – Fach, Kategorie, Prioritaet, Foerderhinweis – steht
  * im Produktstand unter „Beobachtungen strukturieren — Live". Der Einblick
  * zeigt davon den sichtbaren Teil: den Chip.
+ *
+ * Dieselbe Schreibweise wie oben: Stern nur, wo ein Kompositum ihn braucht.
+ * „tier" stand hier einmal ohne Wortgrenze – und traf in „medi-tier-en".
  */
 export const DEMO_SUBJECT_KEYWORDS: Record<string, string[]> = {
   Deutsch: [
-    "lesen",
+    "lese*",
     "liest",
-    "vorlesen",
-    "schreibt",
-    "schreiben",
-    "text",
+    "vorles*",
+    "schreib*",
+    "text*",
     "deutsch",
     "buch",
+    "bücher",
   ],
-  Mathe: [
-    "rechnet",
-    "rechnen",
-    "mathe",
-    "zahlen",
-    "zahlenraum",
-    "plus",
-    "minus",
-    "aufgabe",
-  ],
+  Mathe: ["rechn*", "rechen*", "mathe*", "zahl", "zahlen*", "plus", "minus", "aufgabe*"],
   Sachunterricht: [
-    "versuch",
-    "experiment",
+    "versuch*",
+    "experiment*",
     "sachunterricht",
-    "natur",
-    "pflanze",
+    "natur*",
+    "pflanze*",
     "tier",
-    "forscht",
+    "tiere",
+    "forsch*",
   ],
 };
 
