@@ -929,14 +929,51 @@ npm run test:formular
 ```
 
 Er startet einen eigenen `next start` (Port 3311), einen Schein-CRM-Endpunkt
-(Port 3312) und einen kopflosen Browser und schickt beide Formulare ab –
-einmal mit erreichbarem und einmal mit totem CRM. **Beide Male muss dieselbe
-Bestätigung erscheinen.** Der zweite Fall ist der eigentliche Punkt: Die
-Brevo-Mail ist der Verlass, die CRM-Übergabe die Zugabe.
+(Port 3312), ein Schein-Brevo (Port 3314) und einen kopflosen Browser und
+fährt **vier Kanal-Kombinationen** ab:
 
-Der Test setzt `DEMO_DRY_RUN=true` und verschickt deshalb keine echte Mail.
+| Lauf | Mail | CRM | erwartet                              |
+| ---- | ---- | --- | ------------------------------------- |
+| A    | ok   | ok  | Bestätigung, kein Teil-Ausfall im Log |
+| B    | 401  | ok  | **Bestätigung** – ein Kanal genügt    |
+| C    | ok   | tot | Bestätigung, CRM-Fehler im Log        |
+| D    | 401  | tot | Fehlermeldung – nur dann              |
+
+Lauf B ist der Grund für den Test: Vorher entschied allein die Mail, und ein
+abgelaufener Brevo-Schlüssel ließ Besucher eine Fehlermeldung lesen, während
+ihre Anfrage längst im CRM lag.
+
+Lauf E erzwingt die übrigen Zustände: Validierungsfehler, stille Bestätigung
+nach ausgefülltem Honeypot, Zeitüberschreitung des CRM (ein Mock-Pfad, der nie
+antwortet) und den Rate-Limit-Hinweis. Jeder dieser sichtbaren Texte läuft
+anschließend durch dieselben Ton-Muster wie die ausgelieferten Seiten
+(`scripts/ton-muster.mjs`) – diese Sätze stehen in keinem HTML und wurden
+deshalb nie geprüft.
+
+Der Test verschickt **keine echte Mail**: Statt `DEMO_DRY_RUN` (das den
+Mailversand immer gelingen ließ und den interessanten Fall unerreichbar
+machte) läuft ein Schein-Brevo auf 127.0.0.1. `brevo.ts` nimmt einen
+Ersatz-Endpunkt nur an, wenn er auf dem eigenen Rechner liegt – eine Variable,
+die den Versand irgendwohin umlenken könnte, wäre ein Abfluss für
+Formulardaten.
+
 Belegte Ports brechen ihn ab, statt einen fremden Prozess zu messen. Ein
 anderer Browser lässt sich über `EDGE_PATH` angeben.
+
+### Mailversand diagnostizieren
+
+Wenn Anfragen ankommen, aber keine Mail: `BREVO_API_KEY`, `DEMO_MAIL_FROM` und
+`DEMO_MAIL_TO` in `.env.local` legen, dann
+
+```
+npm run diagnose:brevo
+```
+
+Das schickt **eine echte Testmail** über dieselbe API wie die Website und
+benennt das Ergebnis: 401 = Schlüssel ungültig oder rotiert · 400 mit
+Absender-Bezug = `DEMO_MAIL_FROM` nicht (mehr) verifiziert · 402 oder
+Limit-Hinweis = Konto- oder Tageslimit. Der Schlüssel erscheint in keiner
+Ausgabe, auch nicht gekürzt.
 
 ## Screenshots erzeugen
 

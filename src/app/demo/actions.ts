@@ -118,13 +118,26 @@ export async function submitDemoRequest(
   // 6. Zwei Wege, gleichzeitig.
   //
   //    ==================================================================
-  //    DIE MAIL ENTSCHEIDET, DAS CRM NICHT
+  //    EIN KANAL GENÜGT
   //    ==================================================================
-  //    Nur das Ergebnis von Brevo bestimmt, was die anfragende Person zu
-  //    sehen bekommt. Ein Fehler bei der CRM-Uebergabe wird geloggt und
-  //    sonst nichts – die Mail liegt dann bereits im Postfach, die Anfrage
-  //    ist also angekommen. Sie deswegen als gescheitert zu melden waere
-  //    schlicht falsch, und die Person wuerde ein zweites Mal absenden.
+  //    Die Anfrage gilt als angekommen, sobald MINDESTENS EINER der beiden
+  //    Wege sie bestaetigt hat. Erst wenn BEIDE fehlschlagen, sieht die
+  //    anfragende Person eine Fehlermeldung.
+  //
+  //    VORHER ENTSCHIED ALLEIN DIE MAIL, und das war der gemeldete Fehler:
+  //    Der Brevo-Schluessel war nicht mehr gueltig, das CRM hatte die
+  //    Anfrage laengst angenommen – und der Besucher las trotzdem „konnte
+  //    nicht uebermittelt werden" und schickte ein zweites Mal. Wir hatten
+  //    die Anfrage doppelt, er hatte das Gefuehl, ins Leere zu schreiben.
+  //
+  //    Die Umkehrung ist nicht Grosszuegigkeit, sondern Genauigkeit: Die
+  //    Meldung soll sagen, ob die Anfrage bei UNS ist. Welcher unserer
+  //    beiden Wege sie getragen hat, ist unser Problem, nicht seins.
+  //
+  //    DAMIT DAS KEIN STILLES LOCH WIRD: Jeder gescheiterte Kanal wird
+  //    geloggt – Kanal, Fehlerart, Dauer, secret-frei –, und zwar auch dann,
+  //    wenn der andere getragen hat. Ein Teil-Ausfall, den niemand sieht,
+  //    waere in einer Woche ein Total-Ausfall, den alle sehen.
   //
   //    `allSettled` statt `all`: `all` bricht beim ERSTEN abgelehnten
   //    Versprechen ab und liesse den anderen Weg unbeachtet weiterlaufen.
@@ -135,30 +148,65 @@ export async function submitDemoRequest(
     sendLeadToCrm({ values: result.values, source, origin }),
   ]);
 
+  if (mailErgebnis.status === "rejected") {
+    console.error("[mail] Versand warf unerwartet.");
+  }
   if (crmErgebnis.status === "rejected") {
     // Sollte unerreichbar sein – sendLeadToCrm() wirft nicht. Wenn diese
     // Zeile doch einmal laeuft, ist die Zusage dort gebrochen.
     console.error("[crm] Übergabe warf unerwartet.");
   }
 
-  const sent =
+  const mail =
     mailErgebnis.status === "fulfilled"
       ? mailErgebnis.value
       : ({ ok: false, reason: "send-failed" } as const);
+  const crm =
+    crmErgebnis.status === "fulfilled"
+      ? crmErgebnis.value
+      : ({ ok: false, reason: "failed" } as const);
 
-  if (mailErgebnis.status === "rejected") {
-    console.error("[demo] Versand warf unerwartet.");
+  // Eine Zeile, die den Gesamtzustand traegt. Sie enthaelt nichts aus dem
+  // Formular – kein Name, keine Adresse, keine Zieladresse, keinen
+  // Schluessel. Nur, welcher Weg getragen hat.
+  const zustand = (ergebnis: { ok: boolean; reason?: string }) =>
+    ergebnis.ok
+      ? "ok"
+      : ergebnis.reason === "not-configured"
+        ? "nicht-eingerichtet"
+        : "fehlgeschlagen";
+
+  if (mail.ok || crm.ok) {
+    // Nur ECHTE Ausfaelle melden. Ein nicht eingerichteter Kanal ist der
+    // dokumentierte Normalfall in Vorschau-Deployments und lokal; ihn hier
+    // zu melden hiesse, das Log bei jeder Anfrage mit einer Nicht-Meldung zu
+    // fuellen – und genau daran stirbt die Aufmerksamkeit fuer echte.
+    if (zustand(mail) === "fehlgeschlagen" || zustand(crm) === "fehlgeschlagen") {
+      console.warn(
+        `[formular] Teil-Ausfall: mail=${zustand(mail)}, crm=${zustand(crm)} – Anfrage trotzdem angekommen.`,
+      );
+    }
+    return { status: "success" };
   }
 
-  if (!sent.ok) {
-    return {
-      status: "error",
-      message:
-        sent.reason === "not-configured"
-          ? "Der Versand ist derzeit nicht eingerichtet. Ihre Anfrage wurde nicht übermittelt."
-          : "Ihre Anfrage konnte gerade nicht übermittelt werden. Bitte versuchen Sie es erneut.",
-    };
-  }
+  console.error(
+    `[formular] Beide Kanäle gescheitert: mail=${zustand(mail)}, crm=${zustand(crm)}.`,
+  );
 
-  return { status: "success" };
+  // Der Wortlaut unterscheidet zwei Faelle, die verschiedene Menschen
+  // betreffen: „nicht eingerichtet" ist unser Konfigurationsfehler und darf
+  // niemanden zum Wiederholen einladen; alles andere kann ein Aussetzer
+  // sein, bei dem ein zweiter Versuch sinnvoll ist.
+  const beideNichtEingerichtet =
+    !mail.ok &&
+    mail.reason === "not-configured" &&
+    !crm.ok &&
+    crm.reason === "not-configured";
+
+  return {
+    status: "error",
+    message: beideNichtEingerichtet
+      ? "Der Versand ist derzeit nicht eingerichtet. Ihre Anfrage wurde nicht übermittelt."
+      : "Ihre Anfrage konnte gerade nicht übermittelt werden. Bitte versuchen Sie es erneut.",
+  };
 }
